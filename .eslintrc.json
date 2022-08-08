@@ -3,7 +3,12 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended", "standard"],
+  "extends": [
+    "plugin:react/recommended",
+    "standard",
+    "prettier",
+    "plugin:react/jsx-runtime"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -12,11 +17,26 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
-    "semi": ["error", "always"], // 分号
-    "quotes": ["error", "double", { "allowTemplateLiterals": true }], // 引号
-    "no-console": 1,
-    "comma-dangle": ["warn", "always"]
+    "semi": ["warn", "always"], // 分号
+    "quotes": ["warn", "single", { "allowTemplateLiterals": true }], // 引号
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "always",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ], // 逗号
+    "no-console": 1 // Means warn
+    // "prettier/prettier": 2 // Means error
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // React version. "detect" automatically picks the version you have installed.
+    }
   }
 }
