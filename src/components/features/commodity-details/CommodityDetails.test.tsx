@@ -1,0 +1,3 @@
+describe('CommodityDetails test', () => {
+  it('', () => {});
+});

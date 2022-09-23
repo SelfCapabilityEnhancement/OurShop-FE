@@ -32,8 +32,8 @@
         "functions": "never"
       }
     ], // 逗号
-    "no-console": 1 // Means warn
-    // "prettier/prettier": 2 // Means error
+    "no-console": 2, // Means error
+    "no-unused-vars": 1 // Means warn
   },
   "settings": {
     "react": {
