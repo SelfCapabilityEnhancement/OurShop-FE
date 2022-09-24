@@ -11,13 +11,20 @@ describe('Header test', () => {
       expect(logoIcon).toBeTruthy();
     });
 
-    it('should render navigate list', () => {
+    it('should render navigation list', () => {
       const { container } = render(<Header />);
       const navList = container.querySelector('.nav-list');
 
       expect(navList?.children.length).toEqual(3);
     });
+
+    it('should render user avatar', () => {
+      const { container } = render(<Header />);
+      const avatar = container.querySelector('.avatar');
+
+      expect(avatar).toBeTruthy();
+    });
   });
 
-  describe('navigate event part', () => {});
+  describe('navigation event part', () => {});
 });
