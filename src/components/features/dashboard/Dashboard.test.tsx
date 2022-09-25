@@ -1,3 +1,0 @@
-describe('Homepage test', () => {
-  it('', () => {});
-});

@@ -1,36 +1,51 @@
+import { NavLink, useNavigate } from 'react-router-dom';
+
 export default function Header() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/home');
+  };
+
   return (
     <div className="flex justify-between items-center shadow-md">
       <div className="flex items-center basis-1/2">
-        <img src="src/assets/images/logo.png" alt="" className="logo" />
-        <span>OurShop</span>
+        <img
+          src="src/assets/images/logo.png"
+          alt=""
+          className="logo cursor-pointer"
+          onClick={handleClick}
+        />
+        <span className="cursor-pointer" onClick={handleClick}>
+          OurShop
+        </span>
       </div>
       <div className="flex items-center basis-1/2">
         <div className="nav-list flex justify-around basis-3/4">
-          <a
-            href="#"
+          <NavLink
+            to="create-product"
             className="basis-1/3 mx-4 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-rose-500 focus:border-rose-500"
           >
             Create Product
-          </a>
-          <a
-            href="#"
+          </NavLink>
+          <NavLink
+            to="shopping-cart"
             className="basis-1/3 mx-4 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-rose-500 focus:border-rose-500"
           >
             Shopping Cart
-          </a>
-          <a
-            href="#"
+          </NavLink>
+          <NavLink
+            to="my-order"
             className="basis-1/3 mx-4 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-rose-500 focus:border-rose-500"
           >
             My Order
-          </a>
+          </NavLink>
         </div>
         <div className="basis-1/4 flex justify-end mr-10">
           <img
