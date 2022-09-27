@@ -5,6 +5,7 @@ import CreateProduct from '../components/features/create-product/CreateProduct';
 import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
 import MyOrder from '../components/features/my-order/MyOrder';
 import HomePage from '../components/features/home-page/HomePage';
+import MyWallet from '../components/features/my-wallet/MyWallet';
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-order',
         element: <MyOrder />,
+      },
+      {
+        path: 'my-wallet',
+        element: <MyWallet />,
       },
     ],
   },

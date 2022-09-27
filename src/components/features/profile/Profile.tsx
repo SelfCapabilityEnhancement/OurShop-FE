@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -9,7 +10,7 @@ export default function Profile() {
   return (
     <Menu as="div" className="relative ml-3">
       <div>
-        <Menu.Button className="basis-1/4 flex justify-end mr-10">
+        <Menu.Button className="flex justify-end mr-10">
           <img
             className="avatar h-12 w-12 rounded-full"
             src="src/assets/images/avatar.png"
@@ -29,22 +30,22 @@ export default function Profile() {
         <Menu.Items className="absolute right-0 z-10 mt-2 w-40 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
+              <NavLink
+                to="my-wallet"
                 className={classNames(active ? 'bg-gray-100' : '', 'wallet block px-4 py-2 text-center text-base')}
               >
                 my wallet
-              </a>
+              </NavLink>
             )}
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
+              <NavLink
+                to="my-order"
                 className={classNames(active ? 'bg-gray-100' : '', 'settings block px-4 py-2 text-center text-base')}
               >
                 settings
-              </a>
+              </NavLink>
             )}
           </Menu.Item>
         </Menu.Items>

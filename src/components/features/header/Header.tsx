@@ -22,7 +22,7 @@ export default function Header() {
           OurShop
         </span>
       </div>
-      <div className="flex items-center basis-1/2">
+      <div className="flex items-center basis-1/3">
         <div className="nav-list flex justify-around basis-3/4">
           <NavLink
             to="create-product"
@@ -49,7 +49,7 @@ export default function Header() {
             My Order
           </NavLink>
         </div>
-         <Profile></Profile>
+        <Profile></Profile>
       </div>
     </div>
   );
