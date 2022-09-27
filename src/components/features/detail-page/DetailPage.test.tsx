@@ -1,6 +1,5 @@
 import {render, screen} from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
-import test from "node:test";
 
 describe('Detail Page', () => {
     beforeEach(() => {
