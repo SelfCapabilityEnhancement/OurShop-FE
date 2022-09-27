@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
 import test from "node:test";
+import userEvent from "@testing-library/user-event";
 
 describe('Detail Page', () => {
   beforeEach(() => {
@@ -25,5 +26,9 @@ describe('Detail Page', () => {
     expect(
         screen.getByRole('button', {name: /purchase/i})
     ).toBeInTheDocument();
+  });
+  test('should show another picture when click small product picture', async () => {
+    await userEvent.click(screen.getByAltText('small product picture 2'));
+    expect(screen.queryByAltText('big product picture 2')).toBeInTheDocument();
   });
 });
