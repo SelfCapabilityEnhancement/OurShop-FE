@@ -9,20 +9,20 @@ describe('Detail Page', () => {
   test('should show arrows and num of products', () => {
     expect(screen.getByTestId('svg-plus')).toBeInTheDocument();
     expect(screen.getByTestId('svg-minus')).toBeInTheDocument();
-    expect(screen.getByRole('span', {name: /1/i})).toBeInTheDocument();
+    expect(screen.getByTestId('num').textContent).toBe('1');
   });
-  test('should add one when click svg-plus',()=>{
-    userEvent.click(screen.getByTestId('svg-plus'));
-    expect(screen.getByRole('span', {name: /2/i})).toBeInTheDocument();
+  test('should add one when click svg-plus',async ()=>{
+    await userEvent.click(screen.getByTestId('svg-plus'));
+    expect(screen.getByTestId('num').textContent).toBe('2');
   });
-  test('svg-minus should be disabled when num of products is 1',()=>{
-    userEvent.click(screen.getByTestId('svg-minus'));
-    expect(screen.getByRole('span', {name: /1/i})).toBeInTheDocument();
+  test('svg-minus should be disabled when num of products is 1',async ()=>{
+    await userEvent.click(screen.getByTestId('svg-minus'));
+    expect(screen.getByTestId('num').textContent).toBe('1');
   });
-  test('should minus one when click svg-minus',()=>{
-    userEvent.click(screen.getByTestId('svg-plus'));
-    expect(screen.getByRole('span', {name: /2/i})).toBeInTheDocument();
-    userEvent.click(screen.getByTestId('svg-minus'));
-    expect(screen.getByRole('span', {name: /1/i})).toBeInTheDocument();
+  test('should minus one when click svg-minus',async()=>{
+    await userEvent.click(screen.getByTestId('svg-plus'));
+    expect(screen.getByTestId('num').textContent).toBe('2');
+    await userEvent.click(screen.getByTestId('svg-minus'));
+    expect(screen.getByTestId('num').textContent).toBe('1');
   });
 });

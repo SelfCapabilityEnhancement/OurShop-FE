@@ -48,7 +48,7 @@ export default function DetailPage() {
             description
           </h2>
           <p className="description bg-slate-300">xxx</p>
-          <div className="PurchaseNumber absolute bottom-16">
+          <div className="PurchaseNumber absolute bottom-16 ml-2">
             <Counter />
           </div>
           <div className="flex gap-5 absolute bottom-2">
