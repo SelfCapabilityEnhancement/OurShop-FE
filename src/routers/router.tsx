@@ -6,6 +6,7 @@ import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
 import MyOrder from '../components/features/my-order/MyOrder';
 import HomePage from '../components/features/home-page/HomePage';
 import MyWallet from '../components/features/my-wallet/MyWallet';
+import DetailPage from '@/components/features/detail-page/DetailPage';
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-wallet',
         element: <MyWallet />,
+      },
+      {
+        path: 'detail',
+        element: <DetailPage />,
       },
     ],
   },
