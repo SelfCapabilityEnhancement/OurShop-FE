@@ -7,7 +7,7 @@ export default function ShoppingCart() {
   ];
 
   return (
-    <div className="w-[1280px] mx-auto mt-5">
+    <div className="w-5/6 h-[calc(100vh-150px)] mx-auto mt-5 relative">
       <ul className="flex flex-col">
         {products.map(({name, count}, index) => {
           return (
@@ -34,6 +34,14 @@ export default function ShoppingCart() {
           );
         })}
       </ul>
+      <button type="button"
+              className="payBtn go-home w-1/6 px-3 py-3 h-12 absolute bottom-10 right-96 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
+        Pay by Token
+      </button>
+      <button type="button"
+              className="payBtn go-home w-1/6 px-3 py-3 h-12 absolute bottom-10 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
+        Pay by Money
+      </button>
     </div>
   );
 }
