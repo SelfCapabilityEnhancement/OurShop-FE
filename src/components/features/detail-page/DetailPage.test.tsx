@@ -32,9 +32,9 @@ describe('Detail Page', () => {
   });
   test('should show banner when click adding to shopping cart button',async ()=>{
     await userEvent.click(screen.getByText('add in shopping cart'));
-    expect(screen.getByText('The product was added into shopping cart successfully')).toBeInTheDocument();
+    expect(screen.getByText('The product was added into shopping cart successfully!')).toBeInTheDocument();
     setTimeout(() => {
-      expect(screen.queryByText('The product was added into shopping cart successfully')).not.toBeInTheDocument();
+      expect(screen.queryByText('The product was added into shopping cart successfully!')).not.toBeInTheDocument();
     }, 3000);
   });
 });
