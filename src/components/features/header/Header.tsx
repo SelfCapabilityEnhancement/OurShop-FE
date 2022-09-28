@@ -1,4 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import Profile from '../profile/Profile';
+
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export default function Header() {
           OurShop
         </span>
       </div>
-      <div className="flex items-center basis-1/2">
+      <div className="flex items-center basis-1/3">
         <div className="nav-list flex justify-around basis-3/4">
           <NavLink
             to="create-product"
@@ -47,13 +49,7 @@ export default function Header() {
             My Order
           </NavLink>
         </div>
-        <div className="basis-1/4 flex justify-end mr-10">
-          <img
-            src="src/assets/images/avatar.png"
-            alt=""
-            className="avatar h-12 w-12 rounded-full"
-          />
-        </div>
+        <Profile></Profile>
       </div>
     </div>
   );
