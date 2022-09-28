@@ -30,4 +30,11 @@ describe('Detail Page', () => {
     await userEvent.click(screen.getByAltText('small product picture 2'));
     expect(screen.queryByAltText('big product picture 2')).toBeInTheDocument();
   });
+  test('should show banner when click adding to shopping cart button',async ()=>{
+    await userEvent.click(screen.getByText('add in shopping cart'));
+    expect(screen.getByText('The product was added into shopping cart successfully')).toBeInTheDocument();
+    setTimeout(() => {
+      expect(screen.queryByText('The product was added into shopping cart successfully')).not.toBeInTheDocument();
+    }, 3000);
+  });
 });
