@@ -12,8 +12,8 @@ export default defineConfig({
         replacement: resolve(__dirname, 'src'),
       },
       {
-        find: 'assets',
-        replacement: resolve(__dirname, 'src/assets'),
+        find: 'images',
+        replacement: resolve(__dirname, 'src/assets/images'),
       },
     ],
   },

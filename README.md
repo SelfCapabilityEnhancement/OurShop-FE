@@ -1,9 +1,5 @@
 # vite-react-tailwindcss-app
 
-## to do
-
-- scan [typescript refactoring doc](https://code.visualstudio.com/docs/typescript/typescript-refactoring)
-
 ## vite + react + jest
 
 [learn more](https://egghead.io/lessons/jest-adding-jest-with-typescript-support-to-a-vite-application)
@@ -17,3 +13,7 @@
 - `@babel/preset-react @babel/preset-typescript @babel/preset-env` allow us to use ES6 Modules, typescript, JSX in our tests
 - `identity-obj-proxy` is helpful when rendering CSS modules so that we can see the original class names instead of obfuscated ones
 
+## issue for can't load images after deployment(two solutions)
+
+- put images to public directory
+- import image url
