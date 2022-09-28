@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
-
+import logoUrl from 'images/logo.png';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -10,19 +10,19 @@ export default function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center shadow-md">
-      <div className="flex items-center basis-1/2">
+    <div className="flex justify-between items-center shadow-md h-[71px]">
+      <div className="flex items-center basis-1/2 ml-8">
         <img
-          src="src/assets/images/logo.png"
+          src={logoUrl}
           alt=""
-          className="logo cursor-pointer"
+          className="logo cursor-pointer w-[64px] h-[55px]"
           onClick={handleClick}
         />
         <span className="cursor-pointer" onClick={handleClick}>
           OurShop
         </span>
       </div>
-      <div className="flex items-center basis-1/3">
+      <div className="flex items-center basis-1/2">
         <div className="nav-list flex justify-around basis-3/4">
           <NavLink
             to="create-product"

@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import avatarUrl from 'images/avatar.png';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -8,16 +9,10 @@ function classNames(...classes: string[]) {
 
 export default function Profile() {
   return (
-    <Menu as="div" className="relative ml-3">
-      <div>
-        <Menu.Button className="flex justify-end mr-10">
-          <img
-            className="avatar h-12 w-12 rounded-full"
-            src="src/assets/images/avatar.png"
-            alt=""
-          />
-        </Menu.Button>
-      </div>
+    <Menu as="div" className="relative basis-1/4 flex justify-end mr-8">
+      <Menu.Button>
+        <img className="avatar h-12 w-12 rounded-full" src={avatarUrl} alt="" />
+      </Menu.Button>
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -32,8 +27,11 @@ export default function Profile() {
             <Menu.Item>
               {({ active }) => (
                 <NavLink
-                  to='my-wallet'
-                  className={classNames(active ? 'bg-gray-100' : '', 'wallet block px-4 py-2 text-center text-base')}
+                  to="my-wallet"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'wallet block px-4 py-2 text-center text-base'
+                  )}
                 >
                   my wallet
                 </NavLink>
@@ -44,8 +42,11 @@ export default function Profile() {
             <Menu.Item>
               {({ active }) => (
                 <NavLink
-                  to='my-order'
-                  className={classNames(active ? 'bg-gray-100' : '', 'settings block px-4 py-2 text-center text-base')}
+                  to="my-order"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'settings block px-4 py-2 text-center text-base'
+                  )}
                 >
                   settings
                 </NavLink>

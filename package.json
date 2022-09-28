@@ -61,7 +61,9 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less)$": "identity-obj-proxy",
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "\\.(jpg|jpeg|png|gif|svg)$": "<rootDir>/mocks/fileMock.ts",
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "images/(.*)$": "<rootDir>/src/assets/images/$1"
     }
   }
 }

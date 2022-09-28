@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 describe('App test', () => {
-  describe('navigation event part', () => {
+  describe('should render Header component', () => {
     it('should navigate to corresponding page when click the create product menu item', async () => {
       render(<App />, { wrapper: BrowserRouter });
       const user = userEvent.setup();
