@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
-import Counter from "@/components/features/counter/Counter";
-import userEvent from "@testing-library/user-event";
+import Counter from '@/components/common/counter/Counter';
+import userEvent from '@testing-library/user-event';
 
 describe('Detail Page', () => {
   beforeEach(() => {

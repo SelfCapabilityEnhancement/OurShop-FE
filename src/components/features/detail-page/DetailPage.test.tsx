@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('Detail Page', () => {
   beforeEach(() => {
