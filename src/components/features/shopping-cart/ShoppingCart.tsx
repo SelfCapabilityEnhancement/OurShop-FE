@@ -1,17 +1,31 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { Product } from '@/components/common/CustomeTypes';
 import { getProducts } from '@/assets/mockData';
+import Counter from '@/components/common/counter/Counter';
 
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
-  const products: Array<Product> = getProducts();
+  const [products, setProducts] = useState(getProducts());
   const [checkedState, setCheckedState] = useState(
       new Array(products.length).fill(false)
   );
 
-  const handleOnChange = (position: number) => {
+  const handlePlus = (index: number) => {
+    const tmp = [...products];
+    tmp[index].count += 1;
+    setProducts(tmp);
+  };
+
+  const handleMinus = (index: number) => {
+    if (products[index].count > 1) {
+      const tmp = [...products];
+      tmp[index].count -= 1;
+      setProducts(tmp);
+    }
+  };
+
+  const handleOnCheck = (position: number) => {
     const updatedCheckedState = checkedState.map((item, index) =>
         index === position ? !item : item
     );
@@ -33,7 +47,7 @@ export default function ShoppingCart() {
               <ul className="flex flex-col">
                 {products.map(({name, count}, index) => {
                   return (
-                      <li key={`product-${index}`} className="product border-gray-400 my-5 h-20">
+                      <li key={`product-${index}`} className="product border-gray-400 my-3 h-20">
                         <div
                             className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
                           <div className="w-20 h-16 flex-initial mx-5">
@@ -45,15 +59,16 @@ export default function ShoppingCart() {
                                  className="font-medium flex-auto mx-5">
                             {name}
                           </label>
-                          <div className="font-medium flex-auto">
-                            Number {count}
+                          <div className="font-medium flex-auto flex flex-row items-center text-2xl">
+                            <span className="mr-5">Number</span>
+                            <Counter count={count} handlePlus={() => handlePlus(index)} handleMinus={() => handleMinus(index)} />
                           </div>
                           <input id={`product-checkbox-${index}`}
                                  type="checkbox"
                                  value=""
                                  className="w-6 h-6 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
                                  checked={checkedState[index]}
-                                 onChange={() => handleOnChange(index)}/>
+                                 onChange={() => handleOnCheck(index)}/>
                         </div>
                       </li>
                   );
