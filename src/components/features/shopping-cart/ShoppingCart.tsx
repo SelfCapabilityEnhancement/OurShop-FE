@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 export interface Product {
   name: string
@@ -29,7 +29,7 @@ export default function ShoppingCart({products = tempProducts}: { products: Arra
   };
 
   const handleOnClickPayBtn = () => {
-    var result = products.filter((item, index) => checkedState[index]);
+    const result = products.filter((_item, index) => checkedState[index]);
     navigate('/purchase-confirmation', {state: result});
   };
 
