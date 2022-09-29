@@ -38,4 +38,7 @@ describe('purchase confirmation', () => {
 
     expect(screen.findByTestId('shopping-cart')).toBeTruthy();
   });
+  it('should calculate the cost of tokens',()=>{
+    expect(screen.getByText(/19/i)).toBeInTheDocument();
+  });
 });
