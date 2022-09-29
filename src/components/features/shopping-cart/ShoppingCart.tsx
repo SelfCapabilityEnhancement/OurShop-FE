@@ -1,17 +1,8 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import { Product } from '@/components/common/CustomeTypes';
+import { tempProducts } from '@/assets/mockData';
 
-export interface Product {
-  name: string
-  token: number
-  count: number
-}
-
-const tempProducts: Array<Product> = [
-  {name: 'Product1', token: 5, count: 2},
-  {name: 'Product2', token: 3, count: 1},
-  {name: 'Product3', token: 2, count: 3},
-];
 
 export default function ShoppingCart({products = tempProducts}: { products: Array<Product> }) {
   const navigate = useNavigate();
@@ -25,7 +16,6 @@ export default function ShoppingCart({products = tempProducts}: { products: Arra
     );
 
     setCheckedState(updatedCheckedState);
-
   };
 
   const handleOnClickPayBtn = () => {
@@ -34,7 +24,7 @@ export default function ShoppingCart({products = tempProducts}: { products: Arra
   };
 
   return (
-      <div className="w-5/6 h-[calc(100vh-150px)] mx-auto mt-5 relative">
+      <div data-testid="shopping-cart" className="w-5/6 h-[calc(100vh-150px)] mx-auto mt-5 relative">
         {products.length === 0 ?
             <div className="empty-msg text-center text-3xl font-semibold mt-10">
               nothing in the shopping cart

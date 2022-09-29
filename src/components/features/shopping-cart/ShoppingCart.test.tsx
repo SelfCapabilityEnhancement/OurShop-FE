@@ -1,8 +1,9 @@
 import {Container} from 'react-dom';
 import {render, screen} from '@testing-library/react';
-import ShoppingCart, {Product} from '@/components/features/shopping-cart/ShoppingCart';
+import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
+import { Product } from '@/components/common/CustomeTypes';
 import {BrowserRouter} from 'react-router-dom';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('display shopping cart page given nonempty products', () => {
   let container: Container;
