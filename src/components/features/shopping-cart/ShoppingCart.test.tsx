@@ -1,15 +1,17 @@
 import {Container} from 'react-dom';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import ShoppingCart, {Product} from '@/components/features/shopping-cart/ShoppingCart';
 import {BrowserRouter} from 'react-router-dom';
+import userEvent from "@testing-library/user-event";
 
 describe('display shopping cart page given nonempty products', () => {
   let container: Container;
-  const tempProducts:Array<Product> = [
+  const tempProducts: Array<Product> = [
     {name: 'Product1', token: 5, count: 1},
     {name: 'Product2', token: 3, count: 2},
     {name: 'Product3', token: 2, count: 3},
   ];
+  const user = userEvent.setup();
 
   beforeEach(() => {
     container = render(<ShoppingCart products={tempProducts}/>, {wrapper: BrowserRouter}).container;
@@ -23,6 +25,11 @@ describe('display shopping cart page given nonempty products', () => {
     const payBtn = container.querySelectorAll('.payBtn');
 
     expect(payBtn.length).toBe(2);
+  });
+  it('should navigate to purchase-confirmation page', async () => {
+    const element = container.querySelector('.token');
+    await user.click(element as Element);
+    expect(screen.findByText('Purchase Confirmation')).toBeTruthy();
   });
 });
 
