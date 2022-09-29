@@ -39,6 +39,7 @@ export default function Header() {
             focus:text-rose-500 focus:border-rose-500"
           >
             Shopping Cart
+            <span data-testid="redDot" className="inline-block w-3 h-3 mr-2 bg-red-600 rounded-full mb-1 ml-1"></span>
           </NavLink>
           <NavLink
             to="my-order"

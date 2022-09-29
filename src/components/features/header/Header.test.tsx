@@ -30,10 +30,15 @@ describe('Header test', () => {
 
       expect(avatar).toBeTruthy();
     });
+
+    it('should show red dot after shopping cart when cart is not empty',()=>{
+      expect(screen.getByTestId('redDot')).toBeInTheDocument();
+    });
   });
 
   describe('navigation event part', () => {
     it('should navigate to homepage when click the logo', async () => {});
     it('should navigate to the create product page when click the create product menu item', async () => {});
   });
+
 });
