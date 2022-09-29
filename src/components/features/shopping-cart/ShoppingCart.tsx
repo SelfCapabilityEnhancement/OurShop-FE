@@ -1,11 +1,12 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Product } from '@/components/common/CustomeTypes';
-import { tempProducts } from '@/assets/mockData';
+import { getProducts } from '@/assets/mockData';
 
 
-export default function ShoppingCart({products = tempProducts}: { products: Array<Product> }) {
+export default function ShoppingCart() {
   const navigate = useNavigate();
+  const products: Array<Product> = getProducts();
   const [checkedState, setCheckedState] = useState(
       new Array(products.length).fill(false)
   );
@@ -19,8 +20,8 @@ export default function ShoppingCart({products = tempProducts}: { products: Arra
   };
 
   const handleOnClickPayBtn = () => {
-    const result = products.filter((_item, index) => checkedState[index]);
-    navigate('/purchase-confirmation', {state: result});
+    const selectedProducts = products.filter((_item, index) => checkedState[index]);
+    navigate('/purchase-confirmation', {state: { products: selectedProducts }});
   };
 
   return (

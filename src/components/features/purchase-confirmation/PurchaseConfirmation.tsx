@@ -3,7 +3,7 @@ import {Product} from '@/components/common/CustomeTypes';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
-  const {state}: { state: Array<Product> } = useLocation();
+  const {state: {products}}: { state: {products: Array<Product> } } = useLocation();
 
   const handleClickCancel = () => {
     navigate('/shopping-cart');
@@ -13,7 +13,7 @@ export default function PurchaseConfirmation() {
   };
   const calCostOfToken = () => {
     let cost = 0;
-    state.forEach((element) => {
+    products.forEach((element) => {
       cost += element.count * element.token;
     });
     return cost;
@@ -26,7 +26,7 @@ export default function PurchaseConfirmation() {
 
         <ul className="flex-1 flex flex-col">
           {
-            state.map(({name, token, count}, index) => (
+            products.map(({name, token, count}, index) => (
                 <li key={`product-${index}`} className="product border-gray-400 my-7 h-10">
                   <div className="flex flex-1 flex-row items-center items-center p-4">
                     <div className="justify-center items-center mr-4">
