@@ -8,28 +8,80 @@ const orders = [
     id: 1,
     productId: 1,
     productName: 'Product Name 1',
-    purchaseDate: '11.10.2022',
-    purchaseNumber: '1',
+    purchaseDate: new Date('2022-01-01'),
+    purchaseNumber: 1,
   },
   {
     id: 2,
     productId: 1,
     productName: 'Product Name 1',
-    purchaseDate: '11.10.2022',
-    purchaseNumber: '1',
+    purchaseDate: new Date('2022-01-01'),
+    purchaseNumber: 2,
   },
   {
     id: 3,
     productId: 2,
-    productName: 'Product Name2',
-    purchaseDate: '11.12.2022',
-    purchaseNumber: '2',
+    productName: 'Product Name 2',
+    purchaseDate: new Date('2022-01-01'),
+    purchaseNumber: 1,
+  },
+  {
+    id: 4,
+    productId: 2,
+    productName: 'Product Name 2',
+    purchaseDate: new Date('2022-01-01'),
+    purchaseNumber: 2,
+  },
+  {
+    id: 5,
+    productId: 2,
+    productName: 'Product Name 2',
+    purchaseDate: new Date('2022-01-01'),
+    purchaseNumber: 3,
   },
 ];
 
 export default function OrderManagement() {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const [ordersList, setOrdersList] = useState(getAdminOrdersList(orders));
+
+  function getAdminOrdersList(
+    orders: Array<{
+      id: number;
+      productId: number;
+      productName: string;
+      purchaseDate: Date;
+      purchaseNumber: number;
+    }>
+  ): Array<{ productId: number; productName: String; purchaseNumber: number }> {
+    var adminOrdersList: any[] = [];
+
+    for (var i: number = 0; i < orders.length; i++) {
+      var productIds: number[] = [];
+      adminOrdersList.map(({ productId }) => productIds.push(productId));
+      if (productIds.includes(orders[i].productId)) {
+        adminOrdersList = adminOrdersList.map((orderAdmin) =>
+          orderAdmin.productId === orders[i].productId
+            ? {
+                ...orderAdmin,
+                purchaseNumber:
+                  orderAdmin.purchaseNumber + orders[i].purchaseNumber,
+              }
+            : orderAdmin
+        );
+      } else {
+        adminOrdersList.push({
+          productId: orders[i].productId,
+          productName: orders[i].productName,
+          purchaseNumber: orders[i].purchaseNumber,
+        });
+      }
+    }
+    return adminOrdersList;
+  }
+
+  let ordersAdmin;
   return (
     <div className="mt-10 ml-10">
       <div className="date-range-selection w-11/12 absolute">
@@ -75,9 +127,9 @@ export default function OrderManagement() {
       </div>
       <div className="order-list w-11/12 mx-auto absolute top-[200px]">
         <ul className="flex flex-col">
-          {orders.map((item) => (
+          {ordersList.map((item) => (
             <li
-              key={item.id}
+              key={item.productId}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
               <OrderItemAdmin order={item} />
