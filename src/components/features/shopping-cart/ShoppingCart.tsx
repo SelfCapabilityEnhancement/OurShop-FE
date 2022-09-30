@@ -76,11 +76,11 @@ export default function ShoppingCart() {
               </ul>
               <button type="button"
                       onClick={handleOnClickPayBtn}
-                      className="payBtn token go-home w-1/6 px-3 py-3 h-12 absolute bottom-10 right-72 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
+                      className="payBtn token go-home w-1/6 p-3 h-12 absolute bottom-10 right-72 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
                 Pay by Token
               </button>
               <button type="button"
-                      className="payBtn money go-home w-1/6 px-3 py-3 h-12 absolute bottom-10 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
+                      className="payBtn money go-home w-1/6 p-3 h-12 absolute bottom-10 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
                 Pay by Money
               </button>
             </div>)}

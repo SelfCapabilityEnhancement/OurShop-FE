@@ -29,21 +29,18 @@ export default function PurchaseConfirmation() {
       <div
           className="flex flex-col content-center shadow-lg min-w-[640px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
         <div
-            className={`purchase-confirmation-banner ${showBanner ? 'block' : 'hidden'} flex z-10 fixed p-4 top-16 left-[calc(50vw-175px)] w-[350px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
+            className={`purchase-confirmation-banner ${showBanner ? 'block' : 'hidden'} flex z-10 fixed p-4 top-40 left-[calc(50vw-175px)] w-[350px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
             role="alert"
         >
-          <svg
-              aria-hidden="true"
-              className="flex-shrink-0 inline w-5 h-5 mr-3"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-            ></path>
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               strokeWidth="1.5"
+               stroke="currentColor"
+               className="flex-shrink-0 inline w-5 h-5 mr-3">
+            <path strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div>
           <span className="font-medium">
@@ -88,12 +85,12 @@ export default function PurchaseConfirmation() {
         <div className="mt-auto mb-5 flex justify-around">
           <button type="button"
                   onClick={handleClickCancel}
-                  className="button cancel w-1/4 px-3 py-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 ">
+                  className="button cancel w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 ">
             Cancel
           </button>
           <button type="button"
                   onClick={handleClickBuy}
-                  className="button buy w-1/4 px-3 py-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
+                  className="button buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 ">
             Buy
           </button>
         </div>
