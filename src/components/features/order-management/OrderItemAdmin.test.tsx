@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import OrderItemAdmin from "@/components/features/order-management/OrderItemAdmin";
+import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 
 describe('OrderItemAdmin', () => {
   const mockOrderItemAdmin = [
@@ -13,15 +13,15 @@ describe('OrderItemAdmin', () => {
   beforeEach(() => {
     render(<OrderItemAdmin order={mockOrderItemAdmin[0]} />);
   });
-  test('should render picture, product name and number', async () => {
+  test('should render picture, product name and number', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
 
     expect(screen.getByTestId('product-name').textContent).toBe(
-        mockOrderItemAdmin[0].productName
+      mockOrderItemAdmin[0].productName
     );
     expect(screen.getByTestId('number-title').textContent).toBe('number: ');
     expect(screen.getByTestId('total-order-number').textContent).toBe(
-        mockOrderItemAdmin[0].purchaseNumber
+      mockOrderItemAdmin[0].purchaseNumber
     );
   });
 });
