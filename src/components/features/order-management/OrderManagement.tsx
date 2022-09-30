@@ -8,35 +8,35 @@ const orders = [
     id: 1,
     productId: 1,
     productName: 'Product Name 1',
-    purchaseDate: new Date('2022-01-01'),
+    purchaseDate: new Date('2022-09-01'),
     purchaseNumber: 1,
   },
   {
     id: 2,
     productId: 1,
     productName: 'Product Name 1',
-    purchaseDate: new Date('2022-01-01'),
+    purchaseDate: new Date('2022-09-02'),
     purchaseNumber: 2,
   },
   {
     id: 3,
     productId: 2,
     productName: 'Product Name 2',
-    purchaseDate: new Date('2022-01-01'),
+    purchaseDate: new Date('2022-09-01'),
     purchaseNumber: 1,
   },
   {
     id: 4,
     productId: 2,
     productName: 'Product Name 2',
-    purchaseDate: new Date('2022-01-01'),
+    purchaseDate: new Date('2022-09-02'),
     purchaseNumber: 2,
   },
   {
     id: 5,
     productId: 2,
     productName: 'Product Name 2',
-    purchaseDate: new Date('2022-01-01'),
+    purchaseDate: new Date('2022-09-03'),
     purchaseNumber: 3,
   },
 ];
@@ -55,10 +55,10 @@ export default function OrderManagement() {
       purchaseNumber: number;
     }>
   ): Array<{ productId: number; productName: String; purchaseNumber: number }> {
-    var adminOrdersList: any[] = [];
+    let adminOrdersList: any[] = [];
 
-    for (var i: number = 0; i < orders.length; i++) {
-      var productIds: number[] = [];
+    for (let i: number = 0; i < orders.length; i++) {
+      const productIds: number[] = [];
       adminOrdersList.map(({ productId }) => productIds.push(productId));
       if (productIds.includes(orders[i].productId)) {
         adminOrdersList = adminOrdersList.map((orderAdmin) =>
@@ -81,20 +81,43 @@ export default function OrderManagement() {
     return adminOrdersList;
   }
 
-  let ordersAdmin;
+  function dateRangeFilterHandler() {
+    if (startDate && endDate && startDate <= endDate) {
+      const filteredOrders = orders.filter((order: any) => {
+        return (
+          order.purchaseDate.getDate() >= startDate.getDate() &&
+          order.purchaseDate.getDate() <= endDate.getDate()
+        );
+      });
+      setOrdersList(getAdminOrdersList(filteredOrders));
+    } else if (startDate && !endDate) {
+      const filteredOrders = orders.filter((order: any) => {
+        return order.purchaseDate.getDate() >= startDate.getDate();
+      });
+      setOrdersList(getAdminOrdersList(filteredOrders));
+    } else if (!startDate && endDate) {
+      const filteredOrders = orders.filter((order: any) => {
+        return order.purchaseDate.getDate() <= endDate.getDate();
+      });
+      setOrdersList(getAdminOrdersList(filteredOrders));
+    } else if (startDate && endDate && startDate > endDate) {
+      setOrdersList([]);
+    }
+  }
+
   return (
     <div className="mt-10 ml-10">
       <div className="date-range-selection w-11/12 absolute">
         <div className="start-end-date-picker flex absolute top-1">
           <span className="mr-[10px] py-2">From</span>
           <ReactDatePicker
-            className="bg-slate-100 rounded-lg w-[100px] py-2 text-center"
+            className="start-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
             selected={startDate}
             onChange={(date: Date) => setStartDate(date)}
           />
           <span className="mx-[10px] py-2">To</span>
           <ReactDatePicker
-            className="bg-slate-100 rounded-lg w-[100px] py-2 text-center"
+            className="end-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
             selected={endDate}
             onChange={(date: Date) => setEndDate(date)}
           />
@@ -103,6 +126,7 @@ export default function OrderManagement() {
           <button
             type="button"
             className="apply-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[80px] mr-[20px]"
+            onClick={dateRangeFilterHandler}
           >
             Apply
           </button>
