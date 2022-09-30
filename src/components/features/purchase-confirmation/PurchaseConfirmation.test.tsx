@@ -41,4 +41,11 @@ describe('purchase confirmation', () => {
   it('should calculate the cost of tokens',()=>{
     expect(screen.getByText(/19/i)).toBeInTheDocument();
   });
+
+  it('should show banner when click buy by token btn',async ()=>{
+    const element = container.querySelector('.buy.button');
+    await user.click(element as Element);
+    expect(screen.findByText('The purchase made successfully!')).toBeTruthy();
+    expect(screen.findByTestId('shopping-cart')).toBeTruthy();
+  });
 });
