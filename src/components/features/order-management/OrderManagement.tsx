@@ -105,6 +105,12 @@ export default function OrderManagement() {
     }
   }
 
+  function resetHandler() {
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setOrdersList(getAdminOrdersList(orders));
+  }
+
   return (
     <div className="mt-10 ml-10">
       <div className="date-range-selection w-11/12 absolute">
@@ -133,6 +139,7 @@ export default function OrderManagement() {
           <button
             type="button"
             className="reset-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-slate-100 hover:bg-slate-200 focus:ring-slate-300 focus:ring-offset-slate-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[50px]"
+            onClick={resetHandler}
           >
             <svg
               className="h-8 w-8 text-slate-500"

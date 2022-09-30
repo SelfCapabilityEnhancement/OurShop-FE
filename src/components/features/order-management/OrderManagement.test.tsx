@@ -1,4 +1,4 @@
-import { getByRole, render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -131,5 +131,26 @@ describe('display my order', () => {
     await user.click(applyButton as Element);
 
     expect(container.querySelectorAll('.order-item-admin').length).toBe(0);
+  });
+
+  test('should clear date range input and show all orders when click reset button', async () =>{
+    const startDateInput = container.querySelector(' .start-date');
+    const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply-button');
+    const resetButton = container.querySelector('.reset-button');
+
+    await user.type(startDateInput as Element, '09/03/2022');
+    await user.type(endDateInput as Element, '09/03/2022');
+    await user.click(applyButton as Element);
+    await user.click(resetButton as Element);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
+    expect(
+        container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('Product Name 1number: 3');
+    expect(
+        container.querySelectorAll('.order-item-admin').item(1).textContent
+    ).toBe('Product Name 2number: 6');
+    expect(screen.getAllByRole('textbox')[0].textContent).toBe('');
+    expect(screen.getAllByRole('textbox')[1].textContent).toBe('');
   });
 });
