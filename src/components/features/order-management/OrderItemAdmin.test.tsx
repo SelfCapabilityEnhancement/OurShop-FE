@@ -20,7 +20,7 @@ describe('OrderItemAdmin', () => {
         mockOrderItemAdmin[0].productName
     );
     expect(screen.getByTestId('number-title').textContent).toBe('number: ');
-    expect(screen.getByTestId('purchase-number').textContent).toBe(
+    expect(screen.getByTestId('total-order-number').textContent).toBe(
         mockOrderItemAdmin[0].purchaseNumber
     );
   });
