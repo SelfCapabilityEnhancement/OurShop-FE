@@ -7,7 +7,7 @@ export default function OrderItemAdmin(props: { order: any }) {
       <div className="w-20 h-16 flex-initial mx-5">
         <img
           alt="profile"
-          src={`src/assets/images/product/product${order.productId}.png`}
+          src={`public/assets/images/product/product${order.productId}.png`}
           className="mx-auto object-cover rounded-lg"
           data-testid="product-picture"
         />
