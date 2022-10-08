@@ -18,7 +18,7 @@ describe('display address info', () => {
     expect(screen.getByText('My Address')).toBeInTheDocument();
     expect(screen.getByText('My Office')).toBeInTheDocument();
     expect(screen.getByText('My Shipping address')).toBeInTheDocument();
-    expect(screen.getByText('wuhan')).toBeInTheDocument();
+    expect(screen.getByText('Wuhan')).toBeInTheDocument();
     expect(screen.getByText('Good to Go')).toBeInTheDocument();
   });
 
