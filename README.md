@@ -1,4 +1,9 @@
-# vite-react-tailwindcss-app
+# Ourshop structure
+
+- vite
+- react
+- tailwindcss
+- jest
 
 ## vite + react + jest
 
