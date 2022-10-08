@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 describe('Detail Page', () => {
   beforeEach(() => {
@@ -36,5 +36,20 @@ describe('Detail Page', () => {
     setTimeout(() => {
       expect(screen.queryByText('The product was added into shopping cart successfully!')).not.toBeInTheDocument();
     }, 3000);
+  });
+
+  test('should add one when click svg-plus',async ()=>{
+    await userEvent.click(screen.getByTestId('svg-plus'));
+    expect(screen.getByTestId('num').textContent).toBe('2');
+  });
+  test('svg-minus should be disabled when num of products is 1',async ()=>{
+    await userEvent.click(screen.getByTestId('svg-minus'));
+    expect(screen.getByTestId('num').textContent).toBe('1');
+  });
+  test('should minus one when click svg-minus',async()=>{
+    await userEvent.click(screen.getByTestId('svg-plus'));
+    expect(screen.getByTestId('num').textContent).toBe('2');
+    await userEvent.click(screen.getByTestId('svg-minus'));
+    expect(screen.getByTestId('num').textContent).toBe('1');
   });
 });

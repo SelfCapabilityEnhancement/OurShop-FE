@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Counter from '@/components/features/counter/Counter';
+import { useState } from 'react';
+import Counter from '@/components/common/counter/Counter';
 
 export default function DetailPage() {
   const srcArray = [
@@ -27,10 +27,21 @@ export default function DetailPage() {
 
   const [bigImg, setBigImg] = useState(srcArray[0]);
   const [showBanner, SetShowBanner] = useState(false);
+  const [count, setCount] = useState(1);
+
+  const handleMinus = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const handlePlus = () => {
+    setCount(count + 1);
+  };
 
   function handleAddToCart() {
     SetShowBanner(true);
-    setTimeout(()=>{SetShowBanner(false)}, 1500);
+    setTimeout(()=>{SetShowBanner(false);}, 1500);
   }
 
   return (
@@ -94,8 +105,9 @@ export default function DetailPage() {
           <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
             xxx
           </p>
-          <div className="PurchaseNumber absolute bottom-12 ml-2">
-            <Counter />
+          <div data-testid="counter" className="PurchaseNumber flex gap-48 absolute bottom-12 mt-4 ml-2">
+            <span className="my-auto mb-2 text-2xl">No. of purchase</span>
+            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus} />
           </div>
           <div className="flex gap-[25px] absolute bottom-0">
             <button
