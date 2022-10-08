@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 const baseCites = [
   { id: 1, name: 'Wuhan' },
@@ -9,12 +9,34 @@ const baseCites = [
   { id: 4, name: 'Chengdu' },
 ];
 
+function TextSubmission(props: { value: string, handleEdit: Function }) {
+  return (
+    <div className='flex justify-center'>
+        <textarea
+          className='address-input appearance-none border border-gray-300 w-11/12 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'
+          placeholder='Enter your shipping address'
+          name='shippingAddress'
+          value={props.value}
+          onChange={(event) => props.handleEdit(event)}
+          rows={5}
+          cols={30}
+        ></textarea>
+    </div>
+  );
+}
+
 export default function MyAddress() {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/home');
   };
   const [selectedCity, setSelectedCity] = useState(baseCites[0]);
+  const [shippingAddress, setShippingAddress] = useState('text text here');
+  const [Visiable, setVisiable] = useState(false);
+
+  const handleEdit = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setShippingAddress(event.target.value);
+  };
 
   return (
     <div className='relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 p-4'>
@@ -79,27 +101,22 @@ export default function MyAddress() {
       </div>
       <div className='flex items-center justify-between m-8'>
         <p className='text-2xl font-semibold'>My Shipping address</p>
-        <p className='text-2xl font-semibold text-indigo-400'>edit</p>
+        <p className='text-2xl font-semibold text-indigo-400' onClick={() => setVisiable((prevState) => !prevState)}>edit</p>
       </div>
-
-      <div className='flex justify-center'>
-        <textarea
-          className='address-input appearance-none border border-gray-300 w-11/12 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'
-          id='comment'
-          placeholder='Enter your comment'
-          name='comment'
-          value={'text text here'}
-          rows={5}
-          cols={30}
-        ></textarea>
-      </div>
-      <button
-        type='button'
-        onClick={handleClick}
-        className='go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 '
-      >
-        Good to Go
-      </button>
+      {Visiable ? (
+        <TextSubmission value={shippingAddress} handleEdit={handleEdit} />
+      ) : (
+        <div>
+          <p className='m-8 text-2xl font-light'>{shippingAddress}</p>
+          <button
+            type='button'
+            onClick={handleClick}
+            className='go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 '
+          >
+            Good to Go
+          </button>
+        </div>
+      )}
     </div>
   );
 }
