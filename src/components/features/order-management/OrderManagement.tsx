@@ -82,26 +82,23 @@ export default function OrderManagement() {
   }
 
   function dateRangeFilterHandler() {
-    if (startDate && endDate && startDate <= endDate) {
+    startDate?.setHours(0,0,0);
+    endDate?.setHours(23,59,59);
+    if (startDate && endDate) {
       const filteredOrders = orders.filter((order: any) => {
-        return (
-          order.purchaseDate.getDate() >= startDate.getDate() &&
-          order.purchaseDate.getDate() <= endDate.getDate()
-        );
+        return order.purchaseDate >= startDate && order.purchaseDate <= endDate;
       });
       setOrdersList(getAdminOrdersList(filteredOrders));
     } else if (startDate && !endDate) {
       const filteredOrders = orders.filter((order: any) => {
-        return order.purchaseDate.getDate() >= startDate.getDate();
+        return order.purchaseDate >= startDate;
       });
       setOrdersList(getAdminOrdersList(filteredOrders));
     } else if (!startDate && endDate) {
       const filteredOrders = orders.filter((order: any) => {
-        return order.purchaseDate.getDate() <= endDate.getDate();
+        return order.purchaseDate <= endDate;
       });
       setOrdersList(getAdminOrdersList(filteredOrders));
-    } else if (startDate && endDate && startDate > endDate) {
-      setOrdersList([]);
     }
   }
 
