@@ -1,6 +1,8 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Product} from '@/components/common/CustomeTypes';
 import {useState} from 'react';
+import productImage from 'images/product/product1.png';
+
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
@@ -57,7 +59,7 @@ export default function PurchaseConfirmation() {
                   <div className="flex flex-1 flex-row items-center items-center p-4">
                     <div className="justify-center items-center mr-4">
                       <img alt="product"
-                           src="src/assets/images/product/product1.png"
+                           src={productImage}
                            className="mx-auto object-cover rounded-lg h-20 w-24"/>
                     </div>
                     <div className="flex-1 text-gray-600 text-2xl font-medium">
