@@ -8,6 +8,7 @@ import HomePage from '../components/features/home-page/HomePage';
 import MyWallet from '../components/features/my-wallet/MyWallet';
 import PurchaseConfirmation from '@/components/features/purchase-confirmation/PurchaseConfirmation';
 import DetailPage from '@/components/features/detail-page/DetailPage';
+import OrderManagement from "@/components/features/order-management/OrderManagement";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: 'detail',
         element: <DetailPage />,
+      },
+      {
+        path: 'order-management',
+        element: <OrderManagement />,
       },
     ],
   },
