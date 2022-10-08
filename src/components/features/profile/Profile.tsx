@@ -42,6 +42,21 @@ export default function Profile() {
             <Menu.Item>
               {({ active }) => (
                 <NavLink
+                  to="my-address"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'address block px-4 py-2 text-center text-base'
+                  )}
+                >
+                  my address
+                </NavLink>
+              )}
+            </Menu.Item>
+          </div>
+          <div className="px-1 py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <NavLink
                   to="my-order"
                   className={classNames(
                     active ? 'bg-gray-100' : '',
