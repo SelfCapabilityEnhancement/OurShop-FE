@@ -22,6 +22,38 @@ describe('display address info', () => {
     expect(screen.getByText('Good to Go')).toBeInTheDocument();
   });
 
+  it('should display new shipping address after edit and save', async () => {
+    const edit = container.querySelector('.edit-btn');
+    const save = container.querySelector('.save-btn');
+    const addressInput = container.querySelector('.address-input');
+    const newAddress = 'another text here';
+
+    expect(screen.getByText('text text here')).toBeInTheDocument();
+    expect(save).toBeTruthy();
+
+    await user.click(edit as Element);
+    await user.type(addressInput as Element, newAddress);
+    await user.click(save as Element);
+
+    expect(screen.queryByText(newAddress)).toBeInTheDocument();
+  });
+
+  it('should display new shipping address after edit and cancel', async () => {
+    const edit = container.querySelector('.edit-btn');
+    const cancel = container.querySelector('.cancel-btn');
+    const addressInput = container.querySelector('.address-input');
+    const address = 'text text here';
+
+    expect(screen.getByText('text text here')).toBeInTheDocument();
+    expect(cancel).toBeTruthy();
+
+    await user.click(edit as Element);
+    await user.type(addressInput as Element, 'newAddress');
+    await user.click(cancel as Element);
+
+    expect(screen.queryByText(address)).toBeInTheDocument();
+  });
+
   it('should navigate to home when click good to go', async () => {
     const button = container.querySelector('.go-home');
 
