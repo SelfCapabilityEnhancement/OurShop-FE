@@ -116,12 +116,14 @@ export default function OrderManagement() {
           <ReactDatePicker
             className="start-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
             selected={startDate}
+            placeholderText="time"
             onChange={(date: Date) => setStartDate(date)}
           />
           <span className="mx-[10px] py-2">To</span>
           <ReactDatePicker
             className="end-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
             selected={endDate}
+            placeholderText="time"
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
