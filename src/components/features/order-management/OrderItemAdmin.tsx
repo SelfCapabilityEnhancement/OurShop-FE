@@ -1,4 +1,5 @@
 import React from 'react';
+import product1 from 'images/product/product1.png';
 
 export default function OrderItemAdmin(props: { order: any }) {
   const order = props.order;
@@ -7,7 +8,7 @@ export default function OrderItemAdmin(props: { order: any }) {
       <div className="w-20 h-16 flex-initial mx-5">
         <img
           alt="profile"
-          src={`public/assets/images/product/product${order.productId}.png`}
+          src={product1}
           className="mx-auto object-cover rounded-lg"
           data-testid="product-picture"
         />
