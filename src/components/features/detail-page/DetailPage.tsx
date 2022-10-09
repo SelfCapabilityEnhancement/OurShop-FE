@@ -85,6 +85,9 @@ export default function DetailPage() {
     }
   }
 
+  function handleRadioOnChange(){
+
+  }
   return (
     <div className="mx-auto mt-10 relative">
       <div
@@ -173,7 +176,7 @@ export default function DetailPage() {
           <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
             xxx
           </p>
-          <div className="PurchaseNumber flex bottom-12 ml-2">
+          <div data-testid="counter" className="PurchaseNumber flex bottom-12 ml-2">
             <span className="my-auto mr-48 mb-2 text-2xl">No. of purchase</span>
             <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus}/>
           </div>
@@ -187,6 +190,7 @@ export default function DetailPage() {
                 className="firstLogisticMethod w-5 h-5 mt-1 accent-purple-500"
                 checked={firstLogisticMethodChecked}
                 onClick={handleFirstLogisticMethodClick}
+                onChange={handleRadioOnChange}
               />
               <span>collecting at office</span>
             </div>
@@ -195,6 +199,7 @@ export default function DetailPage() {
                 type="radio"
                 checked={secondLogisticMethodChecked}
                 onClick={handleSecondLogisticMethodClick}
+                onChange={handleRadioOnChange}
                 className="secondLogisticMethod w-5 h-5 mt-1 accent-purple-500"
               />
               <span>shipping to an address</span>
