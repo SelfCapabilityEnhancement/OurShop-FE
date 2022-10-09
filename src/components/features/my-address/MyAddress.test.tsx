@@ -24,30 +24,36 @@ describe('display address info', () => {
 
   it('should display new shipping address after edit and save', async () => {
     const edit = container.querySelector('.edit-btn');
-    const save = container.querySelector('.save-btn');
-    const addressInput = container.querySelector('.address-input');
     const newAddress = 'another text here';
 
     expect(screen.getByText('text text here')).toBeInTheDocument();
-    expect(save).toBeTruthy();
 
     await user.click(edit as Element);
+    const save = container.querySelector('.save.button');
+    const addressInput = container.querySelector('.address-input');
+    expect(edit).toBeTruthy();
+    expect(save).toBeTruthy();
+    expect(addressInput).toBeTruthy();
+
     await user.type(addressInput as Element, newAddress);
     await user.click(save as Element);
 
-    expect(screen.queryByText(newAddress)).toBeInTheDocument();
+    expect(screen.getByText('text text here' + newAddress)).toBeInTheDocument();
   });
 
   it('should display new shipping address after edit and cancel', async () => {
     const edit = container.querySelector('.edit-btn');
-    const cancel = container.querySelector('.cancel-btn');
-    const addressInput = container.querySelector('.address-input');
     const address = 'text text here';
 
-    expect(screen.getByText('text text here')).toBeInTheDocument();
-    expect(cancel).toBeTruthy();
-
+    expect(screen.getByText(address)).toBeInTheDocument();
     await user.click(edit as Element);
+
+    const cancel = container.querySelector('.cancel.button');
+    const addressInput = container.querySelector('.address-input');
+    expect(edit).toBeTruthy();
+    expect(cancel).toBeTruthy();
+    expect(addressInput).toBeTruthy();
+
     await user.type(addressInput as Element, 'newAddress');
     await user.click(cancel as Element);
 
