@@ -38,6 +38,20 @@ describe('Detail Page', () => {
     }, 3000);
   });
 
+  test('should show title of logistic method',()=>{
+    expect(screen.getByText('Logistic method')).toBeInTheDocument();
+    expect(screen.getByText('collecting at office')).toBeInTheDocument();
+    expect(screen.getByText('shipping to an address')).toBeInTheDocument();
+    expect(screen.getAllByRole('radio').length).toBe(2);
+  });
+
+  test('should show error prompt when not click any logistic method',async ()=>{
+    await userEvent.click(screen.getByText('add in shopping cart'));
+    expect(screen.getByText('Please choose one logistic method!')).toBeInTheDocument();
+    setTimeout(() => {
+      expect(screen.getByText('Please choose one logistic method!')).not.toBeInTheDocument();
+    }, 3000);
+  });
   test('should add one when click svg-plus',async ()=>{
     await userEvent.click(screen.getByTestId('svg-plus'));
     expect(screen.getByTestId('num').textContent).toBe('2');
@@ -52,4 +66,5 @@ describe('Detail Page', () => {
     await userEvent.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
+
 });

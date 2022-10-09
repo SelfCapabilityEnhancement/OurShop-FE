@@ -27,6 +27,11 @@ export default function DetailPage() {
 
   const [bigImg, setBigImg] = useState(srcArray[0]);
   const [showBanner, SetShowBanner] = useState(false);
+  const [showSuccessBanner, SetShowSuccessBanner] = useState(false);
+  const [firstLogisticMethodChecked, SetFirstLogisticMethodChecked] =
+    useState(false);
+  const [secondLogisticMethodChecked, SetSecondLogisticMethodChecked] =
+    useState(false);
   const [count, setCount] = useState(1);
 
   const handleMinus = () => {
@@ -41,13 +46,51 @@ export default function DetailPage() {
 
   function handleAddToCart() {
     SetShowBanner(true);
-    setTimeout(()=>{SetShowBanner(false);}, 1500);
+    if (!firstLogisticMethodChecked && !secondLogisticMethodChecked) {
+      SetShowSuccessBanner(false);
+      setTimeout(() => {
+        SetShowBanner(false);
+      }, 1500);
+    } else if (firstLogisticMethodChecked || secondLogisticMethodChecked) {
+      SetShowSuccessBanner(true);
+      setTimeout(() => {
+        SetShowBanner(false);
+      }, 1500);
+    }
+  }
+
+  function handleFirstLogisticMethodClick() {
+    if (!firstLogisticMethodChecked) {
+      if (!secondLogisticMethodChecked) {
+        SetFirstLogisticMethodChecked(true);
+      } else if (secondLogisticMethodChecked) {
+        SetFirstLogisticMethodChecked(true);
+        SetSecondLogisticMethodChecked(false);
+      }
+    } else if (firstLogisticMethodChecked) {
+      SetFirstLogisticMethodChecked(false);
+    }
+  }
+
+  function handleSecondLogisticMethodClick() {
+    if (!secondLogisticMethodChecked) {
+      if (!firstLogisticMethodChecked) {
+        SetSecondLogisticMethodChecked(true);
+      } else if (firstLogisticMethodChecked) {
+        SetSecondLogisticMethodChecked(true);
+        SetFirstLogisticMethodChecked(false);
+      }
+    } else if (secondLogisticMethodChecked) {
+      SetSecondLogisticMethodChecked(false);
+    }
   }
 
   return (
     <div className="mx-auto mt-10 relative">
       <div
-        className={`add-in-cart-banner ${showBanner ? 'block' : 'hidden'} flex z-10 w-[500px] p-4 absolute top-2 left-[250px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
+        className={`add-in-cart-banner ${
+          showBanner ? (showSuccessBanner ? 'block' : 'hidden') : 'hidden'
+        } flex z-10 w-[500px] p-4 absolute top-2 left-[250px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
         role="alert"
       >
         <svg
@@ -66,6 +109,31 @@ export default function DetailPage() {
         <div>
           <span className="font-medium">
             The product was added into shopping cart successfully!
+          </span>
+        </div>
+      </div>
+      <div
+        className={`add-in-cart-banner ${
+          showBanner ? (!showSuccessBanner ? 'block' : 'hidden') : 'hidden'
+        } flex z-10 w-[400px] p-4 absolute top-2 left-[350px] text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800`}
+        role="alert"
+      >
+        <svg
+          aria-hidden="true"
+          className="flex-shrink-0 inline w-5 h-5 mr-3"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
+        <div>
+          <span className="font-medium">
+            Please choose one logistic method!
           </span>
         </div>
       </div>
@@ -105,11 +173,34 @@ export default function DetailPage() {
           <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
             xxx
           </p>
-          <div data-testid="counter" className="PurchaseNumber flex gap-48 absolute bottom-12 mt-4 ml-2">
-            <span className="my-auto mb-2 text-2xl">No. of purchase</span>
-            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus} />
+          <div className="PurchaseNumber flex bottom-12 ml-2">
+            <span className="my-auto mr-48 mb-2 text-2xl">No. of purchase</span>
+            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus}/>
           </div>
-          <div className="flex gap-[25px] absolute bottom-0">
+          <h2 className="self-center mt-2 mb-2 ml-2 font-light sm:text-2xl">
+            Logistic method
+          </h2>
+          <div className="flex gap-[120px] mb-10 ml-2">
+            <div className="flex gap-[5px]">
+              <input
+                type="radio"
+                className="firstLogisticMethod w-5 h-5 mt-1 accent-purple-500"
+                checked={firstLogisticMethodChecked}
+                onClick={handleFirstLogisticMethodClick}
+              />
+              <span>collecting at office</span>
+            </div>
+            <div className="flex gap-[5px]">
+              <input
+                type="radio"
+                checked={secondLogisticMethodChecked}
+                onClick={handleSecondLogisticMethodClick}
+                className="secondLogisticMethod w-5 h-5 mt-1 accent-purple-500"
+              />
+              <span>shipping to an address</span>
+            </div>
+          </div>
+          <div className="flex gap-[25px]  bottom-0">
             <button
               type="button"
               onClick={handleAddToCart}
