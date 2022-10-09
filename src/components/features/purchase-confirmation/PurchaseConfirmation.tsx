@@ -29,7 +29,7 @@ export default function PurchaseConfirmation() {
 
   return (
       <div
-          className="flex flex-col content-center shadow-lg min-w-[640px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
+          className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
         <div
             className={`purchase-confirmation-banner ${showBanner ? 'block' : 'hidden'} flex z-10 fixed p-4 top-40 left-[calc(50vw-175px)] w-[350px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
             role="alert"

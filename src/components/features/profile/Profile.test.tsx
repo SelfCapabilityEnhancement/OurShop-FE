@@ -18,6 +18,7 @@ describe('display profile option', () => {
     await user.click(avatar as Element);
 
     expect(container.querySelector('.wallet')).toBeTruthy();
+    expect(container.querySelector('.address')).toBeTruthy();
     expect(container.querySelector('.settings')).toBeTruthy();
   });
 
@@ -26,8 +27,19 @@ describe('display profile option', () => {
 
     await user.click(avatar as Element);
     const wallet = container.querySelector('.wallet');
+
     await user.click(wallet as Element);
 
     expect(screen.findByText('My Wallet')).toBeTruthy();
+  });
+
+  it('should navigate to address page when click my address', async () => {
+    const avatar = container.querySelector('.avatar');
+
+    await user.click(avatar as Element);
+    const address = container.querySelector('.address');
+    await user.click(address as Element);
+
+    expect(screen.findByText('My Address')).toBeTruthy();
   });
 });
