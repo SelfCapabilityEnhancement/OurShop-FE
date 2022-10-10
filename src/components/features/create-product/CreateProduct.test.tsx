@@ -22,4 +22,21 @@ describe('Create product test', () => {
     expect(screen.getByText('picture')).toBeInTheDocument();
     expect(container.querySelector('.create.button')).toBeInTheDocument();
   });
+
+  it('should display product info when edited', () => {
+    const inputs = [
+      {id: '#name', value: 'product Name'},
+      {id: '#usd', value: '123'},
+      {id: '#token', value: '321'},
+      {id: '#description', value: 'product Description'},
+    ];
+
+    inputs.forEach(async ({ id, value }) => {
+      const input = container.querySelector(id);
+
+      await user.type(input as Element, value);
+
+      expect(input).toHaveValue(value);
+    });
+  });
 });
