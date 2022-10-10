@@ -39,4 +39,12 @@ describe('Create product test', () => {
       expect(input).toHaveValue(value);
     });
   });
+
+  it('should display alert when click submit with empty field', async () => {
+    const submit = container.querySelector('button.create');
+
+    await user.click(submit as Element);
+
+    expect(await screen.findByText('all required field must be filled'));
+  });
 });
