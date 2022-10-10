@@ -1,9 +1,9 @@
 export interface Product {
   id: string
   name: string
-  token: number|undefined
-  usd: number|undefined
-  sku: number|undefined
+  token: number
+  usd: number
+  sku: number
   description: string
   images: string[]
 }

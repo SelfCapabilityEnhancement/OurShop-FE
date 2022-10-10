@@ -5,12 +5,12 @@ import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
 
 
-
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(() => {
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({observe: () => null, disconnect: () => null}));
     container = render(<CreateProduct />, {wrapper: BrowserRouter}).container;
   });
 
