@@ -1,7 +1,10 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Product } from '@/components/common/CustomeTypes';
-import { Dialog, Transition } from '@headlessui/react';
+import Banner from '@/components/common/banner/Banner';
+
+const successMsg = 'The product was created successfully!';
+const failMsg = 'all required field must be filled';
 
 const emptyProduct: Product = {
   id: '',
@@ -55,58 +58,6 @@ function CreateProduct() {
     setProduct(tmp);
   };
 
-
-  const getBanner = (validateResult: boolean) => {
-    return (
-      <Transition appear show={showBanner} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={() => {
-        }}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
-
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex mt-20 items-center justify-center p-4 text-center'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                <Dialog.Panel className={`${validateResult ? 'bg-green-200' : 'bg-red-200'} transform overflow-hidden rounded-md p-3 text-left align-middle shadow-xl transition-all`}>
-                  <div className={`flex flex-row items-center text-sm`}>
-                    <svg xmlns='http://www.w3.org/2000/svg'
-                         fill='none'
-                         viewBox='0 0 24 24'
-                         strokeWidth={1.5}
-                         stroke='currentColor'
-                         className={`w-6 h-6 ${validateResult ? 'text-green-600' : 'text-red-600'} mr-2`}>
-                      <path strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d={validateResult ? 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z' : 'M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z'} />
-                    </svg>
-                    {validateResult ? 'The product was created successfully!' : 'all required field must be filled'}
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    );
-  };
-
   const validateForm = () => {
     let result = true;
     Object.entries(product).forEach(([key, value]) => {
@@ -129,10 +80,9 @@ function CreateProduct() {
   };
 
   return (
-    <div className=''>
-      {getBanner(validateForm())}
-      <form className='m-8'>
-        <div className='mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96'>
+    <div className='m-8'>
+      <Banner visible={showBanner} result={validateForm()} successMsg={successMsg} failMsg={failMsg} />
+      <form className='mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96'>
           {basicForm.map(({ id, label, type }) => (
             <div key={id} className='col-span-2 grid grid-cols-2 gap-y-4'>
               <label htmlFor={id}
@@ -158,7 +108,6 @@ function CreateProduct() {
             id='description' />
 
           <ImageUploader images={product.images} handleNewImage={handleNewImage} />
-        </div>
       </form>
       <button onClick={handleSubmit}
               className='create button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>
