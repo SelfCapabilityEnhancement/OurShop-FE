@@ -4,6 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 import { Container } from 'react-dom';
 
+jest.mock('@/service', () => ({
+  http: { get: jest.fn() },
+}));
+
 describe('Header test', () => {
   let container: Container;
 
