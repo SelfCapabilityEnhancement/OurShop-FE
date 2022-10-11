@@ -13,7 +13,7 @@ export default function HomePage() {
           <div className='bg-gray-100'>
             <div className='text-xl font-normal'>{product.name}</div>
             <div className='text-xl font-normal text-red-600'>
-              {`$${product.usd} or ${product.token} Token`}
+              {`$${product.priceMoney} or ${product.priceToken} Token`}
             </div>
           </div>
         </div>
