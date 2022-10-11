@@ -5,7 +5,7 @@ import { BrowserRouter, Location } from 'react-router-dom';
 import * as ReactRouter from 'react-router';
 
 import userEvent from '@testing-library/user-event';
-import { getProducts } from '@/assets/mockData';
+import { getProductCount, getProducts } from '@/assets/mockData';
 
 
 describe('purchase confirmation', () => {
@@ -16,7 +16,7 @@ describe('purchase confirmation', () => {
     pathname: '',
     search: '',
     hash: '',
-    state: { products :getProducts() },
+    state: { products :getProducts(), count: getProductCount() },
   };
 
   beforeEach(() => {

@@ -2,10 +2,8 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import avatarUrl from 'images/avatar.png';
+import { classNames } from '@/components/common/utils';
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function Profile() {
   return (

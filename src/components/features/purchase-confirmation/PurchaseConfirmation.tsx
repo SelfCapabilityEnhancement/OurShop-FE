@@ -6,7 +6,7 @@ import productImage from 'images/product/product1.png';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
-  const {state: {products}}: { state: { products: Array<Product> } } = useLocation();
+  const {state: {products, count}}: { state: { products: Array<Product>, count: Array<number> } } = useLocation();
   const [showBanner, SetShowBanner] = useState(false);
 
   const handleClickCancel = () => {
@@ -21,8 +21,8 @@ export default function PurchaseConfirmation() {
   };
   const calCostOfToken = () => {
     let cost = 0;
-    products.forEach((element) => {
-      cost += element.count * element.token;
+    products.forEach((product, index) => {
+      cost += count[index] * product.token;
     });
     return cost;
   };
@@ -54,7 +54,7 @@ export default function PurchaseConfirmation() {
 
         <ul className="flex-1 flex flex-col">
           {
-            products.map(({name, token, count}, index) => (
+            products.map(({name, token}, index) => (
                 <li key={`product-${index}`} className="product border-gray-400 my-7 h-10">
                   <div className="flex flex-1 flex-row items-center items-center p-4">
                     <div className="justify-center items-center mr-4">
@@ -67,7 +67,7 @@ export default function PurchaseConfirmation() {
                     </div>
                     <div className="pl-1 mr-16">
                       <div className="text-2xl font-normal">
-                        Number: {count}
+                        Number: {count[index]}
                       </div>
                       <div className="text-xl font-normal">
                         Token: {token}

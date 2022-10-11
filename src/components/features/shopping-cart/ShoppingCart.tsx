@@ -1,27 +1,28 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { getProducts } from '@/assets/mockData';
+import { getProducts, getProductCount } from '@/assets/mockData';
 import Counter from '@/components/common/counter/Counter';
 import productImage from 'images/product/product1.png';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
   const [products, setProducts] = useState(getProducts());
+  const [count, setCount] = useState(getProductCount());
   const [checkedState, setCheckedState] = useState(
       new Array(products.length).fill(false)
   );
 
   const handlePlus = (index: number) => {
-    const tmp = [...products];
-    tmp[index].count += 1;
-    setProducts(tmp);
+    const tmp = [...count];
+    tmp[index] += 1;
+    setCount(tmp);
   };
 
   const handleMinus = (index: number) => {
-    if (products[index].count > 1) {
-      const tmp = [...products];
-      tmp[index].count -= 1;
-      setProducts(tmp);
+    if (count[index] > 1) {
+      const tmp = [...count];
+      tmp[index] -= 1;
+      setCount(tmp);
     }
   };
 
@@ -35,7 +36,7 @@ export default function ShoppingCart() {
 
   const handleOnClickPayBtn = () => {
     const selectedProducts = products.filter((_item, index) => checkedState[index]);
-    navigate('/purchase-confirmation', {state: { products: selectedProducts }});
+    navigate('/purchase-confirmation', {state: { products: selectedProducts, count }});
   };
 
   return (
@@ -45,7 +46,7 @@ export default function ShoppingCart() {
               nothing in the shopping cart
             </div> : (<div>
               <ul className="flex flex-col">
-                {products.map(({name, count}, index) => {
+                {products.map(({name}, index) => {
                   return (
                       <li key={`product-${index}`} className="product border-gray-400 my-3 h-20">
                         <div
@@ -61,7 +62,7 @@ export default function ShoppingCart() {
                           </label>
                           <div className="font-medium flex-auto flex flex-row items-center text-2xl">
                             <span className="mr-5">Number</span>
-                            <Counter count={count} handlePlus={() => handlePlus(index)} handleMinus={() => handleMinus(index)} />
+                            <Counter count={count[index]} handlePlus={() => handlePlus(index)} handleMinus={() => handleMinus(index)} />
                           </div>
                           <input id={`product-checkbox-${index}`}
                                  type="checkbox"
