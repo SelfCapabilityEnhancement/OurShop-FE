@@ -47,4 +47,21 @@ describe('Create product test', () => {
 
     expect(await screen.findByText('all required field must be filled'));
   });
+
+  it('should display tabs', () => {
+    const tabs = [
+      { id: 'productInfo', name: 'Product Information' },
+      { id: 'logisticInfo', name: 'Logistic Information' },
+      { id: 'approvalFlow', name: 'approval flow' },
+    ];
+
+    tabs.forEach(async (tab) => {
+      const tabElement = screen.getByText(tab.name);
+
+      expect(tabElement).toBeInTheDocument();
+      await user.click(tabElement);
+
+      expect(container.querySelector(`.${tab.id}`)).toBeInTheDocument();
+    });
+  });
 });
