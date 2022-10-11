@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import Header from './Header';
 import { Container } from 'react-dom';
+
+jest.mock('@/service', () => ({
+  http: { get: jest.fn() },
+}));
 
 describe('Header test', () => {
   let container: Container;
@@ -31,7 +34,7 @@ describe('Header test', () => {
       expect(avatar).toBeTruthy();
     });
 
-    it('should show red dot after shopping cart when cart is not empty',()=>{
+    it('should show red dot after shopping cart when cart is not empty', () => {
       expect(screen.getByTestId('redDot')).toBeInTheDocument();
     });
   });
@@ -40,5 +43,4 @@ describe('Header test', () => {
     it('should navigate to homepage when click the logo', async () => {});
     it('should navigate to the create product page when click the create product menu item', async () => {});
   });
-
 });

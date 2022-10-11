@@ -1,6 +1,8 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
 import logoUrl from 'images/logo.png';
+import { useEffect } from 'react';
+import { http } from '@/service';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -8,6 +10,16 @@ export default function Header() {
   const handleClick = () => {
     navigate('/home');
   };
+
+  useEffect(() => {
+    // just a sample, you can remove it
+    const fetchData = async () => {
+      const response = await http.get('/user/allUsers');
+      console.log(response);
+    };
+
+    fetchData().catch(console.error);
+  }, []);
 
   return (
     <div className="flex justify-between items-center shadow-md h-[71px]">
@@ -25,8 +37,8 @@ export default function Header() {
       <div className="flex items-center basis-1/2">
         <div className="nav-list flex justify-around basis-3/4">
           <NavLink
-              to="order-management"
-              className="basis-1/3 mx-4 py-4 text-center border-b-2 border-white
+            to="order-management"
+            className="basis-1/3 mx-4 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-rose-500 focus:border-rose-500"
           >
@@ -47,7 +59,10 @@ export default function Header() {
             focus:text-rose-500 focus:border-rose-500"
           >
             Shopping Cart
-            <span data-testid="redDot" className="inline-block w-3 h-3 mr-2 bg-red-600 rounded-full mb-1 ml-1"></span>
+            <span
+              data-testid="redDot"
+              className="inline-block w-3 h-3 mr-2 bg-red-600 rounded-full mb-1 ml-1"
+            ></span>
           </NavLink>
           <NavLink
             to="my-order"

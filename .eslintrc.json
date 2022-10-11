@@ -32,8 +32,13 @@
         "functions": "never"
       }
     ], // 逗号
-    "no-console": 2, // Means error
-    "no-unused-vars": 1 // Means warn
+    "no-console": 1, // Means warn
+    "no-unused-vars": 2, // Means error
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "block", "next": "block" },
+      { "blankLine": "always", "prev": "function", "next": "function" }
+    ]
   },
   "settings": {
     "react": {

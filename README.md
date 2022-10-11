@@ -4,6 +4,7 @@
 - react
 - tailwindcss
 - jest
+- axios
 
 ## vite + react + jest
 
@@ -26,3 +27,11 @@
 ## issue for not found page after deployment
 
 - React Router it handles all the routes but when you directly goto an endpoint, netlify must know where to redirect you. That is what we are specifying in the \_redirects file.
+
+## issue that 3rd party modules can't be recognized by jest
+
+- they are published as untranspiled code, so need transform them via `babel-jest`
+
+## issue for CORS
+
+- proxy server request data with real server and browser just interact with the proxy server
