@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "https://ourshop-tw.netlify.app/*"
+  to = "/index.html"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://ourshop.azurewebsites.net/api/v1/:splat"
+  status = 200
+  force = true
