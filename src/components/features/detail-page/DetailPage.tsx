@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import product1 from 'images/product/product1.png';
@@ -9,40 +9,21 @@ import product5 from 'images/product/product5.png';
 import { Product } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 
-const srcArray = [
-  {
-    id: 0,
-    src: product1,
-  },
-  {
-    id: 1,
-    src: product2,
-  },
-  {
-    id: 2,
-    src: product3,
-  },
-  {
-    id: 3,
-    src: product4,
-  },
-  {
-    id: 4,
-    src: product5,
-  },
-];
+const srcArray = [product1, product2, product3, product4, product5];
+const logisticMethods = ['office', 'address'];
 
 export default function DetailPage() {
   const { state: { product } }: { state: { product: Product } } = useLocation();
 
-  const [bigImg, setBigImg] = useState(srcArray[0]);
-  const [showBanner, SetShowBanner] = useState(false);
-  const [showSuccessBanner, SetShowSuccessBanner] = useState(false);
-  const [firstLogisticMethodChecked, SetFirstLogisticMethodChecked] =
-    useState(false);
-  const [secondLogisticMethodChecked, SetSecondLogisticMethodChecked] =
-    useState(false);
+  const [bigImgIndex, setBigImgIndex] = useState(0);
+  const [showBanner, setShowBanner] = useState(false);
+  const [validation, setValidation] = useState(false);
+  const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
+
+  useEffect(() => {
+    validate();
+  }, [validation]);
 
   const handleMinus = () => {
     if (count > 1) {
@@ -55,74 +36,45 @@ export default function DetailPage() {
   };
 
   function handleAddToCart() {
-    SetShowBanner(true);
-    if (!firstLogisticMethodChecked && !secondLogisticMethodChecked) {
-      SetShowSuccessBanner(false);
-      setTimeout(() => {
-        SetShowBanner(false);
-      }, 1500);
-    } else if (firstLogisticMethodChecked || secondLogisticMethodChecked) {
-      SetShowSuccessBanner(true);
-      setTimeout(() => {
-        SetShowBanner(false);
-      }, 1500);
-    }
+    setShowBanner(true);
+    setTimeout(() => {
+      setShowBanner(false);
+    }, 1500);
   }
 
-  function handleFirstLogisticMethodClick() {
-    if (!firstLogisticMethodChecked) {
-      if (!secondLogisticMethodChecked) {
-        SetFirstLogisticMethodChecked(true);
-      } else if (secondLogisticMethodChecked) {
-        SetFirstLogisticMethodChecked(true);
-        SetSecondLogisticMethodChecked(false);
-      }
-    } else if (firstLogisticMethodChecked) {
-      SetFirstLogisticMethodChecked(false);
-    }
-  }
+  const validate = () => {
+    const result = logisticMethods.includes(logisticMethod);
+    setValidation(result);
+  };
 
-  function handleSecondLogisticMethodClick() {
-    if (!secondLogisticMethodChecked) {
-      if (!firstLogisticMethodChecked) {
-        SetSecondLogisticMethodChecked(true);
-      } else if (firstLogisticMethodChecked) {
-        SetSecondLogisticMethodChecked(true);
-        SetFirstLogisticMethodChecked(false);
-      }
-    } else if (secondLogisticMethodChecked) {
-      SetSecondLogisticMethodChecked(false);
-    }
-  }
-
-  function handleRadioOnChange() {
-
-  }
+  const handleLogisticMethodClick = (value: string) => {
+    setLogisticMethod(value);
+  };
 
   return (
     <div className='mx-auto mt-10 relative'>
-      <Banner visible={showBanner} success={showSuccessBanner}
+      <Banner visible={showBanner} success={validation}
               successMsg={'The product was added into shopping cart successfully!'}
               failMsg={'Please choose one logistic method!'} />
 
       <div className='DetailPage flex w-[1000px] gap-1 mt-[50px]'>
         <section>
           <img
-            src={bigImg.src}
-            alt={`big product picture ${bigImg.id}`}
+            src={srcArray[bigImgIndex]}
+            alt={`big product picture ${bigImgIndex}`}
             className='h-[375px] w-[500px] mb-5 rounded-xl'
           />
           <div className='flex small-pictures'>
-            {srcArray.map((imgSrc) => (
+            {srcArray.map((imgSrc, index) => (
               <img
-                key={imgSrc.id}
-                src={imgSrc.src}
-                alt={`small product picture ${imgSrc.id}`}
+                key={index}
+                src={imgSrc}
+                alt={`small product picture ${imgSrc}`}
                 className={`h-[70px] w-[90px] mr-[12px] rounded-xl border-2 ${
-                  imgSrc.id === bigImg.id ? 'border-purple-600' : ''
+                  index === bigImgIndex ? 'border-purple-600' : ''
                 }`}
                 onClick={() => {
-                  setBigImg(srcArray[imgSrc.id]);
+                  setBigImgIndex(index);
                 }}
               />
             ))}
@@ -143,29 +95,35 @@ export default function DetailPage() {
           </p>
           <div data-testid='counter' className='PurchaseNumber flex bottom-12 ml-2'>
             <span className='my-auto mr-48 mb-2 text-2xl'>No. of purchase</span>
-            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus} />
+            <Counter count={count}
+                     handlePlus={handlePlus}
+                     handleMinus={handleMinus} />
           </div>
           <h2 className='self-center mt-2 mb-2 ml-2 font-light sm:text-2xl'>
             Logistic method
           </h2>
           <div className='flex gap-[120px] mb-10 ml-2'>
-            <div className='flex gap-[5px]' onClick={handleFirstLogisticMethodClick}>
-              <input
-                type='radio'
-                className='firstLogisticMethod w-5 h-5 mt-1 accent-purple-500'
-                checked={firstLogisticMethodChecked}
-                onChange={handleRadioOnChange}
-              />
-              <span>collecting at office</span>
-            </div>
-            <div className='flex gap-[5px]' onClick={handleSecondLogisticMethodClick}>
-              <input
-                type='radio'
-                checked={secondLogisticMethodChecked}
-                onChange={handleRadioOnChange}
-                className='secondLogisticMethod w-5 h-5 mt-1 accent-purple-500'
-              />
-              <span>shipping to an address</span>
+            <div className='grid grid-cols-2 gap-x-10'>
+              <label htmlFor='office'
+                     className='flex flex-row items-center'
+                     onClick={() => handleLogisticMethodClick(logisticMethods[0])}>
+                <input
+                  id='office'
+                  type='radio'
+                  name='logistic'
+                  className='firstLogisticMethod w-5 h-5 mr-1 accent-purple-500'
+                />
+                collecting at office</label>
+              <label htmlFor='address'
+                     className='flex flex-row items-center'
+                     onClick={() => handleLogisticMethodClick(logisticMethods[1])}>
+                <input
+                  id='address'
+                  type='radio'
+                  name='logistic'
+                  className='secondLogisticMethod w-5 h-5 mr-1 accent-purple-500'
+                />
+                shipping to an address</label>
             </div>
           </div>
           <div className='flex gap-[25px]  bottom-0'>

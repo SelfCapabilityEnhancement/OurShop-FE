@@ -9,6 +9,7 @@ describe('Detail Page', () => {
   window.IntersectionObserver = jest.fn()
     .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
+  const user = userEvent.setup();
   const mockProduct = tempProducts[0];
   const mockLocation: Location = {
     key: 'default',
@@ -52,15 +53,11 @@ describe('Detail Page', () => {
   });
 
   test('should show banner when click add to shopping cart button', async () => {
-    await userEvent.click(screen.getByText('collecting at office'));
-    await userEvent.click(screen.getByText('add in shopping cart'));
-    expect(screen.queryByText('The product was added into shopping cart successfully!'))
+    await user.click(screen.getByText('add in shopping cart'));
+
+    expect(await screen.findByText(
+      'Please choose one logistic method!'))
       .toBeInTheDocument();
-    setTimeout(() => {
-      expect(screen.queryByText('The product was added into shopping cart successfully!'))
-        .not
-        .toBeInTheDocument();
-    }, 3000);
   });
 
   test('should show title of logistic method', () => {
@@ -79,14 +76,17 @@ describe('Detail Page', () => {
         .toBeInTheDocument();
     }, 3000);
   });
+
   test('should add one when click svg-plus', async () => {
     await userEvent.click(screen.getByTestId('svg-plus'));
     expect(screen.getByTestId('num').textContent).toBe('2');
   });
+
   test('svg-minus should be disabled when num of products is 1', async () => {
     await userEvent.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
+
   test('should minus one when click svg-minus', async () => {
     await userEvent.click(screen.getByTestId('svg-plus'));
     expect(screen.getByTestId('num').textContent).toBe('2');
