@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { getProducts, getProductCount } from '@/assets/mockData';
+import { getProducts, getProductCount } from '@/mocks/mockData';
 import Counter from '@/components/common/counter/Counter';
 import productImage from 'images/product/product1.png';
 

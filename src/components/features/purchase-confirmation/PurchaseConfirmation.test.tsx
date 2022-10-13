@@ -5,7 +5,7 @@ import { BrowserRouter, Location } from 'react-router-dom';
 import * as ReactRouter from 'react-router';
 
 import userEvent from '@testing-library/user-event';
-import { getProductCount, getProducts } from '@/assets/mockData';
+import { getProductCount, getProducts } from '@/mocks/mockData';
 
 
 describe('purchase confirmation', () => {
