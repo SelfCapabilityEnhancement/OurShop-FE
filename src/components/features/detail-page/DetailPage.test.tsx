@@ -1,14 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
 import userEvent from '@testing-library/user-event';
-import * as mock from '@/mocks/mockData';
+import { tempProducts } from '@/mocks/mockData';
+import * as ReactRouter from 'react-router';
+import { Location } from 'react-router-dom';
 
 describe('Detail Page', () => {
-  jest.spyOn(mock, 'getProducts').mockReturnValue(mock.tempProducts);
-  const mockProduct = mock.tempProducts[0];
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({observe: () => null, disconnect: () => null}));
+  window.IntersectionObserver = jest.fn()
+    .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
+
+  const mockProduct = tempProducts[0];
+  const mockLocation: Location = {
+    key: 'default',
+    pathname: '',
+    search: '',
+    hash: '',
+    state: { product: mockProduct },
+  };
 
   beforeEach(() => {
+    jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
     render(<DetailPage />);
   });
 
@@ -19,7 +30,8 @@ describe('Detail Page', () => {
 
   test('should show detail page', () => {
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
-    expect(screen.getByText(`price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`)).toBeInTheDocument();
+    expect(screen.getByText(`price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`))
+      .toBeInTheDocument();
     expect(screen.getByText(/Description/i)).toBeInTheDocument();
     expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
 
@@ -42,9 +54,12 @@ describe('Detail Page', () => {
   test('should show banner when click add to shopping cart button', async () => {
     await userEvent.click(screen.getByText('collecting at office'));
     await userEvent.click(screen.getByText('add in shopping cart'));
-    expect(screen.queryByText('The product was added into shopping cart successfully!')).toBeInTheDocument();
+    expect(screen.queryByText('The product was added into shopping cart successfully!'))
+      .toBeInTheDocument();
     setTimeout(() => {
-      expect(screen.queryByText('The product was added into shopping cart successfully!')).not.toBeInTheDocument();
+      expect(screen.queryByText('The product was added into shopping cart successfully!'))
+        .not
+        .toBeInTheDocument();
     }, 3000);
   });
 
@@ -59,7 +74,9 @@ describe('Detail Page', () => {
     await userEvent.click(screen.getByText('add in shopping cart'));
     expect(screen.queryByText('Please choose one logistic method!')).toBeInTheDocument();
     setTimeout(() => {
-      expect(screen.getByText('Please choose one logistic method!')).not.toBeInTheDocument();
+      expect(screen.getByText('Please choose one logistic method!'))
+        .not
+        .toBeInTheDocument();
     }, 3000);
   });
   test('should add one when click svg-plus', async () => {
