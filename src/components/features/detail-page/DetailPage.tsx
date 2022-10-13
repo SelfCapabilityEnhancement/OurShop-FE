@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import { getProducts } from '@/assets/mockData';
+import Banner from '@/components/common/banner/Banner';
 import product1 from 'images/product/product1.png';
 import product2 from 'images/product/product2.png';
 import product3 from 'images/product/product3.png';
@@ -94,69 +95,23 @@ export default function DetailPage() {
     }
   }
 
-  function handleRadioOnChange(){
+  function handleRadioOnChange() {
 
   }
   return (
-    <div className="mx-auto mt-10 relative">
-      <div
-        className={`add-in-cart-banner ${
-          showBanner ? (showSuccessBanner ? 'block' : 'hidden') : 'hidden'
-        } flex z-10 w-[500px] p-4 absolute top-2 left-[250px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
-        role="alert"
-      >
-        <svg
-          aria-hidden="true"
-          className="flex-shrink-0 inline w-5 h-5 mr-3"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clipRule="evenodd"
-          ></path>
-        </svg>
-        <div>
-          <span className="font-medium">
-            The product was added into shopping cart successfully!
-          </span>
-        </div>
-      </div>
-      <div
-        className={`add-in-cart-banner ${
-          showBanner ? (!showSuccessBanner ? 'block' : 'hidden') : 'hidden'
-        } flex z-10 w-[400px] p-4 absolute top-2 left-[350px] text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800`}
-        role="alert"
-      >
-        <svg
-          aria-hidden="true"
-          className="flex-shrink-0 inline w-5 h-5 mr-3"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clipRule="evenodd"
-          ></path>
-        </svg>
-        <div>
-          <span className="font-medium">
-            Please choose one logistic method!
-          </span>
-        </div>
-      </div>
-      <div className="DetailPage flex w-[1000px] gap-1 mt-[50px]">
+    <div className='mx-auto mt-10 relative'>
+      <Banner visible={showBanner} success={showSuccessBanner}
+              successMsg={'The product was added into shopping cart successfully!'}
+              failMsg={'Please choose one logistic method!'} />
+
+      <div className='DetailPage flex w-[1000px] gap-1 mt-[50px]'>
         <section>
           <img
             src={bigImg.src}
             alt={`big product picture ${bigImg.id}`}
-            className="h-[375px] w-[500px] mb-5 rounded-xl"
+            className='h-[375px] w-[500px] mb-5 rounded-xl'
           />
-          <div className="flex small-pictures">
+          <div className='flex small-pictures'>
             {srcArray.map((imgSrc) => (
               <img
                 key={imgSrc.id}
@@ -172,59 +127,57 @@ export default function DetailPage() {
             ))}
           </div>
         </section>
-        <section className="flex-1 relative">
-          <h2 className="self-center mb-2 font-light sm:text-4xl">
+        <section className='flex-1 relative'>
+          <h2 className='self-center mb-2 font-light sm:text-4xl'>
             {product.name}
           </h2>
-          <p className="price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl">
-            price: {product.count} or 5 token
+          <p className='price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl'>
+            price: ${product.priceMoney} or {product.priceToken} token
           </p>
-          <h2 className="self-center mt-2 mb-2 font-light sm:text-4xl">
-            description
+          <h2 className='self-center mt-2 mb-2 font-light sm:text-4xl'>
+            Description
           </h2>
-          <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
-            xxx
+          <p className='description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl'>
+            {product.description}
           </p>
-          <div data-testid="counter" className="PurchaseNumber flex bottom-12 ml-2">
-            <span className="my-auto mr-48 mb-2 text-2xl">No. of purchase</span>
-            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus}/>
+          <div data-testid='counter' className='PurchaseNumber flex bottom-12 ml-2'>
+            <span className='my-auto mr-48 mb-2 text-2xl'>No. of purchase</span>
+            <Counter count={count} handlePlus={handlePlus} handleMinus={handleMinus} />
           </div>
-          <h2 className="self-center mt-2 mb-2 ml-2 font-light sm:text-2xl">
+          <h2 className='self-center mt-2 mb-2 ml-2 font-light sm:text-2xl'>
             Logistic method
           </h2>
-          <div className="flex gap-[120px] mb-10 ml-2">
-            <div className="flex gap-[5px]">
+          <div className='flex gap-[120px] mb-10 ml-2'>
+            <div className='flex gap-[5px]' onClick={handleFirstLogisticMethodClick}>
               <input
-                type="radio"
-                className="firstLogisticMethod w-5 h-5 mt-1 accent-purple-500"
+                type='radio'
+                className='firstLogisticMethod w-5 h-5 mt-1 accent-purple-500'
                 checked={firstLogisticMethodChecked}
-                onClick={handleFirstLogisticMethodClick}
                 onChange={handleRadioOnChange}
               />
               <span>collecting at office</span>
             </div>
-            <div className="flex gap-[5px]">
+            <div className='flex gap-[5px]' onClick={handleSecondLogisticMethodClick}>
               <input
-                type="radio"
+                type='radio'
                 checked={secondLogisticMethodChecked}
-                onClick={handleSecondLogisticMethodClick}
                 onChange={handleRadioOnChange}
-                className="secondLogisticMethod w-5 h-5 mt-1 accent-purple-500"
+                className='secondLogisticMethod w-5 h-5 mt-1 accent-purple-500'
               />
               <span>shipping to an address</span>
             </div>
           </div>
-          <div className="flex gap-[25px]  bottom-0">
+          <div className='flex gap-[25px]  bottom-0'>
             <button
-              type="button"
+              type='button'
               onClick={handleAddToCart}
-              className="add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              className='add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]'
             >
               add in shopping cart
             </button>
             <button
-              type="button"
-              className="purchase-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              type='button'
+              className='purchase-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]'
             >
               purchase
             </button>
