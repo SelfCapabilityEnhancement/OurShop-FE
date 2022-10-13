@@ -1,27 +1,36 @@
 import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
+import { getProducts } from '@/assets/mockData';
+import product1 from 'images/product/product1.png';
+import product2 from 'images/product/product2.png';
+import product3 from 'images/product/product3.png';
+import product4 from 'images/product/product4.png';
+import product5 from 'images/product/product5.png';
+
+const products = getProducts();
+const product = products[0];
 
 export default function DetailPage() {
   const srcArray = [
     {
       id: 0,
-      src: 'src/assets/images/product/product1.png',
+      src: product1,
     },
     {
       id: 1,
-      src: 'src/assets/images/product/product2.png',
+      src: product2,
     },
     {
       id: 2,
-      src: 'src/assets/images/product/product3.png',
+      src: product3,
     },
     {
       id: 3,
-      src: 'src/assets/images/product/product4.png',
+      src: product4,
     },
     {
       id: 4,
-      src: 'src/assets/images/product/product5.png',
+      src: product5,
     },
   ];
 
@@ -165,10 +174,10 @@ export default function DetailPage() {
         </section>
         <section className="flex-1 relative">
           <h2 className="self-center mb-2 font-light sm:text-4xl">
-            here is a book name xxxx
+            {product.name}
           </h2>
           <p className="price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl">
-            price: 111 or 5 token
+            price: {product.count} or 5 token
           </p>
           <h2 className="self-center mt-2 mb-2 font-light sm:text-4xl">
             description
