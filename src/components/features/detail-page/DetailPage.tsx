@@ -1,39 +1,39 @@
 import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
-import { getProducts } from '@/mocks/mockData';
 import Banner from '@/components/common/banner/Banner';
 import product1 from 'images/product/product1.png';
 import product2 from 'images/product/product2.png';
 import product3 from 'images/product/product3.png';
 import product4 from 'images/product/product4.png';
 import product5 from 'images/product/product5.png';
+import { Product } from '@/components/common/CustomeTypes';
+import { useLocation } from 'react-router-dom';
 
-const products = getProducts();
-const product = products[0];
+const srcArray = [
+  {
+    id: 0,
+    src: product1,
+  },
+  {
+    id: 1,
+    src: product2,
+  },
+  {
+    id: 2,
+    src: product3,
+  },
+  {
+    id: 3,
+    src: product4,
+  },
+  {
+    id: 4,
+    src: product5,
+  },
+];
 
 export default function DetailPage() {
-  const srcArray = [
-    {
-      id: 0,
-      src: product1,
-    },
-    {
-      id: 1,
-      src: product2,
-    },
-    {
-      id: 2,
-      src: product3,
-    },
-    {
-      id: 3,
-      src: product4,
-    },
-    {
-      id: 4,
-      src: product5,
-    },
-  ];
+  const { state: { product } }: { state: { product: Product } } = useLocation();
 
   const [bigImg, setBigImg] = useState(srcArray[0]);
   const [showBanner, SetShowBanner] = useState(false);
@@ -98,6 +98,7 @@ export default function DetailPage() {
   function handleRadioOnChange() {
 
   }
+
   return (
     <div className='mx-auto mt-10 relative'>
       <Banner visible={showBanner} success={showSuccessBanner}
