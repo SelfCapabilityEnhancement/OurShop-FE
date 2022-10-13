@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import HomePage from '@/components/features/home-page/HomePage';
