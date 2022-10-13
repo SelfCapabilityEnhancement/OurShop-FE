@@ -6,7 +6,7 @@ export const tempProducts: Array<Product> = [
     name: 'Product1',
     priceToken: 5,
     priceMoney: 0,
-    description: '',
+    description: 'yummy',
     images: [],
     stock: 2,
   },
