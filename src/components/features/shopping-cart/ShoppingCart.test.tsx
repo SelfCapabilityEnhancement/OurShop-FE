@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import * as mock from '@/assets/mockData';
+import * as mock from '@/mocks/mockData';
 
 
 describe('display shopping cart page given nonempty products', () => {

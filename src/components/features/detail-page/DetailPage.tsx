@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
-import { getProducts } from '@/assets/mockData';
+import { getProducts } from '@/mocks/mockData';
 import Banner from '@/components/common/banner/Banner';
 import product1 from 'images/product/product1.png';
 import product2 from 'images/product/product2.png';

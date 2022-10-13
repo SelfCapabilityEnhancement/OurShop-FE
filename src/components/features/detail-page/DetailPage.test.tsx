@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import DetailPage from '@/components/features/detail-page/DetailPage';
 import userEvent from '@testing-library/user-event';
-import * as mock from '@/assets/mockData';
+import * as mock from '@/mocks/mockData';
 
 describe('Detail Page', () => {
   jest.spyOn(mock, 'getProducts').mockReturnValue(mock.tempProducts);
-  const mockProduct = mock.getProducts()[0];
+  const mockProduct = mock.tempProducts[0];
   window.IntersectionObserver = jest.fn().mockImplementation(() => ({observe: () => null, disconnect: () => null}));
 
   beforeEach(() => {
