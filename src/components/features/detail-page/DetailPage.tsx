@@ -6,8 +6,10 @@ import product2 from 'images/product/product2.png';
 import product3 from 'images/product/product3.png';
 import product4 from 'images/product/product4.png';
 import product5 from 'images/product/product5.png';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
+import { http } from '@/service';
+import { getCurrentUser } from '@/components/common/utils';
 
 const srcArray = [product1, product2, product3, product4, product5];
 const logisticMethods = ['office', 'address'];
@@ -20,9 +22,20 @@ export default function DetailPage() {
   const [validation, setValidation] = useState(false);
   const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    getCurrentUser().then((data) => setUser(data[0]));
+  }, []);
 
   useEffect(() => {
     validate();
+    if (validation) {
+      http.post('/shopping-cart/create',
+        { productId: product.id, productNum: count, userId: user?.id })
+        // eslint-disable-next-line no-console
+        .catch(console.error);
+    }
   }, [validation]);
 
   const handleMinus = () => {
@@ -69,7 +82,7 @@ export default function DetailPage() {
               <img
                 key={index}
                 src={imgSrc}
-                alt={`small product picture ${imgSrc}`}
+                alt={`small product picture ${index}`}
                 className={`h-[70px] w-[90px] mr-[12px] rounded-xl border-2 ${
                   index === bigImgIndex ? 'border-purple-600' : ''
                 }`}
