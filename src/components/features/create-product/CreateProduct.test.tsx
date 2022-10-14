@@ -26,8 +26,8 @@ describe('Create product test', () => {
   it('should display product info when edited', () => {
     const inputs = [
       {id: '#name', value: 'product Name'},
-      {id: '#usd', value: '123'},
-      {id: '#token', value: '321'},
+      {id: '#priceMoney', value: '123'},
+      {id: '#priceToken', value: '321'},
       {id: '#description', value: 'product Description'},
     ];
 
@@ -45,7 +45,7 @@ describe('Create product test', () => {
 
     await user.click(submit as Element);
 
-    expect(await screen.findByText('all required field must be filled'));
+    expect(await screen.findByText('all required field must be filled')).toBeInTheDocument();
   });
 
   it('should display tabs', () => {

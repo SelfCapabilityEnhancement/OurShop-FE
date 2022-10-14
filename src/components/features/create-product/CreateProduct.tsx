@@ -3,25 +3,26 @@ import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { Product } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
-import {classNames} from '@/components/common/utils';
+import { classNames } from '@/components/common/utils';
+import { http } from '@/service';
 
 const successMsg = 'The product was created successfully!';
 const failMsg = 'all required field must be filled';
 
 const emptyProduct: Product = {
-  id: '',
+  id: 1,
   name: '',
-  token: 0,
-  usd: 0,
+  priceToken: 0,
+  priceMoney: 0,
   description: '',
-  sku: 1,
-  images: [],
+  stock: 1,
+  images: '',
 };
 
-const basicForm = [
+const basicForm: { id: keyof Product, label: string, type: string }[] = [
   { id: 'name', label: 'product name', type: 'string' },
-  { id: 'usd', label: 'price in USD', type: 'number' },
-  { id: 'token', label: 'price in token', type: 'number' }];
+  { id: 'priceMoney', label: 'price in USD', type: 'number' },
+  { id: 'priceToken', label: 'price in token', type: 'number' }];
 
 const tabs = [
   { id: 'productInfo', name: 'Product Information' },
@@ -30,34 +31,40 @@ const tabs = [
 ];
 
 function CreateProduct() {
+  const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(emptyProduct);
   const [showBanner, SetShowBanner] = useState(false);
+  const [validation, setValidation] = useState(false);
 
-  const handleNewImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files !== null && files.length > 0) {
+      const imageData = 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png';
+      setImageURL((prevState) => [...prevState, URL.createObjectURL(files[0])]);
       setProduct((prevState) => {
           return {
             ...prevState,
-            images: [...prevState.images, URL.createObjectURL(files[0])],
+            images: `${prevState.images}${imageData};`,
           };
         }
       );
     }
   };
 
-  const handleInputField = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => {
+  const handleInputField = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+                            field: string) => {
     const value = event.target.value;
     const tmp = { ...product };
     switch (field) {
       case 'name':
         tmp.name = value;
         break;
-      case 'usd':
-        tmp.usd = Number(value);
+      case 'priceMoney':
+        tmp.priceMoney = Number(value);
         break;
-      case 'token':
-        tmp.token = Number(value);
+      case 'priceToken':
+        tmp.priceToken = Number(value);
         break;
       case 'description':
         tmp.description = value;
@@ -68,24 +75,28 @@ function CreateProduct() {
 
   const validateForm = () => {
     let result = true;
-    Object.entries(product).forEach(([key, value]) => {
+    Object.values(product).forEach((value) => {
       if (typeof value === 'number' && value <= 0) {
         result = false;
-      } else if (key !== 'id' && value.length <= 0) {
+      } else if (value.length <= 0) {
         result = false;
       }
     });
-    return result;
+    setValidation(result);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    validateForm();
     SetShowBanner(true);
     setTimeout(() => SetShowBanner(false), 1500);
 
-    if (validateForm()) {
-      setTimeout(() => setProduct(emptyProduct), 1500);
-      // Post
-    }
+    // eslint-disable-next-line no-console
+    http.post('/product/create', product).catch(console.error);
+    setTimeout(() => {
+      setProduct(() => emptyProduct);
+      setImageURL(() => []);
+    }, 1000);
   };
 
   return (
@@ -94,7 +105,7 @@ function CreateProduct() {
         <Tab.List className='flex space-x-10 p-1'>
           {tabs.map((tab) => (
             <Tab key={tab.id}
-                 className={({selected}) => classNames(
+                 className={({ selected }) => classNames(
                    'w-52 rounded-lg text-xl font-normal',
                    selected
                      ? `${tab.id} text-purple-500 underline underline-offset-8`
@@ -108,9 +119,8 @@ function CreateProduct() {
           <Tab.Panel>
             <div className='m-8'>
               <Banner visible={showBanner}
-                      success={validateForm()}
-                      successMsg={successMsg}
-                      failMsg={failMsg} />
+                      success={validation}
+                      message={validation ? successMsg : failMsg} />
               <form className='mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96'>
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className='col-span-2 grid grid-cols-2 gap-y-4'>
@@ -121,7 +131,7 @@ function CreateProduct() {
                     <input type={type === 'string' ? 'text' : 'number'}
                            className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring'
                            onChange={(event) => handleInputField(event, id)}
-                           value={product[id as keyof Product] === 0 ? '' : product[id as keyof Product]}
+                           value={type === 'number' && product[id] === 0 ? '' : `${product[id]}`}
                            id={id} />
                   </div>
                 ))}
@@ -136,12 +146,12 @@ function CreateProduct() {
                   onChange={(event) => handleInputField(event, 'description')}
                   id='description' />
 
-                <ImageUploader images={product.images} handleNewImage={handleNewImage} />
+                <ImageUploader images={imageURL} handleNewImage={handleNewImage} />
+                <button onClick={(event) => handleSubmit(event)}
+                        className='create button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center'>
+                  Create Product
+                </button>
               </form>
-              <button onClick={handleSubmit}
-                      className='create button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center'>
-                Create Product
-              </button>
             </div>
           </Tab.Panel>
           <Tab.Panel>Logistic Information</Tab.Panel>

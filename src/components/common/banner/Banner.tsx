@@ -4,13 +4,11 @@ import { Fragment } from 'react';
 export default function Banner({
                                  visible,
                                  success,
-                                 successMsg,
-                                 failMsg,
-                               }: { visible: boolean, success: boolean, successMsg: string, failMsg: string }) {
+                                 message,
+                               }: { visible: boolean, success: boolean, message: string }) {
   return (
     <Transition appear show={visible} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={() => {
-      }}>
+      <Dialog as='div' className='relative z-10' onClose={() => {}}>
         <Transition.Child
           as={Fragment}
           enter='ease-out duration-300'
@@ -46,7 +44,7 @@ export default function Banner({
                           strokeLinejoin='round'
                           d={success ? 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z' : 'M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z'} />
                   </svg>
-                  {success ? successMsg : failMsg}
+                  {message}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -55,4 +53,4 @@ export default function Banner({
       </Dialog>
     </Transition>
   );
-};
+}

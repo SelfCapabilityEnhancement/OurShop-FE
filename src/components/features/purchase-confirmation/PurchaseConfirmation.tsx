@@ -22,7 +22,7 @@ export default function PurchaseConfirmation() {
   const calCostOfToken = () => {
     let cost = 0;
     products.forEach((product, index) => {
-      cost += count[index] * product.token;
+      cost += count[index] * product.priceToken;
     });
     return cost;
   };
@@ -54,7 +54,7 @@ export default function PurchaseConfirmation() {
 
         <ul className="flex-1 flex flex-col">
           {
-            products.map(({name, token}, index) => (
+            products.map(({name, priceToken}, index) => (
                 <li key={`product-${index}`} className="product border-gray-400 my-7 h-10">
                   <div className="flex flex-1 flex-row items-center items-center p-4">
                     <div className="justify-center items-center mr-4">
@@ -70,7 +70,7 @@ export default function PurchaseConfirmation() {
                         Number: {count[index]}
                       </div>
                       <div className="text-xl font-normal">
-                        Token: {token}
+                        Token: {priceToken}
                       </div>
                     </div>
                   </div>
