@@ -26,7 +26,7 @@
 
 ## issue for not found page after deployment
 
-- React Router it handles all the routes but when you directly goto an endpoint, netlify must know where to redirect you. That is what we are specifying in the \_redirects file.
+- React Router it handles all the routes but when you directly goto an endpoint, netlify must know where to redirect you. That is what we are specifying in the netlify.toml file.
 
 ## issue that 3rd party modules can't be recognized by jest
 
