@@ -8,13 +8,13 @@ describe('Banner', () => {
   window.IntersectionObserver = jest.fn().mockImplementation(() => ({observe: () => null, disconnect: () => null}));
 
   it('should display success message', () => {
-    render(<Banner visible={true} success={true} successMsg={successMsg} failMsg={failMsg} />, {wrapper: BrowserRouter});
+    render(<Banner visible={true} success={true} message={successMsg} />, {wrapper: BrowserRouter});
 
     expect(screen.getByText(successMsg)).toBeInTheDocument();
   });
 
   it('should display fail message', () => {
-    render(<Banner visible={true} success={false} successMsg={successMsg} failMsg={failMsg} />, {wrapper: BrowserRouter});
+    render(<Banner visible={true} success={false} message={failMsg} />, {wrapper: BrowserRouter});
 
     expect(screen.getByText(failMsg)).toBeInTheDocument();
   });

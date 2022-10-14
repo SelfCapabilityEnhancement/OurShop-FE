@@ -1,5 +1,5 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { Product } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
@@ -36,17 +36,6 @@ function CreateProduct() {
   const [showBanner, SetShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
 
-  useEffect(() => {
-    validateForm();
-    if (validation) {
-      // eslint-disable-next-line no-console
-      http.post('/product/create', product).catch(console.error);
-      setTimeout(() => {
-        setProduct(() => emptyProduct);
-        setImageURL(() => []);
-      }, 1000);
-    }
-  }, [showBanner]);
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -98,8 +87,16 @@ function CreateProduct() {
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+    validateForm();
     SetShowBanner(true);
     setTimeout(() => SetShowBanner(false), 1500);
+
+    // eslint-disable-next-line no-console
+    http.post('/product/create', product).catch(console.error);
+    setTimeout(() => {
+      setProduct(() => emptyProduct);
+      setImageURL(() => []);
+    }, 1000);
   };
 
   return (
@@ -123,8 +120,7 @@ function CreateProduct() {
             <div className='m-8'>
               <Banner visible={showBanner}
                       success={validation}
-                      successMsg={successMsg}
-                      failMsg={failMsg} />
+                      message={validation ? successMsg : failMsg} />
               <form className='mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96'>
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className='col-span-2 grid grid-cols-2 gap-y-4'>
