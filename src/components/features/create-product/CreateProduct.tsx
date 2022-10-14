@@ -39,12 +39,8 @@ function CreateProduct() {
   useEffect(() => {
     validateForm();
     if (validation) {
-      const postProduct = async () => {
-        await http.post('/product/create', product)
-          .then((response) => JSON.parse(response.data));
-      };
-
-      postProduct().then();
+      // eslint-disable-next-line no-console
+      http.post('/product/create', product).catch(console.error);
       setTimeout(() => {
         setProduct(() => emptyProduct);
         setImageURL(() => []);
@@ -55,7 +51,6 @@ function CreateProduct() {
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files !== null && files.length > 0) {
-      // const imageData = await toBase64(files[0]);
       const imageData = 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png';
       setImageURL((prevState) => [...prevState, URL.createObjectURL(files[0])]);
       setProduct((prevState) => {
