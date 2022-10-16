@@ -1,10 +1,10 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { Product } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { http } from '@/service';
-import { getBlobsInContainer, uploadFileToBlob } from '@/azure-storage-blob';
+import { uploadFileToBlob } from '@/azure-storage-blob';
 import { imageUrlPrefix } from '@/constants';
 import { generateUniqueImageName, classNames } from '@/utils';
 
@@ -38,13 +38,6 @@ function CreateProduct() {
   const [product, setProduct] = useState<Product>(emptyProduct);
   const [showBanner, SetShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
-  // all blobs in container
-  const [blobList, setBlobList] = useState<string[]>([]);
-  useEffect(() => {
-    getBlobsInContainer().then((data) => {
-      setBlobList(data);
-    });
-  }, []);
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -100,31 +93,28 @@ function CreateProduct() {
     setValidation(result);
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-
     validateForm();
     SetShowBanner(true);
-    setTimeout(() => SetShowBanner(false), 1500);
 
-    http.post('/product/create', {
+    await http.post('/product/create', {
       ...product,
-      images: product.images.map((image) => `${imageUrlPrefix}${image.name}`),
+      images: product.images
+        .map((image) => `${imageUrlPrefix}${image.name}`)
+        .join(','),
     });
-    uploadFile();
+    await uploadFile();
 
-    setTimeout(() => {
-      setProduct(() => emptyProduct);
-      setImageURL(() => []);
-    }, 1000);
+    setProduct(() => emptyProduct);
+    setImageURL(() => []);
+    SetShowBanner(false);
   };
 
   const uploadFile = async () => {
-    product.images.forEach((image) => {
-      uploadFileToBlob(image);
-    });
+    await Promise.all(product.images.map((image) => uploadFileToBlob(image)));
   };
 
   return (
@@ -198,19 +188,6 @@ function CreateProduct() {
                   Create Product
                 </button>
               </form>
-            </div>
-            <div>
-              <ul>
-                {blobList.map((image) => {
-                  return (
-                    <li key={image}>
-                      <div>
-                        <img src={image} height="200" />
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
             </div>
           </Tab.Panel>
           <Tab.Panel>Logistic Information</Tab.Panel>
