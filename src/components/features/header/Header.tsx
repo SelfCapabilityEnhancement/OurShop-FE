@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
-import logoUrl from 'images/logo.png';
 import { useEffect } from 'react';
 import { http } from '@/service';
 
@@ -25,7 +24,7 @@ export default function Header() {
     <div className="flex justify-between items-center shadow-md h-[71px]">
       <div className="flex items-center basis-1/2 ml-8">
         <img
-          src={logoUrl}
+          src="/logo.png"
           alt=""
           className="logo cursor-pointer w-[64px] h-[55px]"
           onClick={handleClick}
