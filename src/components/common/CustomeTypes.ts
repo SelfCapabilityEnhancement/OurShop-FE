@@ -5,5 +5,5 @@ export interface Product {
   priceMoney: number;
   stock: number;
   description: string;
-  images: string;
+  images: File[];
 }

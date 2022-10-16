@@ -4,14 +4,20 @@ import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('@/azure-storage-blob', () => ({
+  uploadFileToBlob: jest.fn(),
+}));
 
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(() => {
-    window.IntersectionObserver = jest.fn().mockImplementation(() => ({observe: () => null, disconnect: () => null}));
-    container = render(<CreateProduct />, {wrapper: BrowserRouter}).container;
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+      observe: () => null,
+      disconnect: () => null,
+    }));
+    container = render(<CreateProduct />, { wrapper: BrowserRouter }).container;
   });
 
   it('should display create product form', () => {
@@ -25,10 +31,10 @@ describe('Create product test', () => {
 
   it('should display product info when edited', () => {
     const inputs = [
-      {id: '#name', value: 'product Name'},
-      {id: '#priceMoney', value: '123'},
-      {id: '#priceToken', value: '321'},
-      {id: '#description', value: 'product Description'},
+      { id: '#name', value: 'product Name' },
+      { id: '#priceMoney', value: '123' },
+      { id: '#priceToken', value: '321' },
+      { id: '#description', value: 'product Description' },
     ];
 
     inputs.forEach(async ({ id, value }) => {
@@ -45,7 +51,9 @@ describe('Create product test', () => {
 
     await user.click(submit as Element);
 
-    expect(await screen.findByText('all required field must be filled')).toBeInTheDocument();
+    expect(
+      await screen.findByText('all required field must be filled')
+    ).toBeInTheDocument();
   });
 
   it('should display tabs', () => {

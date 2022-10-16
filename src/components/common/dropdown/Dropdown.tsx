@@ -2,7 +2,7 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { classNames } from '@/components/common/utils';
+import { classNames } from '@/utils';
 
 export default function Example() {
   return (
