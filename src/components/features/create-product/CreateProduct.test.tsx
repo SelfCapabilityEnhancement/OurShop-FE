@@ -8,6 +8,13 @@ jest.mock('@/azure-storage-blob', () => ({
   uploadFileToBlob: jest.fn(),
 }));
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    post: jest.fn(),
+  },
+}));
+
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();

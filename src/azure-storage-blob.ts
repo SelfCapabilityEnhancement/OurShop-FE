@@ -2,9 +2,8 @@
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
 
 const containerName = `images`;
-const sasToken =
-  'sv=2021-06-08&ss=bf&srt=sco&sp=rwdlaciytfx&se=2022-10-31T10:44:43Z&st=2022-10-16T02:44:43Z&spr=https&sig=tNFpqPwgAWjv6WnmOl%2FMMFIkYUSHMiaFv%2FogrDNKZ8U%3D';
-const storageAccountName = 'ourshopimages';
+const sasToken = import.meta.env.VITE_STORAGE_SAS_TOKEN;
+const storageAccountName = import.meta.env.VITE_STORAGE_ACCOUNT_NAME;
 
 // Feature flag - disable storage feature to app if not configured
 export const isStorageConfigured = () => {

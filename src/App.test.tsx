@@ -4,6 +4,13 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    post: jest.fn(),
+  },
+}));
+
 describe('App test', () => {
   describe('should render Header component', () => {
     it('should navigate to corresponding page when click the create product menu item', async () => {
