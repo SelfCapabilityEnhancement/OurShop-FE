@@ -7,5 +7,5 @@ export function classNames(...classes: any) {
 
 // this will be replaced by useContext in next iteration
 export const getCurrentUser = (): Promise<User[]> => {
-  return http.get('/user/allUsers');
+  return http.get('/user/allUsers').then((response) => response.data);
 };

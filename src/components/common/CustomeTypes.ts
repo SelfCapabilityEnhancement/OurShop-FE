@@ -19,3 +19,9 @@ export interface User {
   bankAccount: string;
   avatar: string
 }
+
+export interface ShoppingCartItem {
+  product: Product;
+  shoppingCartProductsId: number;
+  productNum: number
+}

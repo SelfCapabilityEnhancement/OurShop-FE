@@ -28,16 +28,6 @@ export default function DetailPage() {
     getCurrentUser().then((data) => setUser(data[0]));
   }, []);
 
-  useEffect(() => {
-    validate();
-    if (validation) {
-      http.post('/shopping-cart/create',
-        { productId: product.id, productNum: count, userId: user?.id })
-        // eslint-disable-next-line no-console
-        .catch(console.error);
-    }
-  }, [validation]);
-
   const handleMinus = () => {
     if (count > 1) {
       setCount(count - 1);
@@ -49,10 +39,17 @@ export default function DetailPage() {
   };
 
   function handleAddToCart() {
+    validate();
     setShowBanner(true);
     setTimeout(() => {
       setShowBanner(false);
     }, 1500);
+    if (validation) {
+      http.post('/shopping-cart/create',
+          { userId: user?.id, productId: product.id, productNum: count})
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+    }
   }
 
   const validate = () => {

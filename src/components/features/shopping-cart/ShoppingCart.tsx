@@ -1,28 +1,39 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { getProducts, getProductCount } from '@/mocks/mockData';
 import Counter from '@/components/common/counter/Counter';
 import productImage from 'images/product/product1.png';
+import {http} from '@/service';
+import {ShoppingCartItem} from '@/components/common/CustomeTypes';
+import {getCurrentUser} from '@/components/common/utils';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
-  const products = getProducts();
-  const [count, setCount] = useState(getProductCount());
+  const [shoppingCartItems, setShoppingCartItems] = useState<ShoppingCartItem[]>([]);
   const [checkedState, setCheckedState] = useState(
-      new Array(products.length).fill(false)
+      new Array(shoppingCartItems.length).fill(false)
   );
 
+  useEffect(() => {
+    getCurrentUser().then((data) => {
+      http.get(`/shopping-cart/user/${data[0].id}`).then((response) => setShoppingCartItems(response.data))
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+    });
+
+  }, []);
+
+
   const handlePlus = (index: number) => {
-    const tmp = [...count];
-    tmp[index] += 1;
-    setCount(tmp);
+    const tmp = [...shoppingCartItems];
+    tmp[index].productNum += 1;
+    setShoppingCartItems(tmp);
   };
 
   const handleMinus = (index: number) => {
-    if (count[index] > 1) {
-      const tmp = [...count];
-      tmp[index] -= 1;
-      setCount(tmp);
+    if (shoppingCartItems[index].productNum > 1) {
+      const tmp = [...shoppingCartItems];
+      tmp[index].productNum -= 1;
+      setShoppingCartItems(tmp);
     }
   };
 
@@ -35,20 +46,22 @@ export default function ShoppingCart() {
   };
 
   const handleOnClickPayBtn = () => {
-    const selectedProducts = products.filter((_item, index) => checkedState[index]);
-    navigate('/purchase-confirmation', {state: { products: selectedProducts, count }});
+    const selectedItems = shoppingCartItems.filter((_item, index) => checkedState[index]);
+    navigate('/purchase-confirmation', {state: {selectedItems}});
   };
 
   return (
-      <div data-testid="shopping-cart" className="w-5/6 min-w-[720px] h-[calc(100vh-150px)] mx-auto mt-5 relative">
-        {products.length === 0 ?
+      <div data-testid="shopping-cart"
+           className="w-5/6 min-w-[720px] h-[calc(100vh-150px)] mx-auto mt-5 relative">
+        {shoppingCartItems.length === 0 ?
             <div className="empty-msg text-center text-3xl font-semibold mt-10">
               nothing in the shopping cart
             </div> : (<div>
               <ul className="flex flex-col">
-                {products.map(({name}, index) => {
+                {shoppingCartItems.map((shoppingCartItem, index) => {
                   return (
-                      <li key={`product-${index}`} className="product border-gray-400 my-3 h-20">
+                      <li key={`product-${index}`}
+                          className="product border-gray-400 my-3 h-20">
                         <div
                             className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
                           <div className="w-20 h-16 flex-initial mx-5">
@@ -58,11 +71,14 @@ export default function ShoppingCart() {
                           </div>
                           <label htmlFor="product-checkbox-1"
                                  className="font-medium flex-auto mx-5">
-                            {name}
+                            {shoppingCartItem.product.name}
                           </label>
-                          <div className="font-medium flex-auto flex flex-row items-center text-2xl">
+                          <div
+                              className="font-medium flex-auto flex flex-row items-center text-2xl">
                             <span className="mr-5">Number</span>
-                            <Counter count={count[index]} handlePlus={() => handlePlus(index)} handleMinus={() => handleMinus(index)} />
+                            <Counter count={shoppingCartItem.productNum}
+                                     handlePlus={() => handlePlus(index)}
+                                     handleMinus={() => handleMinus(index)}/>
                           </div>
                           <input id={`product-checkbox-${index}`}
                                  type="checkbox"
