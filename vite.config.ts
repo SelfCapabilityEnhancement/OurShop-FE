@@ -3,9 +3,9 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ mode }) => {
   let targetURL = 'https://ourshop.azurewebsites.net/api/v1';
-  if (command === 'serve') {
+  if (mode === 'local-api') {
     targetURL = 'http://127.0.0.1:8080/api/v1';
   }
 

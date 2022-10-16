@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:local": "vite --mode local-api",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview",
     "lint": "eslint . --ext .tsx",
