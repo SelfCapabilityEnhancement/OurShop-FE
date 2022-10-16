@@ -5,6 +5,12 @@ import HomePage from '@/components/features/home-page/HomePage';
 import { tempProducts } from '@/mocks/mockData';
 import { http } from '@/service';
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    get: jest.fn(),
+  },
+}));
 
 describe('HomePage', () => {
   let container: Container;

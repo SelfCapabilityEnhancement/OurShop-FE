@@ -5,7 +5,10 @@ import Header from './Header';
 import { Container } from 'react-dom';
 
 jest.mock('@/service', () => ({
-  http: { get: jest.fn() },
+  isDev: jest.fn(),
+  http: {
+    post: jest.fn(),
+  },
 }));
 
 describe('Header test', () => {
