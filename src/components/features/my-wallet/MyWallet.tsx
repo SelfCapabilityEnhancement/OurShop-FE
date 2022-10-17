@@ -1,7 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '@/utils';
+import { useEffect, useState } from 'react';
+import { User } from '@/components/common/CustomeTypes';
 
 export default function MyWallet() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    getCurrentUser().then((data) => setUser(data[0]));
+  }, []);
 
   const handleClick = () => {
     navigate('/home');
@@ -15,7 +23,7 @@ export default function MyWallet() {
           My Tokens
         </p>
         <p className="text-2xl font-semibold text-purple-500">
-          999
+          {user?.token}
         </p>
       </div>
       <div className="flex items-center justify-between m-8">

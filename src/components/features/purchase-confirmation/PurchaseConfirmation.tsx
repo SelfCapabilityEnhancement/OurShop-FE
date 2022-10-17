@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Product } from '@/components/common/CustomeTypes';
-import { useState } from 'react';
+import { Product, User } from '@/components/common/CustomeTypes';
+import { useEffect, useState } from 'react';
 import { http } from '@/service';
 import { getCurrentUser } from '@/utils';
 
@@ -11,6 +11,11 @@ export default function PurchaseConfirmation() {
   }: { state: { products: Array<Product>; count: Array<number>,shoppingCartProductsIds:Array<number> } } =
     useLocation();
   const [showBanner, SetShowBanner] = useState(false);
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    getCurrentUser().then((data) => setUser(data[0]));
+  }, []);
 
   const handleClickCancel = () => {
     navigate('/shopping-cart');
@@ -97,7 +102,7 @@ export default function PurchaseConfirmation() {
         </ul>
         <div className="grid w-1/2 ml-auto mb-10 grid-cols-2 gap-y-4">
           <div className="text-right text-2xl">My Tokens:</div>
-          <div className="ml-5 text-2xl text-purple-500">999</div>
+          <div className="ml-5 text-2xl text-purple-500">{user?.token}</div>
           <div className="text-right text-2xl">Cost of Tokens:</div>
           <div className="ml-5 text-2xl text-red-600">{calCostOfToken()}</div>
         </div>

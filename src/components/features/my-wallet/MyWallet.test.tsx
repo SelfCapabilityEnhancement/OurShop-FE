@@ -4,6 +4,25 @@ import { render, screen } from '@testing-library/react';
 import MyWallet from '@/components/features/my-wallet/MyWallet';
 import { BrowserRouter } from 'react-router-dom';
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    get: jest.fn().mockResolvedValue({data: [
+        {
+          id: 2,
+          name: 'Ann',
+          sex: 'Female',
+          age: 23,
+          address: 'Guanshan Road',
+          office: 'Wuhan',
+          token: 23,
+          bankAccount: '123',
+          avatar: 'avatar',
+        },
+      ]}),
+  },
+}));
+
 describe('display wallet info', () => {
   let container: Container;
   const user = userEvent.setup();
