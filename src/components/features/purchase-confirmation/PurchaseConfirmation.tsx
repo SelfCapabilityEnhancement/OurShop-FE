@@ -1,7 +1,6 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Product} from '@/components/common/CustomeTypes';
 import {useState} from 'react';
-import productImage from 'images/product/product1.png';
 
 
 export default function PurchaseConfirmation() {
@@ -54,12 +53,12 @@ export default function PurchaseConfirmation() {
 
         <ul className="flex-1 flex flex-col">
           {
-            products.map(({name, priceToken}, index) => (
+            products.map(({name, priceToken,images}, index) => (
                 <li key={`product-${index}`} className="product border-gray-400 my-7 h-10">
                   <div className="flex flex-1 flex-row items-center items-center p-4">
                     <div className="justify-center items-center mr-4">
                       <img alt="product"
-                           src={productImage}
+                           src={images.split(',')[0]}
                            className="mx-auto object-cover rounded-lg h-20 w-24"/>
                     </div>
                     <div className="flex-1 text-gray-600 text-2xl font-medium">
