@@ -7,3 +7,21 @@ export interface Product {
   description: string;
   images: File[];
 }
+
+export interface User {
+  id: number;
+  name: string;
+  sex: string;
+  age: number;
+  address: string;
+  office: string;
+  token: number;
+  bankAccount: string;
+  avatar: string
+}
+
+export interface ShoppingCartItem {
+  product: Product;
+  shoppingCartProductsId: number;
+  productNum: number
+}

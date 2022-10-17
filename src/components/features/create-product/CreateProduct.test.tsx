@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
@@ -58,9 +58,11 @@ describe('Create product test', () => {
 
     await user.click(submit as Element);
 
-    expect(
-      await screen.findByText('all required field must be filled')
-    ).toBeInTheDocument();
+    waitFor(async () => {
+      expect(
+        await screen.findByText('all required field must be filled')
+      ).toBeInTheDocument();
+    });
   });
 
   it('should display tabs', () => {
