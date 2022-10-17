@@ -1,5 +1,5 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { Product } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
@@ -93,24 +93,29 @@ function CreateProduct() {
     setValidation(result);
   };
 
+  useEffect(() => {
+    if (validation) {
+      uploadFile().then(() => {
+        http.post('/product/create', {
+          ...product,
+          images: product.images
+            .map((image) => `${imageUrlPrefix}${image.name}`)
+            .join(','),
+        }).then(() => {
+          setProduct(() => emptyProduct);
+          setImageURL(() => []);
+        });
+      });
+    }
+  }, [validation]);
+
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
     validateForm();
     SetShowBanner(true);
-
-    await http.post('/product/create', {
-      ...product,
-      images: product.images
-        .map((image) => `${imageUrlPrefix}${image.name}`)
-        .join(','),
-    });
-    await uploadFile();
-
-    setProduct(() => emptyProduct);
-    setImageURL(() => []);
-    SetShowBanner(false);
+    setTimeout(() => SetShowBanner(false), 1500);
   };
 
   const uploadFile = async () => {
@@ -118,9 +123,9 @@ function CreateProduct() {
   };
 
   return (
-    <div className="w-full max-w-full p-3">
+    <div className='w-full max-w-full p-3'>
       <Tab.Group>
-        <Tab.List className="flex space-x-10 p-1">
+        <Tab.List className='flex space-x-10 p-1'>
           {tabs.map((tab) => (
             <Tab
               key={tab.id}
@@ -139,22 +144,22 @@ function CreateProduct() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <div className="m-8">
+            <div className='m-8'>
               <Banner
                 visible={showBanner}
                 success={validation}
                 message={validation ? successMsg : failMsg}
               />
-              <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
+              <form className='mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96'>
                 {basicForm.map(({ id, label, type }) => (
-                  <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
-                    <label htmlFor={id} className="mr-5 w-30">
-                      <span className="text-red-500 pr-1">*</span>
+                  <div key={id} className='col-span-2 grid grid-cols-2 gap-y-4'>
+                    <label htmlFor={id} className='mr-5 w-30'>
+                      <span className='text-red-500 pr-1'>*</span>
                       {label}
                     </label>
                     <input
                       type={type === 'string' ? 'text' : 'number'}
-                      className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring"
+                      className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring'
                       onChange={(event) => handleInputField(event, id)}
                       value={
                         type === 'number' && product[id] === 0
@@ -166,15 +171,15 @@ function CreateProduct() {
                   </div>
                 ))}
 
-                <label htmlFor="description" className="mr-5 col-span-2">
-                  <span className="text-red-500 pr-1">*</span>product
+                <label htmlFor='description' className='mr-5 col-span-2'>
+                  <span className='text-red-500 pr-1'>*</span>product
                   description
                 </label>
                 <textarea
-                  className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring"
+                  className='col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring'
                   value={product.description}
                   onChange={(event) => handleInputField(event, 'description')}
-                  id="description"
+                  id='description'
                 />
 
                 <ImageUploader
@@ -183,7 +188,7 @@ function CreateProduct() {
                 />
                 <button
                   onClick={(event) => handleSubmit(event)}
-                  className="create button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className='create button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center'
                 >
                   Create Product
                 </button>

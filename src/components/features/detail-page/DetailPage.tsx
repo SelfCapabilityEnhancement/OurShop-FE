@@ -40,19 +40,22 @@ export default function DetailPage() {
     setCount(count + 1);
   };
 
-  function handleAddToCart() {
-    validate();
-    setShowBanner(true);
-    setTimeout(() => {
-      setShowBanner(false);
-    }, 1500);
+  useEffect(() => {
     if (validation) {
       http.post('/shopping-cart/create',
         { userId: user?.id, productId: product.id, productNum: count })
         // eslint-disable-next-line no-console
         .catch(console.error);
     }
-  }
+  }, [validation]);
+
+  const handleAddToCart = async () => {
+    validate();
+    setShowBanner(true);
+    setTimeout(() => {
+      setShowBanner(false);
+    }, 1500);
+  };
 
   const validate = () => {
     const result = logisticMethods.includes(logisticMethod);
