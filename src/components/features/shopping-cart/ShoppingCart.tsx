@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  getProducts,
-  getProductCount,
-  getShoppingCartProductsIdList
-} from '@/mocks/mockData';
 import Counter from '@/components/common/counter/Counter';
 import productImage from 'images/product/product1.png';
 import { http } from '@/service';
@@ -13,9 +8,6 @@ import { getCurrentUser } from '@/components/common/utils';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
-  const products = getProducts();
-  const count = getProductCount();
-  const shoppingCartProductsIdList = getShoppingCartProductsIdList();
   const [shoppingCartItems, setShoppingCartItems] = useState<
     ShoppingCartItem[]
   >([]);
@@ -56,12 +48,15 @@ export default function ShoppingCart() {
   };
 
   const handleOnClickPayBtn = () => {
-    const selectedProducts = products.filter(
-      (_item, index) => checkedState[index]
-    );
-    const selectedShoppingCartProductsIds = shoppingCartProductsIdList.filter(
-      (_item, index) => checkedState[index]
-    );
+    const selectedProducts = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+    ).map((e)=>e.product);
+    const selectedShoppingCartProductsIds = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+    ).map((e)=>e.shoppingCartProductsId);
+    const count=shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+    ).map((e)=>e.productNum);
     // const selectedItems = shoppingCartItems.filter((_item, index) => checkedState[index]);
     navigate('/purchase-confirmation', {
       state: {
