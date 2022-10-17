@@ -42,9 +42,6 @@ export default function ShoppingCart() {
   const handleOnCheck = (position: number) => {
     const updatedCheckedState = [...checkedState];
     updatedCheckedState[position] = !updatedCheckedState[position];
-    // const updatedCheckedState = checkedState.map((item, index) =>
-    //   index === position ? !item : item
-    // );
 
     setCheckedState(updatedCheckedState);
   };
@@ -58,8 +55,6 @@ export default function ShoppingCart() {
       (e) => e.shoppingCartProductsId
     );
     const count = selectedItems.map((e) => e.productNum);
-    console.log(shoppingCartItems);
-    console.log(selectedItems);
 
     navigate('/purchase-confirmation', {
       state: {
