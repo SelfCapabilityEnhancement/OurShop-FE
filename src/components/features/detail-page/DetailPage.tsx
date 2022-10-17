@@ -9,7 +9,7 @@ import product5 from 'images/product/product5.png';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
-import { getCurrentUser } from '@/components/common/utils';
+import { getCurrentUser } from '@/utils';
 
 const srcArray = [product1, product2, product3, product4, product5];
 const logisticMethods = ['office', 'address'];
