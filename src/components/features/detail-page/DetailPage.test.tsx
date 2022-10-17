@@ -5,9 +5,31 @@ import { tempProducts } from '@/mocks/mockData';
 import * as ReactRouter from 'react-router';
 import { Location } from 'react-router-dom';
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    get: jest.fn().mockResolvedValue({
+      data: [
+        {
+          id: 2,
+          name: 'Ann',
+          sex: 'Female',
+          age: 23,
+          address: 'Guanshan Road',
+          office: 'Wuhan',
+          token: 23,
+          bankAccount: '123',
+          avatar: 'avatar',
+        },
+      ],
+    }),
+  },
+}));
+
+window.IntersectionObserver = jest.fn()
+  .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
+
 describe('Detail Page', () => {
-  window.IntersectionObserver = jest.fn()
-    .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
   const user = userEvent.setup();
   const mockProduct = tempProducts[0];

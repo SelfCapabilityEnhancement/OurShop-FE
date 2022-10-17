@@ -14,6 +14,8 @@ import { getCurrentUser } from '@/components/common/utils';
 const srcArray = [product1, product2, product3, product4, product5];
 const logisticMethods = ['office', 'address'];
 
+const successMsg = 'The product was added into shopping cart successfully!';
+const failMsg = 'Please choose one logistic method!';
 export default function DetailPage() {
   const { state: { product } }: { state: { product: Product } } = useLocation();
 
@@ -46,9 +48,9 @@ export default function DetailPage() {
     }, 1500);
     if (validation) {
       http.post('/shopping-cart/create',
-          { userId: user?.id, productId: product.id, productNum: count})
-      // eslint-disable-next-line no-console
-      .catch(console.error);
+        { userId: user?.id, productId: product.id, productNum: count })
+        // eslint-disable-next-line no-console
+        .catch(console.error);
     }
   }
 
@@ -63,9 +65,10 @@ export default function DetailPage() {
 
   return (
     <div className='mx-auto mt-10 relative'>
-      <Banner visible={showBanner} success={validation}
-              successMsg={'The product was added into shopping cart successfully!'}
-              failMsg={'Please choose one logistic method!'} />
+      <Banner visible={showBanner}
+              success={validation}
+              message={validation ? successMsg : failMsg}
+      />
 
       <div className='DetailPage flex w-[1000px] gap-1 mt-[50px]'>
         <section>
