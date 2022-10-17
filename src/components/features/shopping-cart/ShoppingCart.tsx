@@ -4,7 +4,7 @@ import Counter from '@/components/common/counter/Counter';
 import productImage from 'images/product/product1.png';
 import { http } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
-import { getCurrentUser } from '@/components/common/utils';
+import { getCurrentUser } from '@/utils';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
