@@ -36,7 +36,7 @@ const tabs = [
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<uploadProduct>(emptyProduct);
-  const [showBanner, SetShowBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,8 +114,8 @@ function CreateProduct() {
   ) => {
     event.preventDefault();
     validateForm();
-    SetShowBanner(true);
-    setTimeout(() => SetShowBanner(false), 1500);
+    setShowBanner(true);
+    setTimeout(() => setShowBanner(false), 1500);
   };
 
   const uploadFile = async () => {
