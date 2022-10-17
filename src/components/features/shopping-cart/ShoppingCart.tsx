@@ -40,24 +40,27 @@ export default function ShoppingCart() {
   };
 
   const handleOnCheck = (position: number) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
+    const updatedCheckedState = [...checkedState];
+    updatedCheckedState[position] = !updatedCheckedState[position];
+    // const updatedCheckedState = checkedState.map((item, index) =>
+    //   index === position ? !item : item
+    // );
 
     setCheckedState(updatedCheckedState);
   };
 
   const handleOnClickPayBtn = () => {
-    const selectedProducts = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
-    ).map((e)=>e.product);
-    const selectedShoppingCartProductsIds = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
-    ).map((e)=>e.shoppingCartProductsId);
-    const count=shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
-    ).map((e)=>e.productNum);
-    // const selectedItems = shoppingCartItems.filter((_item, index) => checkedState[index]);
+    const selectedItems = shoppingCartItems.filter(
+      (_item, index) => checkedState[index]
+    );
+    const selectedProducts = selectedItems.map((e) => e.product);
+    const selectedShoppingCartProductsIds = selectedItems.map(
+      (e) => e.shoppingCartProductsId
+    );
+    const count = selectedItems.map((e) => e.productNum);
+    console.log(shoppingCartItems);
+    console.log(selectedItems);
+
     navigate('/purchase-confirmation', {
       state: {
         products: selectedProducts,
