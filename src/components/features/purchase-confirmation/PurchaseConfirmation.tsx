@@ -3,6 +3,7 @@ import { Product } from '@/components/common/CustomeTypes';
 import { useState } from 'react';
 import productImage from 'images/product/product1.png';
 import { http } from '@/service';
+import { getCurrentUser } from '@/utils';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
@@ -15,23 +16,28 @@ export default function PurchaseConfirmation() {
   const handleClickCancel = () => {
     navigate('/shopping-cart');
   };
+
   const handleClickBuy = () => {
-    const res = async () => {
-      await http
-        .post('/shopping-cart/pay-by-token', {
-          userId: 1,
-          token: calCostOfToken(),
-          shoppingCartProductsIdList: shoppingCartProductsIds,
-        })
-        .then((response) => response);
-    };
-    res();
+    getCurrentUser().then((data) => {
+      const res = async () => {
+        await http
+          .post('/shopping-cart/pay-by-token', {
+            userId: data[0].id,
+            token: calCostOfToken(),
+            shoppingCartProductsIdList: shoppingCartProductsIds,
+          })
+          .then((response) => response);
+      };
+      res();
+    });
+
     SetShowBanner(true);
     setTimeout(() => {
       SetShowBanner(false);
       navigate('/shopping-cart');
     }, 1500);
   };
+
   const calCostOfToken = () => {
     let cost = 0;
     products.forEach((product, index) => {
