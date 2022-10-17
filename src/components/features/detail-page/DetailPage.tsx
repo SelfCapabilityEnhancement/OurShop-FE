@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
-import product1 from 'images/product/product1.png';
-import product2 from 'images/product/product2.png';
-import product3 from 'images/product/product3.png';
-import product4 from 'images/product/product4.png';
-import product5 from 'images/product/product5.png';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
 import { getCurrentUser } from '@/components/common/utils';
 
-const srcArray = [product1, product2, product3, product4, product5];
 const logisticMethods = ['office', 'address'];
 
 const successMsg = 'The product was added into shopping cart successfully!';
 const failMsg = 'Please choose one logistic method!';
 export default function DetailPage() {
   const { state: { product } }: { state: { product: Product } } = useLocation();
-
   const [bigImgIndex, setBigImgIndex] = useState(0);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
@@ -73,12 +66,12 @@ export default function DetailPage() {
       <div className='DetailPage flex w-[1000px] gap-1 mt-[50px]'>
         <section>
           <img
-            src={srcArray[bigImgIndex]}
+            src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
             className='h-[375px] w-[500px] mb-5 rounded-xl'
           />
           <div className='flex small-pictures'>
-            {srcArray.map((imgSrc, index) => (
+            {product.images.split(',').map((imgSrc, index) => (
               <img
                 key={index}
                 src={imgSrc}

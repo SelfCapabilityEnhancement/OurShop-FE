@@ -21,11 +21,12 @@ describe('HomePage', () => {
     render(<HomePage />, { wrapper: BrowserRouter });
   });
 
-  it('should display products', async () => {
-    const products = await screen.findAllByRole('img');
-
-    expect(await screen.findByText(tempProducts[0].name)).toBeInTheDocument();
-    expect(products).toHaveLength(tempProducts.length);
+  it('should display products',  () => {
+    waitFor(() => {
+      const products = screen.findAllByRole('img');
+      expect(screen.findByText(tempProducts[0].name)).toBeInTheDocument();
+      expect(products).toHaveLength(tempProducts.length);
+    });
   });
 
   it('should navigate to detail page when click product', () => {

@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import productImage from 'images/product/product1.png';
 import {http} from '@/service';
 import {ShoppingCartItem} from '@/components/common/CustomeTypes';
 import {getCurrentUser} from '@/components/common/utils';
@@ -66,7 +65,7 @@ export default function ShoppingCart() {
                             className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
                           <div className="w-20 h-16 flex-initial mx-5">
                             <img alt="profile"
-                                 src={productImage}
+                                 src={shoppingCartItem.product.images.split(',')[0]}
                                  className="mx-auto object-cover rounded-lg"/>
                           </div>
                           <label htmlFor="product-checkbox-1"

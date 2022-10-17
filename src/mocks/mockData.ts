@@ -7,7 +7,7 @@ export const tempProducts: Array<Product> = [
     priceToken: 5,
     priceMoney: 0,
     description: 'yummy',
-    images: [],
+    images: 'path1,path2',
     stock: 2,
   },
   {
@@ -16,7 +16,7 @@ export const tempProducts: Array<Product> = [
     priceToken: 3,
     priceMoney: 0,
     description: '',
-    images: [],
+    images: 'path3',
     stock: 3,
   },
   {
@@ -25,7 +25,7 @@ export const tempProducts: Array<Product> = [
     priceToken: 2,
     priceMoney: 0,
     description: '',
-    images: [],
+    images: 'path4',
     stock: 5,
   },
 ];
