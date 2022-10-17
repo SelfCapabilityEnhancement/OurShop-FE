@@ -88,5 +88,10 @@ export const users = [
   },
 ];
 
+// todo 待删除
+const shoppingCartProductsIdList = [94, 95, 96];
+
 export const getProducts = () => tempProducts;
 export const getProductCount = () => count;
+// todo 待删除
+export const getShoppingCartProductsIdList = () => shoppingCartProductsIdList;
