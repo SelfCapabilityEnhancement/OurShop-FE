@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import {http} from '@/service';
-import {ShoppingCartItem} from '@/components/common/CustomeTypes';
-import {getCurrentUser} from '@/components/common/utils';
+import { http } from '@/service';
+import { ShoppingCartItem } from '@/components/common/CustomeTypes';
+import { getCurrentUser } from '@/utils';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
@@ -37,16 +37,29 @@ export default function ShoppingCart() {
   };
 
   const handleOnCheck = (position: number) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-        index === position ? !item : item
-    );
+    const updatedCheckedState = [...checkedState];
+    updatedCheckedState[position] = !updatedCheckedState[position];
 
     setCheckedState(updatedCheckedState);
   };
 
   const handleOnClickPayBtn = () => {
-    const selectedItems = shoppingCartItems.filter((_item, index) => checkedState[index]);
-    navigate('/purchase-confirmation', {state: {selectedItems}});
+    const selectedItems = shoppingCartItems.filter(
+      (_item, index) => checkedState[index]
+    );
+    const selectedProducts = selectedItems.map((e) => e.product);
+    const selectedShoppingCartProductsIds = selectedItems.map(
+      (e) => e.shoppingCartProductsId
+    );
+    const count = selectedItems.map((e) => e.productNum);
+
+    navigate('/purchase-confirmation', {
+      state: {
+        products: selectedProducts,
+        count,
+        shoppingCartProductsIds: selectedShoppingCartProductsIds,
+      },
+    });
   };
 
   return (

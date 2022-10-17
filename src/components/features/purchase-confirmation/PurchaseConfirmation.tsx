@@ -1,23 +1,42 @@
-import {useLocation, useNavigate} from 'react-router-dom';
-import {Product} from '@/components/common/CustomeTypes';
-import {useState} from 'react';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Product } from '@/components/common/CustomeTypes';
+import { useState } from 'react';
+import { http } from '@/service';
+import { getCurrentUser } from '@/utils';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
-  const {state: {products, count}}: { state: { products: Array<Product>, count: Array<number> } } = useLocation();
+  const {
+    state: { products, count,shoppingCartProductsIds },
+  }: { state: { products: Array<Product>; count: Array<number>,shoppingCartProductsIds:Array<number> } } =
+    useLocation();
   const [showBanner, SetShowBanner] = useState(false);
 
   const handleClickCancel = () => {
     navigate('/shopping-cart');
   };
+
   const handleClickBuy = () => {
+    getCurrentUser().then((data) => {
+      const res = async () => {
+        await http
+          .post('/shopping-cart/pay-by-token', {
+            userId: data[0].id,
+            token: calCostOfToken(),
+            shoppingCartProductsIdList: shoppingCartProductsIds,
+          })
+          .then((response) => response);
+      };
+      res();
+    });
+
     SetShowBanner(true);
     setTimeout(() => {
       SetShowBanner(false);
       navigate('/shopping-cart');
     }, 1500);
   };
+
   const calCostOfToken = () => {
     let cost = 0;
     products.forEach((product, index) => {
@@ -27,8 +46,7 @@ export default function PurchaseConfirmation() {
   };
 
   return (
-      <div
-          className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
+      <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
         <div
             className={`purchase-confirmation-banner ${showBanner ? 'block' : 'hidden'} flex z-10 fixed p-4 top-40 left-[calc(50vw-175px)] w-[350px] text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800`}
             role="alert"

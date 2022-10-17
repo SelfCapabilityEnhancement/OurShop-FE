@@ -1,10 +1,10 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import {http} from '@/service';
 import {shoppingCartItems, users} from '@/mocks/mockData';
-import * as utils from '@/components/common/utils';
+import * as utils from '@/utils';
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),

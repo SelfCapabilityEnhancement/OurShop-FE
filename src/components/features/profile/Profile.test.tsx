@@ -4,6 +4,12 @@ import { Container } from 'react-dom';
 import Profile from '@/components/features/profile/Profile';
 import { BrowserRouter } from 'react-router-dom';
 
+jest.mock('@/service', () => ({
+  isDev: jest.fn(),
+  http: {
+    get: jest.fn(),
+  },
+}));
 
 describe('display profile option', () => {
   let container: Container;
