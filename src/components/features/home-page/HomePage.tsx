@@ -9,7 +9,13 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getProducts = async () => {
-      await http.get('/product').then(({ data }) => setProducts(data));
+      await http.get('/product').then(({ data }) => {
+        data.sort((a: { id: number; }, b: { id: number; }) => {
+          return a.id > b.id ? -1 : 1;
+        });
+
+        setProducts(data);
+      });
     };
 
     getProducts().then();
