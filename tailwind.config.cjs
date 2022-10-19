@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         'fluid': 'repeat(auto-fill, minmax(16rem, 1fr))',
-      }
+      },
     },
   },
   plugins: [],

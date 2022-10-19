@@ -7,7 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
-    get: jest.fn().mockResolvedValue({data: [
+    get: jest.fn().mockResolvedValue({
+      data: [
         {
           id: 2,
           name: 'Ann',
@@ -19,7 +20,8 @@ jest.mock('@/service', () => ({
           bankAccount: '123',
           avatar: 'avatar',
         },
-      ]}),
+      ],
+    }),
   },
 }));
 

@@ -9,7 +9,7 @@ export default function HomePage() {
   useEffect(() => {
     const getProducts = async () => {
       await http.get('/product').then(({ data }) => {
-        data.sort((a: { id: number; }, b: { id: number; }) => {
+        data.sort((a: { id: number }, b: { id: number }) => {
           return a.id > b.id ? -1 : 1;
         });
 
@@ -21,24 +21,30 @@ export default function HomePage() {
   }, []);
 
   const handleClick = (product: Product) => {
-    navigate('/detail', {state: { product }});
+    navigate('/detail', { state: { product } });
   };
 
   return (
-      <div className="grid grid-cols-fluid justify-between my-10">
-        {products.map((product, key) => (
-            <div key={product.id}
-                 onClick={() => handleClick(product)}
-                 className="product w-60 h-48 mb-20 mx-auto flex flex-col bg-gray-100">
-              <img src={product.images.split(',')[0]} alt="product" className={`image${key} h-52`}/>
-              <div className="bg-gray-100">
-                <div className="text-xl font-normal">{product.name}</div>
-                <div className="text-xl font-normal text-red-600">
-                  {`$${product.priceMoney} or ${product.priceToken} Token`}
-                </div>
-              </div>
+    <div className="grid grid-cols-fluid justify-between my-10">
+      {products.map((product, key) => (
+        <div
+          key={product.id}
+          onClick={() => handleClick(product)}
+          className="product w-60 h-48 mb-20 mx-auto flex flex-col bg-gray-100"
+        >
+          <img
+            src={product.images.split(',')[0]}
+            alt="product"
+            className={`image${key} h-52`}
+          />
+          <div className="bg-gray-100">
+            <div className="text-xl font-normal">{product.name}</div>
+            <div className="text-xl font-normal text-red-600">
+              {`$${product.priceMoney} or ${product.priceToken} Token`}
             </div>
-        ))}
-      </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
