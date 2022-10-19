@@ -3,6 +3,9 @@ import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
+import * as utils from '@/utils';
+import * as request from '@/service/request';
+import { uploadProduct } from '@/components/common/CustomeTypes';
 
 jest.mock('@/azure-storage-blob', () => ({
   uploadFileToBlob: jest.fn(),
@@ -80,5 +83,20 @@ describe('Create product test', () => {
 
       expect(container.querySelector(`.${tab.id}`)).toBeInTheDocument();
     });
+  });
+
+  it('should show loading banner when create product', async () => {
+    jest.spyOn(utils, 'validateForm').mockReturnValue(true);
+    jest.spyOn(request, 'uploadFile').mockResolvedValue();
+    jest
+      .spyOn(request, 'postProduct')
+      .mockImplementation(async (product: uploadProduct) => {
+        await setTimeout(() => {}, 1000);
+      });
+    const submit = container.querySelector('button.create');
+
+    await user.click(submit as Element);
+
+    expect(await screen.findByText('Loading')).toBeInTheDocument();
   });
 });

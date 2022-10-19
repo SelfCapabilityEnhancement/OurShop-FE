@@ -1,4 +1,4 @@
-import {createBrowserRouter, Navigate} from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../App';
 import ErrorPage from '../components/features/error-page/Error-page';
 import CreateProduct from '../components/features/create-product/CreateProduct';
@@ -14,36 +14,36 @@ import MyAddress from '@/components/features/my-address/MyAddress';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
-    errorElement: <ErrorPage/>,
+    element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
-        element: <Navigate to="home"/>,
+        element: <Navigate to="home" />,
       },
       {
         path: 'home',
-        element: <HomePage/>,
+        element: <HomePage />,
       },
       {
         path: 'create-product',
-        element: <CreateProduct/>,
+        element: <CreateProduct />,
       },
       {
         path: 'shopping-cart',
-        element: <ShoppingCart/>,
+        element: <ShoppingCart />,
       },
       {
         path: 'my-order',
-        element: <MyOrder/>,
+        element: <MyOrder />,
       },
       {
         path: 'my-wallet',
-        element: <MyWallet/>,
+        element: <MyWallet />,
       },
       {
         path: 'purchase-confirmation',
-        element: <PurchaseConfirmation/>,
+        element: <PurchaseConfirmation />,
       },
       {
         path: 'detail',

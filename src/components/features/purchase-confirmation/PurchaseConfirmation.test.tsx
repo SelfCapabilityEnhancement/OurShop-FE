@@ -10,47 +10,52 @@ import { getProductCount, getProducts } from '@/mocks/mockData';
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
-    get: jest.fn().mockResolvedValue({data: [
+    get: jest.fn().mockResolvedValue({
+      data: [
         {
-          'product': {
-            'id': 79,
-            'name': '橘子',
-            'priceToken': 99,
-            'priceMoney': 9,
-            'description': '水果 🍊',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 79,
+            name: '橘子',
+            priceToken: 99,
+            priceMoney: 9,
+            description: '水果 🍊',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 53,
-          'productNum': 5,
+          shoppingCartProductsId: 53,
+          productNum: 5,
         },
         {
-          'product': {
-            'id': 1,
-            'name': '西瓜',
-            'priceToken': 87,
-            'priceMoney': 7,
-            'description': '水果 🍉',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 1,
+            name: '西瓜',
+            priceToken: 87,
+            priceMoney: 7,
+            description: '水果 🍉',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 98,
-          'productNum': 5,
+          shoppingCartProductsId: 98,
+          productNum: 5,
         },
         {
-          'product': {
-            'id': 97,
-            'name': '手机',
-            'priceToken': 9999,
-            'priceMoney': 899,
-            'description': '一部手机',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 97,
+            name: '手机',
+            priceToken: 9999,
+            priceMoney: 899,
+            description: '一部手机',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 24,
-          'productNum': 1,
+          shoppingCartProductsId: 24,
+          productNum: 1,
         },
-      ]}),
+      ],
+    }),
   },
 }));
 
@@ -62,12 +67,14 @@ describe('purchase confirmation', () => {
     pathname: '',
     search: '',
     hash: '',
-    state: { products :getProducts(), count: getProductCount() },
+    state: { products: getProducts(), count: getProductCount() },
   };
 
   beforeEach(() => {
     jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
-    container = render(<PurchaseConfirmation />, { wrapper: BrowserRouter }).container;
+    container = render(<PurchaseConfirmation />, {
+      wrapper: BrowserRouter,
+    }).container;
   });
 
   it('should display purchase info', () => {
@@ -84,7 +91,7 @@ describe('purchase confirmation', () => {
 
     expect(screen.findByTestId('shopping-cart')).toBeTruthy();
   });
-  it('should calculate the cost of tokens',()=>{
+  it('should calculate the cost of tokens', () => {
     expect(screen.getByText(/19/i)).toBeInTheDocument();
   });
 

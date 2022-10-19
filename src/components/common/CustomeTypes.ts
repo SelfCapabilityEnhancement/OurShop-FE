@@ -27,11 +27,11 @@ export interface User {
   office: string;
   token: number;
   bankAccount: string;
-  avatar: string
+  avatar: string;
 }
 
 export interface ShoppingCartItem {
   product: Product;
   shoppingCartProductsId: number;
-  productNum: number
+  productNum: number;
 }

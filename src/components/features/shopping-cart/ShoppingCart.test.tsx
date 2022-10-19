@@ -1,64 +1,71 @@
-import {render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import {http} from '@/service';
-import {shoppingCartItems, users} from '@/mocks/mockData';
+import { http } from '@/service';
+import { shoppingCartItems, users } from '@/mocks/mockData';
 import * as utils from '@/utils';
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
-    get: jest.fn().mockResolvedValue({data: [
+    get: jest.fn().mockResolvedValue({
+      data: [
         {
-          'product': {
-            'id': 79,
-            'name': '橘子',
-            'priceToken': 99,
-            'priceMoney': 9,
-            'description': '水果 🍊',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 79,
+            name: '橘子',
+            priceToken: 99,
+            priceMoney: 9,
+            description: '水果 🍊',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 53,
-          'productNum': 5,
+          shoppingCartProductsId: 53,
+          productNum: 5,
         },
         {
-          'product': {
-            'id': 1,
-            'name': '西瓜',
-            'priceToken': 87,
-            'priceMoney': 7,
-            'description': '水果 🍉',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 1,
+            name: '西瓜',
+            priceToken: 87,
+            priceMoney: 7,
+            description: '水果 🍉',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 98,
-          'productNum': 5,
+          shoppingCartProductsId: 98,
+          productNum: 5,
         },
         {
-          'product': {
-            'id': 97,
-            'name': '手机',
-            'priceToken': 9999,
-            'priceMoney': 899,
-            'description': '一部手机',
-            'stock': 1,
-            'images': 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+          product: {
+            id: 97,
+            name: '手机',
+            priceToken: 9999,
+            priceMoney: 899,
+            description: '一部手机',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
           },
-          'shoppingCartProductsId': 24,
-          'productNum': 1,
+          shoppingCartProductsId: 24,
+          productNum: 1,
         },
-      ]}),
+      ],
+    }),
   },
 }));
 
 describe('display shopping cart page given nonempty products', () => {
   const user = userEvent.setup();
-  const container = render(<ShoppingCart/>, {wrapper: BrowserRouter}).container;
+  const container = render(<ShoppingCart />, {
+    wrapper: BrowserRouter,
+  }).container;
 
   beforeEach(() => {
-    jest.spyOn(http, 'get').mockResolvedValue({data: shoppingCartItems});
+    jest.spyOn(http, 'get').mockResolvedValue({ data: shoppingCartItems });
     jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
   });
 
@@ -113,10 +120,12 @@ describe('display shopping cart page given nonempty products', () => {
 });
 
 describe('display empty message given empty products', () => {
-  const container = render(<ShoppingCart/>, {wrapper: BrowserRouter}).container;
+  const container = render(<ShoppingCart />, {
+    wrapper: BrowserRouter,
+  }).container;
 
   it('should display nothing in the shopping cart', () => {
-    jest.spyOn(http, 'get').mockResolvedValue({data: []});
+    jest.spyOn(http, 'get').mockResolvedValue({ data: [] });
     jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
     waitFor(() => {
       const emptyMsg = container.querySelector('.empty-msg');
