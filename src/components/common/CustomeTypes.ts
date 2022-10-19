@@ -1,4 +1,4 @@
-export interface Product {
+export interface uploadProduct {
   id: number;
   name: string;
   priceToken: number;
@@ -6,6 +6,16 @@ export interface Product {
   stock: number;
   description: string;
   images: File[];
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  priceToken: number;
+  priceMoney: number;
+  stock: number;
+  description: string;
+  images: String;
 }
 
 export interface User {

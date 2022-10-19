@@ -48,7 +48,7 @@ describe('Detail Page', () => {
 
   test('should show product picture', () => {
     expect(screen.getByAltText(/big product picture/i)).toBeInTheDocument();
-    expect(screen.getAllByAltText(/small product picture.*?/i).length).toBe(5);
+    expect(screen.getAllByAltText(/small product picture.*?/i).length).toBe(2);
   });
 
   test('should show detail page', () => {
@@ -70,8 +70,8 @@ describe('Detail Page', () => {
   });
 
   test('should show another picture when click small product picture', async () => {
-    await userEvent.click(screen.getByAltText('small product picture 2'));
-    expect(screen.queryByAltText('big product picture 2')).toBeInTheDocument();
+    await userEvent.click(screen.getByAltText('small product picture 1'));
+    expect(screen.queryByAltText('big product picture 1')).toBeInTheDocument();
   });
 
   test('should show banner when click add to shopping cart button', async () => {
