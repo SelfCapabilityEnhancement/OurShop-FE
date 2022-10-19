@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useState } from 'react';
 
 const orders = [
   {
@@ -82,8 +82,8 @@ export default function OrderManagement() {
   }
 
   function dateRangeFilterHandler() {
-    startDate?.setHours(0,0,0);
-    endDate?.setHours(23,59,59);
+    startDate?.setHours(0, 0, 0);
+    endDate?.setHours(23, 59, 59);
     if (startDate && endDate) {
       const filteredOrders = orders.filter((order: any) => {
         return order.purchaseDate >= startDate && order.purchaseDate <= endDate;

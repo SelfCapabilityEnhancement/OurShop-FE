@@ -1,4 +1,3 @@
-import React from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
 
 const orders = [
@@ -20,7 +19,10 @@ export default function MyOrder() {
     <div className="w-[1280px] mx-auto mt-5">
       <ul className="flex flex-col">
         {orders.map((item) => (
-          <li key={item.id} className="order-item product border-gray-400 mb-5 h-20 ">
+          <li
+            key={item.id}
+            className="order-item product border-gray-400 mb-5 h-20 "
+          >
             <OrderItem order={item} />
           </li>
         ))}

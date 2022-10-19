@@ -1,5 +1,4 @@
-import React from 'react';
-import product1 from "images/product/product1.png";
+import product1 from 'images/product/product1.png';
 
 export default function OrderItem(props: { order: any }) {
   const order = props.order;
