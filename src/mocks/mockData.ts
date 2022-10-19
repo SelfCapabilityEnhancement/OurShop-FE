@@ -88,5 +88,34 @@ export const users = [
   },
 ];
 
+const date = new Date('2022-10-19 15:34:20');
+
+export const mockOrder = [
+  {
+    product: {
+      id: 79,
+      name: '橘子',
+      priceToken: 99,
+      priceMoney: 9,
+      description: '水果 🍊',
+      stock: 1,
+      images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+    },
+    orders: {
+      id: 1,
+      userId: 12,
+      orderProductsId: 3,
+      orderAddress: 'order address',
+      orderStatus: 'order status',
+      purchaseDate: date,
+    },
+    orderProducts: {
+      id: 3,
+      productId: 79,
+      purchaseNum: 1,
+    },
+  },
+];
+
 export const getProducts = () => tempProducts;
 export const getProductCount = () => count;

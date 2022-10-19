@@ -1,7 +1,7 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { uploadProduct } from '@/components/common/CustomeTypes';
+import { UploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { http } from '@/service';
 import { uploadFileToBlob } from '@/azure-storage-blob';
@@ -11,7 +11,7 @@ import { generateUniqueImageName, classNames } from '@/utils';
 const successMsg = 'The product was created successfully!';
 const failMsg = 'all required field must be filled';
 
-const emptyProduct: uploadProduct = {
+const emptyProduct: UploadProduct = {
   id: 1,
   name: '',
   priceToken: 0,
@@ -21,7 +21,7 @@ const emptyProduct: uploadProduct = {
   images: [],
 };
 
-const basicForm: { id: keyof uploadProduct; label: string; type: string }[] = [
+const basicForm: { id: keyof UploadProduct; label: string; type: string }[] = [
   { id: 'name', label: 'product name', type: 'string' },
   { id: 'priceMoney', label: 'price in USD', type: 'number' },
   { id: 'priceToken', label: 'price in token', type: 'number' },
@@ -35,7 +35,7 @@ const tabs = [
 
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
-  const [product, setProduct] = useState<uploadProduct>(emptyProduct);
+  const [product, setProduct] = useState<UploadProduct>(emptyProduct);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
 

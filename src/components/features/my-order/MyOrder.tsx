@@ -20,9 +20,9 @@ export default function MyOrder() {
   return (
     <div className="w-[1280px] mx-auto mt-5">
       <ul className="flex flex-col">
-        {ordersItems.map((item, key) => (
+        {ordersItems.map((item) => (
           <li
-            key={key}
+            key={item.orderProducts.id}
             className="order-item product border-gray-400 mb-5 h-20 "
           >
             <OrderItem order={item} />

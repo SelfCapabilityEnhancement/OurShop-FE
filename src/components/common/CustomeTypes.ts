@@ -1,4 +1,4 @@
-export interface uploadProduct {
+export interface UploadProduct {
   id: number;
   name: string;
   priceToken: number;
@@ -45,7 +45,7 @@ export interface Orders {
   purchaseDate: Date;
 }
 
-export interface orderProducts {
+export interface OrderProducts {
   id: number;
   productId: number;
   purchaseNum: number;
@@ -54,5 +54,5 @@ export interface orderProducts {
 export interface OrdersItem {
   product: Product;
   orders: Orders;
-  orderProducts: orderProducts;
+  orderProducts: OrderProducts;
 }
