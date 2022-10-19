@@ -1,47 +1,10 @@
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 describe('display my order', () => {
-  const mockOrder = [
-    {
-      id: 1,
-      productId: 1,
-      productName: 'Product Name 1',
-      purchaseDate: new Date('2022-09-01'),
-      purchaseNumber: 1,
-    },
-    {
-      id: 2,
-      productId: 1,
-      productName: 'Product Name 1',
-      purchaseDate: new Date('2022-09-02'),
-      purchaseNumber: 2,
-    },
-    {
-      id: 3,
-      productId: 2,
-      productName: 'Product Name 2',
-      purchaseDate: new Date('2022-09-01'),
-      purchaseNumber: 1,
-    },
-    {
-      id: 4,
-      productId: 2,
-      productName: 'Product Name 2',
-      purchaseDate: new Date('2022-09-02'),
-      purchaseNumber: 2,
-    },
-    {
-      id: 5,
-      productId: 2,
-      productName: 'Product Name 2',
-      purchaseDate: new Date('2022-09-03'),
-      purchaseNumber: 3,
-    },
-  ];
   let container: Container;
   const user = userEvent.setup();
   beforeEach(() => {
@@ -133,7 +96,7 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(0);
   });
 
-  test('should clear date range input and show all orders when click reset button', async () =>{
+  test('should clear date range input and show all orders when click reset button', async () => {
     const startDateInput = container.querySelector(' .start-date');
     const endDateInput = container.querySelector(' .end-date');
     const applyButton = container.querySelector('.apply-button');
@@ -145,10 +108,10 @@ describe('display my order', () => {
     await user.click(resetButton as Element);
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
-        container.querySelectorAll('.order-item-admin').item(0).textContent
+      container.querySelectorAll('.order-item-admin').item(0).textContent
     ).toBe('Product Name 1number: 3');
     expect(
-        container.querySelectorAll('.order-item-admin').item(1).textContent
+      container.querySelectorAll('.order-item-admin').item(1).textContent
     ).toBe('Product Name 2number: 6');
     expect(screen.getAllByRole('textbox')[0].textContent).toBe('');
     expect(screen.getAllByRole('textbox')[1].textContent).toBe('');
