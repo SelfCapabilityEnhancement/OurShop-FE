@@ -3,10 +3,8 @@ import React, { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { uploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
-import { http } from '@/service';
-import { uploadFileToBlob } from '@/azure-storage-blob';
-import { imageUrlPrefix } from '@/constants';
-import { generateUniqueImageName, classNames } from '@/utils';
+import { classNames, generateUniqueImageName, validateForm } from '@/utils';
+import { postProduct, uploadFile } from '@/service/request';
 
 const successMsg = 'The product was created successfully!';
 const failMsg = 'all required field must be filled';
@@ -81,31 +79,14 @@ function CreateProduct() {
     setProduct(tmp);
   };
 
-  const validateForm = () => {
-    let result = true;
-    Object.values(product).forEach((value) => {
-      if (typeof value === 'number' && value <= 0) {
-        result = false;
-      } else if (value.length <= 0) {
-        result = false;
-      }
-    });
-    return result;
-  };
-
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (validateForm()) {
+    if (validateForm(product)) {
       setValidation(true);
-      await uploadFile();
-      await http.post('/product/create', {
-        ...product,
-        images: product.images
-          .map((image) => `${imageUrlPrefix}${image.name}`)
-          .join(','),
-      });
+      await uploadFile(product);
+      await postProduct(product);
       setProduct(() => emptyProduct);
       setImageURL(() => []);
     } else {
@@ -113,10 +94,6 @@ function CreateProduct() {
     }
     setShowBanner(true);
     setTimeout(() => setShowBanner(false), 1500);
-  };
-
-  const uploadFile = async () => {
-    await Promise.all(product.images.map((image) => uploadFileToBlob(image)));
   };
 
   return (

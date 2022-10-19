@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { User } from '@/components/common/CustomeTypes';
+import { uploadProduct, User } from '@/components/common/CustomeTypes';
 import { http } from '@/service';
 
 export const generateUniqueImageName = (name: string) => {
@@ -13,4 +13,16 @@ export function classNames(...classes: any) {
 // this will be replaced by useContext in next iteration
 export const getCurrentUser = (): Promise<User[]> => {
   return http.get('/user/getById/13').then((response) => [response.data]);
+};
+
+export const validateForm = (obj: uploadProduct) => {
+  let result = true;
+  Object.values(obj).forEach((value) => {
+    if (typeof value === 'number' && value <= 0) {
+      result = false;
+    } else if (value.length <= 0) {
+      result = false;
+    }
+  });
+  return result;
 };
