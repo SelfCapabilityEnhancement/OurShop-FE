@@ -6,6 +6,8 @@ export interface uploadProduct {
   stock: number;
   description: string;
   images: File[];
+  logisticMethod: string;
+  logisticMethodComment: string;
 }
 
 export interface Product {
@@ -15,7 +17,9 @@ export interface Product {
   priceMoney: number;
   stock: number;
   description: string;
-  images: String;
+  images: string;
+  logisticMethod: string;
+  logisticMethodComment: string;
 }
 
 export interface User {

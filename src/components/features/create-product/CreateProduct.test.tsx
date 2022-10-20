@@ -31,12 +31,12 @@ describe('Create product test', () => {
   });
 
   it('should display create product form', () => {
-    expect(screen.getByText('product name')).toBeInTheDocument();
-    expect(screen.getByText('price in USD')).toBeInTheDocument();
-    expect(screen.getByText('price in token')).toBeInTheDocument();
-    expect(screen.getByText('product description')).toBeInTheDocument();
-    expect(screen.getByText('picture')).toBeInTheDocument();
-    expect(container.querySelector('.create.button')).toBeInTheDocument();
+    expect(screen.getByText('Product Name')).toBeInTheDocument();
+    expect(screen.getByText('Price in USD')).toBeInTheDocument();
+    expect(screen.getByText('Price in Token')).toBeInTheDocument();
+    expect(screen.getByText('Product Description')).toBeInTheDocument();
+    expect(screen.getByText('Picture')).toBeInTheDocument();
+    expect(container.querySelector('button.next')).toBeInTheDocument();
   });
 
   it('should display product info when edited', () => {
@@ -72,7 +72,7 @@ describe('Create product test', () => {
     const tabs = [
       { id: 'productInfo', name: 'Product Information' },
       { id: 'logisticInfo', name: 'Logistic Information' },
-      { id: 'approvalFlow', name: 'approval flow' },
+      { id: 'approvalFlow', name: 'Approval Flow' },
     ];
 
     tabs.forEach(async (tab) => {
@@ -85,18 +85,27 @@ describe('Create product test', () => {
     });
   });
 
-  it('should show loading banner when create product', async () => {
+  it('should show processing banner when create product', async () => {
     jest.spyOn(utils, 'validateForm').mockReturnValue(true);
     jest.spyOn(request, 'uploadFile').mockResolvedValue();
     jest
       .spyOn(request, 'postProduct')
       .mockImplementation(async (product: uploadProduct) => {
-        await setTimeout(() => {}, 1000);
+        await setTimeout(() => product, 1000);
       });
-    const submit = container.querySelector('button.create');
 
+    const next = container.querySelector('button.next');
+    expect(next).toBeInTheDocument();
+    await user.click(next as Element);
+    expect(await screen.findByText('Logistic Methods')).toBeInTheDocument();
+
+    const office = container.querySelector('#office');
+    await user.click(office as Element);
+
+    const submit = container.querySelector('button.create');
+    expect(submit).toBeInTheDocument();
     await user.click(submit as Element);
 
-    expect(await screen.findByText('Loading')).toBeInTheDocument();
+    expect(await screen.findByText('Processing...')).toBeInTheDocument();
   });
 });
