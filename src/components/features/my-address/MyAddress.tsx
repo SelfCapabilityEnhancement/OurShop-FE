@@ -17,7 +17,8 @@ export default function MyAddress() {
   };
   const [selectedCity, setSelectedCity] = useState(baseCites[0]);
   const [shippingAddress, setShippingAddress] = useState('text text here');
-  const [saveShippingAddress, setSaveShippingAddress] = useState(shippingAddress);
+  const [saveShippingAddress, setSaveShippingAddress] =
+    useState(shippingAddress);
   const [Visible, setVisible] = useState(false);
 
   const handleEdit = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,40 +42,38 @@ export default function MyAddress() {
   }
 
   return (
-    <div className='relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 p-4'>
-      <h1 className='address-header text-center text-3xl mb-10'>My Address</h1>
-      <div className='flex items-center justify-between m-8'>
-        <p className='text-2xl font-semibold'>My Office</p>
+    <div className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 p-4">
+      <h1 className="address-header text-center text-3xl mb-10">My Address</h1>
+      <div className="flex items-center justify-between m-8">
+        <p className="text-2xl font-semibold">My Office</p>
         <Listbox value={selectedCity} onChange={setSelectedCity}>
-          <div className='relative mt-1 w-28'>
-            <Listbox.Button
-              className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
-              <span className='block truncate'>{selectedCity.name}</span>
-              <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
+          <div className="relative mt-1 w-28">
+            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+              <span className="block truncate">{selectedCity.name}</span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth='1.5'
-                  stroke='currentColor'
-                  className='w-6 h-6'
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
                 >
                   <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9'
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
                   />
                 </svg>
               </span>
             </Listbox.Button>
             <Transition
               as={Fragment}
-              leave='transition ease-in duration-100'
-              leaveFrom='opacity-100'
-              leaveTo='opacity-0'
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              <Listbox.Options
-                className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {baseCites.map((city) => (
                   <Listbox.Option
                     key={city.id}
@@ -103,20 +102,29 @@ export default function MyAddress() {
           </div>
         </Listbox>
       </div>
-      <div className='flex items-center justify-between m-8'>
-        <p className='text-2xl font-semibold'>My Shipping address</p>
-        <p className='edit-btn text-2xl font-semibold text-indigo-400' onClick={handleClickEdit()}>edit</p>
+      <div className="flex items-center justify-between m-8">
+        <p className="text-2xl font-semibold">My Shipping address</p>
+        <p
+          className="edit-btn text-2xl font-semibold text-indigo-400"
+          onClick={handleClickEdit()}
+        >
+          edit
+        </p>
       </div>
       {Visible ? (
-        <TextSubmission value={shippingAddress} handleEdit={handleEdit} handleCancel={handleClickCancel}
-                        handleSave={handleClickSave} />
+        <TextSubmission
+          value={shippingAddress}
+          handleEdit={handleEdit}
+          handleCancel={handleClickCancel}
+          handleSave={handleClickSave}
+        />
       ) : (
         <div>
-          <p className='m-8 text-2xl font-light'>{saveShippingAddress}</p>
+          <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
           <button
-            type='button'
+            type="button"
             onClick={handleClick}
-            className='go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 '
+            className="go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
           >
             Good to Go
           </button>

@@ -26,11 +26,11 @@ jest.mock('@/service', () => ({
   },
 }));
 
-window.IntersectionObserver = jest.fn()
+window.IntersectionObserver = jest
+  .fn()
   .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
 describe('Detail Page', () => {
-
   const user = userEvent.setup();
   const mockProduct = tempProducts[0];
   const mockLocation: Location = {
@@ -53,8 +53,11 @@ describe('Detail Page', () => {
 
   test('should show detail page', () => {
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
-    expect(screen.getByText(`price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`))
-      .toBeInTheDocument();
+    expect(
+      screen.getByText(
+        `price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`
+      )
+    ).toBeInTheDocument();
     expect(screen.getByText(/Description/i)).toBeInTheDocument();
     expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
 
@@ -77,9 +80,9 @@ describe('Detail Page', () => {
   test('should show banner when click add to shopping cart button', async () => {
     await user.click(screen.getByText('add in shopping cart'));
 
-    expect(await screen.findByText(
-      'Please choose one logistic method!'))
-      .toBeInTheDocument();
+    expect(
+      await screen.findByText('Please choose one logistic method!')
+    ).toBeInTheDocument();
   });
 
   test('should show title of logistic method', () => {
@@ -91,11 +94,13 @@ describe('Detail Page', () => {
 
   test('should show error prompt when not click any logistic method', async () => {
     await userEvent.click(screen.getByText('add in shopping cart'));
-    expect(screen.queryByText('Please choose one logistic method!')).toBeInTheDocument();
+    expect(
+      screen.queryByText('Please choose one logistic method!')
+    ).toBeInTheDocument();
     setTimeout(() => {
-      expect(screen.getByText('Please choose one logistic method!'))
-        .not
-        .toBeInTheDocument();
+      expect(
+        screen.getByText('Please choose one logistic method!')
+      ).not.toBeInTheDocument();
     }, 3000);
   });
 
@@ -115,5 +120,4 @@ describe('Detail Page', () => {
     await userEvent.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
-
 });

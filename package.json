@@ -15,7 +15,10 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["eslint . --ext .tsx --fix", "prettier --config .prettierrc  --write ."]
+    "*.{ts,tsx}": [
+      "eslint . --ext .tsx --fix",
+      "prettier --config .prettierrc  --write ."
+    ]
   },
   "dependencies": {
     "@azure/storage-blob": "^12.11.0",

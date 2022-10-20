@@ -1,4 +1,3 @@
-import React from 'react';
 import product1 from 'images/product/product1.png';
 
 export default function OrderItemAdmin(props: { order: any }) {
