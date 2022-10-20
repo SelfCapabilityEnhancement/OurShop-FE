@@ -5,6 +5,7 @@ import { uploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import { postProduct, uploadFile } from '@/service/request';
+import Loading from '@/components/common/loading/Loading';
 
 const successMsg = 'The product was created successfully!';
 const failMsg = 'all required field must be filled';
@@ -34,6 +35,7 @@ const tabs = [
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<uploadProduct>(emptyProduct);
+  const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
 
@@ -85,8 +87,10 @@ function CreateProduct() {
     event.preventDefault();
     if (validateForm(product)) {
       setValidation(true);
+      setLoading(true);
       await uploadFile(product);
       await postProduct(product);
+      setLoading(false);
       setProduct(() => emptyProduct);
       setImageURL(() => []);
     } else {
@@ -124,6 +128,7 @@ function CreateProduct() {
                 success={validation}
                 message={validation ? successMsg : failMsg}
               />
+              <Loading message="Loading..." visible={showLoading} />
               <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
