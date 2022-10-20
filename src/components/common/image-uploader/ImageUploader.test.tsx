@@ -15,7 +15,7 @@ describe('Image Uploader', () => {
   });
 
   it('should display image uploader', () => {
-    expect(screen.getByText('picture')).toBeInTheDocument();
+    expect(screen.getByText('Picture')).toBeInTheDocument();
     expect(container.querySelector('.new-image')).toBeInTheDocument();
   });
 });
