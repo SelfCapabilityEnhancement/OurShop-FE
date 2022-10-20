@@ -21,15 +21,15 @@ const emptyProduct: uploadProduct = {
 };
 
 const basicForm: { id: keyof uploadProduct; label: string; type: string }[] = [
-  { id: 'name', label: 'product name', type: 'string' },
-  { id: 'priceMoney', label: 'price in USD', type: 'number' },
-  { id: 'priceToken', label: 'price in token', type: 'number' },
+  { id: 'name', label: 'Product Name', type: 'string' },
+  { id: 'priceMoney', label: 'Price in USD', type: 'number' },
+  { id: 'priceToken', label: 'Price in Token', type: 'number' },
 ];
 
 const tabs = [
   { id: 'productInfo', name: 'Product Information' },
   { id: 'logisticInfo', name: 'Logistic Information' },
-  { id: 'approvalFlow', name: 'approval flow' },
+  { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
 function CreateProduct() {
@@ -128,7 +128,7 @@ function CreateProduct() {
                 success={validation}
                 message={validation ? successMsg : failMsg}
               />
-              <Loading message="Loading..." visible={showLoading} />
+              <Loading message="Processing..." visible={showLoading} />
               <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
@@ -151,8 +151,8 @@ function CreateProduct() {
                 ))}
 
                 <label htmlFor="description" className="mr-5 col-span-2">
-                  <span className="text-red-500 pr-1">*</span>product
-                  description
+                  <span className="text-red-500 pr-1">*</span>
+                  Product Description
                 </label>
                 <textarea
                   className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring"
@@ -175,7 +175,7 @@ function CreateProduct() {
             </div>
           </Tab.Panel>
           <Tab.Panel>Logistic Information</Tab.Panel>
-          <Tab.Panel>approval flow</Tab.Panel>
+          <Tab.Panel>Approval Flow</Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>

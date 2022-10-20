@@ -8,7 +8,8 @@ export default function ImageUploader({
   return (
     <div className="col-span-2">
       <div className="mb-5">
-        <span className="text-red-500 pr-1">*</span>picture
+        <span className="text-red-500 pr-1">*</span>
+        Picture
       </div>
       <div className="grid grid-cols-5 gap-x-1 items-center">
         {images.map((image, index) => (
