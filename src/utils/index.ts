@@ -15,14 +15,16 @@ export const getCurrentUser = (): Promise<User[]> => {
   return http.get('/user/getById/13').then((response) => [response.data]);
 };
 
-export const validateForm = (obj: uploadProduct) => {
+export const validateForm = (obj: uploadProduct, exclude: string[] = []) => {
   let result = true;
-  Object.values(obj).forEach((value) => {
-    if (typeof value === 'number' && value <= 0) {
-      result = false;
-    } else if (value.length <= 0) {
-      result = false;
+  for (const [key, value] of Object.entries(obj)) {
+    if (!exclude.includes(key)) {
+      if (typeof value === 'number' && value <= 0) {
+        result = false;
+      } else if (value.length <= 0) {
+        result = false;
+      }
     }
-  });
+  }
   return result;
 };
