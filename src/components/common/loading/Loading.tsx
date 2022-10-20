@@ -34,10 +34,10 @@ export default function Loading({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="transform overflow-hidden rounded-md p-3 text-left align-middle shadow-xl transition-all">
-                <div role="status">
+              <Dialog.Panel className="transform overflow-hidden p-3 text-left align-middle transition-all">
+                <div role="status" className="flex items-center">
                   <svg
-                    className="inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    className="inline mr-2 w-10 h-10 text-gray-200 animate-spin fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default function Loading({
                       fill="currentFill"
                     />
                   </svg>
-                  <span className="sr-only">{message}</span>
+                  <span className="text-2xl">{message}</span>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
