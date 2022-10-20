@@ -18,6 +18,8 @@ const emptyProduct: uploadProduct = {
   description: '',
   stock: 1,
   images: [],
+  logisticMethod: '',
+  logisticMethodComment: '',
 };
 
 const basicForm: { id: keyof uploadProduct; label: string; type: string }[] = [
@@ -38,6 +40,8 @@ function CreateProduct() {
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [logisticMethods, setLogisticMethods] = useState(new Set());
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -76,16 +80,63 @@ function CreateProduct() {
         break;
       case 'description':
         tmp.description = value;
+        break;
+      case 'logisticMethodComment':
+        tmp.logisticMethodComment = value;
     }
 
     setProduct(tmp);
+  };
+
+  const handleCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    logisticMethod: string
+  ) => {
+    if (event.target.checked) {
+      setLogisticMethods((prevState) => {
+        const tmp = [...prevState, logisticMethod];
+        setProduct((prevState) => {
+          const logisticMethod = [...tmp].join(';');
+          return {
+            ...prevState,
+            logisticMethod,
+          };
+        });
+        return new Set(tmp);
+      });
+    } else {
+      setLogisticMethods((prevState) => {
+        const tmp = [...prevState].filter((x) => x !== logisticMethod);
+        setProduct((prevState) => {
+          const logisticMethod = [...tmp].join(';');
+          return {
+            ...prevState,
+            logisticMethod,
+          };
+        });
+        return new Set(tmp);
+      });
+    }
+  };
+
+  const handleNext = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    if (validateForm(product, ['logisticMethod', 'logisticMethodComment'])) {
+      setSelectedTab(1);
+    } else {
+      setValidation(false);
+      setShowBanner(true);
+      setTimeout(() => setShowBanner(false), 1500);
+    }
   };
 
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (validateForm(product)) {
+    if (validateForm(product, ['logisticMethodComment'])) {
       setValidation(true);
       setLoading(true);
       await uploadFile(product);
@@ -102,7 +153,7 @@ function CreateProduct() {
 
   return (
     <div className="w-full max-w-full p-3">
-      <Tab.Group>
+      <Tab.Group manual selectedIndex={selectedTab} onChange={setSelectedTab}>
         <Tab.List className="flex space-x-10 p-1">
           {tabs.map((tab) => (
             <Tab
@@ -128,7 +179,6 @@ function CreateProduct() {
                 success={validation}
                 message={validation ? successMsg : failMsg}
               />
-              <Loading message="Processing..." visible={showLoading} />
               <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
@@ -166,15 +216,73 @@ function CreateProduct() {
                   handleNewImage={handleNewImage}
                 />
                 <button
-                  onClick={(event) => handleSubmit(event)}
-                  className="create button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  onClick={(event) => handleNext(event)}
+                  className="next text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                 >
-                  Create Product
+                  Next
                 </button>
               </form>
             </div>
           </Tab.Panel>
-          <Tab.Panel>Logistic Information</Tab.Panel>
+          <Tab.Panel>
+            <Banner
+              visible={showBanner}
+              success={validation}
+              message={validation ? successMsg : failMsg}
+            />
+            <Loading message="Processing..." visible={showLoading} />
+            <div className="flex flex-col m-8 w-96">
+              <div className="text-xl mb-5">
+                <span className="text-red-500 mb-1 pr-1">*</span>
+                Logistic Methods
+              </div>
+              <label
+                htmlFor="office"
+                className="flex flex-row items-center mb-3"
+              >
+                <input
+                  id="office"
+                  type="checkbox"
+                  name="logistic"
+                  checked={logisticMethods.has('office')}
+                  className="firstLogisticMethod w-5 h-5 mr-2 accent-purple-500"
+                  onChange={(event) => handleCheckBox(event, 'office')}
+                />
+                collecting at office
+              </label>
+              <label htmlFor="address" className="flex flex-row items-center">
+                <input
+                  id="address"
+                  type="checkbox"
+                  name="logistic"
+                  checked={logisticMethods.has('address')}
+                  className="secondLogisticMethod w-5 h-5 mr-2 accent-purple-500"
+                  onChange={(event) => handleCheckBox(event, 'address')}
+                />
+                shipping to an address
+              </label>
+              <label
+                htmlFor="logisticMethodComment"
+                className="text-xl mr-5 col-span-2 mt-10 mb-2"
+              >
+                Comment
+              </label>
+              <textarea
+                className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded mb-5 focus:outline-none focus:ring"
+                value={product.logisticMethodComment}
+                onChange={(event) =>
+                  handleInputField(event, 'logisticMethodComment')
+                }
+                id="logisticMethodComment"
+              />
+              <button
+                onClick={(event) => handleSubmit(event)}
+                className="create text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+              >
+                Create Product
+              </button>
+            </div>
+          </Tab.Panel>
           <Tab.Panel>Approval Flow</Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
