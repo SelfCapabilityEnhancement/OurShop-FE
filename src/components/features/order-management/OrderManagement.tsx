@@ -1,9 +1,24 @@
 import { useState } from 'react';
-import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
 import { ordersItems } from '@/mocks/mockData';
+import OrderItemAdminFinished from '@/components/features/order-management/OrderItemAdminFinished';
+import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
+import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
+
+function OrderItemAdminGivenStatus(item: OrdersItemAdmin, nowStatus: string) {
+  switch (nowStatus) {
+    case 'all':
+      return <OrderItemAdmin order={item} />;
+    case 'pending':
+      return <OrderItemAdminPending order={item} />;
+    case 'finished':
+      return <OrderItemAdminFinished order={item} />;
+    default:
+      return <OrderItemAdmin order={item} />;
+  }
+}
 
 export default function OrderManagement() {
   const [startDate, setStartDate] = useState<Date>();
@@ -12,8 +27,6 @@ export default function OrderManagement() {
   const [adminOrdersItemList, setAdminOrdersItemList] = useState(
     getAdminOrdersList(ordersItems)
   );
-
-  // const [ordersList, setOrdersList] = useState(getAdminOrdersList(ordersItems));
 
   function getAdminOrdersList(ordersItemList: OrdersItem[]) {
     let ordersItemAdminList: OrdersItemAdmin[] = [];
@@ -24,7 +37,6 @@ export default function OrderManagement() {
         productIds.push(ordersItemAdmin.product.id)
       );
       if (productIds.includes(ordersItemList[i].product.id)) {
-        // @ts-ignore
         ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
           ordersItemAdmin.product.id === ordersItemList[i].product.id
             ? {
@@ -32,7 +44,10 @@ export default function OrderManagement() {
                 productNumAll:
                   ordersItemAdmin.productNumAll +
                   ordersItemList[i].orderProducts.purchaseNum,
-                ordersList: ordersItemList[i].orders,
+                ordersList: [
+                  ...ordersItemAdmin.ordersList,
+                  ordersItemList[i].orders,
+                ],
               }
             : ordersItemAdmin
         );
@@ -197,7 +212,7 @@ export default function OrderManagement() {
           Historical Order
         </label>
       </div>
-      <div className="date-range-selection w-11/12 absolute">
+      <div className="date-range-selection w-11/12 absolute  mt-2">
         <div className="start-end-date-picker flex absolute top-1">
           <span className="mr-[10px] py-2">From</span>
           <ReactDatePicker
@@ -214,7 +229,7 @@ export default function OrderManagement() {
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
-        <div className="apply-reset-button flex absolute right-0 mt-8">
+        <div className="apply-reset-button flex absolute right-0">
           <button
             type="button"
             className="apply-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[80px] mr-[20px]"
@@ -242,14 +257,14 @@ export default function OrderManagement() {
           </button>
         </div>
       </div>
-      <div className="order-list w-11/12 mx-auto absolute top-[200px]">
+      <div className="order-list w-11/12 mx-auto absolute top-[250px]">
         <ul className="flex flex-col">
           {adminOrdersItemList.map((item: OrdersItemAdmin) => (
             <li
               key={item.product.id}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
-              <OrderItemAdmin order={item} />
+              {OrderItemAdminGivenStatus(item, nowStatus)}
             </li>
           ))}
         </ul>

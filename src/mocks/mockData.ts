@@ -145,6 +145,7 @@ const orders1 = {
   orderProductsId: 1,
   orderAddress: 'order address',
   orderStatus: 'finished',
+  vendorDate: new Date('2002-10-10'),
   purchaseDate: new Date('2022-10-01'),
 };
 const orders2 = {
@@ -153,6 +154,7 @@ const orders2 = {
   orderProductsId: 2,
   orderAddress: 'order address',
   orderStatus: 'finished',
+  vendorDate: new Date('2002-10-11'),
   purchaseDate: new Date('2022-10-01'),
 };
 const orders3 = {
