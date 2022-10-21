@@ -130,8 +130,8 @@ describe('display my order', () => {
     await user.click(pendingOrderLabel as Element);
     const ordersItems = container.querySelectorAll('.order-item-admin');
     expect(ordersItems.length).toBe(2);
-    expect(ordersItems[0].textContent).toBe('苹果number: 2');
-    expect(ordersItems[1].textContent).toBe('橘子number: 1');
+    expect(ordersItems[0].textContent).toBe('苹果number: 2View Detail');
+    expect(ordersItems[1].textContent).toBe('橘子number: 1View Detail');
   });
 
   test('should only display finished orders when click pending order label', async () => {
@@ -139,7 +139,11 @@ describe('display my order', () => {
     await user.click(pendingOrderLabel as Element);
     const ordersItems = container.querySelectorAll('.order-item-admin');
     expect(ordersItems.length).toBe(2);
-    expect(ordersItems[0].textContent).toBe('苹果number: 1');
-    expect(ordersItems[1].textContent).toBe('橘子number: 1');
+    expect(ordersItems[0].textContent).toBe(
+      '苹果Ordered Date: 10/10/2002Number: 1View Detail'
+    );
+    expect(ordersItems[1].textContent).toBe(
+      '橘子Ordered Date: 10/11/2002Number: 1View Detail'
+    );
   });
 });

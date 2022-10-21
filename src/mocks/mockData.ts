@@ -237,5 +237,21 @@ export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   },
 ];
 
+export const mockOrderItemAdminPending: OrdersItemAdmin[] = [
+  {
+    product: product1,
+    productNumAll: 2,
+    ordersList: [orders3, orders5],
+  },
+];
+
+export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
+  {
+    product: product1,
+    productNumAll: 2,
+    ordersList: [orders1],
+  },
+];
+
 export const getProducts = () => tempProducts;
 export const getProductCount = () => count;

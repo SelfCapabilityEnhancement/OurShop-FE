@@ -30,7 +30,10 @@ export default function OrderItemAdminFinished(props: {
         <span data-testid="number-title">Number: </span>
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>
-      <button className="view-detail button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center">
+      <button
+        className="button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center"
+        data-testid="view-detail"
+      >
         View Detail
       </button>
     </div>
