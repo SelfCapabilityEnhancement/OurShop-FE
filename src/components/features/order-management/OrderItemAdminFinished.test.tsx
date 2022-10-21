@@ -19,7 +19,6 @@ describe('OrderItemAdmin', () => {
       'Ordered Date: '
     );
 
-    // @ts-ignore
     const dateString = mockOrderItemAdminFinished[0].ordersList[0].vendorDate
       ? mockOrderItemAdminFinished[0].ordersList[0].vendorDate.toLocaleDateString()
       : '';
