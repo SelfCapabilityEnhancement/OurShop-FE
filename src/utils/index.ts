@@ -6,7 +6,7 @@ export const generateUniqueImageName = (name: string) => {
   return `${name.replace(/\.png/, '')}-${moment().unix()}.png`;
 };
 
-export function classNames(...classes: any) {
+export function classNames(...classes: any): string {
   return classes.filter(Boolean).join(' ');
 }
 
@@ -16,14 +16,14 @@ export const getCurrentUser = (): Promise<User[]> => {
 };
 
 export const validateForm = (obj: uploadProduct, exclude: string[] = []) => {
-  let result = true;
+  const result: any = {};
   for (const [key, value] of Object.entries(obj)) {
     if (!exclude.includes(key)) {
       if (typeof value === 'number' && value <= 0) {
-        result = false;
-      } else if (value.length <= 0) {
-        result = false;
-      }
+        result[key] = true;
+      } else result[key] = value.length <= 0;
+    } else {
+      result[key] = false;
     }
   }
   return result;

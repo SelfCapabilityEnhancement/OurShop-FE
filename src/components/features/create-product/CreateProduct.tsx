@@ -1,5 +1,5 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { uploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
@@ -7,8 +7,8 @@ import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import { postProduct, uploadFile } from '@/service/request';
 import Loading from '@/components/common/loading/Loading';
 
-const successMsg = 'The product was created successfully!';
-const failMsg = 'all required field must be filled';
+const successMsg = 'The Product was Created Successfully!';
+const failMsg = 'All Required Field Must be Filled';
 
 const emptyProduct: uploadProduct = {
   id: 1,
@@ -20,6 +20,15 @@ const emptyProduct: uploadProduct = {
   images: [],
   logisticMethod: '',
   logisticMethodComment: '',
+};
+
+const initValidateResult = {
+  name: false,
+  priceToken: false,
+  priceMoney: false,
+  description: false,
+  images: false,
+  logisticMethod: false,
 };
 
 const basicForm: { id: keyof uploadProduct; label: string; type: string }[] = [
@@ -39,9 +48,17 @@ function CreateProduct() {
   const [product, setProduct] = useState<uploadProduct>(emptyProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [validation, setValidation] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
   const [logisticMethods, setLogisticMethods] = useState(new Set());
+  const [validations, setValidations] = useState<any>(initValidateResult);
+
+  useEffect(() => {
+    if (Object.values(validations).includes(true)) {
+      setTimeout(() => {
+        setValidations(initValidateResult);
+      }, 2000);
+    }
+  }, [validations]);
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -123,12 +140,17 @@ function CreateProduct() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (validateForm(product, ['logisticMethod', 'logisticMethodComment'])) {
-      setSelectedTab(1);
-    } else {
-      setValidation(false);
+    const result = validateForm(product, [
+      'logisticMethod',
+      'logisticMethodComment',
+    ]);
+
+    if (Object.values(result).includes(true)) {
+      setValidations(result);
       setShowBanner(true);
       setTimeout(() => setShowBanner(false), 1500);
+    } else {
+      setSelectedTab(1);
     }
   };
 
@@ -136,17 +158,20 @@ function CreateProduct() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    if (validateForm(product, ['logisticMethodComment'])) {
-      setValidation(true);
+    const result = validateForm(product, ['logisticMethodComment']);
+
+    if (Object.values(result).includes(true)) {
+      setValidations(result);
+    } else {
       setLoading(true);
       await uploadFile(product);
       await postProduct(product);
+
       setLoading(false);
       setProduct(() => emptyProduct);
       setImageURL(() => []);
-    } else {
-      setValidation(false);
     }
+
     setShowBanner(true);
     setTimeout(() => setShowBanner(false), 1500);
   };
@@ -158,6 +183,9 @@ function CreateProduct() {
           {tabs.map((tab) => (
             <Tab
               key={tab.id}
+              onClick={(event: { preventDefault: () => void }) => {
+                event.preventDefault();
+              }}
               className={({ selected }) =>
                 classNames(
                   'w-52 rounded-lg text-xl font-normal',
@@ -174,11 +202,7 @@ function CreateProduct() {
         <Tab.Panels>
           <Tab.Panel>
             <div className="m-8">
-              <Banner
-                visible={showBanner}
-                success={validation}
-                message={validation ? successMsg : failMsg}
-              />
+              <Banner visible={showBanner} success={false} message={failMsg} />
               <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
@@ -188,7 +212,10 @@ function CreateProduct() {
                     </label>
                     <input
                       type={type === 'string' ? 'text' : 'number'}
-                      className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring"
+                      className={classNames(
+                        'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring',
+                        validations[id] ? 'outline-none ring ring-rose-500' : ''
+                      )}
                       onChange={(event) => handleInputField(event, id)}
                       value={
                         type === 'number' && product[id] === 0
@@ -205,7 +232,12 @@ function CreateProduct() {
                   Product Description
                 </label>
                 <textarea
-                  className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring"
+                  className={classNames(
+                    'col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring',
+                    validations.description
+                      ? 'outline-none ring ring-rose-500'
+                      : ''
+                  )}
                   value={product.description}
                   onChange={(event) => handleInputField(event, 'description')}
                   id="description"
@@ -214,6 +246,7 @@ function CreateProduct() {
                 <ImageUploader
                   images={imageURL}
                   handleNewImage={handleNewImage}
+                  validation={validations.images}
                 />
                 <button
                   onClick={(event) => handleNext(event)}
@@ -227,8 +260,10 @@ function CreateProduct() {
           <Tab.Panel>
             <Banner
               visible={showBanner}
-              success={validation}
-              message={validation ? successMsg : failMsg}
+              success={!Object.values(validations).includes(true)}
+              message={
+                Object.values(validations).includes(true) ? failMsg : successMsg
+              }
             />
             <Loading message="Processing..." visible={showLoading} />
             <div className="flex flex-col m-8 w-96">
@@ -245,7 +280,12 @@ function CreateProduct() {
                   type="checkbox"
                   name="logistic"
                   checked={logisticMethods.has('office')}
-                  className="firstLogisticMethod w-5 h-5 mr-2 accent-purple-500"
+                  className={classNames(
+                    'firstLogisticMethod w-5 h-5 mr-2 accent-purple-500 outline-none',
+                    validations.logisticMethod
+                      ? 'outline-none ring-inset ring ring-rose-500'
+                      : ''
+                  )}
                   onChange={(event) => handleCheckBox(event, 'office')}
                 />
                 collecting at office
@@ -256,7 +296,12 @@ function CreateProduct() {
                   type="checkbox"
                   name="logistic"
                   checked={logisticMethods.has('address')}
-                  className="secondLogisticMethod w-5 h-5 mr-2 accent-purple-500"
+                  className={classNames(
+                    'firstLogisticMethod w-5 h-5 mr-2 accent-purple-500 outline-none',
+                    validations.logisticMethod
+                      ? 'outline-none ring-inset ring ring-rose-500'
+                      : ''
+                  )}
                   onChange={(event) => handleCheckBox(event, 'address')}
                 />
                 shipping to an address
