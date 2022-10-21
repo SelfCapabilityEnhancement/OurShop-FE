@@ -56,3 +56,9 @@ export interface OrdersItem {
   orders: Orders;
   orderProducts: OrderProducts;
 }
+
+export interface OrdersItemAdmin {
+  product: Product;
+  productNumAll: number;
+  ordersList: Orders[];
+}

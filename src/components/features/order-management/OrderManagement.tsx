@@ -2,114 +2,201 @@ import { useState } from 'react';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-const orders = [
-  {
-    id: 1,
-    productId: 1,
-    productName: 'Product Name 1',
-    purchaseDate: new Date('2022-09-01'),
-    purchaseNumber: 1,
-  },
-  {
-    id: 2,
-    productId: 1,
-    productName: 'Product Name 1',
-    purchaseDate: new Date('2022-09-02'),
-    purchaseNumber: 2,
-  },
-  {
-    id: 3,
-    productId: 2,
-    productName: 'Product Name 2',
-    purchaseDate: new Date('2022-09-01'),
-    purchaseNumber: 1,
-  },
-  {
-    id: 4,
-    productId: 2,
-    productName: 'Product Name 2',
-    purchaseDate: new Date('2022-09-02'),
-    purchaseNumber: 2,
-  },
-  {
-    id: 5,
-    productId: 2,
-    productName: 'Product Name 2',
-    purchaseDate: new Date('2022-09-03'),
-    purchaseNumber: 3,
-  },
-];
+import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { ordersItems } from '@/mocks/mockData';
 
 export default function OrderManagement() {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [ordersList, setOrdersList] = useState(getAdminOrdersList(orders));
+  const [nowStatus, setNowStatus] = useState('all');
+  const [adminOrdersItemList, setAdminOrdersItemList] = useState(
+    getAdminOrdersList(ordersItems)
+  );
 
-  function getAdminOrdersList(
-    orders: Array<{
-      id: number;
-      productId: number;
-      productName: string;
-      purchaseDate: Date;
-      purchaseNumber: number;
-    }>
-  ): Array<{ productId: number; productName: String; purchaseNumber: number }> {
-    let adminOrdersList: any[] = [];
+  // const [ordersList, setOrdersList] = useState(getAdminOrdersList(ordersItems));
 
-    for (let i: number = 0; i < orders.length; i++) {
+  function getAdminOrdersList(ordersItemList: OrdersItem[]) {
+    let ordersItemAdminList: OrdersItemAdmin[] = [];
+
+    for (let i: number = 0; i < ordersItemList.length; i++) {
       const productIds: number[] = [];
-      adminOrdersList.map(({ productId }) => productIds.push(productId));
-      if (productIds.includes(orders[i].productId)) {
-        adminOrdersList = adminOrdersList.map((orderAdmin) =>
-          orderAdmin.productId === orders[i].productId
+      ordersItemAdminList.map((ordersItemAdmin) =>
+        productIds.push(ordersItemAdmin.product.id)
+      );
+      if (productIds.includes(ordersItemList[i].product.id)) {
+        // @ts-ignore
+        ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+          ordersItemAdmin.product.id === ordersItemList[i].product.id
             ? {
-                ...orderAdmin,
-                purchaseNumber:
-                  orderAdmin.purchaseNumber + orders[i].purchaseNumber,
+                ...ordersItemAdmin,
+                productNumAll:
+                  ordersItemAdmin.productNumAll +
+                  ordersItemList[i].orderProducts.purchaseNum,
+                ordersList: ordersItemList[i].orders,
               }
-            : orderAdmin
+            : ordersItemAdmin
         );
       } else {
-        adminOrdersList.push({
-          productId: orders[i].productId,
-          productName: orders[i].productName,
-          purchaseNumber: orders[i].purchaseNumber,
+        ordersItemAdminList.push({
+          product: ordersItemList[i].product,
+          productNumAll: ordersItemList[i].orderProducts.purchaseNum,
+          ordersList: [ordersItemList[i].orders],
         });
       }
     }
-    return adminOrdersList;
+    return ordersItemAdminList;
   }
 
-  function dateRangeFilterHandler() {
+  const filterOrdersByStatus = (
+    ordersItemList: OrdersItem[],
+    status: string
+  ) => {
+    if (status === 'all') {
+      return ordersItemList;
+    } else {
+      return ordersItemList.filter(
+        (ordersItem) => ordersItem.orders.orderStatus === status
+      );
+    }
+  };
+
+  const filterOrdersByDateRange = (ordersItemsList: OrdersItem[]) => {
     startDate?.setHours(0, 0, 0);
     endDate?.setHours(23, 59, 59);
     if (startDate && endDate) {
-      const filteredOrders = orders.filter((order: any) => {
-        return order.purchaseDate >= startDate && order.purchaseDate <= endDate;
+      return ordersItemsList.filter((order: OrdersItem) => {
+        return (
+          order.orders.purchaseDate >= startDate &&
+          order.orders.purchaseDate <= endDate
+        );
       });
-      setOrdersList(getAdminOrdersList(filteredOrders));
     } else if (startDate && !endDate) {
-      const filteredOrders = orders.filter((order: any) => {
-        return order.purchaseDate >= startDate;
+      return ordersItemsList.filter((order: OrdersItem) => {
+        return order.orders.purchaseDate >= startDate;
       });
-      setOrdersList(getAdminOrdersList(filteredOrders));
     } else if (!startDate && endDate) {
-      const filteredOrders = orders.filter((order: any) => {
-        return order.purchaseDate <= endDate;
+      return ordersItemsList.filter((order: OrdersItem) => {
+        return order.orders.purchaseDate <= endDate;
       });
-      setOrdersList(getAdminOrdersList(filteredOrders));
+    } else {
+      return ordersItemsList;
     }
-  }
+  };
 
-  function resetHandler() {
+  // const initialState: OrdersItemAdmin[] = getAdminOrdersList(ordersItems);
+
+  // eslint-disable-next-line no-unused-vars
+
+  // function reducer(state: OrdersItem[], action: Action) {
+  //   const filteredorders = filterOrdersByDateRange(ordersItems);
+  //   switch (action.type) {
+  //     case StatusKind.All: {
+  //       return getAdminOrdersList(filteredorders);
+  //       console.log(1);
+  //     }
+  //     case StatusKind.PENDING:
+  //       return getAdminOrdersList(
+  //         filterOrdersByStatus(ordersItems, StatusKind.PENDING)
+  //       );
+  //     case StatusKind.FINIESHED:
+  //       return getAdminOrdersList(
+  //         filterOrdersByStatus(ordersItems, StatusKind.FINIESHED)
+  //       );
+  //     default:
+  //       return getAdminOrdersList(ordersItems);
+  //   }
+  // }
+  //
+  // const [state, dispatch] = useReducer(reducer, initialState);
+  // const showAll = () => {
+  //   setNowStatus(StatusKind.All);
+  //   // @ts-ignore
+  //   dispatch({ type: StatusKind.All });
+  // };
+  //
+  // const showPending = () => {
+  //   setNowStatus(StatusKind.PENDING);
+  //   // @ts-ignore
+  //   dispatch({ type: StatusKind.PENDING });
+  // };
+  //
+  // const showHistory = () => {
+  //   setNowStatus(StatusKind.FINIESHED);
+  //   // @ts-ignore
+  //   dispatch({ type: StatusKind.FINIESHED });
+  // };
+
+  const dataRangeFilterHandler = () => {
+    setAdminOrdersItemList(
+      getAdminOrdersList(
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus))
+      )
+    );
+  };
+
+  const resetHandler = () => {
     setStartDate(undefined);
     setEndDate(undefined);
-    setOrdersList(getAdminOrdersList(orders));
-  }
+    setAdminOrdersItemList(
+      getAdminOrdersList(filterOrdersByStatus(ordersItems, nowStatus))
+    );
+  };
+
+  const showAll = () => {
+    setNowStatus('all');
+    setAdminOrdersItemList(
+      getAdminOrdersList(
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all'))
+      )
+    );
+  };
+
+  const showPending = () => {
+    setNowStatus('pending');
+    setAdminOrdersItemList(
+      getAdminOrdersList(
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending'))
+      )
+    );
+  };
+
+  const showFinished = () => {
+    setNowStatus('finished');
+    setAdminOrdersItemList(
+      getAdminOrdersList(
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished'))
+      )
+    );
+  };
 
   return (
     <div className="mt-10 ml-10">
+      <div className="order-status-header w-11/12 mb-6">
+        <label
+          className="order-status-label all-label basis-1/3 mx-4 py-4 text-center border-b-2 border-white
+            hover:text-gray-600 hover:border-gray-300
+            focus:text-rose-500 focus:border-rose-500"
+          onClick={showAll}
+        >
+          Sales Overview
+        </label>
+        <label
+          className="order-status-label pending-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white
+            hover:text-gray-600 hover:border-gray-300
+            focus:text-rose-500 focus:border-rose-500"
+          onClick={showPending}
+        >
+          Pending Order
+        </label>
+        <label
+          className="order-status-label finished-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white
+            hover:text-gray-600 hover:border-gray-300
+            focus:text-rose-500 focus:border-rose-500"
+          onClick={showFinished}
+        >
+          Historical Order
+        </label>
+      </div>
       <div className="date-range-selection w-11/12 absolute">
         <div className="start-end-date-picker flex absolute top-1">
           <span className="mr-[10px] py-2">From</span>
@@ -127,11 +214,11 @@ export default function OrderManagement() {
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
-        <div className="apply-reset-button flex absolute right-0">
+        <div className="apply-reset-button flex absolute right-0 mt-8">
           <button
             type="button"
             className="apply-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[80px] mr-[20px]"
-            onClick={dateRangeFilterHandler}
+            onClick={dataRangeFilterHandler}
           >
             Apply
           </button>
@@ -157,9 +244,9 @@ export default function OrderManagement() {
       </div>
       <div className="order-list w-11/12 mx-auto absolute top-[200px]">
         <ul className="flex flex-col">
-          {ordersList.map((item) => (
+          {adminOrdersItemList.map((item: OrdersItemAdmin) => (
             <li
-              key={item.productId}
+              key={item.product.id}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
               <OrderItemAdmin order={item} />
