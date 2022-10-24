@@ -35,7 +35,7 @@ export default function HomePage() {
           <img
             src={product.images.split(',')[0]}
             alt="product"
-            className={`image${key} h-48 w-60 object-fill`}
+            className={`image${key} h-48 w-60 object-cover`}
           />
           <div className="bg-gray-100">
             <div className="text-xl font-normal">{product.name}</div>
