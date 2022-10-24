@@ -2,8 +2,16 @@ import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
 export default function OrderItemAdminPending(props: {
   order: OrdersItemAdmin;
+  setShowWindow: any;
+  setSelectedOrdersItemAdmin: any;
 }) {
   const order = props.order;
+
+  function openDetailWindow() {
+    props.setShowWindow(true);
+    props.setSelectedOrdersItemAdmin(order);
+  }
+
   return (
     <div className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 relative">
       <div className="w-20 h-16 flex-initial mx-5">
@@ -25,6 +33,7 @@ export default function OrderItemAdminPending(props: {
       <button
         className="button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center"
         data-testid="view-detail"
+        onClick={openDetailWindow}
       >
         View Detail
       </button>

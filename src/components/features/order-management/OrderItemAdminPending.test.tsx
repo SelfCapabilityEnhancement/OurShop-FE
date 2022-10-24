@@ -4,7 +4,13 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 
 describe('OrderItemAdmin', () => {
   beforeEach(() => {
-    render(<OrderItemAdminPending order={mockOrderItemAdminPending[0]} />);
+    render(
+      <OrderItemAdminPending
+        order={mockOrderItemAdminPending[0]}
+        setShowWindow={() => {}}
+        setSelectedOrdersItemAdmin={() => {}}
+      />
+    );
   });
   test('should render picture, product name, number and detail button', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
