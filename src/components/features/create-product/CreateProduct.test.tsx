@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
@@ -29,6 +29,8 @@ describe('Create product test', () => {
     }));
     container = render(<CreateProduct />, { wrapper: BrowserRouter }).container;
   });
+
+  afterEach(cleanup);
 
   it('should display create product form', () => {
     expect(screen.getByText('Product Name')).toBeInTheDocument();
