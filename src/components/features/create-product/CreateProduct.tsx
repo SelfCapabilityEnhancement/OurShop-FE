@@ -170,6 +170,9 @@ function CreateProduct() {
       setLoading(false);
       setProduct(() => emptyProduct);
       setImageURL(() => []);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     }
 
     setShowBanner(true);
