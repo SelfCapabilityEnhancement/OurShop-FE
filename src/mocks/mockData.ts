@@ -13,6 +13,8 @@ export const tempProducts: Array<Product> = [
     description: 'yummy',
     images: 'path1,path2',
     stock: 2,
+    logisticMethod: '',
+    logisticMethodComment: '',
   },
   {
     id: 2,
@@ -22,6 +24,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path3',
     stock: 3,
+    logisticMethod: '',
+    logisticMethodComment: '',
   },
   {
     id: 3,
@@ -31,6 +35,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path4',
     stock: 5,
+    logisticMethod: '',
+    logisticMethodComment: '',
   },
 ];
 
@@ -46,6 +52,8 @@ export const shoppingCartItems = [
       description: '水果 🍊',
       stock: 1,
       images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+      logisticMethod: '',
+      logisticMethodComment: '',
     },
     shoppingCartProductsId: 53,
     productNum: 5,
@@ -59,6 +67,8 @@ export const shoppingCartItems = [
       description: '水果 🍉',
       stock: 1,
       images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+      logisticMethod: '',
+      logisticMethodComment: '',
     },
     shoppingCartProductsId: 98,
     productNum: 5,
@@ -72,6 +82,8 @@ export const shoppingCartItems = [
       description: '一部手机',
       stock: 1,
       images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+      logisticMethod: '',
+      logisticMethodComment: '',
     },
     shoppingCartProductsId: 24,
     productNum: 1,
@@ -104,6 +116,8 @@ export const mockOrder = [
       description: '水果 🍊',
       stock: 1,
       images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+      logisticMethod: '',
+      logisticMethodComment: '',
     },
     orders: {
       id: 1,
@@ -129,6 +143,8 @@ const product1 = {
   description: '水果 🍊',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+  logisticMethod: '',
+  logisticMethodComment: '',
 };
 const product2 = {
   id: 1,
@@ -138,6 +154,8 @@ const product2 = {
   description: '水果 🍊',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+  logisticMethod: '',
+  logisticMethodComment: '',
 };
 const orders1 = {
   id: 1,

@@ -1,4 +1,4 @@
-export interface uploadProduct {
+export interface UploadProduct {
   id: number;
   name: string;
   priceToken: number;

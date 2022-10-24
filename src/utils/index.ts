@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { uploadProduct, User } from '@/components/common/CustomeTypes';
+import { UploadProduct, User } from '@/components/common/CustomeTypes';
 import { http } from '@/service';
 
 export const generateUniqueImageName = (name: string) => {
@@ -15,7 +15,7 @@ export const getCurrentUser = (): Promise<User[]> => {
   return http.get('/user/getById/13').then((response) => [response.data]);
 };
 
-export const validateForm = (obj: uploadProduct, exclude: string[] = []) => {
+export const validateForm = (obj: UploadProduct, exclude: string[] = []) => {
   const result: any = {};
   for (const [key, value] of Object.entries(obj)) {
     if (!exclude.includes(key)) {

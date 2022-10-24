@@ -5,7 +5,7 @@ import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
 // import * as utils from '@/utils';
 // import * as request from '@/service/request';
-// import { uploadProduct } from '@/components/common/CustomeTypes';
+// import { UploadProduct } from '@/components/common/CustomeTypes';
 
 jest.mock('@/azure-storage-blob', () => ({
   uploadFileToBlob: jest.fn(),
@@ -76,7 +76,7 @@ describe('Create product test', () => {
   //   jest.spyOn(request, 'uploadFile').mockResolvedValue();
   //   jest
   //     .spyOn(request, 'postProduct')
-  //     .mockImplementation(async (product: uploadProduct) => {
+  //     .mockImplementation(async (product: UploadProduct) => {
   //       await setTimeout(() => product, 1000);
   //     });
   //
