@@ -4,7 +4,13 @@ import OrderItemAdminFinished from '@/components/features/order-management/Order
 
 describe('OrderItemAdmin', () => {
   beforeEach(() => {
-    render(<OrderItemAdminFinished order={mockOrderItemAdminFinished[0]} />);
+    render(
+      <OrderItemAdminFinished
+        order={mockOrderItemAdminFinished[0]}
+        setShowWindow={() => {}}
+        setSelectedOrdersItemAdmin={() => {}}
+      />
+    );
   });
   test('should render picture, product name, number and detail button', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();

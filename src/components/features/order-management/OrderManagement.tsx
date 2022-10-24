@@ -6,27 +6,41 @@ import { ordersItems } from '@/mocks/mockData';
 import OrderItemAdminFinished from '@/components/features/order-management/OrderItemAdminFinished';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
-
-function OrderItemAdminGivenStatus(item: OrdersItemAdmin, nowStatus: string) {
-  switch (nowStatus) {
-    case 'all':
-      return <OrderItemAdmin order={item} />;
-    case 'pending':
-      return <OrderItemAdminPending order={item} />;
-    case 'finished':
-      return <OrderItemAdminFinished order={item} />;
-    default:
-      return <OrderItemAdmin order={item} />;
-  }
-}
+import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 
 export default function OrderManagement() {
+  const product1 = {
+    id: 2,
+    name: '苹果',
+    priceToken: 99,
+    priceMoney: 9,
+    description: '水果 🍊',
+    stock: 1,
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+  };
+  const orders1 = {
+    id: 1,
+    userId: 1,
+    orderProductsId: 1,
+    orderAddress: 'order address',
+    orderStatus: 'finished',
+    vendorDate: new Date('2002-10-10'),
+    purchaseDate: new Date('2022-10-01'),
+  };
+
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [nowStatus, setNowStatus] = useState('all');
   const [adminOrdersItemList, setAdminOrdersItemList] = useState(
     getAdminOrdersList(ordersItems)
   );
+  const [showWindow, setShowWindow] = useState(false);
+  const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
+    useState<OrdersItemAdmin>({
+      product: product1,
+      productNumAll: 2,
+      ordersList: [orders1],
+    });
 
   function getAdminOrdersList(ordersItemList: OrdersItem[]) {
     let ordersItemAdminList: OrdersItemAdmin[] = [];
@@ -98,49 +112,6 @@ export default function OrderManagement() {
     }
   };
 
-  // const initialState: OrdersItemAdmin[] = getAdminOrdersList(ordersItems);
-
-  // eslint-disable-next-line no-unused-vars
-
-  // function reducer(state: OrdersItem[], action: Action) {
-  //   const filteredorders = filterOrdersByDateRange(ordersItems);
-  //   switch (action.type) {
-  //     case StatusKind.All: {
-  //       return getAdminOrdersList(filteredorders);
-  //       console.log(1);
-  //     }
-  //     case StatusKind.PENDING:
-  //       return getAdminOrdersList(
-  //         filterOrdersByStatus(ordersItems, StatusKind.PENDING)
-  //       );
-  //     case StatusKind.FINIESHED:
-  //       return getAdminOrdersList(
-  //         filterOrdersByStatus(ordersItems, StatusKind.FINIESHED)
-  //       );
-  //     default:
-  //       return getAdminOrdersList(ordersItems);
-  //   }
-  // }
-  //
-  // const [state, dispatch] = useReducer(reducer, initialState);
-  // const showAll = () => {
-  //   setNowStatus(StatusKind.All);
-  //   // @ts-ignore
-  //   dispatch({ type: StatusKind.All });
-  // };
-  //
-  // const showPending = () => {
-  //   setNowStatus(StatusKind.PENDING);
-  //   // @ts-ignore
-  //   dispatch({ type: StatusKind.PENDING });
-  // };
-  //
-  // const showHistory = () => {
-  //   setNowStatus(StatusKind.FINIESHED);
-  //   // @ts-ignore
-  //   dispatch({ type: StatusKind.FINIESHED });
-  // };
-
   const dataRangeFilterHandler = () => {
     setAdminOrdersItemList(
       getAdminOrdersList(
@@ -182,6 +153,34 @@ export default function OrderManagement() {
         filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished'))
       )
     );
+  };
+
+  const OrderItemAdminGivenStatus = (
+    item: OrdersItemAdmin,
+    nowStatus: string
+  ) => {
+    switch (nowStatus) {
+      case 'all':
+        return <OrderItemAdmin order={item} />;
+      case 'pending':
+        return (
+          <OrderItemAdminPending
+            order={item}
+            setShowWindow={setShowWindow}
+            setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+          />
+        );
+      case 'finished':
+        return (
+          <OrderItemAdminFinished
+            order={item}
+            setShowWindow={setShowWindow}
+            setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+          />
+        );
+      default:
+        return <OrderItemAdmin order={item} />;
+    }
   };
 
   return (
@@ -269,6 +268,11 @@ export default function OrderManagement() {
           ))}
         </ul>
       </div>
+      <OrderDetailWindow
+        setShowWindow={setShowWindow}
+        showWindow={showWindow}
+        selectedOrdersItemAdmin={selectedOrdersItemAdmin}
+      />
     </div>
   );
 }

@@ -128,7 +128,7 @@ const product1 = {
   priceMoney: 9,
   description: '水果 🍊',
   stock: 1,
-  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
 };
 const product2 = {
   id: 1,
@@ -137,7 +137,7 @@ const product2 = {
   priceMoney: 9,
   description: '水果 🍊',
   stock: 1,
-  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
+  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
 };
 const orders1 = {
   id: 1,
