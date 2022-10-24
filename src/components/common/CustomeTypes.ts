@@ -39,3 +39,31 @@ export interface ShoppingCartItem {
   shoppingCartProductsId: number;
   productNum: number;
 }
+
+export interface Orders {
+  id: number;
+  userId: number;
+  orderProductsId: number;
+  orderAddress: string;
+  orderStatus: string;
+  vendorDate?: Date;
+  purchaseDate: Date;
+}
+
+export interface OrderProducts {
+  id: number;
+  productId: number;
+  purchaseNum: number;
+}
+
+export interface OrdersItem {
+  product: Product;
+  orders: Orders;
+  orderProducts: OrderProducts;
+}
+
+export interface OrdersItemAdmin {
+  product: Product;
+  productNumAll: number;
+  ordersList: Orders[];
+}

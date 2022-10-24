@@ -6,5 +6,5 @@ const prodBaseUrl = 'https://ourshop-tw.netlify.app';
 
 export const http = axios.create({
   baseURL: `${isDev() ? localBaseUrl : prodBaseUrl}/api`,
-  timeout: 5000,
+  timeout: 10000,
 });
