@@ -10,6 +10,7 @@ import { getProductCount, getProducts } from '@/mocks/mockData';
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
+    post: jest.fn(),
     get: jest.fn().mockResolvedValue({
       data: [
         {
@@ -62,6 +63,10 @@ jest.mock('@/service', () => ({
 describe('purchase confirmation', () => {
   let container: Container;
   const user = userEvent.setup();
+  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+    observe: () => null,
+    disconnect: () => null,
+  }));
   const mockLocation: Location = {
     key: 'default',
     pathname: '',
@@ -77,28 +82,35 @@ describe('purchase confirmation', () => {
     }).container;
   });
 
-  it('should display purchase info', () => {
-    expect(screen.getByText('Purchase Confirmation')).toBeTruthy();
-    expect(screen.getByText('My Tokens:')).toBeTruthy();
-    expect(screen.getByText('Cost of Tokens:')).toBeTruthy();
-    expect(container.querySelectorAll('.button')).toHaveLength(2);
+  it('should display purchase info', async () => {
+    expect(
+      await screen.findByText('Purchase Confirmation')
+    ).toBeInTheDocument();
+    expect(await screen.findByText('My Tokens:')).toBeInTheDocument();
+    expect(await screen.findByText('Cost of Tokens:')).toBeInTheDocument();
+    expect(container.querySelectorAll('button')).toHaveLength(2);
   });
 
   it('should navigate to shopping cart when click cancel', async () => {
-    const cancelButton = container.querySelector('.cancel.button');
+    const cancelButton = container.querySelector('button.cancel');
 
+    expect(cancelButton).toBeInTheDocument();
     await user.click(cancelButton as Element);
 
     expect(screen.findByTestId('shopping-cart')).toBeTruthy();
   });
+
   it('should calculate the cost of tokens', () => {
     expect(screen.getByText(/19/i)).toBeInTheDocument();
   });
 
-  // it('should show banner when click buy by token btn',async ()=>{
-  //   const element = container.querySelector('.buy.button');
-  //   await user.click(element as Element);
-  //   expect(screen.findByText('The purchase made successfully!')).toBeTruthy();
-  //   expect(screen.findByTestId('shopping-cart')).toBeTruthy();
-  // });
+  it('should show banner when click buy by token btn', async () => {
+    const element = container.querySelector('button.buy');
+
+    await user.click(element as Element);
+
+    expect(
+      await screen.findByText('The Purchase Made Successfully!')
+    ).toBeInTheDocument();
+  });
 });

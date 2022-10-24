@@ -1,7 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
-import { useEffect } from 'react';
-import { http } from '@/service';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -9,16 +7,6 @@ export default function Header() {
   const handleClick = () => {
     navigate('/home');
   };
-
-  useEffect(() => {
-    // just a sample, you can remove it
-    const fetchData = async () => {
-      const response = await http.get('/user/allUsers');
-      console.log(response);
-    };
-
-    fetchData().catch(console.error);
-  }, []);
 
   return (
     <div className="flex justify-between items-center shadow-md h-[71px]">

@@ -8,15 +8,15 @@
     "dev:local": "vite --mode local-api",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview",
-    "lint": "eslint . --ext .tsx",
-    "lint-and-fix": "eslint . --ext .tsx --fix",
+    "lint": "eslint -c .eslintrc.json . --ext .tsx",
+    "lint-and-fix": "eslint -c .eslintrc.json . --ext .tsx --fix",
     "prettier-format": "prettier --config .prettierrc  --write .",
     "test": "jest",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint . --ext .tsx --fix",
+      "eslint -c .eslintrc.json . --ext .tsx --fix",
       "prettier --config .prettierrc  --write ."
     ]
   },

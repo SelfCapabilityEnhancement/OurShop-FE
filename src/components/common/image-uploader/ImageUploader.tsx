@@ -1,14 +1,19 @@
+import { classNames } from '@/utils';
+
 export default function ImageUploader({
   images,
   handleNewImage,
+  validation,
 }: {
   images: string[];
   handleNewImage: Function;
+  validation: boolean;
 }) {
   return (
     <div className="col-span-2">
       <div className="mb-5">
-        <span className="text-red-500 pr-1">*</span>picture
+        <span className="text-red-500 pr-1">*</span>
+        Picture
       </div>
       <div className="grid grid-cols-5 gap-x-1 items-center">
         {images.map((image, index) => (
@@ -26,7 +31,10 @@ export default function ImageUploader({
             viewBox="0 0 24 24"
             strokeWidth="0.5"
             stroke="currentColor"
-            className="new-image bg-slate-100 rounded-md border-solid"
+            className={classNames(
+              'new-image bg-slate-100 rounded-md border-solid',
+              validation ? 'outline-none ring ring-rose-500' : ''
+            )}
           >
             <path
               strokeLinecap="round"

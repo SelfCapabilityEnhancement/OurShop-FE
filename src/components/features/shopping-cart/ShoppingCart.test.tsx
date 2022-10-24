@@ -3,7 +3,7 @@ import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { http } from '@/service';
-import { users } from '@/mocks/mockData';
+import { shoppingCartItems, users } from '@/mocks/mockData';
 import * as utils from '@/utils';
 
 jest.mock('@/service', () => ({
@@ -60,12 +60,22 @@ jest.mock('@/service', () => ({
 
 describe('display shopping cart page given nonempty products', () => {
   const user = userEvent.setup();
+  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+    observe: () => null,
+    disconnect: () => null,
+  }));
+
   const container = render(<ShoppingCart />, {
     wrapper: BrowserRouter,
   }).container;
 
   beforeEach(() => {
+    jest.spyOn(http, 'get').mockResolvedValue({ data: shoppingCartItems });
     jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
+  });
+
+  it('should display loading when startup', async () => {
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
   });
 
   it('should display shopping cart list', () => {
@@ -114,21 +124,6 @@ describe('display shopping cart page given nonempty products', () => {
       const minusBtn = screen.getAllByTestId('svg-minus')[2];
       userEvent.click(minusBtn);
       expect(screen.getAllByTestId('num')[2].textContent).toBe('2');
-    });
-  });
-});
-
-describe('display empty message given empty products', () => {
-  const container = render(<ShoppingCart />, {
-    wrapper: BrowserRouter,
-  }).container;
-
-  it('should display nothing in the shopping cart', () => {
-    jest.spyOn(http, 'get').mockResolvedValue({ data: [] });
-    jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
-    waitFor(() => {
-      const emptyMsg = container.querySelector('.empty-msg');
-      expect(emptyMsg).toBeTruthy();
     });
   });
 });

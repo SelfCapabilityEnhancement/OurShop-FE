@@ -17,6 +17,8 @@ export default function OrderManagement() {
     description: '水果 🍊',
     stock: 1,
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    logisticMethod: '',
+    logisticMethodComment: '',
   };
   const orders1 = {
     id: 1,
