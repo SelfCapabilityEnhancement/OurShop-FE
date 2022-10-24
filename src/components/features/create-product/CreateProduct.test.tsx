@@ -3,6 +3,9 @@ import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
+// import * as utils from '@/utils';
+// import * as request from '@/service/request';
+// import { uploadProduct } from '@/components/common/CustomeTypes';
 
 jest.mock('@/azure-storage-blob', () => ({
   uploadFileToBlob: jest.fn(),
@@ -54,16 +57,41 @@ describe('Create product test', () => {
   });
 
   it('should display alert when click submit with empty field', async () => {
-    const submit = container.querySelector('button.create');
+    const submit = container.querySelector('button.next');
 
+    expect(submit).toBeInTheDocument();
     await user.click(submit as Element);
 
-    waitFor(async () => {
+    await waitFor(async () => {
       expect(
-        await screen.findByText('all required field must be filled')
+        await screen.findByText('All Required Field Must be Filled')
       ).toBeInTheDocument();
     });
   });
+
+  // it('should show processing banner when create product', async () => {
+  //   jest.spyOn(utils, 'validateForm').mockReturnValue({ mock: false });
+  //   jest.spyOn(request, 'uploadFile').mockResolvedValue();
+  //   jest
+  //     .spyOn(request, 'postProduct')
+  //     .mockImplementation(async (product: uploadProduct) => {
+  //       await setTimeout(() => product, 1000);
+  //     });
+  //
+  //   const next = container.querySelector('button.next');
+  //   expect(next).toBeInTheDocument();
+  //   await user.click(next as Element);
+  //   expect(await screen.findByText('Logistic Methods')).toBeInTheDocument();
+  //
+  //   const office = container.querySelector('#office');
+  //   await user.click(office as Element);
+  //
+  //   const submit = container.querySelector('button.create');
+  //   expect(submit).toBeInTheDocument();
+  //   await user.click(submit as Element);
+  //
+  //   expect(await screen.findByText('Processing...')).toBeInTheDocument();
+  // });
 
   it('should display tabs', () => {
     const tabs = [
@@ -82,40 +110,3 @@ describe('Create product test', () => {
     });
   });
 });
-
-// describe('fix bug test',()=>{
-//   let container: Container;
-//   const user = userEvent.setup();
-//
-//   beforeEach(() => {
-//     window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-//       observe: () => null,
-//       disconnect: () => null,
-//     }));
-//     container = render(<CreateProduct />, { wrapper: BrowserRouter }).container;
-//   });
-//
-//   it('should show processing banner when create product', async () => {
-//     jest.spyOn(utils, 'validateForm').mockReturnValue(true);
-//     jest.spyOn(request, 'uploadFile').mockResolvedValue();
-//     jest
-//     .spyOn(request, 'postProduct')
-//     .mockImplementation(async (product: uploadProduct) => {
-//       await setTimeout(() => product, 1000);
-//     });
-//
-//     const next = container.querySelector('button.next');
-//     expect(next).toBeInTheDocument();
-//     await user.click(next as Element);
-//     expect(await screen.findByText('Logistic Methods')).toBeInTheDocument();
-//
-//     const office = container.querySelector('#office');
-//     await user.click(office as Element);
-//
-//     const submit = container.querySelector('button.create');
-//     expect(submit).toBeInTheDocument();
-//     await user.click(submit as Element);
-//
-//     expect(await screen.findByText('Processing...')).toBeInTheDocument();
-//   });
-// });
