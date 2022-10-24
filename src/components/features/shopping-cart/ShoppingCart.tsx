@@ -91,7 +91,7 @@ export default function ShoppingCart() {
                       />
                     </div>
                     <label
-                      htmlFor="product-checkbox-1"
+                      htmlFor={`product-checkbox-${index}`}
                       className="font-medium flex-auto mx-5"
                     >
                       {shoppingCartItem.product.name}
