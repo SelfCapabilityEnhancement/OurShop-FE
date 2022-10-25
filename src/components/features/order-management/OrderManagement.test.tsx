@@ -7,6 +7,10 @@ import userEvent from '@testing-library/user-event';
 describe('display my order', () => {
   let container: Container;
   const user = userEvent.setup();
+  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+    observe: () => null,
+    disconnect: () => null,
+  }));
   beforeEach(() => {
     container = render(<OrderManagement />, {
       wrapper: BrowserRouter,
@@ -23,10 +27,7 @@ describe('display my order', () => {
   test('should count total order number for each product', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 3');
-    expect(
-      container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 2');
+    ).toBe('苹果number: 1');
   });
   test('should filter orders by date range when input date range and count total order number for each product', async () => {
     const startDateInput = container.querySelector(' .start-date');
@@ -34,22 +35,34 @@ describe('display my order', () => {
     const applyButton = container.querySelector('.apply-button');
 
     await user.type(startDateInput as Element, '10/01/2022');
-    await user.type(endDateInput as Element, '10/03/2022');
+    await user.type(endDateInput as Element, '10/02/2022');
     await user.click(applyButton as Element);
 
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 3');
+    ).toBe('苹果number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 2');
+    ).toBe('橘子number: 1');
   });
 
   test('should filter orders by start date when only input start date and count total order number for each product', async () => {
     const startDateInput = container.querySelector(' .start-date');
     const applyButton = container.querySelector('.apply-button');
 
-    await user.type(startDateInput as Element, '10/03/2022');
+    await user.type(startDateInput as Element, '10/02/2022');
+    await user.click(applyButton as Element);
+
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
+    expect(
+      container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('橘子number: 1');
+  });
+  test('should filter orders by end date when only input end date and count total order number for each product', async () => {
+    const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply-button');
+
+    await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
 
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
@@ -57,11 +70,8 @@ describe('display my order', () => {
       container.querySelectorAll('.order-item-admin').item(0).textContent
     ).toBe('苹果number: 1');
   });
-  test('should filter orders by end date when only input end date and count total order number for each product', async () => {
-    const endDateInput = container.querySelector(' .end-date');
+  test('should show all orders when do not input any date and count total order number for each product', async () => {
     const applyButton = container.querySelector('.apply-button');
-
-    await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
 
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
@@ -71,18 +81,6 @@ describe('display my order', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
     ).toBe('橘子number: 1');
-  });
-  test('should show all orders when do not input any date and count total order number for each product', async () => {
-    const applyButton = container.querySelector('.apply-button');
-    await user.click(applyButton as Element);
-
-    expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
-    expect(
-      container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 3');
-    expect(
-      container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 2');
   });
   test('should do not show any order when input incoorect date range', async () => {
     const startDateInput = container.querySelector(' .start-date');
@@ -109,10 +107,10 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 3');
+    ).toBe('苹果number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 2');
+    ).toBe('橘子number: 1');
     expect(screen.getAllByRole('textbox')[0].textContent).toBe('');
     expect(screen.getAllByRole('textbox')[1].textContent).toBe('');
   });
@@ -129,21 +127,25 @@ describe('display my order', () => {
     const pendingOrderLabel = container.querySelector('.pending-order');
     await user.click(pendingOrderLabel as Element);
     const ordersItems = container.querySelectorAll('.order-item-admin');
-    expect(ordersItems.length).toBe(2);
-    expect(ordersItems[0].textContent).toBe('苹果number: 2View Detail');
-    expect(ordersItems[1].textContent).toBe('橘子number: 1View Detail');
+    expect(ordersItems.length).toBe(1);
+    expect(ordersItems[0].textContent).toBe('苹果number: 1View Detail');
   });
 
   test('should only display finished orders when click pending order label', async () => {
     const pendingOrderLabel = container.querySelector('.finished-order');
     await user.click(pendingOrderLabel as Element);
     const ordersItems = container.querySelectorAll('.order-item-admin');
-    expect(ordersItems.length).toBe(2);
+    expect(ordersItems.length).toBe(1);
     expect(ordersItems[0].textContent).toBe(
-      '苹果Ordered Date: 10/10/2002Number: 1View Detail'
+      '橘子Ordered Date: 10/12/2022Number: 1View Detail'
     );
-    expect(ordersItems[1].textContent).toBe(
-      '橘子Ordered Date: 10/11/2002Number: 1View Detail'
-    );
+  });
+
+  test('should display order detail window when click View Detail Button in Pending or Historical order status', async () => {
+    const pendingOrderLabel = container.querySelector('.finished-order');
+    await user.click(pendingOrderLabel as Element);
+    const viewDetail = container.querySelector('.view-detail');
+    await user.click(viewDetail as Element);
+    expect(await screen.findByText('Order Detail')).toBeInTheDocument();
   });
 });

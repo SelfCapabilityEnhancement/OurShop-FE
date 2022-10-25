@@ -24,8 +24,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path3',
     stock: 3,
-    logisticMethod: '',
-    logisticMethodComment: '',
+    // logisticMethod: '',
+    // logisticMethodComment: '',
   },
   {
     id: 3,
@@ -35,8 +35,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path4',
     stock: 5,
-    logisticMethod: '',
-    logisticMethodComment: '',
+    // logisticMethod: '',
+    // logisticMethodComment: '',
   },
 ];
 
@@ -162,8 +162,8 @@ const orders1 = {
   userId: 1,
   orderProductsId: 1,
   orderAddress: 'order address',
-  orderStatus: 'finished',
-  vendorDate: new Date('2002-10-10'),
+  orderStatus: 'pending',
+  vendorDate: new Date(''),
   purchaseDate: new Date('2022-10-01'),
 };
 const orders2 = {
@@ -172,33 +172,10 @@ const orders2 = {
   orderProductsId: 2,
   orderAddress: 'order address',
   orderStatus: 'finished',
-  vendorDate: new Date('2002-10-11'),
-  purchaseDate: new Date('2022-10-01'),
-};
-const orders3 = {
-  id: 3,
-  userId: 3,
-  orderProductsId: 3,
-  orderAddress: 'order address',
-  orderStatus: 'pending',
+  vendorDate: new Date('2022-10-12'),
   purchaseDate: new Date('2022-10-02'),
 };
-const orders4 = {
-  id: 4,
-  userId: 12,
-  orderProductsId: 4,
-  orderAddress: 'order address',
-  orderStatus: 'pending',
-  purchaseDate: new Date('2022-10-02'),
-};
-const orders5 = {
-  id: 5,
-  userId: 12,
-  orderProductsId: 5,
-  orderAddress: 'order address',
-  orderStatus: 'pending',
-  purchaseDate: new Date('2022-10-03'),
-};
+
 export const ordersItems: OrdersItem[] = [
   {
     product: product1,
@@ -218,57 +195,27 @@ export const ordersItems: OrdersItem[] = [
       purchaseNum: 1,
     },
   },
-  {
-    product: product1,
-    orders: orders3,
-    orderProducts: {
-      id: 3,
-      productId: 1,
-      purchaseNum: 1,
-    },
-  },
-  {
-    product: product2,
-    orders: orders4,
-    orderProducts: {
-      id: 4,
-      productId: 2,
-      purchaseNum: 1,
-    },
-  },
-  {
-    product: product1,
-    orders: orders5,
-    orderProducts: {
-      id: 5,
-      productId: 1,
-      purchaseNum: 1,
-    },
-  },
-];
-
-export const mockOrderItemAdmin: OrdersItemAdmin[] = [
-  {
-    product: product1,
-    productNumAll: 11,
-    ordersList: [orders1, orders3, orders5],
-  },
 ];
 
 export const mockOrderItemAdminPending: OrdersItemAdmin[] = [
   {
     product: product1,
-    productNumAll: 2,
-    ordersList: [orders3, orders5],
+    productNumAll: 1,
+    ordersList: [orders1],
   },
 ];
 
 export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
   {
-    product: product1,
-    productNumAll: 2,
-    ordersList: [orders1],
+    product: product2,
+    productNumAll: 1,
+    ordersList: [orders2],
   },
+];
+
+export const mockOrderItemAdmin: OrdersItemAdmin[] = [
+  mockOrderItemAdminPending[0],
+  mockOrderItemAdminFinished[0],
 ];
 
 export const getProducts = () => tempProducts;
