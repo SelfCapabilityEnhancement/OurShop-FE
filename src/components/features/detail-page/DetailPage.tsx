@@ -150,8 +150,10 @@ export default function DetailPage() {
           </div>
           <div className="flex gap-[120px] mb-3 ml-2">
             <div className="grid grid-cols-2 gap-x-5">
-              {renderLogisticMethod('office')}
-              {renderLogisticMethod('address')}
+              {product.logisticMethod.includes('office') &&
+                renderLogisticMethod('office')}
+              {product.logisticMethod.includes('address') &&
+                renderLogisticMethod('address')}
             </div>
           </div>
           <div className="self-center my-3 font-medium text-3xl">Comment</div>
