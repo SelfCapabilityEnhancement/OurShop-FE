@@ -101,14 +101,12 @@ export default function OrderDetailWindow(props: {
                       type="button"
                       className="inline-flex rounded-md border border-transparent bg-indigo-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeDetailWindow}
-                      data-testid="export-excel"
                     >
                       Export to Excel
                     </button>
                     <button
                       className="inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeDetailWindow}
-                      data-testid="order-made"
                     >
                       Order is Made
                     </button>
