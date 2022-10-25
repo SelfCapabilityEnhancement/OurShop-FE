@@ -6,13 +6,13 @@ export default function Counter(props: {
   const { count, handlePlus, handleMinus } = props;
 
   return (
-    <div className="flex">
+    <div className="flex items-center">
       <svg
         data-testid="svg-minus"
         onClick={() => handleMinus()}
-        className="h-8 w-8"
-        width="24"
-        height="24"
+        className="h-10 w-10"
+        width="32"
+        height="32"
         viewBox="0 0 24 24"
         strokeWidth="2"
         stroke="gray"
@@ -23,15 +23,15 @@ export default function Counter(props: {
         <path stroke="none" d="M0 0h24v24H0z" />
         <path d="M18 15l-6-6l-6 6h12" transform="rotate(270 12 12)" />
       </svg>
-      <span data-testid="num" className="text-2xl w-8 text-center">
+      <span data-testid="num" className="text-3xl w-8 text-center">
         {count}
       </span>
       <svg
         data-testid="svg-plus"
         onClick={() => handlePlus()}
-        className="h-8 w-8"
-        width="24"
-        height="24"
+        className="h-10 w-10"
+        width="32"
+        height="32"
         viewBox="0 0 24 24"
         strokeWidth="2"
         stroke="gray"

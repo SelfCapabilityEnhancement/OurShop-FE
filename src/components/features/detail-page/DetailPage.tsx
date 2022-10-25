@@ -69,7 +69,7 @@ export default function DetailPage() {
       <label
         htmlFor={method}
         className={classNames(
-          'flex flex-row items-center',
+          'flex flex-row items-center text-xl',
           product.logisticMethod.includes(method) ? '' : 'display: none'
         )}
         onClick={() => handleLogisticMethodClick(method)}
@@ -96,11 +96,11 @@ export default function DetailPage() {
       />
 
       <div className="DetailPage flex w-[1000px] mt-[50px]">
-        <section className="mr-20">
+        <section className="mr-10">
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
-            className="h-[375px] w-[500px] mb-5 rounded-xl"
+            className="h-96 w-[500px] mb-5 rounded-xl drop-shadow-xl"
           />
           <div className="flex small-pictures">
             {product.images.split(',').map((imgSrc, index) => (
@@ -108,7 +108,7 @@ export default function DetailPage() {
                 key={index}
                 src={imgSrc}
                 alt={`small product picture ${index}`}
-                className={`h-[70px] w-[90px] mr-[12px] rounded-xl border-2 ${
+                className={`h-16 w-20 mr-3 rounded-xl border-2 drop-shadow-lg ${
                   index === bigImgIndex ? 'border-purple-600' : ''
                 }`}
                 onClick={() => {
@@ -119,31 +119,32 @@ export default function DetailPage() {
           </div>
         </section>
         <section className="flex-1 relative">
-          <h2 className="self-center mb-2 font-light sm:text-4xl">
+          <h2 className="self-center mb-3 font-medium text-3xl">
             {product.name}
           </h2>
           <p className="price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl">
-            price: ${product.priceMoney} or {product.priceToken} token
+            Price: ${product.priceMoney} or {product.priceToken} token
           </p>
-          <h2 className="self-center mt-2 mb-2 font-light sm:text-4xl">
-            Description
+          <h2 className="self-center my-3 font-medium text-3xl">
+            Product Description
           </h2>
-          <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
+          <p className="description bg-slate-100 rounded-xl h-40 py-3 px-3 text-2xl">
             {product.description}
           </p>
           <div
             data-testid="counter"
-            className="PurchaseNumber flex bottom-12 ml-2"
+            className="PurchaseNumber flex bottom-12 my-3 items-center"
           >
-            <span className="my-auto mr-48 mb-2 text-2xl">No. of purchase</span>
+            <span className="mr-36 font-medium text-3xl">No. of Purchase</span>
             <Counter
               count={count}
               handlePlus={handlePlus}
               handleMinus={handleMinus}
             />
           </div>
-          <h2 className="self-center mt-2 mb-2 ml-2 font-light sm:text-2xl">
-            Logistic method
+          <h2 className="self-center my-3 font-medium text-3xl">
+            Logistic Method
+            <span className="text-red-500 pr-1">*</span>
           </h2>
           <div className="flex gap-[120px] mb-10 ml-2">
             <div className="grid grid-cols-2 gap-x-10">
@@ -157,13 +158,13 @@ export default function DetailPage() {
               onClick={handleAddToCart}
               className="add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
-              add in shopping cart
+              Add in Shopping Cart
             </button>
             <button
               type="button"
               className="purchase-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
-              purchase
+              Purchase
             </button>
           </div>
         </section>
