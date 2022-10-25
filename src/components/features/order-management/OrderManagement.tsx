@@ -17,6 +17,8 @@ export default function OrderManagement() {
     description: '',
     stock: 1,
     images: '',
+    logisticMethod: '',
+    logisticMethodComment: '',
   };
   const orders = {
     id: 1,

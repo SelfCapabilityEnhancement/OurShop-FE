@@ -24,8 +24,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path3',
     stock: 3,
-    // logisticMethod: '',
-    // logisticMethodComment: '',
+    logisticMethod: '',
+    logisticMethodComment: '',
   },
   {
     id: 3,
@@ -35,8 +35,8 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path4',
     stock: 5,
-    // logisticMethod: '',
-    // logisticMethodComment: '',
+    logisticMethod: '',
+    logisticMethodComment: '',
   },
 ];
 
