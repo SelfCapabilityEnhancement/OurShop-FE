@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
+import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
@@ -97,6 +98,7 @@ export default function DetailPage() {
 
       <div className="DetailPage flex w-[1000px] mt-[50px]">
         <section className="mr-10">
+          <Breadcrumb crumbNames={['Product Detail']} />
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
@@ -119,16 +121,16 @@ export default function DetailPage() {
           </div>
         </section>
         <section className="flex-1 relative">
-          <h2 className="self-center mb-3 font-medium text-3xl">
+          <div className="self-center mb-3 font-medium text-3xl">
             {product.name}
-          </h2>
-          <p className="price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl">
+          </div>
+          <p className="price bg-slate-100 rounded-xl h-[60px] p-3 text-2xl">
             Price: ${product.priceMoney} or {product.priceToken} token
           </p>
-          <h2 className="self-center my-3 font-medium text-3xl">
+          <div className="self-center my-3 font-medium text-3xl">
             Product Description
-          </h2>
-          <p className="description bg-slate-100 rounded-xl h-40 py-3 px-3 text-2xl">
+          </div>
+          <p className="description bg-slate-100 rounded-xl h-32 p-3 text-2xl">
             {product.description}
           </p>
           <div
@@ -142,16 +144,20 @@ export default function DetailPage() {
               handleMinus={handleMinus}
             />
           </div>
-          <h2 className="self-center my-3 font-medium text-3xl">
+          <div className="self-center my-3 font-medium text-3xl">
             Logistic Method
             <span className="text-red-500 pr-1">*</span>
-          </h2>
-          <div className="flex gap-[120px] mb-10 ml-2">
-            <div className="grid grid-cols-2 gap-x-10">
+          </div>
+          <div className="flex gap-[120px] mb-3 ml-2">
+            <div className="grid grid-cols-2 gap-x-5">
               {renderLogisticMethod('office')}
               {renderLogisticMethod('address')}
             </div>
           </div>
+          <div className="self-center my-3 font-medium text-3xl">Comment</div>
+          <p className="description bg-slate-100 rounded-xl h-20 mb-10 p-3 text-2xl">
+            {product.logisticMethodComment}
+          </p>
           <div className="flex gap-[25px]  bottom-0">
             <button
               type="button"
