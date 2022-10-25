@@ -8,6 +8,9 @@ import { BrowserRouter, Location } from 'react-router-dom';
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
+    post: jest.fn().mockImplementation(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }),
     get: jest.fn().mockResolvedValue({
       data: [
         {
@@ -98,6 +101,21 @@ describe('Detail Page', () => {
         screen.getByText('Please Choose One Logistic Method!')
       ).not.toBeInTheDocument();
     }, 3000);
+  });
+
+  test('should show processing and success message when add in shopping cart', async () => {
+    const office = screen.getByText('Collecting at Office');
+    const addInCart = screen.getByText('Add in Shopping Cart');
+
+    await user.click(office);
+    await user.click(addInCart);
+
+    expect(await screen.findByText('Processing...')).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        'The Product was Added into Shopping Cart Successfully!'
+      )
+    ).toBeInTheDocument();
   });
 
   test('should add one when click svg-plus', async () => {

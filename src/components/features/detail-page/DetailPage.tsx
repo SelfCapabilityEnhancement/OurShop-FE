@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
+import Loading from '@/components/common/loading/Loading';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
@@ -18,6 +19,7 @@ export default function DetailPage() {
   const [bigImgIndex, setBigImgIndex] = useState(0);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
   const [user, setUser] = useState<User>();
@@ -39,6 +41,7 @@ export default function DetailPage() {
   const handleAddToCart = async () => {
     if (validate()) {
       setValidation(true);
+      setShowLoading(true);
       await http
         .post('/shopping-cart/create', {
           userId: user?.id,
@@ -47,6 +50,7 @@ export default function DetailPage() {
         })
         // eslint-disable-next-line no-console
         .catch(console.error);
+      setShowLoading(false);
     } else {
       setValidation(false);
     }
@@ -95,7 +99,7 @@ export default function DetailPage() {
         success={validation}
         message={validation ? successMsg : failMsg}
       />
-
+      <Loading visible={showLoading} message="Processing..." />
       <div className="DetailPage flex w-[1000px] mt-[50px]">
         <section className="mr-10">
           <Breadcrumb crumbNames={['Product Detail']} />
