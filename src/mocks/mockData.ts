@@ -14,7 +14,7 @@ export const tempProducts: Array<Product> = [
     images: 'path1,path2',
     stock: 2,
     logisticMethod: 'office;address',
-    logisticMethodComment: '',
+    logisticMethodComment: 'mock comment',
   },
   {
     id: 2,

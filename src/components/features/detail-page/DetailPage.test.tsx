@@ -116,4 +116,15 @@ describe('Detail Page', () => {
     await user.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
+
+  test('should display breadcrumb', () => {
+    expect(screen.getByText('Product Detail')).toBeInTheDocument();
+  });
+
+  test('should display comment', () => {
+    expect(screen.getByText('Comment')).toBeInTheDocument();
+    expect(
+      screen.getByText(mockProduct.logisticMethodComment)
+    ).toBeInTheDocument();
+  });
 });
