@@ -13,7 +13,7 @@ export const tempProducts: Array<Product> = [
     description: 'yummy',
     images: 'path1,path2',
     stock: 2,
-    logisticMethod: '',
+    logisticMethod: 'office;address',
     logisticMethodComment: '',
   },
   {
@@ -24,7 +24,7 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path3',
     stock: 3,
-    logisticMethod: '',
+    logisticMethod: 'office',
     logisticMethodComment: '',
   },
   {
@@ -35,7 +35,7 @@ export const tempProducts: Array<Product> = [
     description: '',
     images: 'path4',
     stock: 5,
-    logisticMethod: '',
+    logisticMethod: 'address',
     logisticMethodComment: '',
   },
 ];

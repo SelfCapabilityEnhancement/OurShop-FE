@@ -3,7 +3,7 @@ import DetailPage from '@/components/features/detail-page/DetailPage';
 import userEvent from '@testing-library/user-event';
 import { tempProducts } from '@/mocks/mockData';
 import * as ReactRouter from 'react-router';
-import { Location } from 'react-router-dom';
+import { BrowserRouter, Location } from 'react-router-dom';
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
@@ -43,7 +43,9 @@ describe('Detail Page', () => {
 
   beforeEach(() => {
     jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
-    render(<DetailPage />);
+    render(<DetailPage />, {
+      wrapper: BrowserRouter,
+    });
   });
 
   test('should show product picture', () => {
@@ -55,69 +57,63 @@ describe('Detail Page', () => {
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
     expect(
       screen.getByText(
-        `price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`
+        `Price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`
       )
     ).toBeInTheDocument();
     expect(screen.getByText(/Description/i)).toBeInTheDocument();
     expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
 
-    expect(screen.getByText('No. of purchase')).toBeInTheDocument();
+    expect(screen.getByText('No. of Purchase')).toBeInTheDocument();
 
     expect(screen.getByTestId('counter')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /add in shopping cart/i })
+      screen.getByRole('button', { name: /Add in Shopping Cart/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /purchase/i })
+      screen.getByRole('button', { name: /Purchase/i })
     ).toBeInTheDocument();
   });
 
   test('should show another picture when click small product picture', async () => {
-    await userEvent.click(screen.getByAltText('small product picture 1'));
+    await user.click(screen.getByAltText('small product picture 1'));
     expect(screen.queryByAltText('big product picture 1')).toBeInTheDocument();
   });
 
-  test('should show banner when click add to shopping cart button', async () => {
-    await user.click(screen.getByText('add in shopping cart'));
-
-    expect(
-      await screen.findByText('Please choose one logistic method!')
-    ).toBeInTheDocument();
-  });
-
   test('should show title of logistic method', () => {
-    expect(screen.getByText('Logistic method')).toBeInTheDocument();
-    expect(screen.getByText('collecting at office')).toBeInTheDocument();
-    expect(screen.getByText('shipping to an address')).toBeInTheDocument();
+    expect(screen.getByText('Logistic Method')).toBeInTheDocument();
+    expect(screen.getByText('Collecting at Office')).toBeInTheDocument();
+    expect(screen.getByText('Shipping to an Address')).toBeInTheDocument();
     expect(screen.getAllByRole('radio').length).toBe(2);
   });
 
   test('should show error prompt when not click any logistic method', async () => {
-    await userEvent.click(screen.getByText('add in shopping cart'));
+    await user.click(screen.getByText('Add in Shopping Cart'));
+
     expect(
-      screen.queryByText('Please choose one logistic method!')
+      screen.queryByText('Please Choose One Logistic Method!')
     ).toBeInTheDocument();
+
     setTimeout(() => {
       expect(
-        screen.getByText('Please choose one logistic method!')
+        screen.getByText('Please Choose One Logistic Method!')
       ).not.toBeInTheDocument();
     }, 3000);
   });
 
   test('should add one when click svg-plus', async () => {
-    await userEvent.click(screen.getByTestId('svg-plus'));
+    await user.click(screen.getByTestId('svg-plus'));
     expect(screen.getByTestId('num').textContent).toBe('2');
   });
 
   test('svg-minus should be disabled when num of products is 1', async () => {
-    await userEvent.click(screen.getByTestId('svg-minus'));
+    await user.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
 
   test('should minus one when click svg-minus', async () => {
-    await userEvent.click(screen.getByTestId('svg-plus'));
+    await user.click(screen.getByTestId('svg-plus'));
     expect(screen.getByTestId('num').textContent).toBe('2');
-    await userEvent.click(screen.getByTestId('svg-minus'));
+    await user.click(screen.getByTestId('svg-minus'));
     expect(screen.getByTestId('num').textContent).toBe('1');
   });
 });
