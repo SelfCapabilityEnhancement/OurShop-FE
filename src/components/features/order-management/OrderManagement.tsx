@@ -116,6 +116,7 @@ export default function OrderManagement() {
       productNumAll: 0,
       ordersList: [orders],
     });
+  const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
 
   const titles = [
     { id: 'salesOverview', name: 'Sales Overview' },
@@ -251,6 +252,7 @@ export default function OrderManagement() {
             order={item}
             setShowWindow={setShowWindow}
             setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+            setShowOrderMadeButton={setShowOrderMadeButton}
           />
         );
       case 'finished':
@@ -259,6 +261,7 @@ export default function OrderManagement() {
             order={item}
             setShowWindow={setShowWindow}
             setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+            setShowOrderMadeButton={setShowOrderMadeButton}
           />
         );
       default:
@@ -373,6 +376,7 @@ export default function OrderManagement() {
         setShowWindow={setShowWindow}
         showWindow={showWindow}
         selectedOrdersItemAdmin={selectedOrdersItemAdmin}
+        showOrderMadeButton={showOrderMadeButton}
       />
     </div>
   );

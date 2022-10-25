@@ -13,6 +13,7 @@ describe('OrderDetailWindow', () => {
         setShowWindow={() => {}}
         showWindow={true}
         selectedOrdersItemAdmin={mockOrderItemAdminPending[0]}
+        showOrderMadeButton={true}
       />
     );
   });
@@ -31,5 +32,6 @@ describe('OrderDetailWindow', () => {
     expect(await screen.findByTestId('buyer-info-list')).toBeInTheDocument();
     expect(await screen.findByTestId('export-excel')).toBeInTheDocument();
     expect(await screen.findByTestId('order-made')).toBeInTheDocument();
+    expect(await screen.findByTestId('cancel-icon')).toBeInTheDocument();
   });
 });
