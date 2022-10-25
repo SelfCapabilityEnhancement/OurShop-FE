@@ -4,12 +4,12 @@ import Banner from '@/components/common/banner/Banner';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
-import { getCurrentUser } from '@/utils';
+import { classNames, getCurrentUser } from '@/utils';
 
 const logisticMethods = ['office', 'address'];
 
-const successMsg = 'The product was added into shopping cart successfully!';
-const failMsg = 'Please choose one logistic method!';
+const successMsg = 'The Product was Added into Shopping Cart Successfully!';
+const failMsg = 'Please Choose One Logistic Method!';
 export default function DetailPage() {
   const {
     state: { product },
@@ -64,6 +64,29 @@ export default function DetailPage() {
     setLogisticMethod(value);
   };
 
+  const renderLogisticMethod = (method: string) => {
+    return (
+      <label
+        htmlFor={method}
+        className={classNames(
+          'flex flex-row items-center',
+          product.logisticMethod.includes(method) ? '' : 'display: none'
+        )}
+        onClick={() => handleLogisticMethodClick(method)}
+      >
+        <input
+          id={method}
+          type="radio"
+          name="logistic"
+          className="firstLogisticMethod w-5 h-5 mr-1 accent-purple-500"
+        />
+        {method === 'office'
+          ? 'Collecting at Office'
+          : 'Shipping to an Address'}
+      </label>
+    );
+  };
+
   return (
     <div className="mx-auto mt-10 relative">
       <Banner
@@ -72,8 +95,8 @@ export default function DetailPage() {
         message={validation ? successMsg : failMsg}
       />
 
-      <div className="DetailPage flex w-[1000px] gap-1 mt-[50px]">
-        <section>
+      <div className="DetailPage flex w-[1000px] mt-[50px]">
+        <section className="mr-20">
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
@@ -124,32 +147,8 @@ export default function DetailPage() {
           </h2>
           <div className="flex gap-[120px] mb-10 ml-2">
             <div className="grid grid-cols-2 gap-x-10">
-              <label
-                htmlFor="office"
-                className="flex flex-row items-center"
-                onClick={() => handleLogisticMethodClick(logisticMethods[0])}
-              >
-                <input
-                  id="office"
-                  type="radio"
-                  name="logistic"
-                  className="firstLogisticMethod w-5 h-5 mr-1 accent-purple-500"
-                />
-                collecting at office
-              </label>
-              <label
-                htmlFor="address"
-                className="flex flex-row items-center"
-                onClick={() => handleLogisticMethodClick(logisticMethods[1])}
-              >
-                <input
-                  id="address"
-                  type="radio"
-                  name="logistic"
-                  className="secondLogisticMethod w-5 h-5 mr-1 accent-purple-500"
-                />
-                shipping to an address
-              </label>
+              {renderLogisticMethod('office')}
+              {renderLogisticMethod('address')}
             </div>
           </div>
           <div className="flex gap-[25px]  bottom-0">
