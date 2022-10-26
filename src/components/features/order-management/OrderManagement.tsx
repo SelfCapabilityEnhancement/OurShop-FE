@@ -221,7 +221,7 @@ export default function OrderManagement() {
               onClick={() => showTitle(title.id)}
               className={({ selected }) =>
                 classNames(
-                  `order-status-label ${title.id} w-52 rounded-lg text-xl font-normal`,
+                  `order-status-label ${title.id} w-52 rounded-lg text-xl font-normal outline-0`,
                   selected
                     ? ` text-pink-500 underline underline-offset-8 border-b-2 border-white`
                     : 'text-gray-800'
