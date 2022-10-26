@@ -9,25 +9,25 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 
 export default function OrderManagement() {
-  const product1 = {
-    id: 2,
-    name: '苹果',
-    priceToken: 99,
-    priceMoney: 9,
-    description: '水果 🍊',
+  const product = {
+    id: 1,
+    name: '',
+    priceToken: 1,
+    priceMoney: 1,
+    description: '',
     stock: 1,
-    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    images: '',
     logisticMethod: '',
     logisticMethodComment: '',
   };
-  const orders1 = {
+  const orders = {
     id: 1,
     userId: 1,
     orderProductsId: 1,
-    orderAddress: 'order address',
-    orderStatus: 'finished',
-    vendorDate: new Date('2002-10-10'),
-    purchaseDate: new Date('2022-10-01'),
+    orderAddress: '',
+    orderStatus: '',
+    vendorDate: new Date(''),
+    purchaseDate: new Date(''),
   };
 
   const [startDate, setStartDate] = useState<Date>();
@@ -39,9 +39,9 @@ export default function OrderManagement() {
   const [showWindow, setShowWindow] = useState(false);
   const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
     useState<OrdersItemAdmin>({
-      product: product1,
-      productNumAll: 2,
-      ordersList: [orders1],
+      product,
+      productNumAll: 0,
+      ordersList: [orders],
     });
 
   function getAdminOrdersList(ordersItemList: OrdersItem[]) {
@@ -49,9 +49,9 @@ export default function OrderManagement() {
 
     for (let i: number = 0; i < ordersItemList.length; i++) {
       const productIds: number[] = [];
-      ordersItemAdminList.map((ordersItemAdmin) =>
-        productIds.push(ordersItemAdmin.product.id)
-      );
+      ordersItemAdminList.forEach((ordersItemAdmin) => {
+        productIds.push(ordersItemAdmin.product.id);
+      });
       if (productIds.includes(ordersItemList[i].product.id)) {
         ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
           ordersItemAdmin.product.id === ordersItemList[i].product.id

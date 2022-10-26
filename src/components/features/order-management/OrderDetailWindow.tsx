@@ -1,15 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
 export default function OrderDetailWindow(props: {
-  setShowWindow: any;
+  setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
   showWindow: boolean;
   selectedOrdersItemAdmin: OrdersItemAdmin;
 }) {
   function closeDetailWindow() {
     props.setShowWindow(false);
   }
+
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
   return (
     <>
@@ -80,26 +81,34 @@ export default function OrderDetailWindow(props: {
                   </div>
                   <div>
                     <p className="ml-2">Buyer Information</p>
-                    <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-base">
+                    <p
+                      className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-base"
+                      data-testid="buyer-info-list"
+                    >
+                      userId Order Address <br />
                       {selectedOrdersItemAdmin.ordersList.map(
-                        (order) =>
+                        (order, index) => (
                           // FIXME buyer information
-                          order.userId + ' ' + order.orderAddress + '/r'
+                          <p key={index}>
+                            {order.userId} {order.orderAddress}
+                          </p>
+                        )
                       )}
                     </p>
                   </div>
-
                   <div className="mt-4 flex justify-evenly">
                     <button
                       type="button"
                       className="inline-flex rounded-md border border-transparent bg-indigo-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeDetailWindow}
+                      data-testid="export-excel"
                     >
                       Export to Excel
                     </button>
                     <button
                       className="inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeDetailWindow}
+                      data-testid="order-made"
                     >
                       Order is Made
                     </button>

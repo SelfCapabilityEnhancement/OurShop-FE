@@ -6,7 +6,7 @@ import { classNames } from '@/utils';
 
 export default function Profile() {
   return (
-    <Menu as="div" className="relative basis-1/4 flex justify-end mr-8">
+    <Menu as="div" className="relative flex justify-end mr-8">
       <Menu.Button>
         <img className="avatar h-12 w-12 rounded-full" src={avatarUrl} alt="" />
       </Menu.Button>

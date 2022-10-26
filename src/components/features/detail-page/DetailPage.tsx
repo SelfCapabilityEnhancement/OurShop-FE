@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
+import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
+import Loading from '@/components/common/loading/Loading';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { http } from '@/service';
-import { getCurrentUser } from '@/utils';
+import { classNames, getCurrentUser } from '@/utils';
 
 const logisticMethods = ['office', 'address'];
 
-const successMsg = 'The product was added into shopping cart successfully!';
-const failMsg = 'Please choose one logistic method!';
+const successMsg = 'The Product was Added into Shopping Cart Successfully!';
+const failMsg = 'Please Choose One Logistic Method!';
 export default function DetailPage() {
   const {
     state: { product },
@@ -17,6 +19,7 @@ export default function DetailPage() {
   const [bigImgIndex, setBigImgIndex] = useState(0);
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
   const [user, setUser] = useState<User>();
@@ -38,6 +41,7 @@ export default function DetailPage() {
   const handleAddToCart = async () => {
     if (validate()) {
       setValidation(true);
+      setShowLoading(true);
       await http
         .post('/shopping-cart/create', {
           userId: user?.id,
@@ -46,6 +50,7 @@ export default function DetailPage() {
         })
         // eslint-disable-next-line no-console
         .catch(console.error);
+      setShowLoading(false);
     } else {
       setValidation(false);
     }
@@ -64,6 +69,29 @@ export default function DetailPage() {
     setLogisticMethod(value);
   };
 
+  const renderLogisticMethod = (method: string) => {
+    return (
+      <label
+        htmlFor={method}
+        className={classNames(
+          'flex flex-row items-center text-xl',
+          product.logisticMethod.includes(method) ? '' : 'display: none'
+        )}
+        onClick={() => handleLogisticMethodClick(method)}
+      >
+        <input
+          id={method}
+          type="radio"
+          name="logistic"
+          className="firstLogisticMethod w-5 h-5 mr-1 accent-purple-500"
+        />
+        {method === 'office'
+          ? 'Collecting at Office'
+          : 'Shipping to an Address'}
+      </label>
+    );
+  };
+
   return (
     <div className="mx-auto mt-10 relative">
       <Banner
@@ -71,13 +99,14 @@ export default function DetailPage() {
         success={validation}
         message={validation ? successMsg : failMsg}
       />
-
-      <div className="DetailPage flex w-[1000px] gap-1 mt-[50px]">
-        <section>
+      <Loading visible={showLoading} message="Processing..." />
+      <div className="DetailPage flex w-[1000px] mt-12">
+        <section className="mr-10">
+          <Breadcrumb crumbNames={['Product Detail']} />
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
-            className="h-[375px] w-[500px] mb-5 rounded-xl"
+            className="h-96 w-[500px] mb-5 rounded-xl border-2 drop-shadow-xl"
           />
           <div className="flex small-pictures">
             {product.images.split(',').map((imgSrc, index) => (
@@ -85,7 +114,7 @@ export default function DetailPage() {
                 key={index}
                 src={imgSrc}
                 alt={`small product picture ${index}`}
-                className={`h-[70px] w-[90px] mr-[12px] rounded-xl border-2 ${
+                className={`h-16 w-20 mr-3 rounded-xl border-2 drop-shadow-lg ${
                   index === bigImgIndex ? 'border-purple-600' : ''
                 }`}
                 onClick={() => {
@@ -96,75 +125,58 @@ export default function DetailPage() {
           </div>
         </section>
         <section className="flex-1 relative">
-          <h2 className="self-center mb-2 font-light sm:text-4xl">
+          <div className="self-center mb-3 font-medium text-3xl">
             {product.name}
-          </h2>
-          <p className="price bg-slate-100 rounded-xl h-[60px] py-3 px-3 text-2xl">
-            price: ${product.priceMoney} or {product.priceToken} token
+          </div>
+          <p className="price bg-slate-100 rounded-xl h-[60px] p-3 text-2xl">
+            Price: ${product.priceMoney} or {product.priceToken} Token
           </p>
-          <h2 className="self-center mt-2 mb-2 font-light sm:text-4xl">
-            Description
-          </h2>
-          <p className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-2xl">
+          <div className="self-center my-3 font-medium text-3xl">
+            Product Description
+          </div>
+          <p className="description bg-slate-100 rounded-xl h-32 p-3 text-2xl">
             {product.description}
           </p>
           <div
             data-testid="counter"
-            className="PurchaseNumber flex bottom-12 ml-2"
+            className="PurchaseNumber flex bottom-12 my-3 items-center"
           >
-            <span className="my-auto mr-48 mb-2 text-2xl">No. of purchase</span>
+            <span className="mr-36 font-medium text-3xl">No. of Purchase</span>
             <Counter
               count={count}
               handlePlus={handlePlus}
               handleMinus={handleMinus}
             />
           </div>
-          <h2 className="self-center mt-2 mb-2 ml-2 font-light sm:text-2xl">
-            Logistic method
-          </h2>
-          <div className="flex gap-[120px] mb-10 ml-2">
-            <div className="grid grid-cols-2 gap-x-10">
-              <label
-                htmlFor="office"
-                className="flex flex-row items-center"
-                onClick={() => handleLogisticMethodClick(logisticMethods[0])}
-              >
-                <input
-                  id="office"
-                  type="radio"
-                  name="logistic"
-                  className="firstLogisticMethod w-5 h-5 mr-1 accent-purple-500"
-                />
-                collecting at office
-              </label>
-              <label
-                htmlFor="address"
-                className="flex flex-row items-center"
-                onClick={() => handleLogisticMethodClick(logisticMethods[1])}
-              >
-                <input
-                  id="address"
-                  type="radio"
-                  name="logistic"
-                  className="secondLogisticMethod w-5 h-5 mr-1 accent-purple-500"
-                />
-                shipping to an address
-              </label>
+          <div className="self-center my-3 font-medium text-3xl">
+            Logistic Method
+            <span className="text-red-500">*</span>
+          </div>
+          <div className="flex gap-[120px] mb-3 ml-2">
+            <div className="grid grid-cols-2 gap-x-5">
+              {product.logisticMethod.includes('office') &&
+                renderLogisticMethod('office')}
+              {product.logisticMethod.includes('address') &&
+                renderLogisticMethod('address')}
             </div>
           </div>
+          <div className="self-center my-3 font-medium text-3xl">Comment</div>
+          <p className="description bg-slate-100 rounded-xl h-20 mb-10 p-3 text-2xl">
+            {product.logisticMethodComment}
+          </p>
           <div className="flex gap-[25px]  bottom-0">
             <button
               type="button"
               onClick={handleAddToCart}
-              className="add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              className="add-in-cart py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
-              add in shopping cart
+              Add in Shopping Cart
             </button>
             <button
               type="button"
-              className="purchase-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              className="purchase py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
-              purchase
+              Purchase
             </button>
           </div>
         </section>

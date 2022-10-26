@@ -1,9 +1,12 @@
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import React from 'react';
 
 export default function OrderItemAdminFinished(props: {
   order: OrdersItemAdmin;
-  setShowWindow: any;
-  setSelectedOrdersItemAdmin: any;
+  setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedOrdersItemAdmin: React.Dispatch<
+    React.SetStateAction<OrdersItemAdmin>
+  >;
 }) {
   const order = props.order;
 
@@ -39,7 +42,7 @@ export default function OrderItemAdminFinished(props: {
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>
       <button
-        className="button text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center"
+        className="view-detail text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center"
         data-testid="view-detail"
         onClick={openDetailWindow}
       >
