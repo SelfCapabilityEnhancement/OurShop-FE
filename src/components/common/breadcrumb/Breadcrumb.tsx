@@ -18,9 +18,7 @@ export default function Breadcrumb(props: { crumbNames: string[] }) {
             clipRule="evenodd"
           ></path>
         </svg>
-        <div className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2">
-          {name}
-        </div>
+        <div className="ml-1 text-base font-medium text-violet-500">{name}</div>
       </div>
     </li>
   );
@@ -31,7 +29,7 @@ export default function Breadcrumb(props: { crumbNames: string[] }) {
         <li className="inline-flex items-center to-home">
           <NavLink
             to="/home"
-            className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
+            className="inline-flex items-center text-base font-medium text-gray-700 hover:text-gray-900"
           >
             <svg
               className="w-4 h-4 mr-2"
