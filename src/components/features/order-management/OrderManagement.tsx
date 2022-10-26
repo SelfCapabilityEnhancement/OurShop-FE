@@ -7,6 +7,8 @@ import OrderItemAdminFinished from '@/components/features/order-management/Order
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
+import { Tab } from '@headlessui/react';
+import { classNames } from '@/utils';
 
 export default function OrderManagement() {
   const product = {
@@ -43,6 +45,14 @@ export default function OrderManagement() {
       productNumAll: 0,
       ordersList: [orders],
     });
+
+  const titles = [
+    { id: 'salesOverview', name: 'Sales Overview' },
+    { id: 'pendingOrder', name: 'Pending Order' },
+    { id: 'historicalOrder', name: 'Historical Order' },
+  ];
+
+  const [selectedTitle, setSelectedTitle] = useState(0);
 
   function getAdminOrdersList(ordersItemList: OrdersItem[]) {
     let ordersItemAdminList: OrdersItemAdmin[] = [];
@@ -185,34 +195,71 @@ export default function OrderManagement() {
     }
   };
 
+  const showTitle = (titleId: string) => {
+    if (titleId === 'salesOverview') {
+      return showAll();
+    } else if (titleId === 'pendingOrder') {
+      return showPending();
+    } else if (titleId === 'historicalOrder') {
+      return showFinished();
+    } else {
+      return showAll();
+    }
+  };
+
   return (
     <div className="mt-10 ml-10">
-      <div className="order-status-header w-11/12 mb-6">
-        <label
-          className="order-status-label all-label basis-1/3 mx-4 py-4 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
-          onClick={showAll}
-        >
-          Sales Overview
-        </label>
-        <label
-          className="order-status-label pending-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
-          onClick={showPending}
-        >
-          Pending Order
-        </label>
-        <label
-          className="order-status-label finished-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
-          onClick={showFinished}
-        >
-          Historical Order
-        </label>
-      </div>
+      <Tab.Group
+        manual
+        selectedIndex={selectedTitle}
+        onChange={setSelectedTitle}
+      >
+        <Tab.List className="order-status-header w-11/12 mb-6 border-b-2 border-white">
+          {titles.map((title) => (
+            <Tab
+              key={title.id}
+              onClick={() => showTitle(title.id)}
+              className={({ selected }) =>
+                classNames(
+                  `order-status-label ${title.id} w-52 rounded-lg text-xl font-normal`,
+                  selected
+                    ? ` text-pink-500 underline underline-offset-8 border-b-2 border-white`
+                    : 'text-gray-800'
+                )
+              }
+            >
+              {title.name}
+            </Tab>
+          ))}
+        </Tab.List>
+      </Tab.Group>
+
+      {/* <div className="order-status-header w-11/12 mb-6"> */}
+      {/*   <label */}
+      {/*     className="order-status-label all-label basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
+      {/*       hover:text-gray-600 hover:border-gray-300 */}
+      {/*       focus:text-rose-500 focus:border-rose-500" */}
+      {/*     onClick={showAll} */}
+      {/*   > */}
+      {/*     Sales Overview */}
+      {/*   </label> */}
+      {/*   <label */}
+      {/*     className="order-status-label pending-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
+      {/*       hover:text-gray-600 hover:border-gray-300 */}
+      {/*       focus:text-rose-500 focus:border-rose-500" */}
+      {/*     onClick={showPending} */}
+      {/*   > */}
+      {/*     Pending Order */}
+      {/*   </label> */}
+      {/*   <label */}
+      {/*     className="order-status-label finished-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
+      {/*       hover:text-gray-600 hover:border-gray-300 */}
+      {/*       focus:text-rose-500 focus:border-rose-500" */}
+      {/*     onClick={showFinished} */}
+      {/*   > */}
+      {/*     Historical Order */}
+      {/*   </label> */}
+      {/* </div> */}
       <div className="date-range-selection w-11/12 absolute  mt-2">
         <div className="start-end-date-picker flex absolute top-1">
           <span className="mr-[10px] py-2">From</span>
