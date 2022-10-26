@@ -30,7 +30,7 @@ export default function HomePage() {
         <div
           key={product.id}
           onClick={() => handleClick(product)}
-          className="product w-60 h-64 mb-5 mx-auto flex flex-col bg-gray-100"
+          className="product w-60 h-72 mb-5 mx-auto flex flex-col bg-gray-100"
         >
           <img
             src={product.images.split(',')[0]}
