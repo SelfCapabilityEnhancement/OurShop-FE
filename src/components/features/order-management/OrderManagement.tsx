@@ -9,6 +9,77 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
+import Chart from '@/components/common/charts/Charts';
+import HLine from '@/components/common/horizontal-line/HorizontalLine';
+
+const goodOptions = {
+  title: {
+    text: 'Most Popular Product',
+  },
+  tooltip: {},
+  xAxis: {},
+  yAxis: {
+    inverse: true,
+    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+  },
+  series: [
+    {
+      realtimeSort: true,
+      name: '销量',
+      type: 'bar',
+      data: [5, 20, 36, 10, 10, 20],
+      label: {
+        show: true,
+        position: 'right',
+      },
+    },
+  ],
+};
+
+const categoryOptions = {
+  title: {
+    text: 'Sales by Product Category',
+  },
+  tooltip: {
+    trigger: 'item',
+  },
+  legend: {
+    top: '7%',
+    left: 'center',
+  },
+  series: [
+    {
+      name: 'Category',
+      type: 'pie',
+      radius: ['30%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2,
+      },
+      label: {
+        show: false,
+        position: 'center',
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: '20',
+          fontWeight: 'bold',
+        },
+      },
+      labelLine: {
+        show: true,
+      },
+      data: [
+        { value: 1048, name: 'Clothes' },
+        { value: 735, name: 'Souvenir' },
+        { value: 580, name: 'Books' },
+      ],
+    },
+  ],
+};
 
 export default function OrderManagement() {
   const product = {
@@ -278,7 +349,13 @@ export default function OrderManagement() {
           </button>
         </div>
       </div>
-      <div className="order-list w-11/12 mx-auto absolute top-[250px]">
+      <HLine text="Kanban" />
+      <div className="grid grid-cols-2 m-5">
+        <Chart options={goodOptions} />
+        <Chart options={categoryOptions} />
+      </div>
+      <HLine text="Orders" />
+      <div className="order-list mt-3 w-11/12 mx-auto">
         <ul className="flex flex-col">
           {adminOrdersItemList.map((item: OrdersItemAdmin) => (
             <li
