@@ -208,7 +208,7 @@ export default function OrderManagement() {
   };
 
   return (
-    <div className="mt-10 ml-10">
+    <div className="mt-10 mx-10">
       <Tab.Group
         manual
         selectedIndex={selectedTitle}
@@ -223,7 +223,7 @@ export default function OrderManagement() {
                 classNames(
                   `order-status-label ${title.id} w-52 rounded-lg text-xl font-normal outline-0`,
                   selected
-                    ? ` text-pink-500 underline underline-offset-8 border-b-2 border-white`
+                    ? 'text-pink-500 underline underline-offset-8 border-b-2 border-white'
                     : 'text-gray-800'
                 )
               }
@@ -233,51 +233,24 @@ export default function OrderManagement() {
           ))}
         </Tab.List>
       </Tab.Group>
-
-      {/* <div className="order-status-header w-11/12 mb-6"> */}
-      {/*   <label */}
-      {/*     className="order-status-label all-label basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
-      {/*       hover:text-gray-600 hover:border-gray-300 */}
-      {/*       focus:text-rose-500 focus:border-rose-500" */}
-      {/*     onClick={showAll} */}
-      {/*   > */}
-      {/*     Sales Overview */}
-      {/*   </label> */}
-      {/*   <label */}
-      {/*     className="order-status-label pending-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
-      {/*       hover:text-gray-600 hover:border-gray-300 */}
-      {/*       focus:text-rose-500 focus:border-rose-500" */}
-      {/*     onClick={showPending} */}
-      {/*   > */}
-      {/*     Pending Order */}
-      {/*   </label> */}
-      {/*   <label */}
-      {/*     className="order-status-label finished-order basis-1/3 mx-4 py-4 text-center border-b-2 border-white */}
-      {/*       hover:text-gray-600 hover:border-gray-300 */}
-      {/*       focus:text-rose-500 focus:border-rose-500" */}
-      {/*     onClick={showFinished} */}
-      {/*   > */}
-      {/*     Historical Order */}
-      {/*   </label> */}
-      {/* </div> */}
-      <div className="date-range-selection w-11/12 absolute  mt-2">
-        <div className="start-end-date-picker flex absolute top-1">
-          <span className="mr-[10px] py-2">From</span>
+      <div className="date-range-selection w-11/12 mt-2 flex items-center">
+        <div className="start-end-date-picker flex ml-5">
+          <span className="mr-2 py-2">From</span>
           <ReactDatePicker
-            className="start-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
+            className="start-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={startDate}
             placeholderText="time"
             onChange={(date: Date) => setStartDate(date)}
           />
-          <span className="mx-[10px] py-2">To</span>
+          <span className="mx-2 py-2">To</span>
           <ReactDatePicker
-            className="end-date bg-slate-100 rounded-lg w-[100px] py-2 text-center"
+            className="end-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={endDate}
             placeholderText="time"
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
-        <div className="apply-reset-button flex absolute right-0">
+        <div className="apply-reset-button flex flex-1 justify-end">
           <button
             type="button"
             className="apply-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[80px] mr-[20px]"
