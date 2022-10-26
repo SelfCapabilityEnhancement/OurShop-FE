@@ -60,7 +60,7 @@ describe('Detail Page', () => {
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
     expect(
       screen.getByText(
-        `Price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} token`
+        `Price: $${mockProduct.priceMoney} or ${mockProduct.priceToken} Token`
       )
     ).toBeInTheDocument();
     expect(screen.getByText(/Description/i)).toBeInTheDocument();

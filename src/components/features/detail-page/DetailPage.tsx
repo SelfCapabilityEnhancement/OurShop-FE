@@ -100,13 +100,13 @@ export default function DetailPage() {
         message={validation ? successMsg : failMsg}
       />
       <Loading visible={showLoading} message="Processing..." />
-      <div className="DetailPage flex w-[1000px] mt-[50px]">
+      <div className="DetailPage flex w-[1000px] mt-12">
         <section className="mr-10">
           <Breadcrumb crumbNames={['Product Detail']} />
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
-            className="h-96 w-[500px] mb-5 rounded-xl drop-shadow-xl"
+            className="h-96 w-[500px] mb-5 rounded-xl border-2 drop-shadow-xl"
           />
           <div className="flex small-pictures">
             {product.images.split(',').map((imgSrc, index) => (
@@ -129,7 +129,7 @@ export default function DetailPage() {
             {product.name}
           </div>
           <p className="price bg-slate-100 rounded-xl h-[60px] p-3 text-2xl">
-            Price: ${product.priceMoney} or {product.priceToken} token
+            Price: ${product.priceMoney} or {product.priceToken} Token
           </p>
           <div className="self-center my-3 font-medium text-3xl">
             Product Description
@@ -150,7 +150,7 @@ export default function DetailPage() {
           </div>
           <div className="self-center my-3 font-medium text-3xl">
             Logistic Method
-            <span className="text-red-500 pr-1">*</span>
+            <span className="text-red-500">*</span>
           </div>
           <div className="flex gap-[120px] mb-3 ml-2">
             <div className="grid grid-cols-2 gap-x-5">
@@ -168,13 +168,13 @@ export default function DetailPage() {
             <button
               type="button"
               onClick={handleAddToCart}
-              className="add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              className="add-in-cart py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
               Add in Shopping Cart
             </button>
             <button
               type="button"
-              className="purchase-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
+              className="purchase py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[230px]"
             >
               Purchase
             </button>
