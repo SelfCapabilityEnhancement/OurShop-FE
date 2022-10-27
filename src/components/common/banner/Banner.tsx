@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { preventScrollBug } from '@/utils';
 
 export default function Banner({
   visible,
@@ -35,6 +36,7 @@ export default function Banner({
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
+              afterLeave={() => setTimeout(preventScrollBug)}
             >
               <Dialog.Panel
                 className={`${

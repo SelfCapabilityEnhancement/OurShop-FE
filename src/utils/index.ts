@@ -28,3 +28,14 @@ export const validateForm = (obj: UploadProduct, exclude: string[] = []) => {
   }
   return result;
 };
+
+export const preventScrollBug = () => {
+  // prevent scroll bug
+  // https://github.com/tailwindlabs/headlessui/issues/1698
+  const HTMLDOM = document.querySelector('html');
+
+  if (HTMLDOM) {
+    // https://stackoverflow.com/a/67384208/6236633
+    HTMLDOM.setAttribute('style', '');
+  }
+};
