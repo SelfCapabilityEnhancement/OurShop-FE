@@ -1,18 +1,56 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { http } from '@/service';
 
 export default function OrderDetailWindow(props: {
   setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
   showWindow: boolean;
   selectedOrdersItemAdmin: OrdersItemAdmin;
   showOrderMadeButton: boolean;
+  ordersItems: OrdersItem[];
+  setOrdersItems: React.Dispatch<React.SetStateAction<OrdersItem[]>>;
+  setAdminOrdersItemList: React.Dispatch<
+    React.SetStateAction<OrdersItemAdmin[]>
+  >;
+  getAdminOrdersList: Function;
+  filterOrdersByStatus: Function;
 }) {
   function closeDetailWindow() {
     props.setShowWindow(false);
   }
 
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
+
+  const handleOrderMade = async () => {
+    const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
+      (orders) => orders.id
+    );
+
+    await http
+      .post('/orders', ordersIdList)
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+
+    props.setShowWindow(false);
+    const updatedordersItems = props.ordersItems.map((ordersItem) =>
+      ordersIdList.includes(ordersItem.orders.id)
+        ? {
+            ...ordersItem,
+            orders: {
+              ...ordersItem.orders,
+              orderStatus: 'finished',
+            },
+          }
+        : ordersItem
+    );
+    props.setOrdersItems(updatedordersItems);
+    props.setAdminOrdersItemList(
+      props.getAdminOrdersList(
+        props.filterOrdersByStatus(updatedordersItems, 'pending')
+      )
+    );
+  };
   return (
     <Transition appear show={props.showWindow} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeDetailWindow}>
@@ -107,6 +145,7 @@ export default function OrderDetailWindow(props: {
                     <button
                       className="inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       data-testid="order-made"
+                      onClick={handleOrderMade}
                     >
                       Order is Made
                     </button>

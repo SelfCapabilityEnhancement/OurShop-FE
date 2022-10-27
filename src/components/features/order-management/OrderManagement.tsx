@@ -82,7 +82,7 @@ const categoryOptions = {
 };
 
 export default function OrderManagement() {
-  const [ordersItems, setOrdersItems] = useState([]);
+  const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
   const [adminOrdersItemList, setAdminOrdersItemList] = useState<
     OrdersItemAdmin[]
   >([]);
@@ -91,7 +91,7 @@ export default function OrderManagement() {
       .get(`/orders`)
       .then((response) => {
         setOrdersItems(response.data);
-        setAdminOrdersItemList(getAdminOrdersList(ordersItems));
+        setAdminOrdersItemList(getAdminOrdersList(response.data));
       })
       // eslint-disable-next-line no-console
       .catch(console.error);
@@ -388,6 +388,11 @@ export default function OrderManagement() {
         showWindow={showWindow}
         selectedOrdersItemAdmin={selectedOrdersItemAdmin}
         showOrderMadeButton={showOrderMadeButton}
+        ordersItems={ordersItems}
+        setOrdersItems={setOrdersItems}
+        setAdminOrdersItemList={setAdminOrdersItemList}
+        getAdminOrdersList={getAdminOrdersList}
+        filterOrdersByStatus={filterOrdersByStatus}
       />
     </div>
   );

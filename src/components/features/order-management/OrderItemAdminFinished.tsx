@@ -10,6 +10,9 @@ export default function OrderItemAdminFinished(props: {
   setShowOrderMadeButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const order = props.order;
+  const date = new Date(
+    order.ordersList[0].vendorDate ? order.ordersList[0].vendorDate : ''
+  );
 
   function openDetailWindow() {
     props.setShowOrderMadeButton(false);
@@ -33,11 +36,7 @@ export default function OrderItemAdminFinished(props: {
       {/* FIXME: show in center */}
       <div className="absolute left-[300px]">
         <span data-testid="ordered-date-title">Ordered Date: </span>
-        <span data-testid="ordered-date">
-          {order.ordersList[0].vendorDate
-            ? order.ordersList[0].vendorDate.toLocaleDateString()
-            : ''}
-        </span>
+        <span data-testid="ordered-date">{date.toLocaleDateString()}</span>
       </div>
       <div className="absolute left-[600px]">
         <span data-testid="number-title">Number: </span>
