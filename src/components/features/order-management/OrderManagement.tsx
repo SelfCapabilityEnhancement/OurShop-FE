@@ -292,7 +292,7 @@ export default function OrderManagement() {
               onClick={() => showTitle(title.id)}
               className={({ selected }) =>
                 classNames(
-                  `order-status-label ${title.id} w-52 rounded-lg text-xl font-normal outline-0`,
+                  `order-status-label ${title.id} w-52 rounded-lg text-xl text-left font-normal outline-0`,
                   selected
                     ? 'text-pink-500 underline underline-offset-8 border-b-2 border-white'
                     : 'text-gray-800'
@@ -349,12 +349,14 @@ export default function OrderManagement() {
           </button>
         </div>
       </div>
-      <HLine text="Kanban" />
-      <div className="grid grid-cols-2 m-5">
-        <Chart options={goodOptions} />
-        <Chart options={categoryOptions} />
+      <div className={`${selectedTitle === 0 ? '' : 'hidden'}`}>
+        <HLine text="Kanban" />
+        <div className="grid grid-cols-2 m-5">
+          <Chart options={goodOptions} />
+          <Chart options={categoryOptions} />
+        </div>
+        <HLine text="Orders" />
       </div>
-      <HLine text="Orders" />
       <div className="order-list mt-3 w-11/12 mx-auto">
         <ul className="flex flex-col">
           {adminOrdersItemList.map((item: OrdersItemAdmin) => (
