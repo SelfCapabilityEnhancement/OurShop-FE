@@ -1,17 +1,17 @@
 import { Container } from 'react-dom';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import MyAddress from '@/components/features/my-address/MyAddress';
+import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('display address info', () => {
+describe('display user info', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(() => {
-    container = render(<MyAddress />, { wrapper: BrowserRouter }).container;
+    container = render(<MyInformation />, { wrapper: BrowserRouter }).container;
   });
-  it('should display address info', async () => {
+  it('should display user info', async () => {
     const address = container.querySelector('.address-header');
 
     expect(address).toBeTruthy();

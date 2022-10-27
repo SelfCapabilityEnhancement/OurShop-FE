@@ -10,7 +10,7 @@ const baseCites = [
   { id: 4, name: 'Chengdu' },
 ];
 
-export default function MyAddress() {
+export default function MyInformation() {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/home');
@@ -43,7 +43,9 @@ export default function MyAddress() {
 
   return (
     <div className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 p-4">
-      <h1 className="address-header text-center text-3xl mb-10">My Address</h1>
+      <h1 className="address-header text-center text-3xl mb-10">
+        My Information
+      </h1>
       <div className="flex items-center justify-between m-8">
         <p className="text-2xl font-semibold">My Office</p>
         <Listbox value={selectedCity} onChange={setSelectedCity}>

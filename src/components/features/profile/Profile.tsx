@@ -39,13 +39,13 @@ export default function Profile() {
             <Menu.Item>
               {({ active }) => (
                 <NavLink
-                  to="my-address"
+                  to="my-information"
                   className={classNames(
                     active ? 'bg-gray-100' : '',
                     'address block px-4 py-2 text-center text-base'
                   )}
                 >
-                  my address
+                  my information
                 </NavLink>
               )}
             </Menu.Item>
