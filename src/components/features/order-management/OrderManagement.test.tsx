@@ -11,6 +11,10 @@ jest.mock('@/service', () => ({
   },
 }));
 
+jest.mock('@/components/common/chart/Chart', () => ({
+  default: jest.fn().mockImplementation(() => <div />),
+}));
+
 describe('display my order', () => {
   let container: Container;
   const user = userEvent.setup();

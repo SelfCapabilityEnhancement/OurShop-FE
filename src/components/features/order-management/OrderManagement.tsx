@@ -9,7 +9,7 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import Chart from '@/components/common/charts/Charts';
+import Chart from '@/components/common/chart/Chart';
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 
 const goodOptions = {

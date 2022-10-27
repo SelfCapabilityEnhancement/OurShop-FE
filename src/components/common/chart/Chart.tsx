@@ -49,9 +49,9 @@ export default function Chart({
 
   // 监听窗口大小改变
   useEffect(() => {
-    window.addEventListener('resize', resizeHandler);
-    return () => window.removeEventListener('resize', resizeHandler);
+    window.addEventListener('resize', () => resizeHandler());
+    return () => window.removeEventListener('resize', () => resizeHandler());
   }, []);
 
-  return <div style={{ height: '400px' }} ref={chartRef} />;
+  return <div className="h-96" ref={chartRef} />;
 }
