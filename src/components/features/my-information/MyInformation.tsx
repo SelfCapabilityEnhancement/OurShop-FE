@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { TextSubmission } from '@/components/common/TextSubmission/TextSubmission';
+import { getCurrentUser } from '@/utils';
+import { User } from '@/components/common/CustomeTypes';
+import { http } from '@/service';
 
 const baseCites = [
   { id: 1, name: 'Wuhan' },
@@ -12,27 +15,46 @@ const baseCites = [
 
 export default function MyInformation() {
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleClick = async () => {
+    await http.post('/user/updateUserAddressAndOffice', {
+      userId: user?.id,
+      office: selectedCity.name,
+      address: shippingAddress,
+    });
     navigate('/home');
   };
   const [selectedCity, setSelectedCity] = useState(baseCites[0]);
-  const [shippingAddress, setShippingAddress] = useState('text text here');
+  const [shippingAddress, setShippingAddress] = useState('');
   const [saveShippingAddress, setSaveShippingAddress] =
     useState(shippingAddress);
   const [Visible, setVisible] = useState(false);
+  const [user, setUser] = useState<User>();
 
   const handleEdit = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setShippingAddress(event.target.value);
   };
 
+  useEffect(() => {
+    getCurrentUser().then((data) => {
+      setUser(data[0]);
+      setShippingAddress(data[0].address);
+      setSaveShippingAddress(data[0].address);
+      baseCites.forEach((baseCity) => {
+        if (baseCity.name === data[0].office) {
+          setSelectedCity(baseCity);
+        }
+      });
+    });
+  }, []);
+
   function handleClickCancel() {
     setVisible(false);
   }
 
-  function handleClickSave() {
+  const handleClickSave = () => {
     setSaveShippingAddress(shippingAddress);
     setVisible(false);
-  }
+  };
 
   function handleClickEdit() {
     return () => {

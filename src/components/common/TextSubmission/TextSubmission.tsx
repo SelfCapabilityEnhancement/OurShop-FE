@@ -28,7 +28,7 @@ export function TextSubmission(props: {
           onClick={() => props.handleSave()}
           className="button save w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
         >
-          Save
+          Confirm
         </button>
       </div>
     </div>
