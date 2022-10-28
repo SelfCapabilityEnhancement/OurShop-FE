@@ -35,7 +35,8 @@ export default function OrderDetailWindow(props: {
             props.setOrdersItems(response.data);
             props.setAdminOrdersItemList(
               props.getAdminOrdersList(
-                props.filterOrdersByStatus(response.data, 'pending')
+                props.filterOrdersByStatus(response.data, 'pending'),
+                'pending'
               )
             );
             props.setShowWindow(false);

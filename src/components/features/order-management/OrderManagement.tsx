@@ -91,7 +91,7 @@ export default function OrderManagement() {
       .get(`/orders`)
       .then((response) => {
         setOrdersItems(response.data);
-        setAdminOrdersItemList(getAdminOrdersList(response.data));
+        setAdminOrdersItemList(getAdminOrdersList(response.data, 'all'));
       })
       // eslint-disable-next-line no-console
       .catch(console.error);
@@ -138,36 +138,109 @@ export default function OrderManagement() {
   const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
   const [selectedTitle, setSelectedTitle] = useState(0);
 
-  function getAdminOrdersList(ordersItemList: OrdersItem[]) {
-    let ordersItemAdminList: OrdersItemAdmin[] = [];
+  function orderByVendorDate(ordersItemAdminList: OrdersItemAdmin[]) {
+    return ordersItemAdminList.sort((objA, objB) => {
+      const date1 = new Date(objA.ordersList[0].vendorDate);
+      const date2 = new Date(objB.ordersList[0].vendorDate);
+      return date2.getTime() - date1.getTime();
+    });
+  }
 
+  function countProductNumAllByProductId(
+    ordersItemAdmin: OrdersItemAdmin,
+    ordersItemList: OrdersItem[],
+    index: number
+  ) {
+    return ordersItemAdmin.product.id === ordersItemList[index].product.id
+      ? {
+          ...ordersItemAdmin,
+          productNumAll:
+            ordersItemAdmin.productNumAll +
+            ordersItemList[index].orderProducts.purchaseNum,
+          ordersList: [
+            ...ordersItemAdmin.ordersList,
+            ordersItemList[index].orders,
+          ],
+        }
+      : ordersItemAdmin;
+  }
+
+  function addNewOrdersItemAdmin(
+    ordersItemAdminList: OrdersItemAdmin[],
+    ordersItemList: OrdersItem[],
+    index: number
+  ) {
+    ordersItemAdminList.push({
+      product: ordersItemList[index].product,
+      productNumAll: ordersItemList[index].orderProducts.purchaseNum,
+      ordersList: [ordersItemList[index].orders],
+    });
+  }
+
+  function countProductNumAllByProductIdAndVendorDate(
+    ordersItemAdmin: OrdersItemAdmin,
+    ordersItemList: OrdersItem[],
+    index: number,
+    date: Date
+  ) {
+    return ordersItemAdmin.product.id === ordersItemList[index].product.id &&
+      ordersItemAdmin.ordersList[0].vendorDate === date
+      ? {
+          ...ordersItemAdmin,
+          productNumAll:
+            ordersItemAdmin.productNumAll +
+            ordersItemList[index].orderProducts.purchaseNum,
+          ordersList: [
+            ...ordersItemAdmin.ordersList,
+            ordersItemList[index].orders,
+          ],
+        }
+      : ordersItemAdmin;
+  }
+
+  function getAdminOrdersList(ordersItemList: OrdersItem[], status: string) {
+    let ordersItemAdminList: OrdersItemAdmin[] = [];
     for (let i: number = 0; i < ordersItemList.length; i++) {
       const productIds: number[] = [];
       ordersItemAdminList.forEach((ordersItemAdmin) => {
         productIds.push(ordersItemAdmin.product.id);
       });
-      if (productIds.includes(ordersItemList[i].product.id)) {
-        ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
-          ordersItemAdmin.product.id === ordersItemList[i].product.id
-            ? {
-                ...ordersItemAdmin,
-                productNumAll:
-                  ordersItemAdmin.productNumAll +
-                  ordersItemList[i].orderProducts.purchaseNum,
-                ordersList: [
-                  ...ordersItemAdmin.ordersList,
-                  ordersItemList[i].orders,
-                ],
-              }
-            : ordersItemAdmin
-        );
-      } else {
-        ordersItemAdminList.push({
-          product: ordersItemList[i].product,
-          productNumAll: ordersItemList[i].orderProducts.purchaseNum,
-          ordersList: [ordersItemList[i].orders],
+      const vendorDates: String[] = [];
+      if (status === 'finished') {
+        ordersItemAdminList.forEach((ordersItemAdmin) => {
+          vendorDates.push(ordersItemAdmin.ordersList[0].vendorDate.toString());
         });
       }
+      const dateOrder = ordersItemList[i].orders.vendorDate;
+      if (status === 'finished') {
+        if (
+          productIds.includes(ordersItemList[i].product.id) &&
+          vendorDates.includes(dateOrder.toString())
+        ) {
+          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+            countProductNumAllByProductIdAndVendorDate(
+              ordersItemAdmin,
+              ordersItemList,
+              i,
+              dateOrder
+            )
+          );
+        } else {
+          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+        }
+      }
+      if (status !== 'finished') {
+        if (productIds.includes(ordersItemList[i].product.id)) {
+          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+            countProductNumAllByProductId(ordersItemAdmin, ordersItemList, i)
+          );
+        } else {
+          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+        }
+      }
+    }
+    if (status === 'finished') {
+      return orderByVendorDate(ordersItemAdminList);
     }
     return ordersItemAdminList;
   }
@@ -211,7 +284,8 @@ export default function OrderManagement() {
   const dataRangeFilterHandler = () => {
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus)),
+        nowStatus
       )
     );
   };
@@ -220,7 +294,10 @@ export default function OrderManagement() {
     setStartDate(undefined);
     setEndDate(undefined);
     setAdminOrdersItemList(
-      getAdminOrdersList(filterOrdersByStatus(ordersItems, nowStatus))
+      getAdminOrdersList(
+        filterOrdersByStatus(ordersItems, nowStatus),
+        nowStatus
+      )
     );
   };
 
@@ -228,7 +305,8 @@ export default function OrderManagement() {
     setNowStatus('all');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all')),
+        'all'
       )
     );
   };
@@ -237,7 +315,8 @@ export default function OrderManagement() {
     setNowStatus('pending');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending')),
+        'pending'
       )
     );
   };
@@ -246,12 +325,13 @@ export default function OrderManagement() {
     setNowStatus('finished');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished')),
+        'finished'
       )
     );
   };
 
-  const OrderItemAdminGivenStatus = (
+  const orderItemAdminGivenStatus = (
     item: OrdersItemAdmin,
     nowStatus: string
   ) => {
@@ -283,13 +363,13 @@ export default function OrderManagement() {
 
   const showTitle = (titleId: string) => {
     if (titleId === 'salesOverview') {
-      return showAll();
+      showAll();
     } else if (titleId === 'pendingOrder') {
-      return showPending();
+      showPending();
     } else if (titleId === 'historicalOrder') {
-      return showFinished();
+      showFinished();
     } else {
-      return showAll();
+      showAll();
     }
   };
   return (
@@ -373,12 +453,12 @@ export default function OrderManagement() {
       </div>
       <div className="order-list mt-3 w-11/12 mx-auto">
         <ul className="flex flex-col">
-          {adminOrdersItemList.map((item: OrdersItemAdmin) => (
+          {adminOrdersItemList.map((item: OrdersItemAdmin, index) => (
             <li
-              key={item.product.id}
+              key={index}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
-              {OrderItemAdminGivenStatus(item, nowStatus)}
+              {orderItemAdminGivenStatus(item, nowStatus)}
             </li>
           ))}
         </ul>

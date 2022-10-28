@@ -126,6 +126,7 @@ export const mockOrder = [
       orderAddress: 'order address',
       orderStatus: 'order status',
       purchaseDate: date,
+      vendorDate: new Date(1900, 1, 1, 0, 0, 0),
     },
     orderProducts: {
       id: 3,
@@ -172,7 +173,7 @@ const orders2 = {
   orderProductsId: 2,
   orderAddress: 'order address',
   orderStatus: 'finished',
-  vendorDate: new Date('2022-10-12'),
+  vendorDate: new Date(1900, 1, 1, 0, 0, 0),
   purchaseDate: new Date('2022-10-02'),
 };
 

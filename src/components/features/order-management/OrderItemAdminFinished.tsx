@@ -34,11 +34,11 @@ export default function OrderItemAdminFinished(props: {
         {order.product.name}
       </span>
       {/* FIXME: show in center */}
-      <div className="absolute left-[300px]">
+      <div className="absolute left-[500px]">
         <span data-testid="ordered-date-title">Ordered Date: </span>
         <span data-testid="ordered-date">{date.toLocaleDateString()}</span>
       </div>
-      <div className="absolute left-[600px]">
+      <div className="absolute left-[800px]">
         <span data-testid="number-title">Number: </span>
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>

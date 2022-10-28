@@ -46,7 +46,7 @@ export interface Orders {
   orderProductsId: number;
   orderAddress: string;
   orderStatus: string;
-  vendorDate?: Date;
+  vendorDate: Date;
   purchaseDate: Date;
 }
 
