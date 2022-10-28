@@ -41,43 +41,27 @@ describe('display user info', () => {
     expect(await screen.findByText('Save')).toBeInTheDocument();
   });
 
-  // it('should display new shipping address after edit and save', async () => {
-  //   const edit = container.querySelector('.edit-btn');
-  //   const newAddress = 'another text here';
-  //
-  //   expect(screen.getByText('Guanshan Road')).toBeInTheDocument();
-  //
-  //   await user.click(edit as Element);
-  //   const save = container.querySelector('.save.button');
-  //   const addressInput = container.querySelector('.address-input');
-  //   expect(edit).toBeTruthy();
-  //   expect(save).toBeTruthy();
-  //   expect(addressInput).toBeTruthy();
-  //
-  //   await user.type(addressInput as Element, newAddress);
-  //   await user.click(save as Element);
-  //
-  //   expect(screen.getByText(newAddress)).toBeInTheDocument();
-  // });
+  it('should display new shipping address after edit and save', async () => {
+    const edit = await screen.findByText('edit');
+    const newAddress = 'Poly International';
 
-  // it('should display new shipping address after edit and cancel', async () => {
-  //   const edit = container.querySelector('.edit-btn');
-  //   const address = 'Guanshan Road';
-  //
-  //   expect(screen.getByText(address)).toBeInTheDocument();
-  //   await user.click(edit as Element);
-  //
-  //   const cancel = container.querySelector('.cancel.button');
-  //   const addressInput = container.querySelector('.address-input');
-  //   expect(edit).toBeTruthy();
-  //   expect(cancel).toBeTruthy();
-  //   expect(addressInput).toBeTruthy();
-  //
-  //   await user.type(addressInput as Element, 'newAddress');
-  //   await user.click(cancel as Element);
-  //
-  //   expect(screen.queryByText(address)).toBeInTheDocument();
-  // });
+    expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
+    expect(edit).toBeInTheDocument();
+
+    user.click(edit as Element);
+
+    const addressInput = await screen.findByDisplayValue('Guanshan Road');
+    expect(addressInput).toBeInTheDocument();
+    const confirm = await screen.findByRole('button', { name: /Confirm/i });
+    expect(confirm).toBeInTheDocument();
+
+    await userEvent.type(addressInput, newAddress);
+    user.click(confirm as Element);
+
+    const save = await screen.findByRole('button', { name: /Save/i });
+    expect(save).toBeInTheDocument();
+    await user.click(save as Element);
+  });
 
   it('should navigate to home when click good to go', async () => {
     const button = container.querySelector('.go-home');
