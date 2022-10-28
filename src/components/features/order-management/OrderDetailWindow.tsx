@@ -8,7 +8,6 @@ export default function OrderDetailWindow(props: {
   showWindow: boolean;
   selectedOrdersItemAdmin: OrdersItemAdmin;
   showOrderMadeButton: boolean;
-  ordersItems: OrdersItem[];
   setOrdersItems: React.Dispatch<React.SetStateAction<OrdersItem[]>>;
   setAdminOrdersItemList: React.Dispatch<
     React.SetStateAction<OrdersItemAdmin[]>
@@ -29,27 +28,41 @@ export default function OrderDetailWindow(props: {
 
     await http
       .post('/orders', ordersIdList)
+      .then(() => {
+        http
+          .get(`/orders`)
+          .then((response) => {
+            props.setOrdersItems(response.data);
+            props.setAdminOrdersItemList(
+              props.getAdminOrdersList(
+                props.filterOrdersByStatus(response.data, 'pending')
+              )
+            );
+            props.setShowWindow(false);
+          })
+          // eslint-disable-next-line no-console
+          .catch(console.error);
+      })
       // eslint-disable-next-line no-console
       .catch(console.error);
 
-    props.setShowWindow(false);
-    const updatedordersItems = props.ordersItems.map((ordersItem) =>
-      ordersIdList.includes(ordersItem.orders.id)
-        ? {
-            ...ordersItem,
-            orders: {
-              ...ordersItem.orders,
-              orderStatus: 'finished',
-            },
-          }
-        : ordersItem
-    );
-    props.setOrdersItems(updatedordersItems);
-    props.setAdminOrdersItemList(
-      props.getAdminOrdersList(
-        props.filterOrdersByStatus(updatedordersItems, 'pending')
-      )
-    );
+    // const updatedordersItems = props.ordersItems.map((ordersItem) =>
+    //   ordersIdList.includes(ordersItem.orders.id)
+    //     ? {
+    //         ...ordersItem,
+    //         orders: {
+    //           ...ordersItem.orders,
+    //           orderStatus: 'finished',
+    //         },
+    //       }
+    //     : ordersItem
+    // );
+    // props.setOrdersItems(updatedordersItems);
+    // props.setAdminOrdersItemList(
+    //   props.getAdminOrdersList(
+    //     props.filterOrdersByStatus(updatedordersItems, 'pending')
+    //   )
+    // );
   };
   return (
     <Transition appear show={props.showWindow} as={Fragment}>
@@ -143,7 +156,7 @@ export default function OrderDetailWindow(props: {
                   </button>
                   {props.showOrderMadeButton ? (
                     <button
-                      className="inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="order-made inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       data-testid="order-made"
                       onClick={handleOrderMade}
                     >

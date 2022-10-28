@@ -388,7 +388,6 @@ export default function OrderManagement() {
         showWindow={showWindow}
         selectedOrdersItemAdmin={selectedOrdersItemAdmin}
         showOrderMadeButton={showOrderMadeButton}
-        ordersItems={ordersItems}
         setOrdersItems={setOrdersItems}
         setAdminOrdersItemList={setAdminOrdersItemList}
         getAdminOrdersList={getAdminOrdersList}

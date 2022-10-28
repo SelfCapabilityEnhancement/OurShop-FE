@@ -227,8 +227,8 @@ describe('display my order', () => {
   });
 
   test('should only display finished orders when click historical order label', async () => {
-    const pendingOrderLabel = container.querySelector('.historicalOrder');
-    user.click(pendingOrderLabel as Element);
+    const historicalOrderLabel = container.querySelector('.historicalOrder');
+    user.click(historicalOrderLabel as Element);
     waitFor(() => {
       const ordersItems = container.querySelectorAll('.order-item-admin');
       expect(ordersItems.length).toBe(1);
@@ -239,12 +239,24 @@ describe('display my order', () => {
   });
 
   test('should display order detail window when click View Detail Button in Pending or Historical order status', async () => {
-    const pendingOrderLabel = container.querySelector('.historicalOrder');
+    const pendingOrderLabel = container.querySelector('.pendingOrder');
     waitFor(() => {
       user.click(pendingOrderLabel as Element);
       const viewDetail = container.querySelector('.view-detail');
       user.click(viewDetail as Element);
       expect(screen.findByText('Order Detail')).toBeInTheDocument();
+    });
+  });
+
+  test('should change order status when click order is made button under pending order label', async () => {
+    waitFor(() => {
+      user.click(container.querySelector('.pendingOrder') as Element);
+      expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
+      user.click(container.querySelector('.view-detail') as Element);
+      user.click(container.querySelector('.order-made') as Element);
+      expect(container.querySelectorAll('.order-item-admin').length).toBe(0);
+      user.click(container.querySelector('.historicalOrder') as Element);
+      expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     });
   });
 });
