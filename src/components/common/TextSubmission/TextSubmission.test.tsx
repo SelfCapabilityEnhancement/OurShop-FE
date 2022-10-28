@@ -17,10 +17,10 @@ describe('TextSubmission', () => {
     ).container;
   });
   test('should show textArea, save button and cancel button', () => {
-    const save = container.querySelector('.save.button');
+    const confirm = container.querySelector('.confirm.button');
     const cancel = container.querySelector('.cancel.button');
     const addressInput = container.querySelector('.address-input');
-    expect(save).toBeTruthy();
+    expect(confirm).toBeTruthy();
     expect(cancel).toBeTruthy();
     expect(addressInput).toBeTruthy();
   });

@@ -9,7 +9,7 @@ import MyWallet from '../components/features/my-wallet/MyWallet';
 import PurchaseConfirmation from '@/components/features/purchase-confirmation/PurchaseConfirmation';
 import DetailPage from '@/components/features/detail-page/DetailPage';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
-import MyAddress from '@/components/features/my-address/MyAddress';
+import MyInformation from '@/components/features/my-information/MyInformation';
 
 export const router = createBrowserRouter([
   {
@@ -54,8 +54,8 @@ export const router = createBrowserRouter([
         element: <OrderManagement />,
       },
       {
-        path: 'my-address',
-        element: <MyAddress />,
+        path: 'my-information',
+        element: <MyInformation />,
       },
     ],
   },
