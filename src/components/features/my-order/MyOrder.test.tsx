@@ -4,6 +4,7 @@ import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { users } from '@/mocks/mockData';
 import * as utils from '@/utils';
+
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
