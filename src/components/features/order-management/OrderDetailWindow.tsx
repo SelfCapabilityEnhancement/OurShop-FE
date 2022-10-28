@@ -14,6 +14,7 @@ export default function OrderDetailWindow(props: {
   >;
   getAdminOrdersList: Function;
   filterOrdersByStatus: Function;
+  filterOrdersByDateRange: Function;
 }) {
   function closeDetailWindow() {
     props.setShowWindow(false);
@@ -35,7 +36,9 @@ export default function OrderDetailWindow(props: {
             props.setOrdersItems(response.data);
             props.setAdminOrdersItemList(
               props.getAdminOrdersList(
-                props.filterOrdersByStatus(response.data, 'pending'),
+                props.filterOrdersByDateRange(
+                  props.filterOrdersByStatus(response.data, 'pending')
+                ),
                 'pending'
               )
             );
@@ -46,24 +49,6 @@ export default function OrderDetailWindow(props: {
       })
       // eslint-disable-next-line no-console
       .catch(console.error);
-
-    // const updatedordersItems = props.ordersItems.map((ordersItem) =>
-    //   ordersIdList.includes(ordersItem.orders.id)
-    //     ? {
-    //         ...ordersItem,
-    //         orders: {
-    //           ...ordersItem.orders,
-    //           orderStatus: 'finished',
-    //         },
-    //       }
-    //     : ordersItem
-    // );
-    // props.setOrdersItems(updatedordersItems);
-    // props.setAdminOrdersItemList(
-    //   props.getAdminOrdersList(
-    //     props.filterOrdersByStatus(updatedordersItems, 'pending')
-    //   )
-    // );
   };
   return (
     <Transition appear show={props.showWindow} as={Fragment}>

@@ -264,17 +264,17 @@ export default function OrderManagement() {
     if (startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
         return (
-          order.orders.purchaseDate >= startDate &&
-          order.orders.purchaseDate <= endDate
+          new Date(order.orders.purchaseDate) >= startDate &&
+          new Date(order.orders.purchaseDate) <= endDate
         );
       });
     } else if (startDate && !endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return order.orders.purchaseDate >= startDate;
+        return new Date(order.orders.purchaseDate) >= startDate;
       });
     } else if (!startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return order.orders.purchaseDate <= endDate;
+        return new Date(order.orders.purchaseDate) <= endDate;
       });
     } else {
       return ordersItemsList;
@@ -472,6 +472,7 @@ export default function OrderManagement() {
         setAdminOrdersItemList={setAdminOrdersItemList}
         getAdminOrdersList={getAdminOrdersList}
         filterOrdersByStatus={filterOrdersByStatus}
+        filterOrdersByDateRange={filterOrdersByDateRange}
       />
     </div>
   );

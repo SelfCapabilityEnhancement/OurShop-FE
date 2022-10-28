@@ -18,6 +18,7 @@ describe('OrderDetailWindow', () => {
         setOrdersItems={() => {}}
         getAdminOrdersList={() => {}}
         filterOrdersByStatus={() => {}}
+        filterOrdersByDateRange={() => {}}
       />
     );
   });
