@@ -3,8 +3,7 @@ import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { http } from '@/service';
-import { shoppingCartItems, users } from '@/mocks/mockData';
-import * as utils from '@/utils';
+import { shoppingCartItems } from '@/mocks/mockData';
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
@@ -56,6 +55,19 @@ jest.mock('@/service', () => ({
       ],
     }),
   },
+  getCurrentUser: jest.fn().mockResolvedValue([
+    {
+      id: 2,
+      name: 'Ann',
+      sex: 'Female',
+      age: 23,
+      address: 'Guanshan Road',
+      office: 'Wuhan',
+      token: 23,
+      bankAccount: '123',
+      avatar: 'avatar',
+    },
+  ]),
 }));
 
 describe('display shopping cart page given nonempty products', () => {
@@ -71,7 +83,6 @@ describe('display shopping cart page given nonempty products', () => {
 
   beforeEach(() => {
     jest.spyOn(http, 'get').mockResolvedValue({ data: shoppingCartItems });
-    jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
   });
 
   it('should display loading when startup', async () => {

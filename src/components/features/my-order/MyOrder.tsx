@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
 import { OrdersItem } from '@/components/common/CustomeTypes';
-import { getCurrentUser } from '@/utils';
-import { http } from '@/service';
+import { http, getCurrentUser } from '@/service';
 
 export default function MyOrder() {
   const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);

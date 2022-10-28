@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser } from '@/utils';
+import { getCurrentUser } from '@/service';
 import { useEffect, useState } from 'react';
 import { User } from '@/components/common/CustomeTypes';
 

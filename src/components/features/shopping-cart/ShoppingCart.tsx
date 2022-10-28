@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import { http } from '@/service';
+import { http, getCurrentUser } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
-import { getCurrentUser } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 
 export default function ShoppingCart() {

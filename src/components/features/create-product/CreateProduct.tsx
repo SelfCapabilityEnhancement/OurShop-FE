@@ -4,8 +4,8 @@ import { Tab } from '@headlessui/react';
 import { UploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
-import { postProduct, uploadFile } from '@/service/request';
 import Loading from '@/components/common/loading/Loading';
+import { postProduct, uploadFile } from '@/service';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';

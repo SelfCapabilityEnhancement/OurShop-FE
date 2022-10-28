@@ -11,22 +11,21 @@ jest.mock('@/service', () => ({
     post: jest.fn().mockImplementation(async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }),
-    get: jest.fn().mockResolvedValue({
-      data: [
-        {
-          id: 2,
-          name: 'Ann',
-          sex: 'Female',
-          age: 23,
-          address: 'Guanshan Road',
-          office: 'Wuhan',
-          token: 23,
-          bankAccount: '123',
-          avatar: 'avatar',
-        },
-      ],
-    }),
   },
+  uploadFile: jest.fn().mockResolvedValue(true),
+  getCurrentUser: jest.fn().mockResolvedValue([
+    {
+      id: 2,
+      name: 'Ann',
+      sex: 'Female',
+      age: 23,
+      address: 'Guanshan Road',
+      office: 'Wuhan',
+      token: 23,
+      bankAccount: '123',
+      avatar: 'avatar',
+    },
+  ]),
 }));
 
 window.IntersectionObserver = jest

@@ -3,13 +3,6 @@ import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 
-jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-  },
-}));
-
 describe('Image Uploader', () => {
   let container: Container;
 
