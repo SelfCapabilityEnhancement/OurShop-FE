@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { TextSubmission } from '@/components/common/TextSubmission/TextSubmission';
-import { getCurrentUser } from '@/utils';
 import { User } from '@/components/common/CustomeTypes';
-import { http } from '@/service';
+import { http, getCurrentUser } from '@/service';
 
 const baseCites = [
   { id: 1, name: 'Wuhan' },
