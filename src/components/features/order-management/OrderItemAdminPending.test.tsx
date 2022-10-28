@@ -17,7 +17,7 @@ describe('OrderItemAdmin', () => {
     expect(screen.getByTestId('product-name').textContent).toBe(
       mockOrderItemAdminPending[0].product.name
     );
-    expect(screen.getByTestId('number-title').textContent).toBe('number: ');
+    expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('total-order-number').textContent).toBe(
       mockOrderItemAdminPending[0].productNumAll.toString()
     );

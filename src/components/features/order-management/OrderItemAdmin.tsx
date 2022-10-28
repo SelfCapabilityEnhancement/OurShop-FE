@@ -16,7 +16,7 @@ export default function OrderItemAdmin(props: { order: OrdersItemAdmin }) {
         {order.product.name}
       </span>
       <div className="absolute right-10">
-        <span data-testid="number-title">number: </span>
+        <span data-testid="number-title">Number: </span>
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>
     </div>

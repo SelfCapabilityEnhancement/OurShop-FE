@@ -13,12 +13,12 @@ describe('OrderItem', () => {
       mockOrder[0].product.name
     );
     expect(screen.getByTestId('purchase-date-title').textContent).toBe(
-      'Date of purchase: '
+      'Date of Purchase: '
     );
     expect(screen.getByTestId('purchase-date').textContent).toBe(
       mockOrder[0].orders.purchaseDate.toLocaleDateString()
     );
-    expect(screen.getByTestId('number-title').textContent).toBe('number: ');
+    expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('purchase-number').textContent).toBe(
       mockOrder[0].orderProducts.purchaseNum.toString()
     );

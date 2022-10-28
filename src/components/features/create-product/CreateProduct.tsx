@@ -291,7 +291,7 @@ function CreateProduct() {
                   )}
                   onChange={(event) => handleCheckBox(event, 'office')}
                 />
-                collecting at office
+                Collecting at Office
               </label>
               <label htmlFor="address" className="flex flex-row items-center">
                 <input
@@ -307,7 +307,7 @@ function CreateProduct() {
                   )}
                   onChange={(event) => handleCheckBox(event, 'address')}
                 />
-                shipping to an address
+                Shipping to an Address
               </label>
               <label
                 htmlFor="logisticMethodComment"

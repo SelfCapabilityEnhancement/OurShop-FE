@@ -41,15 +41,21 @@ export default function Header() {
           </NavLink>
           <NavLink
             to="shopping-cart"
-            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
+            className="basis-1/3 mx-2 py-4 flex text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-rose-500 focus:border-rose-500"
           >
-            Shopping Cart
+            <div className="flex">Shopping Cart</div>
             <span
               data-testid="redDot"
-              className="inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1"
+              className="inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1 flex"
             ></span>
+            {/* <span */}
+            {/*   data-testid="redDot" */}
+            {/*   className={ */}
+            {/*     ShoppingCart.shoppingCartItem? 'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1 flex' : '' */}
+            {/*   } */}
+            {/* ></span> */}
           </NavLink>
           <NavLink
             to="my-order"

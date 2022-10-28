@@ -17,11 +17,11 @@ export default function OrderItem(props: { order: OrdersItem }) {
         {order.product.name}
       </span>
       <div className="purchase-date absolute ml-[500px]">
-        <span data-testid="purchase-date-title">Date of purchase: </span>
+        <span data-testid="purchase-date-title">Date of Purchase: </span>
         <span data-testid="purchase-date">{date.toLocaleDateString()}</span>
       </div>
       <div className="absolute ml-[1000px]">
-        <span data-testid="number-title">number: </span>
+        <span data-testid="number-title">Number: </span>
         <span data-testid="purchase-number">
           {order.orderProducts.purchaseNum}
         </span>

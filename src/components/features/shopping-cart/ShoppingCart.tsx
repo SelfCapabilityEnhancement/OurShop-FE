@@ -110,7 +110,7 @@ export default function ShoppingCart() {
                     id={`product-checkbox-${index}`}
                     type="checkbox"
                     value=""
-                    className="w-6 h-6 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
+                    className="w-6 h-6 accent-purple-500 outline-none"
                     checked={checkedState[index]}
                     onChange={() => handleOnCheck(index)}
                   />

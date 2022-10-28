@@ -30,7 +30,7 @@ export default function OrderItemAdminPending(props: {
       </span>
       {/* FIXME: show in center */}
       <div className="absolute left-[300px]">
-        <span data-testid="number-title">number: </span>
+        <span data-testid="number-title">Number: </span>
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>
       <button
