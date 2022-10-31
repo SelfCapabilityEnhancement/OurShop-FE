@@ -2,8 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { users } from '@/mocks/mockData';
-import * as utils from '@/utils';
+
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
@@ -62,14 +61,28 @@ jest.mock('@/service', () => ({
       ],
     }),
   },
+  getCurrentUser: jest.fn().mockResolvedValue([
+    {
+      id: 2,
+      name: 'Ann',
+      sex: 'Female',
+      age: 23,
+      address: 'Guanshan Road',
+      office: 'Wuhan',
+      token: 23,
+      bankAccount: '123',
+      avatar: 'avatar',
+    },
+  ]),
 }));
 
 describe('display my order', () => {
   let container: Container;
+
   beforeEach(() => {
     container = render(<MyOrder />, { wrapper: BrowserRouter }).container;
-    jest.spyOn(utils, 'getCurrentUser').mockResolvedValue(users);
   });
+
   test('render all OrderItems', () => {
     waitFor(() => {
       expect(container.querySelectorAll('.order-item').length).toBe(2);

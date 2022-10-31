@@ -1,8 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useEffect, useState } from 'react';
-import { http } from '@/service';
-import { getCurrentUser } from '@/utils';
+import { http, getCurrentUser } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 

@@ -5,8 +5,8 @@ import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
-import { http } from '@/service';
-import { classNames, getCurrentUser } from '@/utils';
+import { getCurrentUser, http } from '@/service';
+import { classNames } from '@/utils';
 
 const logisticMethods = ['office', 'address'];
 

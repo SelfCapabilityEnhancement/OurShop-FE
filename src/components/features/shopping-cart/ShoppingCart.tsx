@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import { http } from '@/service';
+import { http, getCurrentUser } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
-import { getCurrentUser } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 
 export default function ShoppingCart() {
@@ -84,21 +83,21 @@ export default function ShoppingCart() {
                 key={`product-${index}`}
                 className="product border-gray-400 my-3 h-20"
               >
-                <div className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
-                  <div className="w-20 h-16 flex-initial mx-5">
+                <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
+                  <div className="mx-5">
                     <img
                       alt="profile"
                       src={shoppingCartItem.product.images.split(',')[0]}
-                      className="mx-auto object-cover rounded-lg"
+                      className="w-20 h-16 mx-auto object-cover rounded-lg"
                     />
                   </div>
                   <label
                     htmlFor="product-checkbox-1"
-                    className="font-medium flex-auto mx-5"
+                    className="font-medium w-2/5 mx-5"
                   >
                     {shoppingCartItem.product.name}
                   </label>
-                  <div className="font-medium flex-auto flex flex-row items-center text-2xl">
+                  <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
                     <span className="mr-5">Number</span>
                     <Counter
                       count={shoppingCartItem.productNum}
@@ -110,7 +109,7 @@ export default function ShoppingCart() {
                     id={`product-checkbox-${index}`}
                     type="checkbox"
                     value=""
-                    className="w-6 h-6 accent-purple-500 outline-none"
+                    className="w-6 h-6 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
                     checked={checkedState[index]}
                     onChange={() => handleOnCheck(index)}
                   />
