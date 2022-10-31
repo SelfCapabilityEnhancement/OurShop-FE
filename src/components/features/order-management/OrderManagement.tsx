@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
-import { ordersItems } from '@/mocks/mockData';
 import OrderItemAdminFinished from '@/components/features/order-management/OrderItemAdminFinished';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
+import { http } from '@/service';
 import Chart from '@/components/common/chart/Chart';
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 
@@ -82,6 +82,21 @@ const categoryOptions = {
 };
 
 export default function OrderManagement() {
+  const [ordersItems, setOrdersItems] = useState([]);
+  const [adminOrdersItemList, setAdminOrdersItemList] = useState<
+    OrdersItemAdmin[]
+  >([]);
+  useEffect(() => {
+    http
+      .get(`/orders`)
+      .then((response) => {
+        setOrdersItems(response.data);
+        setAdminOrdersItemList(getAdminOrdersList(ordersItems));
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+  }, []);
+
   const product = {
     id: 1,
     name: '',
@@ -103,12 +118,16 @@ export default function OrderManagement() {
     purchaseDate: new Date(''),
   };
 
+  const titles = [
+    { id: 'salesOverview', name: 'Sales Overview' },
+    { id: 'pendingOrder', name: 'Pending Order' },
+    { id: 'historicalOrder', name: 'Historical Order' },
+  ];
+
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [nowStatus, setNowStatus] = useState('all');
-  const [adminOrdersItemList, setAdminOrdersItemList] = useState(
-    getAdminOrdersList(ordersItems)
-  );
+
   const [showWindow, setShowWindow] = useState(false);
   const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
     useState<OrdersItemAdmin>({
@@ -117,13 +136,6 @@ export default function OrderManagement() {
       ordersList: [orders],
     });
   const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
-
-  const titles = [
-    { id: 'salesOverview', name: 'Sales Overview' },
-    { id: 'pendingOrder', name: 'Pending Order' },
-    { id: 'historicalOrder', name: 'Historical Order' },
-  ];
-
   const [selectedTitle, setSelectedTitle] = useState(0);
 
   function getAdminOrdersList(ordersItemList: OrdersItem[]) {
@@ -280,7 +292,6 @@ export default function OrderManagement() {
       return showAll();
     }
   };
-
   return (
     <div className="mt-10 mx-10">
       <Tab.Group
