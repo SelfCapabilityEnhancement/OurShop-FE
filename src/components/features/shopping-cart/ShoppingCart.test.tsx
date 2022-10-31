@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { http } from '@/service';
 import { shoppingCartItems } from '@/mocks/mockData';
+import { Container } from 'react-dom';
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
@@ -72,17 +73,17 @@ jest.mock('@/service', () => ({
 
 describe('display shopping cart page given nonempty products', () => {
   const user = userEvent.setup();
+  let container: Container;
   window.IntersectionObserver = jest.fn().mockImplementation(() => ({
     observe: () => null,
     disconnect: () => null,
   }));
 
-  const container = render(<ShoppingCart />, {
-    wrapper: BrowserRouter,
-  }).container;
-
   beforeEach(() => {
     jest.spyOn(http, 'get').mockResolvedValue({ data: shoppingCartItems });
+    container = render(<ShoppingCart />, {
+      wrapper: BrowserRouter,
+    }).container;
   });
 
   it('should display loading when startup', async () => {

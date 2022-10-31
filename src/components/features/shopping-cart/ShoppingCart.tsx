@@ -72,10 +72,10 @@ export default function ShoppingCart() {
   return (
     <div
       data-testid="shopping-cart"
-      className="w-5/6 min-w-[720px] h-[calc(100vh-150px)] mx-auto mt-5 relative"
+      className="w-5/6 min-w-[1080px] h-[calc(100vh-150px)] mx-auto mt-5 relative"
     >
       <Loading visible={showLoading} message="Loading..." />
-      <div>
+      <div className="flex flex-col">
         <ul className="flex flex-col">
           {shoppingCartItems.map((shoppingCartItem, index) => {
             return (
@@ -118,19 +118,23 @@ export default function ShoppingCart() {
             );
           })}
         </ul>
-        <button
-          type="button"
-          onClick={handleOnClickPayBtn}
-          className="payBtn token go-home w-1/6 min-w-fit p-3 h-12 absolute bottom-10 right-72 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
-        >
-          Pay by Token
-        </button>
-        <button
-          type="button"
-          className="payBtn money go-home w-1/6 min-w-fit p-3 h-12 absolute bottom-10 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
-        >
-          Pay by Money
-        </button>
+        <div className="my-10 w-1/2 grid grid-cols-2 justify-items-end self-end">
+          <button
+            type="button"
+            onClick={handleOnClickPayBtn}
+            disabled={!checkedState.includes(true)}
+            className="payBtn token go-home w-3/5 p-2 h-12 right-72 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          >
+            Pay by Token
+          </button>
+          <button
+            type="button"
+            disabled={!checkedState.includes(true)}
+            className="payBtn money go-home w-3/5 p-2 h-12 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          >
+            Pay by Money
+          </button>
+        </div>
       </div>
     </div>
   );
