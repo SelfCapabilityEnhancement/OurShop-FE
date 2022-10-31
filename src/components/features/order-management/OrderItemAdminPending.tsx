@@ -7,10 +7,12 @@ export default function OrderItemAdminPending(props: {
   setSelectedOrdersItemAdmin: React.Dispatch<
     React.SetStateAction<OrdersItemAdmin>
   >;
+  setShowOrderMadeButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const order = props.order;
 
   function openDetailWindow() {
+    props.setShowOrderMadeButton(true);
     props.setShowWindow(true);
     props.setSelectedOrdersItemAdmin(order);
   }

@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
-import { ordersItems } from '@/mocks/mockData';
 import OrderItemAdminFinished from '@/components/features/order-management/OrderItemAdminFinished';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
+import { http } from '@/service';
 import Chart from '@/components/common/chart/Chart';
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 
@@ -102,13 +102,31 @@ export default function OrderManagement() {
     vendorDate: new Date(''),
     purchaseDate: new Date(''),
   };
+  const titles = [
+    { id: 'salesOverview', name: 'Sales Overview' },
+    { id: 'pendingOrder', name: 'Pending Order' },
+    { id: 'historicalOrder', name: 'Historical Order' },
+  ];
+
+  const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
+  const [adminOrdersItemList, setAdminOrdersItemList] = useState<
+    OrdersItemAdmin[]
+  >([]);
+  useEffect(() => {
+    http
+      .get(`/orders`)
+      .then((response) => {
+        setOrdersItems(response.data);
+        setAdminOrdersItemList(getAdminOrdersList(response.data, 'all'));
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+  }, []);
 
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [nowStatus, setNowStatus] = useState('all');
-  const [adminOrdersItemList, setAdminOrdersItemList] = useState(
-    getAdminOrdersList(ordersItems)
-  );
+
   const [showWindow, setShowWindow] = useState(false);
   const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
     useState<OrdersItemAdmin>({
@@ -116,45 +134,110 @@ export default function OrderManagement() {
       productNumAll: 0,
       ordersList: [orders],
     });
-
-  const titles = [
-    { id: 'salesOverview', name: 'Sales Overview' },
-    { id: 'pendingOrder', name: 'Pending Order' },
-    { id: 'historicalOrder', name: 'Historical Order' },
-  ];
-
+  const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
   const [selectedTitle, setSelectedTitle] = useState(0);
 
-  function getAdminOrdersList(ordersItemList: OrdersItem[]) {
-    let ordersItemAdminList: OrdersItemAdmin[] = [];
+  function orderByVendorDate(ordersItemAdminList: OrdersItemAdmin[]) {
+    return ordersItemAdminList.sort((objA, objB) => {
+      const date1 = new Date(objA.ordersList[0].vendorDate);
+      const date2 = new Date(objB.ordersList[0].vendorDate);
+      return date2.getTime() - date1.getTime();
+    });
+  }
 
+  const countProductNumAllByProductId = (
+    ordersItemAdmin: OrdersItemAdmin,
+    ordersItemList: OrdersItem[],
+    index: number
+  ) =>
+    ordersItemAdmin.product.id === ordersItemList[index].product.id
+      ? {
+          ...ordersItemAdmin,
+          productNumAll:
+            ordersItemAdmin.productNumAll +
+            ordersItemList[index].orderProducts.purchaseNum,
+          ordersList: [
+            ...ordersItemAdmin.ordersList,
+            ordersItemList[index].orders,
+          ],
+        }
+      : ordersItemAdmin;
+
+  const countProductNumAllByProductIdAndVendorDate = (
+    ordersItemAdmin: OrdersItemAdmin,
+    ordersItemList: OrdersItem[],
+    index: number,
+    date: Date
+  ) =>
+    ordersItemAdmin.product.id === ordersItemList[index].product.id &&
+    ordersItemAdmin.ordersList[0].vendorDate === date
+      ? {
+          ...ordersItemAdmin,
+          productNumAll:
+            ordersItemAdmin.productNumAll +
+            ordersItemList[index].orderProducts.purchaseNum,
+          ordersList: [
+            ...ordersItemAdmin.ordersList,
+            ordersItemList[index].orders,
+          ],
+        }
+      : ordersItemAdmin;
+
+  const addNewOrdersItemAdmin = (
+    ordersItemAdminList: OrdersItemAdmin[],
+    ordersItemList: OrdersItem[],
+    index: number
+  ) => {
+    ordersItemAdminList.push({
+      product: ordersItemList[index].product,
+      productNumAll: ordersItemList[index].orderProducts.purchaseNum,
+      ordersList: [ordersItemList[index].orders],
+    });
+  };
+
+  function getAdminOrdersList(ordersItemList: OrdersItem[], status: string) {
+    let ordersItemAdminList: OrdersItemAdmin[] = [];
     for (let i: number = 0; i < ordersItemList.length; i++) {
       const productIds: number[] = [];
       ordersItemAdminList.forEach((ordersItemAdmin) => {
         productIds.push(ordersItemAdmin.product.id);
       });
-      if (productIds.includes(ordersItemList[i].product.id)) {
-        ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
-          ordersItemAdmin.product.id === ordersItemList[i].product.id
-            ? {
-                ...ordersItemAdmin,
-                productNumAll:
-                  ordersItemAdmin.productNumAll +
-                  ordersItemList[i].orderProducts.purchaseNum,
-                ordersList: [
-                  ...ordersItemAdmin.ordersList,
-                  ordersItemList[i].orders,
-                ],
-              }
-            : ordersItemAdmin
-        );
-      } else {
-        ordersItemAdminList.push({
-          product: ordersItemList[i].product,
-          productNumAll: ordersItemList[i].orderProducts.purchaseNum,
-          ordersList: [ordersItemList[i].orders],
+      const vendorDates: String[] = [];
+      if (status === 'finished') {
+        ordersItemAdminList.forEach((ordersItemAdmin) => {
+          vendorDates.push(ordersItemAdmin.ordersList[0].vendorDate.toString());
         });
       }
+      const dateOrder = ordersItemList[i].orders.vendorDate;
+      if (status === 'finished') {
+        if (
+          productIds.includes(ordersItemList[i].product.id) &&
+          vendorDates.includes(dateOrder.toString())
+        ) {
+          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+            countProductNumAllByProductIdAndVendorDate(
+              ordersItemAdmin,
+              ordersItemList,
+              i,
+              dateOrder
+            )
+          );
+        } else {
+          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+        }
+      }
+      if (status !== 'finished') {
+        if (productIds.includes(ordersItemList[i].product.id)) {
+          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+            countProductNumAllByProductId(ordersItemAdmin, ordersItemList, i)
+          );
+        } else {
+          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+        }
+      }
+    }
+    if (status === 'finished') {
+      return orderByVendorDate(ordersItemAdminList);
     }
     return ordersItemAdminList;
   }
@@ -178,17 +261,17 @@ export default function OrderManagement() {
     if (startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
         return (
-          order.orders.purchaseDate >= startDate &&
-          order.orders.purchaseDate <= endDate
+          new Date(order.orders.purchaseDate) >= startDate &&
+          new Date(order.orders.purchaseDate) <= endDate
         );
       });
     } else if (startDate && !endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return order.orders.purchaseDate >= startDate;
+        return new Date(order.orders.purchaseDate) >= startDate;
       });
     } else if (!startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return order.orders.purchaseDate <= endDate;
+        return new Date(order.orders.purchaseDate) <= endDate;
       });
     } else {
       return ordersItemsList;
@@ -198,7 +281,8 @@ export default function OrderManagement() {
   const dataRangeFilterHandler = () => {
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus)),
+        nowStatus
       )
     );
   };
@@ -207,7 +291,10 @@ export default function OrderManagement() {
     setStartDate(undefined);
     setEndDate(undefined);
     setAdminOrdersItemList(
-      getAdminOrdersList(filterOrdersByStatus(ordersItems, nowStatus))
+      getAdminOrdersList(
+        filterOrdersByStatus(ordersItems, nowStatus),
+        nowStatus
+      )
     );
   };
 
@@ -215,7 +302,8 @@ export default function OrderManagement() {
     setNowStatus('all');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all')),
+        'all'
       )
     );
   };
@@ -224,7 +312,8 @@ export default function OrderManagement() {
     setNowStatus('pending');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending')),
+        'pending'
       )
     );
   };
@@ -233,12 +322,13 @@ export default function OrderManagement() {
     setNowStatus('finished');
     setAdminOrdersItemList(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished'))
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished')),
+        'finished'
       )
     );
   };
 
-  const OrderItemAdminGivenStatus = (
+  const orderItemAdminGivenStatus = (
     item: OrdersItemAdmin,
     nowStatus: string
   ) => {
@@ -251,6 +341,7 @@ export default function OrderManagement() {
             order={item}
             setShowWindow={setShowWindow}
             setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+            setShowOrderMadeButton={setShowOrderMadeButton}
           />
         );
       case 'finished':
@@ -259,6 +350,7 @@ export default function OrderManagement() {
             order={item}
             setShowWindow={setShowWindow}
             setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+            setShowOrderMadeButton={setShowOrderMadeButton}
           />
         );
       default:
@@ -268,16 +360,33 @@ export default function OrderManagement() {
 
   const showTitle = (titleId: string) => {
     if (titleId === 'salesOverview') {
-      return showAll();
+      showAll();
     } else if (titleId === 'pendingOrder') {
-      return showPending();
+      showPending();
     } else if (titleId === 'historicalOrder') {
-      return showFinished();
+      showFinished();
     } else {
-      return showAll();
+      showAll();
     }
   };
 
+  const refreshData = async (status: string) => {
+    const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
+      (orders) => orders.id
+    );
+
+    await http.post('/orders', ordersIdList).then(() => {
+      http.get(`/orders`).then((response) => {
+        const adminOrdersList = getAdminOrdersList(
+          filterOrdersByDateRange(filterOrdersByStatus(response.data, status)),
+          status
+        );
+        setOrdersItems(response.data);
+        setAdminOrdersItemList(adminOrdersList);
+        setShowWindow(false);
+      });
+    });
+  };
   return (
     <div className="mt-10 mx-10">
       <Tab.Group
@@ -359,12 +468,12 @@ export default function OrderManagement() {
       </div>
       <div className="order-list mt-3 w-11/12 mx-auto">
         <ul className="flex flex-col">
-          {adminOrdersItemList.map((item: OrdersItemAdmin) => (
+          {adminOrdersItemList.map((item: OrdersItemAdmin, index) => (
             <li
-              key={item.product.id}
+              key={index}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
-              {OrderItemAdminGivenStatus(item, nowStatus)}
+              {orderItemAdminGivenStatus(item, nowStatus)}
             </li>
           ))}
         </ul>
@@ -373,6 +482,8 @@ export default function OrderManagement() {
         setShowWindow={setShowWindow}
         showWindow={showWindow}
         selectedOrdersItemAdmin={selectedOrdersItemAdmin}
+        showOrderMadeButton={showOrderMadeButton}
+        refreshData={refreshData}
       />
     </div>
   );

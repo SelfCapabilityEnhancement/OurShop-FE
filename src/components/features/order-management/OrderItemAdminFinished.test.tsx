@@ -9,6 +9,7 @@ describe('OrderItemAdmin', () => {
         order={mockOrderItemAdminFinished[0]}
         setShowWindow={() => {}}
         setSelectedOrdersItemAdmin={() => {}}
+        setShowOrderMadeButton={() => {}}
       />
     );
   });
