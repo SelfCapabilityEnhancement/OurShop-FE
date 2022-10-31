@@ -17,7 +17,7 @@ export const uploadFile = async (product: UploadProduct) => {
 };
 
 export const postProduct = async (product: UploadProduct) => {
-  await http.post('/product/create', {
+  await http.post('/products/create', {
     ...product,
     images: product.images
       .map((image) => `${imageUrlPrefix}${image.name}`)
