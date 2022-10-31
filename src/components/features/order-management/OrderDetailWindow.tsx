@@ -103,14 +103,15 @@ export default function OrderDetailWindow(props: {
                 <div className="mt-4 flex justify-evenly">
                   <button
                     type="button"
-                    className="inline-flex rounded-md border border-transparent bg-indigo-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    // className="inline-flex rounded-md border border-transparent bg-indigo-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    className="inline-flex rounded-md border border-transparent px-4 py-2 text-sm text-white font-medium bg-violet-500 hover:bg-violet-700"
                     data-testid="export-excel"
                   >
                     Export to Excel
                   </button>
                   {props.showOrderMadeButton ? (
                     <button
-                      className="order-made inline-flex rounded-md border border-transparent bg-fuchsia-400 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="order-made inline-flex rounded-md border border-transparent px-4 py-2 text-sm text-white font-medium bg-fuchsia-500 hover:bg-fuchsia-700"
                       data-testid="order-made"
                       onClick={handleOrderMade}
                     >

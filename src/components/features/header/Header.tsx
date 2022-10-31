@@ -21,13 +21,13 @@ export default function Header() {
           OurShop
         </span>
       </div>
-      <div className="flex items-center basis-5/12">
+      <div className="flex items-center basis-8/12">
         <div className="nav-list flex justify-around flex-1">
           <NavLink
             to="order-management"
             className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
+            focus:text-pink-500 focus:border-pink-500 "
           >
             Order Management
           </NavLink>
@@ -35,20 +35,20 @@ export default function Header() {
             to="create-product"
             className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
+            focus:text-pink-500 focus:border-pink-500"
           >
             Create Product
           </NavLink>
           <NavLink
             to="shopping-cart"
-            className="basis-1/3 mx-2 py-4 flex text-center border-b-2 border-white
+            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
+            focus:text-pink-500 focus:border-pink-500 flex "
           >
             <div className="flex">Shopping Cart</div>
             <span
               data-testid="redDot"
-              className="inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1 flex"
+              className="inline-block w-1 h-1 bg-red-600 rounded-full mb-2 ml-1 flex"
             ></span>
             {/* <span */}
             {/*   data-testid="redDot" */}
@@ -61,7 +61,7 @@ export default function Header() {
             to="my-order"
             className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
-            focus:text-rose-500 focus:border-rose-500"
+            focus:text-pink-500 focus:border-pink-500"
           >
             My Order
           </NavLink>
