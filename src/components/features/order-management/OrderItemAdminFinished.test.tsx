@@ -23,7 +23,7 @@ describe('OrderItemAdmin', () => {
       mockOrderItemAdminFinished[0].productNumAll.toString()
     );
     expect(screen.getByTestId('ordered-date-title').textContent).toBe(
-      'Ordered Date: '
+      'Order is Made on: '
     );
 
     const dateString = mockOrderItemAdminFinished[0].ordersList[0].vendorDate

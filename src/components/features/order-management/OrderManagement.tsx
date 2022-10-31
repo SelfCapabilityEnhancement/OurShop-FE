@@ -401,7 +401,7 @@ export default function OrderManagement() {
               onClick={() => showTitle(title.id)}
               className={({ selected }) =>
                 classNames(
-                  `order-status-label ${title.id} w-52 rounded-lg text-xl text-left font-normal outline-0`,
+                  `order-status-label ${title.id} w-52 rounded-lg text-xl text-left font-semibold outline-0`,
                   selected
                     ? 'text-pink-500 underline underline-offset-8 border-b-2 border-white'
                     : 'text-gray-800'
@@ -415,32 +415,34 @@ export default function OrderManagement() {
       </Tab.Group>
       <div className="date-range-selection w-11/12 mt-2 flex items-center">
         <div className="start-end-date-picker flex ml-5">
-          <span className="mr-2 py-2">From</span>
+          <span className="mr-2 py-2 whitespace-nowrap font-semibold">
+            Order Received From{' '}
+          </span>
           <ReactDatePicker
             className="start-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={startDate}
-            placeholderText="time"
+            placeholderText="Time"
             onChange={(date: Date) => setStartDate(date)}
           />
-          <span className="mx-2 py-2">To</span>
+          <span className="mx-2 py-2 font-semibold">To</span>
           <ReactDatePicker
             className="end-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={endDate}
-            placeholderText="time"
+            placeholderText="Time"
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
         <div className="apply-reset-button flex flex-1 justify-end">
           <button
             type="button"
-            className="apply-button py-2 px-4 flex justify-center items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[80px] mr-[20px]"
+            className="apply-button bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] mr-[20px]"
             onClick={dataRangeFilterHandler}
           >
             Apply
           </button>
           <button
             type="button"
-            className="reset-button add-in-cart-button py-2 px-4 flex justify-center items-center bg-slate-100 hover:bg-slate-200 focus:ring-slate-300 focus:ring-offset-slate-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg w-[50px]"
+            className="reset-button add-in-cart-button py-2 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px]"
             onClick={resetHandler}
           >
             <svg

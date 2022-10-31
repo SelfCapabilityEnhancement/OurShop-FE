@@ -8,7 +8,7 @@ export default function OrderItemAdmin(props: { order: OrdersItemAdmin }) {
         <img
           alt="profile"
           src={order.product.images.split(',')[0]}
-          className="mx-auto object-cover rounded-lg"
+          className="w-20 h-16 mx-auto object-cover rounded-lg object-cover"
           data-testid="product-picture"
         />
       </div>

@@ -23,7 +23,7 @@ export default function OrderItemAdminPending(props: {
         <img
           alt="profile"
           src={order.product.images.split(',')[0]}
-          className="mx-auto object-cover rounded-lg"
+          className="w-20 h-16 mx-auto object-cover rounded-lg object-cover"
           data-testid="product-picture"
         />
       </div>
@@ -31,12 +31,12 @@ export default function OrderItemAdminPending(props: {
         {order.product.name}
       </span>
       {/* FIXME: show in center */}
-      <div className="absolute left-[300px]">
+      <div className="absolute left-[600px]">
         <span data-testid="number-title">Number: </span>
         <span data-testid="total-order-number">{order.productNumAll}</span>
       </div>
       <button
-        className="view-detail text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-35 px-5 py-2.5 text-center"
+        className="view-detail px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
         data-testid="view-detail"
         onClick={openDetailWindow}
       >
