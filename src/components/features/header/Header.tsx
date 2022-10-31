@@ -1,8 +1,23 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
+import { useEffect, useState } from 'react';
+import { ShoppingCartItem } from '@/components/common/CustomeTypes';
+import { getCurrentUser, http } from '@/service';
+import { classNames } from '@/utils';
 
 export default function Header() {
   const navigate = useNavigate();
+  const [shoppingCartItems, setShoppingCartItems] = useState<
+    ShoppingCartItem[]
+  >([]);
+
+  useEffect(() => {
+    getCurrentUser().then((data) => {
+      http.get(`/shopping-cart/user/${data[0].id}`).then((response) => {
+        setShoppingCartItems(response.data);
+      });
+    });
+  }, []);
 
   const handleClick = () => {
     navigate('/home');
@@ -21,11 +36,11 @@ export default function Header() {
           OurShop
         </span>
       </div>
-      <div className="flex items-center basis-8/12">
+      <div className="flex items-center basis-1/2">
         <div className="nav-list flex justify-around flex-1">
           <NavLink
             to="order-management"
-            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
+            className="p-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-pink-500 focus:border-pink-500 "
           >
@@ -33,7 +48,7 @@ export default function Header() {
           </NavLink>
           <NavLink
             to="create-product"
-            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
+            className="p-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-pink-500 focus:border-pink-500"
           >
@@ -41,25 +56,22 @@ export default function Header() {
           </NavLink>
           <NavLink
             to="shopping-cart"
-            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
+            className="p-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500 flex "
+            focus:text-pink-500 focus:border-pink-500"
           >
-            <div className="flex">Shopping Cart</div>
+            Shopping Cart
             <span
               data-testid="redDot"
-              className="inline-block w-1 h-1 bg-red-600 rounded-full mb-2 ml-1 flex"
+              className={classNames(
+                'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1',
+                shoppingCartItems.length > 0 ? '' : 'hidden'
+              )}
             ></span>
-            {/* <span */}
-            {/*   data-testid="redDot" */}
-            {/*   className={ */}
-            {/*     ShoppingCart.shoppingCartItem? 'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1 flex' : '' */}
-            {/*   } */}
-            {/* ></span> */}
           </NavLink>
           <NavLink
             to="my-order"
-            className="basis-1/3 mx-2 py-4 text-center border-b-2 border-white
+            className="p-4 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
             focus:text-pink-500 focus:border-pink-500"
           >
