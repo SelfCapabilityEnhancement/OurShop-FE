@@ -132,12 +132,12 @@ export default function MyInformation() {
             </Listbox>
           </div>
           <div className="flex items-center justify-between m-8">
-            <p className="text-2xl font-semibold">My Shipping address</p>
+            <p className="text-2xl font-semibold">My Shipping Address</p>
             <p
               className="edit-btn text-2xl font-semibold text-indigo-400"
               onClick={handleClickEdit()}
             >
-              edit
+              Edit
             </p>
           </div>
           {Visible ? (

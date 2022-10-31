@@ -24,7 +24,7 @@ export default function MyWallet() {
       </div>
       <div className="flex items-center justify-between m-8">
         <p className="text-2xl font-semibold">My Bank Account</p>
-        <p className="text-2xl font-semibold text-indigo-400">edit</p>
+        <p className="text-2xl font-semibold text-indigo-400">Edit</p>
       </div>
       <div className="m-8 text-2xl font-light">
         <p>1234 5678 9101 1234</p>

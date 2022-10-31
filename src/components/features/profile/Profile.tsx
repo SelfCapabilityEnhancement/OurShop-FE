@@ -30,7 +30,7 @@ export default function Profile() {
                     'wallet block px-4 py-2 text-center text-base'
                   )}
                 >
-                  my wallet
+                  My Wallet
                 </NavLink>
               )}
             </Menu.Item>
@@ -45,7 +45,7 @@ export default function Profile() {
                     'address block px-4 py-2 text-center text-base'
                   )}
                 >
-                  my information
+                  My Information
                 </NavLink>
               )}
             </Menu.Item>
@@ -60,7 +60,7 @@ export default function Profile() {
                     'settings block px-4 py-2 text-center text-base'
                   )}
                 >
-                  settings
+                  Settings
                 </NavLink>
               )}
             </Menu.Item>

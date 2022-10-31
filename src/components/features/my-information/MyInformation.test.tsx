@@ -36,14 +36,14 @@ describe('display user info', () => {
     // const address = container.querySelector('.address-header');
     expect(await screen.findByText('My Information')).toBeInTheDocument();
     expect(await screen.findByText('My Office')).toBeInTheDocument();
-    expect(await screen.findByText('My Shipping address')).toBeInTheDocument();
+    expect(await screen.findByText('My Shipping Address')).toBeInTheDocument();
     expect(await screen.findByText('Shanghai')).toBeInTheDocument();
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
     expect(await screen.findByText('Save')).toBeInTheDocument();
   });
 
   it('should display new shipping address after edit and save', async () => {
-    const edit = await screen.findByText('edit');
+    const edit = await screen.findByText('Edit');
     const newAddress = 'Poly International';
 
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
