@@ -1,20 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
-import { http } from '@/service';
+import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
 export default function OrderDetailWindow(props: {
   setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
   showWindow: boolean;
   selectedOrdersItemAdmin: OrdersItemAdmin;
   showOrderMadeButton: boolean;
-  setOrdersItems: React.Dispatch<React.SetStateAction<OrdersItem[]>>;
-  setAdminOrdersItemList: React.Dispatch<
-    React.SetStateAction<OrdersItemAdmin[]>
-  >;
-  getAdminOrdersList: Function;
-  filterOrdersByStatus: Function;
-  filterOrdersByDateRange: Function;
+  refreshData: Function;
 }) {
   function closeDetailWindow() {
     props.setShowWindow(false);
@@ -23,32 +16,7 @@ export default function OrderDetailWindow(props: {
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
 
   const handleOrderMade = async () => {
-    const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
-      (orders) => orders.id
-    );
-
-    await http
-      .post('/orders', ordersIdList)
-      .then(() => {
-        http
-          .get(`/orders`)
-          .then((response) => {
-            props.setOrdersItems(response.data);
-            props.setAdminOrdersItemList(
-              props.getAdminOrdersList(
-                props.filterOrdersByDateRange(
-                  props.filterOrdersByStatus(response.data, 'pending')
-                ),
-                'pending'
-              )
-            );
-            props.setShowWindow(false);
-          })
-          // eslint-disable-next-line no-console
-          .catch(console.error);
-      })
-      // eslint-disable-next-line no-console
-      .catch(console.error);
+    props.refreshData('pending');
   };
   return (
     <Transition appear show={props.showWindow} as={Fragment}>

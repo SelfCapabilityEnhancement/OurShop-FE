@@ -82,21 +82,6 @@ const categoryOptions = {
 };
 
 export default function OrderManagement() {
-  const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
-  const [adminOrdersItemList, setAdminOrdersItemList] = useState<
-    OrdersItemAdmin[]
-  >([]);
-  useEffect(() => {
-    http
-      .get(`/orders`)
-      .then((response) => {
-        setOrdersItems(response.data);
-        setAdminOrdersItemList(getAdminOrdersList(response.data, 'all'));
-      })
-      // eslint-disable-next-line no-console
-      .catch(console.error);
-  }, []);
-
   const product = {
     id: 1,
     name: '',
@@ -117,12 +102,26 @@ export default function OrderManagement() {
     vendorDate: new Date(''),
     purchaseDate: new Date(''),
   };
-
   const titles = [
     { id: 'salesOverview', name: 'Sales Overview' },
     { id: 'pendingOrder', name: 'Pending Order' },
     { id: 'historicalOrder', name: 'Historical Order' },
   ];
+
+  const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
+  const [adminOrdersItemList, setAdminOrdersItemList] = useState<
+    OrdersItemAdmin[]
+  >([]);
+  useEffect(() => {
+    http
+      .get(`/orders`)
+      .then((response) => {
+        setOrdersItems(response.data);
+        setAdminOrdersItemList(getAdminOrdersList(response.data, 'all'));
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.error);
+  }, []);
 
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
@@ -146,12 +145,12 @@ export default function OrderManagement() {
     });
   }
 
-  function countProductNumAllByProductId(
+  const countProductNumAllByProductId = (
     ordersItemAdmin: OrdersItemAdmin,
     ordersItemList: OrdersItem[],
     index: number
-  ) {
-    return ordersItemAdmin.product.id === ordersItemList[index].product.id
+  ) =>
+    ordersItemAdmin.product.id === ordersItemList[index].product.id
       ? {
           ...ordersItemAdmin,
           productNumAll:
@@ -163,40 +162,38 @@ export default function OrderManagement() {
           ],
         }
       : ordersItemAdmin;
-  }
 
-  function addNewOrdersItemAdmin(
+  const countProductNumAllByProductIdAndVendorDate = (
+    ordersItemAdmin: OrdersItemAdmin,
+    ordersItemList: OrdersItem[],
+    index: number,
+    date: Date
+  ) =>
+    ordersItemAdmin.product.id === ordersItemList[index].product.id &&
+    ordersItemAdmin.ordersList[0].vendorDate === date
+      ? {
+          ...ordersItemAdmin,
+          productNumAll:
+            ordersItemAdmin.productNumAll +
+            ordersItemList[index].orderProducts.purchaseNum,
+          ordersList: [
+            ...ordersItemAdmin.ordersList,
+            ordersItemList[index].orders,
+          ],
+        }
+      : ordersItemAdmin;
+
+  const addNewOrdersItemAdmin = (
     ordersItemAdminList: OrdersItemAdmin[],
     ordersItemList: OrdersItem[],
     index: number
-  ) {
+  ) => {
     ordersItemAdminList.push({
       product: ordersItemList[index].product,
       productNumAll: ordersItemList[index].orderProducts.purchaseNum,
       ordersList: [ordersItemList[index].orders],
     });
-  }
-
-  function countProductNumAllByProductIdAndVendorDate(
-    ordersItemAdmin: OrdersItemAdmin,
-    ordersItemList: OrdersItem[],
-    index: number,
-    date: Date
-  ) {
-    return ordersItemAdmin.product.id === ordersItemList[index].product.id &&
-      ordersItemAdmin.ordersList[0].vendorDate === date
-      ? {
-          ...ordersItemAdmin,
-          productNumAll:
-            ordersItemAdmin.productNumAll +
-            ordersItemList[index].orderProducts.purchaseNum,
-          ordersList: [
-            ...ordersItemAdmin.ordersList,
-            ordersItemList[index].orders,
-          ],
-        }
-      : ordersItemAdmin;
-  }
+  };
 
   function getAdminOrdersList(ordersItemList: OrdersItem[], status: string) {
     let ordersItemAdminList: OrdersItemAdmin[] = [];
@@ -372,6 +369,24 @@ export default function OrderManagement() {
       showAll();
     }
   };
+
+  const refreshData = async (status: string) => {
+    const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
+      (orders) => orders.id
+    );
+
+    await http.post('/orders', ordersIdList).then(() => {
+      http.get(`/orders`).then((response) => {
+        const adminOrdersList = getAdminOrdersList(
+          filterOrdersByDateRange(filterOrdersByStatus(response.data, status)),
+          status
+        );
+        setOrdersItems(response.data);
+        setAdminOrdersItemList(adminOrdersList);
+        setShowWindow(false);
+      });
+    });
+  };
   return (
     <div className="mt-10 mx-10">
       <Tab.Group
@@ -468,11 +483,7 @@ export default function OrderManagement() {
         showWindow={showWindow}
         selectedOrdersItemAdmin={selectedOrdersItemAdmin}
         showOrderMadeButton={showOrderMadeButton}
-        setOrdersItems={setOrdersItems}
-        setAdminOrdersItemList={setAdminOrdersItemList}
-        getAdminOrdersList={getAdminOrdersList}
-        filterOrdersByStatus={filterOrdersByStatus}
-        filterOrdersByDateRange={filterOrdersByDateRange}
+        refreshData={refreshData}
       />
     </div>
   );

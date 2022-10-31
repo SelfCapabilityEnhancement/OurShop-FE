@@ -21,11 +21,7 @@ describe('OrderDetailWindow', () => {
         showWindow={true}
         selectedOrdersItemAdmin={mockOrderItemAdminPending[0]}
         showOrderMadeButton={true}
-        setAdminOrdersItemList={() => {}}
-        setOrdersItems={() => {}}
-        getAdminOrdersList={() => {}}
-        filterOrdersByStatus={() => {}}
-        filterOrdersByDateRange={() => {}}
+        refreshData={() => {}}
       />
     );
   });
