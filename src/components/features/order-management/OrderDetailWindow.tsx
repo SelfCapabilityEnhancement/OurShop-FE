@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
 export default function OrderDetailWindow(props: {
@@ -13,10 +13,14 @@ export default function OrderDetailWindow(props: {
     props.setShowWindow(false);
   }
 
+  const [buttonEnabled, setButtonEnabled] = useState(true);
+
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
 
   const handleOrderMade = async () => {
-    props.refreshData('pending');
+    setButtonEnabled(false);
+    const buttonEnabledNow = props.refreshData('pending');
+    setButtonEnabled(buttonEnabledNow);
   };
   return (
     <Transition appear show={props.showWindow} as={Fragment}>
@@ -50,7 +54,9 @@ export default function OrderDetailWindow(props: {
                   className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
                 >
                   <div></div>
-                  <div className="justify-self-center">Order Detail</div>
+                  <div className="justify-self-center font-semibold">
+                    Order Detail
+                  </div>
                   <div className="justify-self-end" data-testid="cancel-icon">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -69,24 +75,24 @@ export default function OrderDetailWindow(props: {
                     </svg>
                   </div>
                 </Dialog.Title>
-                <div className="mt-2 flex">
+                <div className="mt-2 flex mx-2">
                   <img
                     alt="profile"
                     src={selectedOrdersItemAdmin.product.images.split(',')[0]}
-                    className="ml-2 object-cover rounded-lg w-16 h-16 border-pink-500 clear-left"
+                    className="my-2 mx-2 object-cover rounded-lg w-24 h-24"
                     data-testid="product-picture"
                   />
-                  <p className="text-base text-black ml-10 my-4">
+                  <p className="text-base font-semibold mx-auto mt-3 text-black text-center">
                     {selectedOrdersItemAdmin.product.name}
                   </p>
                 </div>
                 <div>
-                  <p className="text-base ml-2">
+                  <p className="text-base mx-2 my-1">
                     Order Number: {selectedOrdersItemAdmin.productNumAll}
                   </p>
                 </div>
-                <div>
-                  <p className="ml-2">Buyer Information</p>
+                <div className="mx-2">
+                  <p className="taxt-base my-1">Buyer Information: </p>
                   <p
                     className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-base"
                     data-testid="buyer-info-list"
@@ -94,7 +100,7 @@ export default function OrderDetailWindow(props: {
                     userId Order Address <br />
                     {selectedOrdersItemAdmin.ordersList.map((order, index) => (
                       // FIXME buyer information
-                      <p key={index}>
+                      <p key={index} className="">
                         {order.userId} {order.orderAddress}
                       </p>
                     ))}
@@ -110,7 +116,9 @@ export default function OrderDetailWindow(props: {
                   </button>
                   {props.showOrderMadeButton ? (
                     <button
-                      className="order-made text-sm px-5 py-2.5 mb-2 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
+                      className={`order-made text-sm px-5 py-2.5 mb-2 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg ${
+                        !buttonEnabled ? 'disabled' : ''
+                      }`}
                       data-testid="order-made"
                       onClick={handleOrderMade}
                     >

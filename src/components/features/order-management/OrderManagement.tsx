@@ -384,6 +384,7 @@ export default function OrderManagement() {
         setOrdersItems(response.data);
         setAdminOrdersItemList(adminOrdersList);
         setShowWindow(false);
+        return true;
       });
     });
   };
@@ -413,8 +414,8 @@ export default function OrderManagement() {
           ))}
         </Tab.List>
       </Tab.Group>
-      <div className="date-range-selection w-11/12 mt-2 flex items-center">
-        <div className="start-end-date-picker flex ml-5">
+      <div className="date-range-selection w-11/12 mx-auto mt-2 flex items-center">
+        <div className="start-end-date-picker flex">
           <span className="mr-2 py-2 whitespace-nowrap font-semibold">
             Order Received From{' '}
           </span>
