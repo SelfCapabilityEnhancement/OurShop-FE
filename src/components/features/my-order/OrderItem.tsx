@@ -20,7 +20,7 @@ export default function OrderItem(props: { order: OrdersItem }) {
         {order.product.name}
       </span>
       <div className="purchase-date w-1/3">
-        <span data-testid="purchase-date-title">Date of purchase: </span>
+        <span data-testid="purchase-date-title">Date of Purchase: </span>
         <span data-testid="purchase-date">{date.toLocaleDateString()}</span>
       </div>
       <div className="w-1/5">
