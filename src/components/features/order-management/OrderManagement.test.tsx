@@ -41,7 +41,7 @@ describe('display my order', () => {
   test('should count total order number for each product', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 1');
+    ).toBe('苹果Number: 1');
   });
 
   test('should filter orders by date range when input date range and count total order number for each product', async () => {
@@ -55,10 +55,10 @@ describe('display my order', () => {
 
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 1');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 1');
+    ).toBe('橘子Number: 1');
   });
 
   test('should filter orders by start date when only input start date and count total order number for each product', async () => {
@@ -71,7 +71,7 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('橘子number: 1');
+    ).toBe('橘子Number: 1');
   });
 
   test('should filter orders by end date when only input end date and count total order number for each product', async () => {
@@ -84,7 +84,7 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 1');
+    ).toBe('苹果Number: 1');
   });
 
   test('should show all orders when do not input any date and count total order number for each product', async () => {
@@ -94,10 +94,10 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 1');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 1');
+    ).toBe('橘子Number: 1');
   });
 
   test('should do not show any order when input incoorect date range', async () => {
@@ -125,10 +125,10 @@ describe('display my order', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果number: 1');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子number: 1');
+    ).toBe('橘子Number: 1');
     expect(screen.getAllByRole('textbox')[0].textContent).toBe('');
     expect(screen.getAllByRole('textbox')[1].textContent).toBe('');
   });
@@ -146,7 +146,7 @@ describe('display my order', () => {
     await user.click(pendingOrderLabel as Element);
     const ordersItems = container.querySelectorAll('.order-item-admin');
     expect(ordersItems.length).toBe(1);
-    expect(ordersItems[0].textContent).toBe('苹果number: 1View Detail');
+    expect(ordersItems[0].textContent).toBe('苹果Number: 1View Detail');
   });
 
   test('should only display finished orders when click pending order label', async () => {
