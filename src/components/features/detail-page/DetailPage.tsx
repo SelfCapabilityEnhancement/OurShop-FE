@@ -43,7 +43,7 @@ export default function DetailPage() {
       setValidation(true);
       setShowLoading(true);
       await http
-        .post('/shopping-cart/create', {
+        .post('/shopping-carts', {
           userId: user?.id,
           productId: product.id,
           productNum: count,

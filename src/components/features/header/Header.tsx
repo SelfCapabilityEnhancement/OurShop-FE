@@ -13,7 +13,7 @@ export default function Header() {
 
   useEffect(() => {
     getCurrentUser().then((data) => {
-      http.get(`/shopping-cart/user/${data[0].id}`).then((response) => {
+      http.get(`/shopping-carts/user/${data[0].id}`).then((response) => {
         setShoppingCartItems(response.data);
       });
     });

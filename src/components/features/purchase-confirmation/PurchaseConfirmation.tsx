@@ -46,7 +46,7 @@ export default function PurchaseConfirmation() {
 
   const handleClickBuy = async () => {
     setShowLoading(true);
-    await http.post('/shopping-cart/pay-by-token', {
+    await http.post('/shopping-carts/pay-by-token', {
       userId: user?.id,
       token: cost,
       count: allCount,

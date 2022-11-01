@@ -19,7 +19,7 @@ export default function ShoppingCart() {
     setShowLoading(true);
     getCurrentUser().then((data) => {
       http
-        .get(`/shopping-cart/user/${data[0].id}`)
+        .get(`/shopping-carts/user/${data[0].id}`)
         .then((response) => {
           setShowLoading(false);
           setShoppingCartItems(response.data);
