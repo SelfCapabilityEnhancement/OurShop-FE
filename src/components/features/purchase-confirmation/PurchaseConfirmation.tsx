@@ -135,7 +135,8 @@ export default function PurchaseConfirmation() {
         <button
           type="button"
           onClick={handleClickBuy}
-          className="buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
+          className="buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          disabled={!user?.id}
         >
           Buy
         </button>
