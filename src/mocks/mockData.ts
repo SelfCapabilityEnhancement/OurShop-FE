@@ -117,40 +117,6 @@ export const users = [
   },
 ];
 
-export const user2 = [];
-
-const date = new Date('2022-10-19 15:34:20');
-
-export const mockOrder = [
-  {
-    product: {
-      id: 79,
-      name: '橘子',
-      priceToken: 99,
-      priceMoney: 9,
-      description: '水果 🍊',
-      stock: 1,
-      images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
-      logisticMethod: '',
-      logisticMethodComment: '',
-    },
-    orders: {
-      id: 1,
-      userId: 12,
-      orderProductsId: 3,
-      orderAddress: 'order address',
-      orderStatus: 'order status',
-      purchaseDate: date,
-      vendorDate: new Date(1900, 1, 1, 0, 0, 0),
-    },
-    orderProducts: {
-      id: 3,
-      productId: 79,
-      purchaseNum: 1,
-    },
-  },
-];
-
 const product1 = {
   id: 2,
   name: '苹果',
@@ -193,6 +159,28 @@ const orders2: Orders = {
   vendorDate: new Date(1900, 1, 1, 0, 0, 0),
   logisticMethod: 'address',
 };
+
+export const mockOrder = [
+  {
+    product: {
+      id: 79,
+      name: '橘子',
+      priceToken: 99,
+      priceMoney: 9,
+      description: '水果 🍊',
+      stock: 1,
+      images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+      logisticMethod: '',
+      logisticMethodComment: '',
+    },
+    orders: orders1,
+    orderProducts: {
+      id: 3,
+      productId: 79,
+      purchaseNum: 1,
+    },
+  },
+];
 
 export const ordersItems: OrdersItem[] = [
   {
