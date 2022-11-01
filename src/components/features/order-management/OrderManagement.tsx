@@ -9,26 +9,31 @@ import OrderDetailWindow from '@/components/features/order-management/OrderDetai
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
 import { http } from '@/service';
-import Chart from '@/components/common/chart/Chart';
+import ReactECharts from 'echarts-for-react';
+// @ts-ignore
+import cloneDeep from 'lodash.clonedeep';
+
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 import Banner from '@/components/common/banner/Banner';
 
-const goodOptions = {
+const initGoodOption = {
   title: {
     text: 'Most Popular Product',
   },
+  grid: { containLabel: true },
   tooltip: {},
   xAxis: {},
   yAxis: {
     inverse: true,
-    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+    max: 9,
+    data: ['1', '2', '3'],
   },
   series: [
     {
       realtimeSort: true,
       name: '销量',
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20],
+      data: [1, 2, 3],
       label: {
         show: true,
         position: 'right',
@@ -37,7 +42,7 @@ const goodOptions = {
   ],
 };
 
-const categoryOptions = {
+const initCategoryOption = {
   title: {
     text: 'Sales by Product Category',
   },
@@ -82,47 +87,62 @@ const categoryOptions = {
   ],
 };
 
-export default function OrderManagement() {
-  const product = {
-    id: 1,
-    name: '',
-    priceToken: 1,
-    priceMoney: 1,
-    description: '',
-    stock: 1,
-    images: '',
-    logisticMethod: '',
-    logisticMethodComment: '',
-  };
-  const orders = {
-    id: 1,
-    userId: 1,
-    orderProductsId: 1,
-    orderAddress: '',
-    orderStatus: '',
-    vendorDate: new Date(''),
-    purchaseDate: new Date(''),
-  };
-  const titles = [
-    { id: 'salesOverview', name: 'Sales Overview' },
-    { id: 'pendingOrder', name: 'Pending Order' },
-    { id: 'historicalOrder', name: 'Historical Order' },
-  ];
+const product = {
+  id: 1,
+  name: '',
+  priceToken: 1,
+  priceMoney: 1,
+  description: '',
+  stock: 1,
+  images: '',
+  logisticMethod: '',
+  logisticMethodComment: '',
+};
 
+const orders = {
+  id: 1,
+  userId: 1,
+  orderProductsId: 1,
+  orderAddress: '',
+  orderStatus: '',
+  vendorDate: new Date(''),
+  purchaseDate: new Date(''),
+};
+
+const titles = [
+  { id: 'salesOverview', name: 'Sales Overview' },
+  { id: 'pendingOrder', name: 'Pending Order' },
+  { id: 'historicalOrder', name: 'Historical Order' },
+];
+
+export default function OrderManagement() {
+  const [goodOption, setGoodOption] = useState(initGoodOption);
+  // eslint-disable-next-line no-unused-vars
+  const [categoryOption, setCategoryOption] = useState(initCategoryOption);
   const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
-  const [adminOrdersItemList, setAdminOrdersItemList] = useState<
-    OrdersItemAdmin[]
-  >([]);
+  const [adminOrdersItems, setAdminOrdersItems] = useState<OrdersItemAdmin[]>(
+    []
+  );
+
   useEffect(() => {
-    http
-      .get(`/orders`)
-      .then((response) => {
-        setOrdersItems(response.data);
-        setAdminOrdersItemList(getAdminOrdersList(response.data, 'all'));
-      })
-      // eslint-disable-next-line no-console
-      .catch(console.error);
+    http.get(`/orders`).then((response) => {
+      setOrdersItems(response.data);
+      setAdminOrdersItems(getAdminOrdersList(response.data, 'all'));
+    });
   }, []);
+
+  useEffect(() => {
+    const sortedItems = [...adminOrdersItems].sort((a, b) => {
+      return a.productNumAll > b.productNumAll ? -1 : 1;
+    });
+
+    setGoodOption((prevState) => {
+      const tmp = cloneDeep(prevState);
+      tmp.yAxis.data = sortedItems.map((a) => a.product.name);
+      tmp.series[0].data = sortedItems.map((a) => a.productNumAll);
+      return tmp;
+    });
+  }, [adminOrdersItems]);
 
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
@@ -281,7 +301,7 @@ export default function OrderManagement() {
   };
 
   const dataRangeFilterHandler = () => {
-    setAdminOrdersItemList(
+    setAdminOrdersItems(
       getAdminOrdersList(
         filterOrdersByDateRange(filterOrdersByStatus(ordersItems, nowStatus)),
         nowStatus
@@ -292,7 +312,7 @@ export default function OrderManagement() {
   const resetHandler = () => {
     setStartDate(undefined);
     setEndDate(undefined);
-    setAdminOrdersItemList(
+    setAdminOrdersItems(
       getAdminOrdersList(
         filterOrdersByStatus(ordersItems, nowStatus),
         nowStatus
@@ -302,7 +322,7 @@ export default function OrderManagement() {
 
   const showAll = () => {
     setNowStatus('all');
-    setAdminOrdersItemList(
+    setAdminOrdersItems(
       getAdminOrdersList(
         filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all')),
         'all'
@@ -312,7 +332,7 @@ export default function OrderManagement() {
 
   const showPending = () => {
     setNowStatus('pending');
-    setAdminOrdersItemList(
+    setAdminOrdersItems(
       getAdminOrdersList(
         filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending')),
         'pending'
@@ -322,7 +342,7 @@ export default function OrderManagement() {
 
   const showFinished = () => {
     setNowStatus('finished');
-    setAdminOrdersItemList(
+    setAdminOrdersItems(
       getAdminOrdersList(
         filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished')),
         'finished'
@@ -385,7 +405,7 @@ export default function OrderManagement() {
         setOrdersItems(response.data);
         setShowWindow(false);
         setShowBanner(true);
-        setAdminOrdersItemList(adminOrdersList);
+        setAdminOrdersItems(adminOrdersList);
         setTimeout(() => {
           setShowBanner(false);
         }, 1500);
@@ -473,14 +493,14 @@ export default function OrderManagement() {
       <div className={`${selectedTitle === 0 ? '' : 'hidden'}`}>
         <HLine text="Kanban" />
         <div className="grid grid-cols-2 m-5">
-          <Chart options={goodOptions} />
-          <Chart options={categoryOptions} />
+          <ReactECharts option={goodOption} style={{ height: 400 }} />
+          <ReactECharts option={categoryOption} style={{ height: 400 }} />
         </div>
         <HLine text="Orders" />
       </div>
       <div className="order-list mt-3 w-11/12 mx-auto">
         <ul className="flex flex-col">
-          {adminOrdersItemList.map((item: OrdersItemAdmin, index) => (
+          {adminOrdersItems.map((item: OrdersItemAdmin, index) => (
             <li
               key={index}
               className="order-item-admin product border-gray-400 mb-5 h-20 "

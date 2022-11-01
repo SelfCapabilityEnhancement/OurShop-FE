@@ -3,84 +3,79 @@ import OrderManagement from '@/components/features/order-management/OrderManagem
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { OrdersItem } from '@/components/common/CustomeTypes';
-
-const product1 = {
-  id: 2,
-  name: '苹果',
-  priceToken: 99,
-  priceMoney: 9,
-  description: '水果 🍊',
-  stock: 1,
-  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
-  logisticMethod: '',
-  logisticMethodComment: '',
-};
-const product2 = {
-  id: 1,
-  name: '橘子',
-  priceToken: 99,
-  priceMoney: 9,
-  description: '水果 🍊',
-  stock: 1,
-  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
-  logisticMethod: '',
-  logisticMethodComment: '',
-};
-const orders1 = {
-  id: 1,
-  userId: 1,
-  orderProductsId: 1,
-  orderAddress: 'order address',
-  orderStatus: 'pending',
-  vendorDate: new Date(''),
-  purchaseDate: new Date('2022-10-01'),
-};
-const orders2 = {
-  id: 2,
-  userId: 2,
-  orderProductsId: 2,
-  orderAddress: 'order address',
-  orderStatus: 'finished',
-  vendorDate: new Date('2022-10-12'),
-  purchaseDate: new Date('2022-10-02'),
-};
-
-export const ordersItems: OrdersItem[] = [
-  {
-    product: product1,
-    orders: orders1,
-    orderProducts: {
-      id: 1,
-      productId: 1,
-      purchaseNum: 1,
-    },
-  },
-  {
-    product: product2,
-    orders: orders2,
-    orderProducts: {
-      id: 2,
-      productId: 2,
-      purchaseNum: 1,
-    },
-  },
-];
-// const response = {
-//   data: ordersItems,
-// };
 
 jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
     get: jest.fn().mockResolvedValue({
-      data: ordersItems,
+      data: [
+        {
+          product: {
+            id: 2,
+            name: '苹果',
+            priceToken: 99,
+            priceMoney: 9,
+            description: '水果 🍊',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+            logisticMethod: '',
+            logisticMethodComment: '',
+          },
+          orders: {
+            id: 1,
+            userId: 1,
+            orderProductsId: 1,
+            orderAddress: 'order address',
+            orderStatus: 'pending',
+            vendorDate: new Date(''),
+            purchaseDate: new Date('2022-10-01'),
+          },
+          orderProducts: {
+            id: 1,
+            productId: 1,
+            purchaseNum: 1,
+          },
+        },
+        {
+          product: {
+            id: 1,
+            name: '橘子',
+            priceToken: 99,
+            priceMoney: 9,
+            description: '水果 🍊',
+            stock: 1,
+            images:
+              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+            logisticMethod: '',
+            logisticMethodComment: '',
+          },
+          orders: {
+            id: 2,
+            userId: 2,
+            orderProductsId: 2,
+            orderAddress: 'order address',
+            orderStatus: 'finished',
+            vendorDate: new Date('2022-10-12'),
+            purchaseDate: new Date('2022-10-02'),
+          },
+          orderProducts: {
+            id: 2,
+            productId: 2,
+            purchaseNum: 1,
+          },
+        },
+      ],
     }),
   },
 }));
 
-jest.mock('@/components/common/chart/Chart', () => ({
-  default: jest.fn().mockImplementation(() => <div />),
+jest.mock('echarts-for-react', () => ({
+  default: jest.fn().mockReturnValue(<div></div>),
+}));
+
+jest.mock('lodash.clonedeep', () => ({
+  default: jest.fn().mockImplementation((data) => data),
 }));
 
 describe('display my order', () => {
