@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { http, getCurrentUser } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
+import Counter from '@/components/common/counter/Counter';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
@@ -16,13 +17,28 @@ export default function PurchaseConfirmation() {
       shoppingCartProductsIds: Array<number>;
     };
   } = useLocation();
+
+  const calCostOfToken = () => {
+    let cost = 0;
+    products.forEach((product, index) => {
+      cost += allCount[index] * product.priceToken;
+    });
+    return cost;
+  };
+
   const [showBanner, SetShowBanner] = useState(false);
   const [user, setUser] = useState<User>();
+  const [allCount, setAllCount] = useState(count);
+  const [cost, setCost] = useState(calCostOfToken());
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     getCurrentUser().then((data) => setUser(data[0]));
   }, []);
+
+  useEffect(() => {
+    setCost(calCostOfToken());
+  }, [allCount]);
 
   const handleClickCancel = () => {
     navigate('/shopping-cart');
@@ -32,7 +48,8 @@ export default function PurchaseConfirmation() {
     setShowLoading(true);
     await http.post('/shopping-cart/pay-by-token', {
       userId: user?.id,
-      token: calCostOfToken(),
+      token: cost,
+      count: allCount,
       shoppingCartProductsIdList: shoppingCartProductsIds,
     });
 
@@ -44,16 +61,22 @@ export default function PurchaseConfirmation() {
     }, 1500);
   };
 
-  const calCostOfToken = () => {
-    let cost = 0;
-    products.forEach((product, index) => {
-      cost += count[index] * product.priceToken;
-    });
-    return cost;
+  const handlePlus = (index: number) => {
+    const tmp = [...allCount];
+    tmp[index] += 1;
+    setAllCount(tmp);
+  };
+
+  const handleMinus = (index: number) => {
+    if (allCount[index] > 1) {
+      const tmp = [...allCount];
+      tmp[index] -= 1;
+      setAllCount(tmp);
+    }
   };
 
   return (
-    <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 h-[720px] bg-zinc-300/40 p-4">
+    <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
       <Banner
         visible={showBanner}
         success={true}
@@ -63,7 +86,7 @@ export default function PurchaseConfirmation() {
       <h1 className="wallet-header text-center text-3xl mb-10">
         Purchase Confirmation
       </h1>
-      <ul className="flex-1 flex flex-col">
+      <ul className="flex-1 flex flex-col mb-10">
         {products.map(({ name, priceToken, images }, index) => (
           <li
             key={`product-${index}`}
@@ -77,12 +100,17 @@ export default function PurchaseConfirmation() {
                   className="mx-auto object-cover rounded-lg h-20 w-24"
                 />
               </div>
-              <div className="flex-1 text-gray-600 text-2xl font-medium">
-                {name}
+              <div className="w-72">
+                <div className="text-gray-600 text-2xl font-medium">{name}</div>
               </div>
-              <div className="pl-1 mr-16">
-                <div className="text-2xl font-normal">
-                  Number: {count[index]}
+              <div className="pl-1 mr-10">
+                <div className="flex items-center">
+                  <span className="text-2xl font-normal">Number:</span>
+                  <Counter
+                    count={allCount[index]}
+                    handlePlus={() => handlePlus(index)}
+                    handleMinus={() => handleMinus(index)}
+                  />
                 </div>
                 <div className="text-xl font-normal">Token: {priceToken}</div>
               </div>
@@ -90,7 +118,7 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
-      <div className="grid w-1/2 ml-auto mb-10 grid-cols-2 gap-y-4">
+      <div className="grid w-1/2 ml-auto my-10 grid-cols-2 gap-y-4">
         <div className="text-right text-2xl">My Tokens:</div>
         <div className="ml-5 text-2xl text-purple-500">{user?.token}</div>
         <div className="text-right text-2xl">Cost of Tokens:</div>

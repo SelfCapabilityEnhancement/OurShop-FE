@@ -26,7 +26,7 @@ export default function MyInformation() {
   const [shippingAddress, setShippingAddress] = useState('');
   const [saveShippingAddress, setSaveShippingAddress] =
     useState(shippingAddress);
-  const [Visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [user, setUser] = useState<User>();
   const [pageVisible, setPageVisible] = useState(false);
 
@@ -140,7 +140,7 @@ export default function MyInformation() {
               Edit
             </p>
           </div>
-          {Visible ? (
+          {visible ? (
             <TextSubmission
               value={shippingAddress}
               handleEdit={handleEdit}
