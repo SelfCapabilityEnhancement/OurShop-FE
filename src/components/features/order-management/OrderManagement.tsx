@@ -11,6 +11,7 @@ import { classNames } from '@/utils';
 import { http } from '@/service';
 import Chart from '@/components/common/chart/Chart';
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
+import Banner from '@/components/common/banner/Banner';
 
 const goodOptions = {
   title: {
@@ -136,6 +137,7 @@ export default function OrderManagement() {
     });
   const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
   const [selectedTitle, setSelectedTitle] = useState(0);
+  const [showBanner, setShowBanner] = useState(false);
 
   function orderByVendorDate(ordersItemAdminList: OrdersItemAdmin[]) {
     return ordersItemAdminList.sort((objA, objB) => {
@@ -374,17 +376,19 @@ export default function OrderManagement() {
     const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
       (orders) => orders.id
     );
-
-    await http.post('/orders', ordersIdList).then(() => {
+    http.post('/orders', ordersIdList).then(() => {
       http.get(`/orders`).then((response) => {
         const adminOrdersList = getAdminOrdersList(
           filterOrdersByDateRange(filterOrdersByStatus(response.data, status)),
           status
         );
         setOrdersItems(response.data);
-        setAdminOrdersItemList(adminOrdersList);
         setShowWindow(false);
-        return true;
+        setShowBanner(true);
+        setAdminOrdersItemList(adminOrdersList);
+        setTimeout(() => {
+          setShowBanner(false);
+        }, 1500);
       });
     });
   };
@@ -415,6 +419,11 @@ export default function OrderManagement() {
         </Tab.List>
       </Tab.Group>
       <div className="date-range-selection w-11/12 mx-auto mt-2 flex items-center">
+        <Banner
+          visible={showBanner}
+          success={true}
+          message={'Order is Made Successfully!'}
+        />
         <div className="start-end-date-picker flex">
           <span className="mr-2 py-2 whitespace-nowrap font-semibold">
             Order Received From{' '}

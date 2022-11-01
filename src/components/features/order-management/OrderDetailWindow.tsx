@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
 export default function OrderDetailWindow(props: {
@@ -9,19 +9,22 @@ export default function OrderDetailWindow(props: {
   showOrderMadeButton: boolean;
   refreshData: Function;
 }) {
+  const [buttonEnabled, setButtonEnabled] = useState(true);
+
+  useEffect(() => {
+    setButtonEnabled(true);
+  }, [props.showWindow]);
+
   function closeDetailWindow() {
     props.setShowWindow(false);
   }
 
-  const [buttonEnabled, setButtonEnabled] = useState(true);
-
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
-
   const handleOrderMade = async () => {
     setButtonEnabled(false);
-    const buttonEnabledNow = props.refreshData('pending');
-    setButtonEnabled(buttonEnabledNow);
+    props.refreshData('pending');
   };
+
   return (
     <Transition appear show={props.showWindow} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeDetailWindow}>
@@ -116,10 +119,9 @@ export default function OrderDetailWindow(props: {
                   </button>
                   {props.showOrderMadeButton ? (
                     <button
-                      className={`order-made text-sm px-5 py-2.5 mb-2 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg ${
-                        !buttonEnabled ? 'disabled' : ''
-                      }`}
+                      className="order-made text-sm px-5 py-2.5 mb-2 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg disabled:opacity-50"
                       data-testid="order-made"
+                      disabled={!buttonEnabled}
                       onClick={handleOrderMade}
                     >
                       Order is Made

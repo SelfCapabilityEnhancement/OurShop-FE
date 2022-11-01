@@ -259,4 +259,22 @@ describe('display my order', () => {
       expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     });
   });
+
+  test('should show processing and success message when add in shopping cart', async () => {
+    waitFor(() => {
+      const pendingOrder = screen.getByText('Pending Order');
+      user.click(pendingOrder);
+
+      const viewDetail = screen.getByText('View Detail');
+      user.click(viewDetail);
+
+      const orderMade = screen.getByText('Order is Made');
+      user.click(orderMade);
+
+      expect(
+        screen.findByText('Order is Made Successfully!')
+      ).toBeInTheDocument();
+      expect(screen.findByText('View Detail')).not.toBeInTheDocument();
+    });
+  });
 });
