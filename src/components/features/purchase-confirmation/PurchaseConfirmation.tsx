@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useEffect, useState } from 'react';
-import { http, getCurrentUser } from '@/service';
+import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -46,12 +46,12 @@ export default function PurchaseConfirmation() {
 
   const handleClickBuy = async () => {
     setShowLoading(true);
-    await http.post('/shopping-carts/pay-by-token', {
-      userId: user?.id,
-      token: cost,
-      count: allCount,
-      shoppingCartProductsIdList: shoppingCartProductsIds,
-    });
+    await payByToken(
+      user?.id as number,
+      cost,
+      allCount,
+      shoppingCartProductsIds
+    );
 
     setShowLoading(false);
     SetShowBanner(true);

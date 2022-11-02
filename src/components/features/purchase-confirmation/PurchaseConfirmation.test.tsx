@@ -8,11 +8,6 @@ import userEvent from '@testing-library/user-event';
 import { getProductCount, getProducts } from '@/mocks/mockData';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-    get: jest.fn().mockResolvedValue({}),
-  },
   getCurrentUser: jest.fn().mockResolvedValue({
     id: 2,
     name: 'Ann',
@@ -24,6 +19,7 @@ jest.mock('@/service', () => ({
     bankAccount: '123',
     avatar: 'avatar',
   }),
+  payByToken: jest.fn(),
 }));
 
 describe('purchase confirmation', () => {

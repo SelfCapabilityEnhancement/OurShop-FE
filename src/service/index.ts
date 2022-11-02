@@ -68,3 +68,17 @@ export const updateUserInfo = async (
     address,
   });
 };
+
+export const payByToken = async (
+  userId: number,
+  cost: number,
+  count: number[],
+  shoppingCartProductsIdList: number[]
+) => {
+  await http.post('/shopping-carts/pay-by-token', {
+    userId,
+    token: cost,
+    count,
+    shoppingCartProductsIdList,
+  });
+};
