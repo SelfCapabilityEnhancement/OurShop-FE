@@ -29,3 +29,15 @@ export const postProduct = async (product: UploadProduct) => {
 export const getCurrentUser = (): Promise<User[]> => {
   return http.get('/user/getById/13').then((response) => [response.data]);
 };
+
+export const addToCarts = async (
+  userId: number,
+  productId: number,
+  productNum: number
+) => {
+  await http.post('/shopping-carts', {
+    userId,
+    productId,
+    productNum,
+  });
+};

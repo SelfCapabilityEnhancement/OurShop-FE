@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
 import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
-import { getCurrentUser, http } from '@/service';
+import { addToCarts, getCurrentUser } from '@/service';
 import { classNames } from '@/utils';
 
 const logisticMethods = ['office', 'address'];
@@ -42,14 +42,7 @@ export default function DetailPage() {
     if (validate()) {
       setValidation(true);
       setShowLoading(true);
-      await http
-        .post('/shopping-carts', {
-          userId: user?.id,
-          productId: product.id,
-          productNum: count,
-        })
-        // eslint-disable-next-line no-console
-        .catch(console.error);
+      await addToCarts(user?.id as number, product.id, count);
       setShowLoading(false);
     } else {
       setValidation(false);

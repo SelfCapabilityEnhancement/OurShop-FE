@@ -6,26 +6,10 @@ import * as ReactRouter from 'react-router';
 import { BrowserRouter, Location } from 'react-router-dom';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn().mockImplementation(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }),
-  },
-  uploadFile: jest.fn().mockResolvedValue(true),
-  getCurrentUser: jest.fn().mockResolvedValue([
-    {
-      id: 2,
-      name: 'Ann',
-      sex: 'Female',
-      age: 23,
-      address: 'Guanshan Road',
-      office: 'Wuhan',
-      token: 23,
-      bankAccount: '123',
-      avatar: 'avatar',
-    },
-  ]),
+  getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
+  addToCarts: jest.fn().mockImplementation(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }),
 }));
 
 window.IntersectionObserver = jest
