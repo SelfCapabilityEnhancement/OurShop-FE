@@ -86,7 +86,6 @@ const initCategoryOption = {
     },
   ],
 };
-
 const product = {
   id: 1,
   name: '',
@@ -98,17 +97,16 @@ const product = {
   logisticMethod: '',
   logisticMethodComment: '',
 };
-
 const orders = {
   id: 1,
   userId: 1,
   orderProductsId: 1,
   orderAddress: '',
   orderStatus: '',
-  vendorDate: new Date(''),
   purchaseDate: new Date(''),
+  vendorDate: new Date(''),
+  logisticMethod: '',
 };
-
 const titles = [
   { id: 'salesOverview', name: 'Sales Overview' },
   { id: 'pendingOrder', name: 'Pending Order' },
@@ -123,7 +121,6 @@ export default function OrderManagement() {
   const [adminOrdersItems, setAdminOrdersItems] = useState<OrdersItemAdmin[]>(
     []
   );
-
   useEffect(() => {
     http.get(`/orders`).then((response) => {
       setOrdersItems(response.data);

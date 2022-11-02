@@ -2,6 +2,8 @@ import {
   OrdersItem,
   Product,
   OrdersItemAdmin,
+  BuyerInfo,
+  Orders,
 } from '@/components/common/CustomeTypes';
 
 export const tempProducts: Array<Product> = [
@@ -102,7 +104,20 @@ export const users = [
     bankAccount: '123',
     avatar: 'avatar',
   },
+  {
+    id: 3,
+    name: 'Betty',
+    sex: 'Female',
+    age: 22,
+    address: 'Pudong Road',
+    office: 'Shanghai',
+    token: 55,
+    bankAccount: '456',
+    avatar: 'avatar',
+  },
 ];
+
+export const user2 = [];
 
 const date = new Date('2022-10-19 15:34:20');
 
@@ -158,23 +173,25 @@ const product2 = {
   logisticMethod: '',
   logisticMethodComment: '',
 };
-const orders1 = {
+const orders1: Orders = {
   id: 1,
   userId: 1,
   orderProductsId: 1,
-  orderAddress: 'order address',
+  orderAddress: 'wuhan',
   orderStatus: 'pending',
-  vendorDate: new Date(''),
   purchaseDate: new Date('2022-10-01'),
+  vendorDate: new Date(''),
+  logisticMethod: 'office',
 };
-const orders2 = {
+const orders2: Orders = {
   id: 2,
   userId: 2,
   orderProductsId: 2,
-  orderAddress: 'order address',
+  orderAddress: 'Pudong road',
   orderStatus: 'finished',
-  vendorDate: new Date(1900, 1, 1, 0, 0, 0),
   purchaseDate: new Date('2022-10-02'),
+  vendorDate: new Date(1900, 1, 1, 0, 0, 0),
+  logisticMethod: 'address',
 };
 
 export const ordersItems: OrdersItem[] = [
@@ -221,3 +238,16 @@ export const mockOrderItemAdmin: OrdersItemAdmin[] = [
 
 export const getProducts = () => tempProducts;
 export const getProductCount = () => count;
+
+export const mockBuyerInfos: BuyerInfo[] = [
+  {
+    user: users[0],
+    orders: orders1,
+    productNum: 2,
+  },
+  {
+    user: users[1],
+    orders: orders2,
+    productNum: 3,
+  },
+];

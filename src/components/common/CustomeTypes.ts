@@ -46,8 +46,9 @@ export interface Orders {
   orderProductsId: number;
   orderAddress: string;
   orderStatus: string;
-  vendorDate: Date;
   purchaseDate: Date;
+  vendorDate: Date;
+  logisticMethod: string;
 }
 
 export interface OrderProducts {
@@ -66,4 +67,10 @@ export interface OrdersItemAdmin {
   product: Product;
   productNumAll: number;
   ordersList: Orders[];
+}
+
+export interface BuyerInfo {
+  user: User;
+  orders: Orders;
+  productNum: number;
 }
