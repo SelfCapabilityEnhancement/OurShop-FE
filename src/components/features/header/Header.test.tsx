@@ -5,12 +5,8 @@ import Header from './Header';
 import { Container } from 'react-dom';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-    get: jest.fn().mockResolvedValue({}),
-  },
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
+  getShoppingCarts: jest.fn().mockResolvedValue({}),
 }));
 
 describe('Header test', () => {

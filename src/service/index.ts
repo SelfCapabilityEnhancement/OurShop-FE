@@ -41,3 +41,8 @@ export const addToCarts = async (
     productNum,
   });
 };
+
+export const getShoppingCarts = async (userId: number) => {
+  const { data } = await http.get(`/shopping-carts/user/${userId}`);
+  return data;
+};

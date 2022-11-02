@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import { http, getCurrentUser } from '@/service';
+import { getCurrentUser, getShoppingCarts } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
 import Loading from '@/components/common/loading/Loading';
 
@@ -17,15 +17,10 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     setShowLoading(true);
-    getCurrentUser().then((user) => {
-      http
-        .get(`/shopping-carts/user/${user.id}`)
-        .then((response) => {
-          setShowLoading(false);
-          setShoppingCartItems(response.data);
-        })
-        // eslint-disable-next-line no-console
-        .catch(console.error);
+    getCurrentUser().then(async ({ id }) => {
+      const items = await getShoppingCarts(id);
+      setShoppingCartItems(items);
+      setShowLoading(false);
     });
   }, []);
 

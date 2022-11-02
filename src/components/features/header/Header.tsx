@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
 import { useEffect, useState } from 'react';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
-import { getCurrentUser, http } from '@/service';
+import { getCurrentUser, getShoppingCarts } from '@/service';
 import { classNames } from '@/utils';
 
 export default function Header() {
@@ -12,10 +12,9 @@ export default function Header() {
   >([]);
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      http.get(`/shopping-carts/user/${user.id}`).then((response) => {
-        setShoppingCartItems(response.data);
-      });
+    getCurrentUser().then(async ({ id }) => {
+      const items = await getShoppingCarts(id);
+      setShoppingCartItems(items);
     });
   }, []);
 

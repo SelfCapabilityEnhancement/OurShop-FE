@@ -5,12 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-    get: jest.fn().mockResolvedValue({ data: [] }),
-  },
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
+  getShoppingCarts: jest.fn().mockResolvedValue({}),
 }));
 
 describe('App test', () => {
