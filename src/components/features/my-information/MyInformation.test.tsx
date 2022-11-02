@@ -8,21 +8,18 @@ jest.mock('@/service', () => ({
   isDev: jest.fn(),
   http: {
     post: jest.fn(),
-    get: jest.fn(),
   },
-  getCurrentUser: jest.fn().mockResolvedValue([
-    {
-      id: 2,
-      name: 'Ann',
-      sex: 'Female',
-      age: 23,
-      address: 'Guanshan Road',
-      office: 'Shanghai',
-      token: 23,
-      bankAccount: '123',
-      avatar: 'avatar',
-    },
-  ]),
+  getCurrentUser: jest.fn().mockResolvedValue({
+    id: 2,
+    name: 'Ann',
+    sex: 'Female',
+    age: 23,
+    address: 'Guanshan Road',
+    office: 'Shanghai',
+    token: 23,
+    bankAccount: '123',
+    avatar: 'avatar',
+  }),
 }));
 
 describe('display user info', () => {

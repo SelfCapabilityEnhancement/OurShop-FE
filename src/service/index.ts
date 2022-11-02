@@ -26,8 +26,8 @@ export const postProduct = async (product: UploadProduct) => {
 };
 
 // this will be replaced by useContext in next iteration
-export const getCurrentUser = (): Promise<User[]> => {
-  return http.get('/user/getById/13').then((response) => [response.data]);
+export const getCurrentUser = (): Promise<User> => {
+  return http.get('/user/getById/13').then((response) => response.data);
 };
 
 export const addToCarts = async (

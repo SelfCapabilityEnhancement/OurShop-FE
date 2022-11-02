@@ -25,7 +25,7 @@ export default function DetailPage() {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    getCurrentUser().then((data) => setUser(data[0]));
+    getCurrentUser().then((user) => setUser(user));
   }, []);
 
   const handleMinus = () => {

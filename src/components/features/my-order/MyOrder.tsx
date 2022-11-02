@@ -7,9 +7,9 @@ export default function MyOrder() {
   const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
 
   useEffect(() => {
-    getCurrentUser().then((data) => {
+    getCurrentUser().then((user) => {
       http
-        .get(`/orders/${data[0].id}`)
+        .get(`/orders/${user.id}`)
         .then((response) => setOrdersItems(response.data))
         // eslint-disable-next-line no-console
         .catch(console.error);

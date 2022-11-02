@@ -8,7 +8,7 @@ export default function MyWallet() {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    getCurrentUser().then((data) => setUser(data[0]));
+    getCurrentUser().then((user) => setUser(user));
   }, []);
 
   const handleClick = () => {

@@ -33,7 +33,7 @@ export default function PurchaseConfirmation() {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
-    getCurrentUser().then((data) => setUser(data[0]));
+    getCurrentUser().then((user) => setUser(user));
   }, []);
 
   useEffect(() => {

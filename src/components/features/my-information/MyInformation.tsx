@@ -35,12 +35,12 @@ export default function MyInformation() {
   };
 
   useEffect(() => {
-    getCurrentUser().then((data) => {
-      setUser(data[0]);
-      setShippingAddress(data[0].address);
-      setSaveShippingAddress(data[0].address);
+    getCurrentUser().then((user) => {
+      setUser(user);
+      setShippingAddress(user.address);
+      setSaveShippingAddress(user.address);
       baseCites.forEach((baseCity) => {
-        if (baseCity.name === data[0].office) {
+        if (baseCity.name === user.office) {
           setSelectedCity(baseCity);
         }
       });

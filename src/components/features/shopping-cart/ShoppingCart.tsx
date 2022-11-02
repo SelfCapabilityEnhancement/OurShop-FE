@@ -17,9 +17,9 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     setShowLoading(true);
-    getCurrentUser().then((data) => {
+    getCurrentUser().then((user) => {
       http
-        .get(`/shopping-carts/user/${data[0].id}`)
+        .get(`/shopping-carts/user/${user.id}`)
         .then((response) => {
           setShowLoading(false);
           setShoppingCartItems(response.data);

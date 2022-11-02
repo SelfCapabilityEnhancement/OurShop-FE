@@ -12,8 +12,8 @@ export default function Header() {
   >([]);
 
   useEffect(() => {
-    getCurrentUser().then((data) => {
-      http.get(`/shopping-carts/user/${data[0].id}`).then((response) => {
+    getCurrentUser().then((user) => {
+      http.get(`/shopping-carts/user/${user.id}`).then((response) => {
         setShoppingCartItems(response.data);
       });
     });
