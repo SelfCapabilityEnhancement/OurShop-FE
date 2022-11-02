@@ -118,14 +118,16 @@ export default function ShoppingCart() {
             type="button"
             onClick={handleOnClickPayBtn}
             disabled={!checkedState.includes(true)}
-            className="payBtn token go-home w-3/5 p-2 h-12 right-72 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+            className="payBtn token go-home w-3/5 p-2 h-12 right-72 text-lg text-white font-semibold rounded-lg
+            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
           >
             Pay by Token
           </button>
           <button
             type="button"
             disabled={!checkedState.includes(true)}
-            className="payBtn money go-home w-3/5 p-2 h-12 right-2 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+            className="payBtn money go-home w-3/5 p-2 h-12 right-2 text-lg text-white font-semibold rounded-lg
+            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
           >
             Pay by Money
           </button>

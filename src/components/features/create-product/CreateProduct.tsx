@@ -253,7 +253,8 @@ function CreateProduct() {
                 />
                 <button
                   onClick={(event) => handleNext(event)}
-                  className="next text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  // className="next text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className="next text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                 >
                   Next
                 </button>
@@ -284,9 +285,9 @@ function CreateProduct() {
                   name="logistic"
                   checked={logisticMethods.has('office')}
                   className={classNames(
-                    'firstLogisticMethod w-5 h-5 mr-2 accent-purple-500 outline-none',
+                    'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
                     validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-rose-500'
+                      ? 'outline-none ring-inset ring ring-violet-500'
                       : ''
                   )}
                   onChange={(event) => handleCheckBox(event, 'office')}
@@ -300,9 +301,9 @@ function CreateProduct() {
                   name="logistic"
                   checked={logisticMethods.has('address')}
                   className={classNames(
-                    'firstLogisticMethod w-5 h-5 mr-2 accent-purple-500 outline-none',
+                    'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
                     validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-rose-500'
+                      ? 'outline-none ring-inset ring ring-violet-500'
                       : ''
                   )}
                   onChange={(event) => handleCheckBox(event, 'address')}
@@ -325,7 +326,7 @@ function CreateProduct() {
               />
               <button
                 onClick={(event) => handleSubmit(event)}
-                className="create text-white bg-violet-500 hover:bg-violet-700 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                className="create text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
               >
                 Create Product
               </button>
