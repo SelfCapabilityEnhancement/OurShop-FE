@@ -10,7 +10,7 @@ jest.mock('@/components/common/chart/Chart', () => ({
 }));
 
 jest.mock('@/service', () => ({
-  getOrdersItems: jest.fn(),
+  getAllOrdersItems: jest.fn(),
   updateOrders: jest.fn().mockResolvedValue([]),
 }));
 
