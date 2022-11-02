@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
 import { OrdersItem } from '@/components/common/CustomeTypes';
-import { http, getCurrentUser } from '@/service';
+import { getCurrentUser, getOrdersItemsByUserId } from '@/service';
 
 export default function MyOrder() {
   const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
 
   useEffect(() => {
     getCurrentUser().then((user) => {
-      http
-        .get(`/orders/${user.id}`)
-        .then((response) => setOrdersItems(response.data))
-        // eslint-disable-next-line no-console
-        .catch(console.error);
+      getOrdersItemsByUserId(user.id).then((response) =>
+        setOrdersItems(response.data)
+      );
     });
   }, []);
 

@@ -93,3 +93,6 @@ export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
 
 export const updateOrders = async (ordersIdList: number[]) =>
   await http.post('/orders', ordersIdList).then((response) => response.data);
+
+export const getOrdersItemsByUserId = (userId: number) =>
+  http.get(`/orders/${userId}`).then((response) => response.data);

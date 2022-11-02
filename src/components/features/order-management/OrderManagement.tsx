@@ -8,7 +8,7 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import { updateOrders, getAllOrdersItems, http } from '@/service';
+import { updateOrders, getAllOrdersItems } from '@/service';
 import ReactECharts from 'echarts-for-react';
 // @ts-ignore
 import cloneDeep from 'lodash.clonedeep';
@@ -41,7 +41,6 @@ const initGoodOption = {
     },
   ],
 };
-
 const initCategoryOption = {
   title: {
     text: 'Sales by Product Category',
@@ -122,9 +121,9 @@ export default function OrderManagement() {
     []
   );
   useEffect(() => {
-    http.get(`/orders`).then((response) => {
-      setOrdersItems(response.data);
-      setAdminOrdersItems(getAdminOrdersList(response.data, 'all'));
+    getAllOrdersItems().then((data) => {
+      setOrdersItems(data);
+      setAdminOrdersItems(getAdminOrdersList(data, 'all'));
     });
   }, []);
 
@@ -409,6 +408,7 @@ export default function OrderManagement() {
       });
     });
   };
+
   return (
     <div className="mt-10 mx-10">
       <Tab.Group
