@@ -8,7 +8,7 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import { http } from '@/service';
+import { updateOrders, getAllOrdersItems, http } from '@/service';
 import ReactECharts from 'echarts-for-react';
 // @ts-ignore
 import cloneDeep from 'lodash.clonedeep';
@@ -393,13 +393,13 @@ export default function OrderManagement() {
     const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
       (orders) => orders.id
     );
-    http.post('/orders', ordersIdList).then(() => {
-      http.get(`/orders`).then((response) => {
+    updateOrders(ordersIdList).then(() => {
+      getAllOrdersItems().then((data) => {
         const adminOrdersList = getAdminOrdersList(
-          filterOrdersByDateRange(filterOrdersByStatus(response.data, status)),
+          filterOrdersByDateRange(filterOrdersByStatus(data, status)),
           status
         );
-        setOrdersItems(response.data);
+        setOrdersItems(data);
         setShowWindow(false);
         setShowBanner(true);
         setAdminOrdersItems(adminOrdersList);
