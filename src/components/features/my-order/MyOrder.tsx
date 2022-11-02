@@ -8,9 +8,7 @@ export default function MyOrder() {
 
   useEffect(() => {
     getCurrentUser().then((user) => {
-      getOrdersItemsByUserId(user.id).then((response) =>
-        setOrdersItems(response.data)
-      );
+      getOrdersItemsByUserId(user.id).then((data) => setOrdersItems(data));
     });
   }, []);
 

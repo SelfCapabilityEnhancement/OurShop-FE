@@ -6,8 +6,12 @@ import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { mockOrdersItems, mockUpdatedOrdersItems } from '@/mocks/mockData';
 
-jest.mock('@/components/common/chart/Chart', () => ({
-  default: jest.fn().mockImplementation(() => <div />),
+jest.mock('echarts-for-react', () => ({
+  default: jest.fn().mockReturnValue(<div></div>),
+}));
+
+jest.mock('lodash.clonedeep', () => ({
+  default: jest.fn().mockImplementation((data) => data),
 }));
 
 jest.mock('@/service', () => ({
@@ -34,13 +38,6 @@ describe('display order management', () => {
         wrapper: BrowserRouter,
       }).container;
     });
-    jest.mock('echarts-for-react', () => ({
-      default: jest.fn().mockReturnValue(<div></div>),
-    }));
-
-    jest.mock('lodash.clonedeep', () => ({
-      default: jest.fn().mockImplementation((data) => data),
-    }));
   });
 
   test('should render datePicker, apply button, reset button and OrderItem for Admin', () => {
