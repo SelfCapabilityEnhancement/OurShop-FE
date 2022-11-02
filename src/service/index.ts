@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { Product, OrdersItem,UploadProduct, User } from '@/components/common/CustomeTypes';
+import {
+  Product,
+  OrdersItem,
+  UploadProduct,
+  User,
+} from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
 
