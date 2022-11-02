@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UploadProduct, User } from '@/components/common/CustomeTypes';
+import { Product, UploadProduct, User } from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
 
@@ -44,5 +44,15 @@ export const addToCarts = async (
 
 export const getShoppingCarts = async (userId: number) => {
   const { data } = await http.get(`/shopping-carts/user/${userId}`);
+  return data;
+};
+
+export const getProducts = async (): Promise<Product[]> => {
+  const { data } = await http.get('/products');
+
+  data.sort((a: { id: number }, b: { id: number }) => {
+    return a.id > b.id ? -1 : 1;
+  });
+
   return data;
 };

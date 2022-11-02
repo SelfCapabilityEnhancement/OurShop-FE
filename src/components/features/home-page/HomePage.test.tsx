@@ -2,22 +2,19 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import HomePage from '@/components/features/home-page/HomePage';
 import { tempProducts } from '@/mocks/mockData';
-import { http } from '@/service';
+import * as service from '@/service';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    get: jest.fn(),
-  },
+  getProducts: jest.fn(),
 }));
 
 describe('HomePage', () => {
   const user = userEvent.setup();
 
   beforeEach(() => {
-    jest.spyOn(http, 'get').mockResolvedValue({ data: tempProducts });
+    jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
     render(<HomePage />, { wrapper: BrowserRouter });
   });
 

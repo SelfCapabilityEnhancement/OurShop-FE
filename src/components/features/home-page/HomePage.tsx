@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@/components/common/CustomeTypes';
-import { http } from '@/service';
 import { useNavigate } from 'react-router-dom';
+import { getProducts } from '@/service';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
-    const getProducts = async () => {
-      await http.get('/products').then(({ data }) => {
-        data.sort((a: { id: number }, b: { id: number }) => {
-          return a.id > b.id ? -1 : 1;
-        });
-
-        setProducts(data);
-      });
-    };
-
-    getProducts().then();
+    getProducts().then((products) => {
+      setProducts(products);
+    });
   }, []);
 
   const handleClick = (product: Product) => {
