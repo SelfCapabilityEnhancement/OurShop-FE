@@ -149,6 +149,17 @@ const orders1: Orders = {
   vendorDate: new Date(''),
   logisticMethod: 'office',
 };
+
+const updatedOrders1: Orders = {
+  id: 1,
+  userId: 1,
+  orderProductsId: 1,
+  orderAddress: 'wuhan',
+  orderStatus: 'finished',
+  purchaseDate: new Date('2022-10-01'),
+  vendorDate: new Date('2022-10-12'),
+  logisticMethod: 'office',
+};
 const orders2: Orders = {
   id: 2,
   userId: 2,
@@ -156,7 +167,7 @@ const orders2: Orders = {
   orderAddress: 'Pudong road',
   orderStatus: 'finished',
   purchaseDate: new Date('2022-10-02'),
-  vendorDate: new Date(1900, 1, 1, 0, 0, 0),
+  vendorDate: new Date('2022-10-12'),
   logisticMethod: 'address',
 };
 
@@ -182,10 +193,30 @@ export const mockOrder = [
   },
 ];
 
-export const ordersItems: OrdersItem[] = [
+export const mockOrdersItems: OrdersItem[] = [
   {
     product: product1,
     orders: orders1,
+    orderProducts: {
+      id: 1,
+      productId: 1,
+      purchaseNum: 1,
+    },
+  },
+  {
+    product: product2,
+    orders: orders2,
+    orderProducts: {
+      id: 2,
+      productId: 2,
+      purchaseNum: 1,
+    },
+  },
+];
+export const mockUpdatedOrdersItems: OrdersItem[] = [
+  {
+    product: product1,
+    orders: updatedOrders1,
     orderProducts: {
       id: 1,
       productId: 1,
