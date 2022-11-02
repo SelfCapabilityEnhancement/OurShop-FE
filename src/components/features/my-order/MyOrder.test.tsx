@@ -1,91 +1,31 @@
-import { render, waitFor } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { users, mockOrdersItems } from '@/mocks/mockData';
+import * as service from '@/service';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    get: jest.fn().mockResolvedValue({
-      data: [
-        {
-          product: {
-            id: 79,
-            name: '橘子',
-            priceToken: 99,
-            priceMoney: 9,
-            description: '水果 🍊',
-            stock: 1,
-            images:
-              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
-          },
-          orders: {
-            id: 1,
-            userId: 12,
-            orderProductsId: 3,
-            orderAddress: 'order address',
-            orderStatus: 'order status',
-            purchaseDate: '2022-10-19-15:34:20',
-          },
-          orderProducts: {
-            id: 3,
-            productId: 79,
-            purchaseNum: 1,
-          },
-        },
-        {
-          product: {
-            id: 78,
-            name: '苹果',
-            priceToken: 98,
-            priceMoney: 8,
-            description: '水果',
-            stock: 1,
-            images:
-              'https://ourshop-tw.netlify.app/assets/product1.04d88779.png;',
-          },
-          orders: {
-            id: 2,
-            userId: 12,
-            orderProductsId: 2,
-            orderAddress: 'order address',
-            orderStatus: 'order status',
-            purchaseDate: '2022-10-19-16:23:20',
-          },
-          orderProducts: {
-            id: 2,
-            productId: 78,
-            purchaseNum: 2,
-          },
-        },
-      ],
-    }),
-  },
-  getCurrentUser: jest.fn().mockResolvedValue([
-    {
-      id: 2,
-      name: 'Ann',
-      sex: 'Female',
-      age: 23,
-      address: 'Guanshan Road',
-      office: 'Wuhan',
-      token: 23,
-      bankAccount: '123',
-      avatar: 'avatar',
-    },
-  ]),
+  getCurrentUser: jest.fn(),
+  getOrdersItemsByUserId: jest.fn(),
 }));
 
 describe('display my order', () => {
   let container: Container;
 
-  beforeEach(() => {
-    container = render(<MyOrder />, { wrapper: BrowserRouter }).container;
+  beforeEach(async () => {
+    jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);
+    jest
+      .spyOn(service, 'getOrdersItemsByUserId')
+      .mockResolvedValue(mockOrdersItems);
+
+    await act(async () => {
+      container = await render(<MyOrder />, { wrapper: BrowserRouter })
+        .container;
+    });
   });
 
   test('render all OrderItems', () => {
-    waitFor(() => {
-      expect(container.querySelectorAll('.order-item').length).toBe(2);
-    });
+    expect(container.querySelectorAll('.order-item').length).toBe(2);
   });
 });

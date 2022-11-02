@@ -4,6 +4,7 @@ import {
   OrdersItemAdmin,
   BuyerInfo,
   Orders,
+  User,
 } from '@/components/common/CustomeTypes';
 
 export const tempProducts: Array<Product> = [
@@ -92,7 +93,7 @@ export const shoppingCartItems = [
   },
 ];
 
-export const users = [
+export const users: User[] = [
   {
     id: 2,
     name: 'Ann',
