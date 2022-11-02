@@ -492,9 +492,9 @@ export default function OrderManagement() {
       </div>
       <div className={`${selectedTitle === 0 ? '' : 'hidden'}`}>
         <HLine text="Kanban" />
-        <div className="grid grid-cols-2 m-5">
-          <ReactECharts option={goodOption} style={{ height: 400 }} />
-          <ReactECharts option={categoryOption} style={{ height: 400 }} />
+        <div className="grid grid-cols-2">
+          <ReactECharts option={goodOption} style={{ height: 500 }} />
+          <ReactECharts option={categoryOption} style={{ height: 500 }} />
         </div>
         <HLine text="Orders" />
       </div>
