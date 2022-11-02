@@ -56,3 +56,15 @@ export const getProducts = async (): Promise<Product[]> => {
 
   return data;
 };
+
+export const updateUserInfo = async (
+  userId: number,
+  officeCity: string,
+  address: string
+) => {
+  await http.post('/user/updateUserAddressAndOffice', {
+    userId,
+    office: officeCity,
+    address,
+  });
+};

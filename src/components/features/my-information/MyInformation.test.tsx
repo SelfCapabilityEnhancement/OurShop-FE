@@ -5,10 +5,6 @@ import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-  },
   getCurrentUser: jest.fn().mockResolvedValue({
     id: 2,
     name: 'Ann',
@@ -20,6 +16,7 @@ jest.mock('@/service', () => ({
     bankAccount: '123',
     avatar: 'avatar',
   }),
+  updateUserInfo: jest.fn(),
 }));
 
 describe('display user info', () => {
@@ -30,7 +27,6 @@ describe('display user info', () => {
     container = render(<MyInformation />, { wrapper: BrowserRouter }).container;
   });
   it('should display user info', async () => {
-    // const address = container.querySelector('.address-header');
     expect(await screen.findByText('My Information')).toBeInTheDocument();
     expect(await screen.findByText('My Office')).toBeInTheDocument();
     expect(await screen.findByText('My Shipping Address')).toBeInTheDocument();

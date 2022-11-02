@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { TextSubmission } from '@/components/common/TextSubmission/TextSubmission';
 import { User } from '@/components/common/CustomeTypes';
-import { http, getCurrentUser } from '@/service';
+import { getCurrentUser, updateUserInfo } from '@/service';
 
 const baseCites = [
   { id: 1, name: 'Wuhan' },
@@ -15,11 +15,11 @@ const baseCites = [
 export default function MyInformation() {
   const navigate = useNavigate();
   const handleClick = async () => {
-    await http.post('/user/updateUserAddressAndOffice', {
-      userId: user?.id,
-      office: selectedCity.name,
-      address: shippingAddress,
-    });
+    await updateUserInfo(
+      user?.id as number,
+      selectedCity.name,
+      shippingAddress
+    );
     navigate('/home');
   };
   const [selectedCity, setSelectedCity] = useState(baseCites[0]);
