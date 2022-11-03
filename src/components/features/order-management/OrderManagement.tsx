@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
-import OrderItemAdminFinished from '@/components/features/order-management/OrderItemAdminFinished';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
-import OrderItemAdminPending from '@/components/features/order-management/OrderItemAdminPending';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
@@ -346,36 +344,6 @@ export default function OrderManagement() {
     );
   };
 
-  const orderItemAdminGivenStatus = (
-    item: OrdersItemAdmin,
-    nowStatus: string
-  ) => {
-    switch (nowStatus) {
-      case 'all':
-        return <OrderItemAdmin order={item} />;
-      case 'pending':
-        return (
-          <OrderItemAdminPending
-            order={item}
-            setShowWindow={setShowWindow}
-            setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
-            setShowOrderMadeButton={setShowOrderMadeButton}
-          />
-        );
-      case 'finished':
-        return (
-          <OrderItemAdminFinished
-            order={item}
-            setShowWindow={setShowWindow}
-            setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
-            setShowOrderMadeButton={setShowOrderMadeButton}
-          />
-        );
-      default:
-        return <OrderItemAdmin order={item} />;
-    }
-  };
-
   const showTitle = (titleId: string) => {
     if (titleId === 'salesOverview') {
       showAll();
@@ -502,7 +470,13 @@ export default function OrderManagement() {
               key={index}
               className="order-item-admin product border-gray-400 mb-5 h-20 "
             >
-              {orderItemAdminGivenStatus(item, nowStatus)}
+              <OrderItemAdmin
+                order={item}
+                nowStatus={nowStatus}
+                setShowWindow={setShowWindow}
+                setSelectedOrdersItemAdmin={setSelectedOrdersItemAdmin}
+                setShowOrderMadeButton={setShowOrderMadeButton}
+              />
             </li>
           ))}
         </ul>
