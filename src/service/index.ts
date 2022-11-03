@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { Product, UploadProduct, User } from '@/components/common/CustomeTypes';
+import {
+  Product,
+  OrdersItem,
+  UploadProduct,
+  User,
+} from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
 
@@ -82,3 +87,12 @@ export const payByToken = async (
     shoppingCartProductsIdList,
   });
 };
+
+export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
+  http.get(`/orders`).then((response) => response.data);
+
+export const updateOrders = async (ordersIdList: number[]) =>
+  await http.post('/orders', ordersIdList).then((response) => response.data);
+
+export const getOrdersItemsByUserId = (userId: number) =>
+  http.get(`/orders/${userId}`).then((response) => response.data);

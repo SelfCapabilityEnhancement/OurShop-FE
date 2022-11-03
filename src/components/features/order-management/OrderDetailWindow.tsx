@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import BuyerInfoTable from '@/components/features/order-management/BuyerInfoTable';
 
 export default function OrderDetailWindow(props: {
   setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -97,16 +98,10 @@ export default function OrderDetailWindow(props: {
                 <div className="mx-2">
                   <p className="taxt-base my-1">Buyer Information: </p>
                   <p
-                    className="description bg-slate-100 rounded-xl h-[210px] py-3 px-3 text-base"
+                    className="description bg-slate-100 rounded-xl h-[210px] overflow-auto"
                     data-testid="buyer-info-list"
                   >
-                    userId Order Address <br />
-                    {selectedOrdersItemAdmin.ordersList.map((order, index) => (
-                      // FIXME buyer information
-                      <p key={index} className="">
-                        {order.userId} {order.orderAddress}
-                      </p>
-                    ))}
+                    <BuyerInfoTable />
                   </p>
                 </div>
                 <div className="mt-4 flex justify-evenly">

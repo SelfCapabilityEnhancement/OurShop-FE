@@ -2,6 +2,9 @@ import {
   OrdersItem,
   Product,
   OrdersItemAdmin,
+  BuyerInfo,
+  Orders,
+  User,
 } from '@/components/common/CustomeTypes';
 
 export const tempProducts: Array<Product> = [
@@ -90,7 +93,7 @@ export const shoppingCartItems = [
   },
 ];
 
-export const users = [
+export const users: User[] = [
   {
     id: 2,
     name: 'Ann',
@@ -102,37 +105,16 @@ export const users = [
     bankAccount: '123',
     avatar: 'avatar',
   },
-];
-
-const date = new Date('2022-10-19 15:34:20');
-
-export const mockOrder = [
   {
-    product: {
-      id: 79,
-      name: '橘子',
-      priceToken: 99,
-      priceMoney: 9,
-      description: '水果 🍊',
-      stock: 1,
-      images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
-      logisticMethod: '',
-      logisticMethodComment: '',
-    },
-    orders: {
-      id: 1,
-      userId: 12,
-      orderProductsId: 3,
-      orderAddress: 'order address',
-      orderStatus: 'order status',
-      purchaseDate: date,
-      vendorDate: new Date(1900, 1, 1, 0, 0, 0),
-    },
-    orderProducts: {
-      id: 3,
-      productId: 79,
-      purchaseNum: 1,
-    },
+    id: 3,
+    name: 'Betty',
+    sex: 'Female',
+    age: 22,
+    address: 'Pudong Road',
+    office: 'Shanghai',
+    token: 55,
+    bankAccount: '456',
+    avatar: 'avatar',
   },
 ];
 
@@ -158,29 +140,84 @@ const product2 = {
   logisticMethod: '',
   logisticMethodComment: '',
 };
-const orders1 = {
+const orders1: Orders = {
   id: 1,
   userId: 1,
   orderProductsId: 1,
-  orderAddress: 'order address',
+  orderAddress: 'wuhan',
   orderStatus: 'pending',
-  vendorDate: new Date(''),
   purchaseDate: new Date('2022-10-01'),
+  vendorDate: new Date(''),
+  logisticMethod: 'office',
 };
-const orders2 = {
+
+const updatedOrders1: Orders = {
+  id: 1,
+  userId: 1,
+  orderProductsId: 1,
+  orderAddress: 'wuhan',
+  orderStatus: 'finished',
+  purchaseDate: new Date('2022-10-01'),
+  vendorDate: new Date('2022-10-12'),
+  logisticMethod: 'office',
+};
+const orders2: Orders = {
   id: 2,
   userId: 2,
   orderProductsId: 2,
-  orderAddress: 'order address',
+  orderAddress: 'Pudong road',
   orderStatus: 'finished',
-  vendorDate: new Date(1900, 1, 1, 0, 0, 0),
   purchaseDate: new Date('2022-10-02'),
+  vendorDate: new Date('2022-10-12'),
+  logisticMethod: 'address',
 };
 
-export const ordersItems: OrdersItem[] = [
+export const mockOrder = [
+  {
+    product: {
+      id: 79,
+      name: '橘子',
+      priceToken: 99,
+      priceMoney: 9,
+      description: '水果 🍊',
+      stock: 1,
+      images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+      logisticMethod: '',
+      logisticMethodComment: '',
+    },
+    orders: orders1,
+    orderProducts: {
+      id: 3,
+      productId: 79,
+      purchaseNum: 1,
+    },
+  },
+];
+
+export const mockOrdersItems: OrdersItem[] = [
   {
     product: product1,
     orders: orders1,
+    orderProducts: {
+      id: 1,
+      productId: 1,
+      purchaseNum: 1,
+    },
+  },
+  {
+    product: product2,
+    orders: orders2,
+    orderProducts: {
+      id: 2,
+      productId: 2,
+      purchaseNum: 1,
+    },
+  },
+];
+export const mockUpdatedOrdersItems: OrdersItem[] = [
+  {
+    product: product1,
+    orders: updatedOrders1,
     orderProducts: {
       id: 1,
       productId: 1,
@@ -221,3 +258,16 @@ export const mockOrderItemAdmin: OrdersItemAdmin[] = [
 
 export const getProducts = () => tempProducts;
 export const getProductCount = () => count;
+
+export const mockBuyerInfos: BuyerInfo[] = [
+  {
+    user: users[0],
+    orders: orders1,
+    productNum: 2,
+  },
+  {
+    user: users[1],
+    orders: orders2,
+    productNum: 3,
+  },
+];

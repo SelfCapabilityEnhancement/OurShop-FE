@@ -8,7 +8,7 @@ import OrderItemAdminPending from '@/components/features/order-management/OrderI
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import { http } from '@/service';
+import { updateOrders, getAllOrdersItems } from '@/service';
 import ReactECharts from 'echarts-for-react';
 // @ts-ignore
 import cloneDeep from 'lodash.clonedeep';
@@ -41,7 +41,6 @@ const initGoodOption = {
     },
   ],
 };
-
 const initCategoryOption = {
   title: {
     text: 'Sales by Product Category',
@@ -86,7 +85,6 @@ const initCategoryOption = {
     },
   ],
 };
-
 const product = {
   id: 1,
   name: '',
@@ -98,17 +96,16 @@ const product = {
   logisticMethod: '',
   logisticMethodComment: '',
 };
-
 const orders = {
   id: 1,
   userId: 1,
   orderProductsId: 1,
   orderAddress: '',
   orderStatus: '',
-  vendorDate: new Date(''),
   purchaseDate: new Date(''),
+  vendorDate: new Date(''),
+  logisticMethod: '',
 };
-
 const titles = [
   { id: 'salesOverview', name: 'Sales Overview' },
   { id: 'pendingOrder', name: 'Pending Order' },
@@ -123,11 +120,10 @@ export default function OrderManagement() {
   const [adminOrdersItems, setAdminOrdersItems] = useState<OrdersItemAdmin[]>(
     []
   );
-
   useEffect(() => {
-    http.get(`/orders`).then((response) => {
-      setOrdersItems(response.data);
-      setAdminOrdersItems(getAdminOrdersList(response.data, 'all'));
+    getAllOrdersItems().then((data) => {
+      setOrdersItems(data);
+      setAdminOrdersItems(getAdminOrdersList(data, 'all'));
     });
   }, []);
 
@@ -396,13 +392,13 @@ export default function OrderManagement() {
     const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
       (orders) => orders.id
     );
-    http.post('/orders', ordersIdList).then(() => {
-      http.get(`/orders`).then((response) => {
+    updateOrders(ordersIdList).then(() => {
+      getAllOrdersItems().then((data) => {
         const adminOrdersList = getAdminOrdersList(
-          filterOrdersByDateRange(filterOrdersByStatus(response.data, status)),
+          filterOrdersByDateRange(filterOrdersByStatus(data, status)),
           status
         );
-        setOrdersItems(response.data);
+        setOrdersItems(data);
         setShowWindow(false);
         setShowBanner(true);
         setAdminOrdersItems(adminOrdersList);
@@ -412,6 +408,7 @@ export default function OrderManagement() {
       });
     });
   };
+
   return (
     <div className="mt-10 mx-10">
       <Tab.Group
