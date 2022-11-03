@@ -153,7 +153,7 @@ export default function MyInformation() {
               <button
                 type="button"
                 onClick={handleClick}
-                className="go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
+                className="go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white transition ease-in duration-200 font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
               >
                 Save
               </button>

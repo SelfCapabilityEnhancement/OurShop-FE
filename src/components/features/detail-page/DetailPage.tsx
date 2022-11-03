@@ -76,7 +76,7 @@ export default function DetailPage() {
           id={method}
           type="radio"
           name="logistic"
-          className="firstLogisticMethod w-5 h-5 mr-1 accent-purple-500"
+          className="firstLogisticMethod w-5 h-5 mr-1 accent-violet-500"
         />
         {method === 'office'
           ? 'Collecting at Office'
