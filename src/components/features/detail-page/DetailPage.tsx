@@ -9,9 +9,9 @@ import { addToCarts, getCurrentUser } from '@/service';
 import { classNames } from '@/utils';
 
 const logisticMethods = ['office', 'address'];
-
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';
 const failMsg = 'Please Choose One Logistic Method!';
+
 export default function DetailPage() {
   const {
     state: { product },

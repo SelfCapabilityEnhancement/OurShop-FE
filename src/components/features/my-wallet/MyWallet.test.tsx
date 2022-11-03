@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import MyWallet from '@/components/features/my-wallet/MyWallet';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue([
@@ -24,9 +25,12 @@ describe('display wallet info', () => {
   let container: Container;
   const user = userEvent.setup();
 
-  beforeEach(() => {
-    container = render(<MyWallet />, { wrapper: BrowserRouter }).container;
+  beforeEach(async () => {
+    await act(async () => {
+      container = render(<MyWallet />, { wrapper: BrowserRouter }).container;
+    });
   });
+
   it('should display wallet info', async () => {
     const wallet = container.querySelector('.wallet-header');
 

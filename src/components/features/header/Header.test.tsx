@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 import { Container } from 'react-dom';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
@@ -12,8 +13,10 @@ jest.mock('@/service', () => ({
 describe('Header test', () => {
   let container: Container;
 
-  beforeEach(() => {
-    container = render(<Header />, { wrapper: BrowserRouter }).container;
+  beforeEach(async () => {
+    await act(async () => {
+      container = render(<Header />, { wrapper: BrowserRouter }).container;
+    });
   });
 
   describe('display part', () => {

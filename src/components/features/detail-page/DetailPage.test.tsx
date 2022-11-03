@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { tempProducts } from '@/mocks/mockData';
 import * as ReactRouter from 'react-router';
 import { BrowserRouter, Location } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
@@ -27,10 +28,13 @@ describe('Detail Page', () => {
     state: { product: mockProduct },
   };
 
-  beforeEach(() => {
-    jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
-    render(<DetailPage />, {
-      wrapper: BrowserRouter,
+  jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
+
+  beforeEach(async () => {
+    await act(async () => {
+      render(<DetailPage />, {
+        wrapper: BrowserRouter,
+      });
     });
   });
 

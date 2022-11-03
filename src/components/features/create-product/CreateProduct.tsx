@@ -5,7 +5,7 @@ import { UploadProduct } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
-import { postProduct, uploadFile } from '@/service';
+import { newProduct, uploadFile } from '@/service';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -165,7 +165,7 @@ function CreateProduct() {
     } else {
       setLoading(true);
       await uploadFile(product);
-      await postProduct(product);
+      await newProduct(product);
 
       setLoading(false);
       setProduct(() => emptyProduct);

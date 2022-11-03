@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue({
@@ -23,9 +24,14 @@ describe('display user info', () => {
   let container: Container;
   const user = userEvent.setup();
 
-  beforeEach(() => {
-    container = render(<MyInformation />, { wrapper: BrowserRouter }).container;
+  beforeEach(async () => {
+    await act(async () => {
+      container = render(<MyInformation />, {
+        wrapper: BrowserRouter,
+      }).container;
+    });
   });
+
   it('should display user info', async () => {
     expect(await screen.findByText('My Information')).toBeInTheDocument();
     expect(await screen.findByText('My Office')).toBeInTheDocument();
@@ -42,19 +48,17 @@ describe('display user info', () => {
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
     expect(edit).toBeInTheDocument();
 
-    user.click(edit as Element);
+    await user.click(edit as Element);
 
     const addressInput = await screen.findByDisplayValue('Guanshan Road');
-    expect(addressInput).toBeInTheDocument();
     const confirm = await screen.findByRole('button', { name: /Confirm/i });
     expect(confirm).toBeInTheDocument();
 
-    await userEvent.type(addressInput, newAddress);
-    user.click(confirm as Element);
+    await user.clear(addressInput);
+    await user.type(addressInput, newAddress);
+    await user.click(confirm as Element);
 
-    const save = await screen.findByRole('button', { name: /Save/i });
-    expect(save).toBeInTheDocument();
-    await user.click(save as Element);
+    expect(await screen.findByText(newAddress)).toBeInTheDocument();
   });
 
   it('should navigate to home when click good to go', async () => {

@@ -21,7 +21,7 @@ export const uploadFile = async (product: UploadProduct) => {
   await Promise.all(product.images.map((image) => uploadFileToBlob(image)));
 };
 
-export const postProduct = async (product: UploadProduct) => {
+export const newProduct = async (product: UploadProduct) => {
   await http.post('/products', {
     ...product,
     images: product.images

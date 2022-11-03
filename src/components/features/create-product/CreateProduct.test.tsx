@@ -7,17 +7,9 @@ import * as utils from '@/utils';
 import * as service from '@/service';
 import { UploadProduct } from '@/components/common/CustomeTypes';
 
-jest.mock('@/azure-storage-blob', () => ({
-  uploadFileToBlob: jest.fn(),
-}));
-
 jest.mock('@/service', () => ({
-  isDev: jest.fn(),
-  http: {
-    post: jest.fn(),
-  },
   uploadFile: jest.fn(),
-  postProduct: jest.fn(),
+  newProduct: jest.fn(),
 }));
 
 describe('Create product test', () => {
@@ -60,7 +52,7 @@ describe('Create product test', () => {
     jest.spyOn(utils, 'validateForm').mockReturnValue({ mock: false });
     jest.spyOn(service, 'uploadFile').mockResolvedValue();
     jest
-      .spyOn(service, 'postProduct')
+      .spyOn(service, 'newProduct')
       .mockImplementation(async (product: UploadProduct) => {
         await setTimeout(() => product, 1000);
       });
