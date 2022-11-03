@@ -46,8 +46,6 @@ const product3 = {
 
 export const tempProducts: Array<Product> = [product1, product2, product3];
 
-const count = [2, 1, 3];
-
 export const shoppingCartItems = [
   {
     product: product1,
@@ -72,8 +70,6 @@ const count = [2, 1, 3];
 export const shoppingCartIds = [53, 98, 24];
 
 export const productIds = [79, 1, 97];
-
-export const productNums = [5, 5, 1];
 
 export const logisticMethods = ['office', 'office', 'office'];
 

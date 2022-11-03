@@ -5,17 +5,16 @@ import { BrowserRouter, Location } from 'react-router-dom';
 import * as ReactRouter from 'react-router';
 
 import userEvent from '@testing-library/user-event';
-import { getProductCount, getProducts, users } from '@/mocks/mockData';
-import * as service from '@/service';
-import { act } from 'react-dom/test-utils';
 import {
   getProductCount,
   getProducts,
+  users,
   logisticMethods,
   productIds,
   shoppingCartIds,
 } from '@/mocks/mockData';
-
+import * as service from '@/service';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
