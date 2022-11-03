@@ -5,7 +5,7 @@ import { BrowserRouter, Location } from 'react-router-dom';
 import * as ReactRouter from 'react-router';
 
 import userEvent from '@testing-library/user-event';
-import { getProductCount, getProducts, user as user1 } from '@/mocks/mockData';
+import { getProductCount, getProducts, users } from '@/mocks/mockData';
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 
@@ -31,7 +31,7 @@ describe('purchase confirmation', () => {
     state: { products: getProducts(), count: getProductCount() },
   };
 
-  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(user1);
+  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);
   jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
 
   beforeEach(async () => {

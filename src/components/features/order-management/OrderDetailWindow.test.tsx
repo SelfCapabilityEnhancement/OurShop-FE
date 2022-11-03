@@ -14,11 +14,12 @@ describe('OrderDetailWindow', () => {
       />
     );
   });
+
   it('should render all elements', async () => {
     expect(screen.getByText('Order Detail')).toBeInTheDocument();
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
     expect(
-      screen.getByText(mockOrderItemAdminPending[0].product.name)
+      screen.getAllByText(mockOrderItemAdminPending[0].product.name)[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(

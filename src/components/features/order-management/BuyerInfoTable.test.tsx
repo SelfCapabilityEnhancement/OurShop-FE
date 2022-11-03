@@ -3,18 +3,20 @@ import BuyerInfoTable from '@/components/features/order-management/BuyerInfoTabl
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
 describe('OrderItemAdmin', () => {
   let container: Container;
-  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-    observe: () => null,
-    disconnect: () => null,
-  }));
 
   beforeEach(() => {
     container = render(<BuyerInfoTable />, {
       wrapper: BrowserRouter,
     }).container;
   });
+
   test('should render 4 titles', () => {
     expect(screen.getByText('Buyer Name')).toBeInTheDocument();
     expect(screen.getByText('Product Name')).toBeInTheDocument();
@@ -26,10 +28,10 @@ describe('OrderItemAdmin', () => {
   test('should render Buyer Info', () => {
     expect(container.querySelectorAll('.buyer-info-line').length).toBe(2);
     expect(container.querySelectorAll('.buyer-info-line')[0].textContent).toBe(
-      'AnnProduct12wuhan123'
+      'Ann苹果2wuhan123'
     );
     expect(container.querySelectorAll('.buyer-info-line')[1].textContent).toBe(
-      'BettyProduct13Pudong road456'
+      'Betty苹果3Pudong road456'
     );
   });
 });
