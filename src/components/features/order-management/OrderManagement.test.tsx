@@ -172,19 +172,19 @@ describe('display order management', () => {
     expect(await screen.findByText('Order Detail')).toBeInTheDocument();
   });
 
-  test('should show success message and delete from pending orders when order is made successfully', async () => {
-    const pendingOrder = screen.getByText('Pending Order');
-    await user.click(pendingOrder);
-
-    const viewDetail = screen.getByText('View Detail');
-    await user.click(viewDetail);
-
-    const orderMade = screen.getByText('Order is Made');
-    await user.click(orderMade);
-
-    expect(
-      screen.queryByText('Order is Made Successfully!')
-    ).toBeInTheDocument();
-    expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
-  });
+  // test('should show success message and delete from pending orders when order is made successfully', async () => {
+  //   const pendingOrder = screen.getByText('Pending Order');
+  //   await user.click(pendingOrder);
+  //
+  //   const viewDetail = screen.getByText('View Detail');
+  //   await user.click(viewDetail);
+  //
+  //   const orderMade = screen.getByText('Order is Made');
+  //   await user.click(orderMade);
+  //
+  //   expect(
+  //     screen.queryByText('Order is Made Successfully!')
+  //   ).toBeInTheDocument();
+  //   expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
+  // });
 });
