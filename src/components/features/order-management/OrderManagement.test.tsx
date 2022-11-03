@@ -73,7 +73,7 @@ describe('display order management', () => {
   });
 
   test('should filter orders by start date when only input start date and count total order number for each product', async () => {
-    const startDateInput = container.querySelector(' .start-date');
+    const startDateInput = container.querySelector('.start-date');
     const applyButton = container.querySelector('.apply-button');
 
     await user.type(startDateInput as Element, '10/02/2022');
@@ -85,7 +85,7 @@ describe('display order management', () => {
   });
 
   test('should filter orders by end date when only input end date and count total order number for each product', async () => {
-    const endDateInput = container.querySelector(' .end-date');
+    const endDateInput = container.querySelector('.end-date');
     const applyButton = container.querySelector('.apply-button');
 
     await user.type(endDateInput as Element, '10/01/2022');
@@ -109,8 +109,8 @@ describe('display order management', () => {
   });
 
   test('should do not show any order when input incoorect date range', async () => {
-    const startDateInput = container.querySelector(' .start-date');
-    const endDateInput = container.querySelector(' .end-date');
+    const startDateInput = container.querySelector('.start-date');
+    const endDateInput = container.querySelector('.end-date');
     const applyButton = container.querySelector('.apply-button');
     await user.type(startDateInput as Element, '10/02/2022');
     await user.type(endDateInput as Element, '10/01/2022');
@@ -119,8 +119,8 @@ describe('display order management', () => {
   });
 
   test('should clear date range input and show all orders when click reset button', async () => {
-    const startDateInput = container.querySelector(' .start-date');
-    const endDateInput = container.querySelector(' .end-date');
+    const startDateInput = container.querySelector('.start-date');
+    const endDateInput = container.querySelector('.end-date');
     const applyButton = container.querySelector('.apply-button');
     const resetButton = container.querySelector('.reset-button');
     await user.type(startDateInput as Element, '09/03/2022');
@@ -183,9 +183,8 @@ describe('display order management', () => {
     await user.click(orderMade);
 
     expect(
-      await screen.queryByText('Order is Made Successfully!')
+      screen.queryByText('Order is Made Successfully!')
     ).toBeInTheDocument();
-
-    expect(await screen.queryByText('View Detail')).not.toBeInTheDocument();
+    expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
   });
 });
