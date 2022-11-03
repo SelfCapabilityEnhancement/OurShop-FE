@@ -4,6 +4,7 @@ import {
   OrdersItem,
   UploadProduct,
   User,
+  PurchaseConfirmationItem,
 } from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
@@ -76,14 +77,12 @@ export const updateUserInfo = async (
 export const payByToken = async (
   userId: number,
   cost: number,
-  count: number[],
-  shoppingCartProductsIdList: number[]
+  purchaseConfirmationItems: PurchaseConfirmationItem[]
 ) => {
   await http.post('/shopping-carts/pay-by-token', {
     userId,
     token: cost,
-    count,
-    shoppingCartProductsIdList,
+    purchaseConfirmationItems,
   });
 };
 

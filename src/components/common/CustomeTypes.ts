@@ -36,8 +36,17 @@ export interface User {
 
 export interface ShoppingCartItem {
   product: Product;
-  shoppingCartProductsId: number;
   productNum: number;
+  productId: number;
+  shoppingCartId: number;
+  logisticMethod: string;
+}
+
+export interface PurchaseConfirmationItem {
+  productNum: number;
+  productId: number;
+  shoppingCartId: number;
+  logisticMethod: string;
 }
 
 export interface Orders {

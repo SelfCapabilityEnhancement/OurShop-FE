@@ -63,8 +63,19 @@ export const shoppingCartItems = [
     product: product3,
     shoppingCartProductsId: 24,
     productNum: 1,
+    logisticMethod: 'office',
   },
 ];
+
+const count = [2, 1, 3];
+
+export const shoppingCartIds = [53, 98, 24];
+
+export const productIds = [79, 1, 97];
+
+export const productNums = [5, 5, 1];
+
+export const logisticMethods = ['office', 'office', 'office'];
 
 export const users: User[] = [
   {

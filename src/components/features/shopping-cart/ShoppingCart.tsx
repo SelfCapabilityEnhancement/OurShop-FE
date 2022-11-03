@@ -50,16 +50,17 @@ export default function ShoppingCart() {
       (_item, index) => checkedState[index]
     );
     const selectedProducts = selectedItems.map((e) => e.product);
-    const selectedShoppingCartProductsIds = selectedItems.map(
-      (e) => e.shoppingCartProductsId
-    );
+    const selectedShoppingCartIds = selectedItems.map((e) => e.shoppingCartId);
+    const selectedProductIds = selectedItems.map((e) => e.productId);
     const count = selectedItems.map((e) => e.productNum);
-
+    const logisticMethods = selectedItems.map((e) => e.logisticMethod);
     navigate('/purchase-confirmation', {
       state: {
         products: selectedProducts,
         count,
-        shoppingCartProductsIds: selectedShoppingCartProductsIds,
+        shoppingCartIds: selectedShoppingCartIds,
+        productIds: selectedProductIds,
+        logisticMethods,
       },
     });
   };

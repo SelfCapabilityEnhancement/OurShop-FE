@@ -8,6 +8,14 @@ import userEvent from '@testing-library/user-event';
 import { getProductCount, getProducts, users } from '@/mocks/mockData';
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
+import {
+  getProductCount,
+  getProducts,
+  logisticMethods,
+  productIds,
+  shoppingCartIds,
+} from '@/mocks/mockData';
+
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
@@ -28,7 +36,13 @@ describe('purchase confirmation', () => {
     pathname: '',
     search: '',
     hash: '',
-    state: { products: getProducts(), count: getProductCount() },
+    state: {
+      products: getProducts(),
+      count: getProductCount(),
+      shoppingCartIds,
+      productIds,
+      logisticMethods,
+    },
   };
 
   jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);

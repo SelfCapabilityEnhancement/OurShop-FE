@@ -1,5 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Product, User } from '@/components/common/CustomeTypes';
+import {
+  Product,
+  PurchaseConfirmationItem,
+  User,
+} from '@/components/common/CustomeTypes';
 import { useEffect, useState } from 'react';
 import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
@@ -9,12 +13,14 @@ import Counter from '@/components/common/counter/Counter';
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
   const {
-    state: { products, count, shoppingCartProductsIds },
+    state: { products, count, shoppingCartIds, productIds, logisticMethods },
   }: {
     state: {
       products: Array<Product>;
       count: Array<number>;
-      shoppingCartProductsIds: Array<number>;
+      shoppingCartIds: Array<number>;
+      productIds: Array<number>;
+      logisticMethods: Array<string>;
     };
   } = useLocation();
 
@@ -46,12 +52,16 @@ export default function PurchaseConfirmation() {
 
   const handleClickBuy = async () => {
     setShowLoading(true);
-    await payByToken(
-      user?.id as number,
-      cost,
-      allCount,
-      shoppingCartProductsIds
-    );
+    const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+    allCount.forEach((count, index) => {
+      purchaseConfirmationItems.push({
+        productNum: count,
+        productId: productIds[index],
+        shoppingCartId: shoppingCartIds[index],
+        logisticMethod: logisticMethods[index],
+      });
+    });
+    await payByToken(user?.id as number, cost, purchaseConfirmationItems);
 
     setShowLoading(false);
     SetShowBanner(true);
