@@ -82,6 +82,23 @@ function CreateProduct() {
     }
   };
 
+  const handleRemoveImage = async (index: number) => {
+    setImageURL((prevState) => {
+      const tmp = [...prevState];
+      tmp.splice(index, 1);
+      return tmp;
+    });
+
+    setProduct((prevState) => {
+      const tmp = [...prevState.images];
+      tmp.splice(index, 1);
+      return {
+        ...prevState,
+        images: tmp,
+      };
+    });
+  };
+
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -346,6 +363,7 @@ function CreateProduct() {
                 <ImageUploader
                   images={imageURL}
                   handleNewImage={handleNewImage}
+                  handleRemoveImage={handleRemoveImage}
                   validation={validations.images}
                 />
                 <button
