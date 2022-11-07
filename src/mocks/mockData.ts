@@ -120,84 +120,119 @@ const orders2: Orders = {
   logisticMethod: 'address',
 };
 
-const updatedOrders1: Orders = {
-  id: 1,
-  userId: 1,
-  orderProductsId: 1,
-  orderAddress: 'wuhan',
-  orderStatus: 'finished',
-  purchaseDate: new Date('2022-10-01'),
-  vendorDate: new Date('2022-10-12'),
-  logisticMethod: 'office',
-};
-
 export const mockOrder = [
   {
-    product: product1,
-    orders: orders1,
-    orderProducts: {
-      id: 3,
-      productId: 2,
-      purchaseNum: 1,
-    },
+    productId: 1,
+    purchaseNum: 1,
+    orderId: 1,
+    address: 'wuhan',
+    status: 'pending',
+    vendorDate: new Date('1900-1-1'),
+    userId: 1,
+    purchaseDate: new Date('2022-10-01'),
+    productName: '苹果',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   },
 ];
 
 export const mockOrdersItems: OrdersItem[] = [
   {
-    product: product1,
-    orders: orders1,
-    orderProducts: {
-      id: 1,
-      productId: 2,
-      purchaseNum: 1,
-    },
+    productId: 1,
+    purchaseNum: 1,
+    orderId: 1,
+    address: 'wuhan',
+    status: 'pending',
+    vendorDate: new Date('1900-1-1'),
+    userId: 1,
+    purchaseDate: new Date('2022-10-01'),
+    productName: '苹果',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   },
   {
-    product: product2,
-    orders: orders2,
-    orderProducts: {
-      id: 2,
-      productId: 2,
-      purchaseNum: 1,
-    },
+    productId: 2,
+    purchaseNum: 1,
+    orderId: 2,
+    address: 'wuhan',
+    status: 'finished',
+    vendorDate: new Date('2022-10-12'),
+    userId: 2,
+    purchaseDate: new Date('2022-10-02'),
+    productName: '橘子',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   },
 ];
 
 export const mockUpdatedOrdersItems: OrdersItem[] = [
   {
-    product: product1,
-    orders: updatedOrders1,
-    orderProducts: {
-      id: 1,
-      productId: 1,
-      purchaseNum: 1,
-    },
+    productId: 1,
+    purchaseNum: 1,
+    orderId: 1,
+    address: 'wuhan',
+    status: 'finished',
+    vendorDate: new Date('2022-10-13'),
+    userId: 1,
+    purchaseDate: new Date('2022-10-01'),
+    productName: '苹果',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   },
   {
-    product: product2,
-    orders: orders2,
-    orderProducts: {
-      id: 2,
-      productId: 2,
-      purchaseNum: 1,
-    },
+    productId: 2,
+    purchaseNum: 1,
+    orderId: 2,
+    address: 'wuhan',
+    status: 'finished',
+    vendorDate: new Date('2022-10-12'),
+    userId: 2,
+    purchaseDate: new Date('2022-10-02'),
+    productName: '橘子',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   },
 ];
 
 export const mockOrderItemAdminPending: OrdersItemAdmin[] = [
   {
-    product: product1,
+    productId: 1,
+    productName: '苹果',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
     productNumAll: 1,
-    ordersList: [orders1],
+    ordersList: [
+      {
+        orderId: 1,
+        userId: 1,
+        vendorDate: new Date('1900-01-01'),
+        address: 'wuhan',
+        purchaseDate: new Date('2022-10-01'),
+        status: 'pending',
+        purchaseNum: 1,
+      },
+    ],
   },
 ];
 
 export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
   {
-    product: product2,
+    productId: 2,
+    productName: '橘子',
+    description: 'yummy',
+    images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
     productNumAll: 1,
-    ordersList: [orders2],
+    ordersList: [
+      {
+        orderId: 2,
+        userId: 2,
+        vendorDate: new Date('2022-10-13'),
+        address: 'wuhan',
+        purchaseDate: new Date('2022-10-02'),
+        status: 'finished',
+        purchaseNum: 1,
+      },
+    ],
   },
 ];
 

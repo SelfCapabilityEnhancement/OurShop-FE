@@ -11,9 +11,7 @@ export default function OrderItemAdmin(props: {
   nowStatus: string;
 }) {
   const order = props.order;
-  const date = new Date(
-    order.ordersList[0].vendorDate ? order.ordersList[0].vendorDate : ''
-  );
+  const date = new Date(order.ordersList[0].vendorDate);
 
   function openDetailWindow() {
     props.setShowOrderMadeButton(props.nowStatus === 'pending');
@@ -26,12 +24,12 @@ export default function OrderItemAdmin(props: {
       <div className="product-info flex flex-1 items-center">
         <img
           alt="profile"
-          src={order.product.images.split(',')[0]}
+          src={order.images.split(',')[0]}
           className="w-20 h-16 mr-10 object-cover rounded-lg object-cover"
           data-testid="product-picture"
         />
         <span className="font-medium mx-5" data-testid="product-name">
-          {order.product.name}
+          {order.productName}
         </span>
       </div>
       <div className="flex items-center">

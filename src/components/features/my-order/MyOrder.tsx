@@ -17,7 +17,7 @@ export default function MyOrder() {
       <ul className="flex flex-col">
         {ordersItems.map((item) => (
           <li
-            key={item.orderProducts.id}
+            key={item.productId}
             className="order-item product border-gray-400 mb-5 h-20 "
           >
             <OrderItem order={item} />

@@ -22,7 +22,7 @@ describe('OrderItemAdminAll', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
 
     expect(screen.getByTestId('product-name').textContent).toBe(
-      mockOrderItemAdmin[0].product.name
+      mockOrderItemAdmin[0].productName
     );
     expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('total-order-number').textContent).toBe(
@@ -46,7 +46,7 @@ describe('OrderItemAdmin', () => {
   test('should render picture, product name, number and detail button', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
     expect(screen.getByTestId('product-name').textContent).toBe(
-      mockOrderItemAdminFinished[0].product.name
+      mockOrderItemAdminFinished[0].productName
     );
     expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('total-order-number').textContent).toBe(
@@ -78,7 +78,7 @@ describe('OrderItemAdminPending', () => {
   test('should render picture, product name, number and detail button', () => {
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
     expect(screen.getByTestId('product-name').textContent).toBe(
-      mockOrderItemAdminPending[0].product.name
+      mockOrderItemAdminPending[0].productName
     );
     expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('total-order-number').textContent).toBe(

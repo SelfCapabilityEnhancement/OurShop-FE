@@ -19,7 +19,7 @@ describe('OrderDetailWindow', () => {
     expect(screen.getByText('Order Detail')).toBeInTheDocument();
     expect(screen.getByTestId('product-picture')).toBeInTheDocument();
     expect(
-      screen.getAllByText(mockOrderItemAdminPending[0].product.name)[0]
+      screen.getAllByText(mockOrderItemAdminPending[0].productName)[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(

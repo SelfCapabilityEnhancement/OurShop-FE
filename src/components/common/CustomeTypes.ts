@@ -66,20 +66,51 @@ export interface OrderProducts {
   purchaseNum: number;
 }
 
-export interface OrdersItem {
-  product: Product;
-  orders: Orders;
-  orderProducts: OrderProducts;
-}
-
-export interface OrdersItemAdmin {
-  product: Product;
-  productNumAll: number;
-  ordersList: Orders[];
-}
+// export interface OrdersItem {
+//   product: Product;
+//   orders: Orders;
+//   orderProducts: OrderProducts;
+// }
+//
+// export interface OrdersItemAdmin {
+//   product: Product;
+//   productNumAll: number;
+//   ordersList: Orders[];
+// }
 
 export interface BuyerInfo {
   user: User;
   orders: Orders;
   productNum: number;
+}
+
+export interface OrdersItem {
+  productId: number;
+  purchaseNum: number;
+  orderId: number;
+  address: string;
+  status: string;
+  vendorDate: Date;
+  userId: number;
+  purchaseDate: Date;
+  productName: string;
+  description: string;
+  images: string;
+}
+
+export interface OrdersItemAdmin {
+  productId: number;
+  productName: string;
+  description: string;
+  images: string;
+  productNumAll: number;
+  ordersList: {
+    orderId: number;
+    userId: number;
+    vendorDate: Date;
+    address: string;
+    purchaseDate: Date;
+    status: string;
+    purchaseNum: number;
+  }[];
 }
