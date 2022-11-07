@@ -32,7 +32,7 @@ export interface User {
   token: number;
   bankAccount: string;
   avatar: string;
-  telephoneNumber: number;
+  telephoneNum: number;
 }
 
 export interface ShoppingCartItem {

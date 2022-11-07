@@ -84,7 +84,7 @@ export const users: User[] = [
     token: 23,
     bankAccount: '123',
     avatar: 'avatar',
-    telephoneNumber: 123456,
+    telephoneNum: 123456,
   },
   {
     id: 3,
@@ -96,7 +96,7 @@ export const users: User[] = [
     token: 55,
     bankAccount: '456',
     avatar: 'avatar',
-    telephoneNumber: 456789,
+    telephoneNum: 456789,
   },
 ];
 
