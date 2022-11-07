@@ -10,6 +10,7 @@ import PurchaseConfirmation from '@/components/features/purchase-confirmation/Pu
 import DetailPage from '@/components/features/detail-page/DetailPage';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import MyInformation from '@/components/features/my-information/MyInformation';
+import ProductManagement from '@/components/features/product-management/ProductManagement';
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-information',
         element: <MyInformation />,
+      },
+      {
+        path: 'product-management',
+        element: <ProductManagement />,
       },
     ],
   },

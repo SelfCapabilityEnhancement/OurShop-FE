@@ -38,6 +38,14 @@ export default function Header() {
       <div className="flex items-center">
         <div className="nav-list flex justify-around flex-1">
           <NavLink
+            to="product-management"
+            className="p-2 mx-3 text-center border-b-2 border-white
+            hover:text-gray-600 hover:border-gray-300
+            focus:text-pink-500 focus:border-pink-500 "
+          >
+            Product Management
+          </NavLink>
+          <NavLink
             to="order-management"
             className="p-2 mx-3 text-center border-b-2 border-white
             hover:text-gray-600 hover:border-gray-300
