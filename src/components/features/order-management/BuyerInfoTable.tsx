@@ -1,8 +1,9 @@
-import { mockBuyerInfos, tempProducts } from '@/mocks/mockData';
+import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 
-const mockProduct = tempProducts[0];
-
-export default function BuyerInfoTable() {
+export default function BuyerInfoTable(props: {
+  selectedOrdersItemAdmin: OrdersItemAdmin;
+}) {
+  const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
   return (
     <div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -13,10 +14,10 @@ export default function BuyerInfoTable() {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="py-3 px-6">
-                Buyer Name
+                Product Name
               </th>
               <th scope="col" className="py-3 px-6">
-                Product Name
+                Buyer Name
               </th>
               <th scope="col" className="py-3 px-6">
                 Number of Product
@@ -30,7 +31,7 @@ export default function BuyerInfoTable() {
             </tr>
           </thead>
           <tbody>
-            {mockBuyerInfos.map((mockBuyerInfo, index) => {
+            {selectedOrdersItemAdmin.ordersList.map((order, index) => {
               return (
                 <tr
                   className={`buyer-info-line border-b ${
@@ -38,21 +39,18 @@ export default function BuyerInfoTable() {
                   }`}
                   key={index}
                 >
-                  <th
+                  <td className="py-4 px-6">
+                    {selectedOrdersItemAdmin.productName}
+                  </td>
+                  <td
                     scope="row"
                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
                   >
-                    {mockBuyerInfo.user.name}
-                  </th>
-                  <td className="py-4 px-6">{mockProduct.name}</td>
-                  <td className="py-4 px-6">{mockBuyerInfo.productNum}</td>
-
-                  <td className="py-4 px-6">
-                    {mockBuyerInfo.orders.orderAddress}
+                    {order.username}
                   </td>
-                  <td className="py-4 px-6">
-                    {mockBuyerInfo.user.bankAccount}
-                  </td>
+                  <td className="py-4 px-6">{order.purchaseNum}</td>
+                  <td className="py-4 px-6">{order.address}</td>
+                  <td className="py-4 px-6">{order.telephoneNum}</td>
                 </tr>
               );
             })}

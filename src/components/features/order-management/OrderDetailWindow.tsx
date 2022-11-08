@@ -112,12 +112,14 @@ export default function OrderDetailWindow(props: {
                 </div>
                 <div className="mx-2">
                   <p className="text-base my-1">Buyer Information: </p>
-                  <p
+                  <div
                     className="description bg-slate-100 rounded-xl h-[210px] overflow-auto"
                     data-testid="buyer-info-list"
                   >
-                    <BuyerInfoTable />
-                  </p>
+                    <BuyerInfoTable
+                      selectedOrdersItemAdmin={selectedOrdersItemAdmin}
+                    />
+                  </div>
                 </div>
                 <div className="mt-4 flex justify-evenly">
                   <button

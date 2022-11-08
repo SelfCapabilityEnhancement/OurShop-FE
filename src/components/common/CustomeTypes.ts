@@ -100,6 +100,8 @@ export interface OrdersItem {
   productName: string;
   description: string;
   images: string;
+  username: string;
+  telephoneNum: string;
 }
 
 export interface OrdersItemAdmin {
@@ -116,5 +118,7 @@ export interface OrdersItemAdmin {
     purchaseDate: Date;
     status: string;
     purchaseNum: number;
+    username: string;
+    telephoneNum: string;
   }[];
 }

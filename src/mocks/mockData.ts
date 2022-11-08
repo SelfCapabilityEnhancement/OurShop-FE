@@ -141,6 +141,8 @@ export const mockOrder = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
 ];
 
@@ -157,6 +159,8 @@ export const mockOrdersItems: OrdersItem[] = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
   {
     productId: 2,
@@ -170,6 +174,8 @@ export const mockOrdersItems: OrdersItem[] = [
     productName: '橘子',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Bobby',
+    telephoneNum: '123789',
   },
 ];
 
@@ -186,6 +192,8 @@ export const mockUpdatedOrdersItems: OrdersItem[] = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
   {
     productId: 2,
@@ -199,6 +207,8 @@ export const mockUpdatedOrdersItems: OrdersItem[] = [
     productName: '橘子',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Bobby',
+    telephoneNum: '123789',
   },
 ];
 
@@ -218,6 +228,8 @@ export const mockOrderItemAdminPending: OrdersItemAdmin[] = [
         purchaseDate: new Date('2022-10-01'),
         status: 'pending',
         purchaseNum: 1,
+        username: 'Ann',
+        telephoneNum: '123456',
       },
     ],
   },
@@ -239,6 +251,8 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
         purchaseDate: new Date('2022-10-02'),
         status: 'finished',
         purchaseNum: 1,
+        username: 'Bobby',
+        telephoneNum: '123789',
       },
     ],
   },
