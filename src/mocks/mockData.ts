@@ -2,8 +2,6 @@ import {
   OrdersItem,
   Product,
   OrdersItemAdmin,
-  BuyerInfo,
-  Orders,
   User,
 } from '@/components/common/CustomeTypes';
 
@@ -105,28 +103,6 @@ export const users: User[] = [
     telephoneNum: 456789,
   },
 ];
-
-const orders1: Orders = {
-  id: 1,
-  userId: 1,
-  orderProductsId: 1,
-  orderAddress: 'wuhan',
-  orderStatus: 'pending',
-  purchaseDate: new Date('2022-10-01'),
-  vendorDate: new Date(''),
-  logisticMethod: 'office',
-};
-
-const orders2: Orders = {
-  id: 2,
-  userId: 2,
-  orderProductsId: 2,
-  orderAddress: 'Pudong road',
-  orderStatus: 'finished',
-  purchaseDate: new Date('2022-10-02'),
-  vendorDate: new Date('2022-10-12'),
-  logisticMethod: 'address',
-};
 
 export const mockOrder = [
   {
@@ -261,17 +237,4 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
 export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminPending[0],
   mockOrderItemAdminFinished[0],
-];
-
-export const mockBuyerInfos: BuyerInfo[] = [
-  {
-    user: users[0],
-    orders: orders1,
-    productNum: 2,
-  },
-  {
-    user: users[1],
-    orders: orders2,
-    productNum: 3,
-  },
 ];
