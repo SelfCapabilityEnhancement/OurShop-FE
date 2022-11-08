@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 import BuyerInfoTable from '@/components/features/order-management/BuyerInfoTable';
 import * as XLSX from 'xlsx';
@@ -28,7 +28,7 @@ export default function OrderDetailWindow(props: {
     props.refreshData('pending');
   };
 
-  const toExcel = React.useCallback(async () => {
+  const toExcel = useCallback(async () => {
     const table = document.getElementById('BuyerInfoTable');
     const sheet = XLSX.utils.table_to_sheet(table);
     const wb = {
