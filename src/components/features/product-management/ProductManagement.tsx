@@ -3,6 +3,7 @@ import { classNames } from '@/utils';
 import { useEffect, useState } from 'react';
 import { Product } from '@/components/common/CustomeTypes';
 import { getProducts } from '@/service';
+import EditProduct from '@/components/features/product-management/EditProduct';
 
 const tabs = [
   { id: 'available', name: 'Available Products' },
@@ -11,6 +12,7 @@ const tabs = [
 
 export default function ProductManagement() {
   const [available, setAvailable] = useState<Product[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getProducts().then((products) => {
@@ -18,8 +20,19 @@ export default function ProductManagement() {
     });
   }, []);
 
+  const handleEdit = (index: number) => {
+    setShowModal(true);
+  };
+
+  const handleCancelEdit = () => {
+    setShowModal(false);
+  };
+
+  const handleDelete = (index: number) => {};
+
   return (
     <div className="w-full max-w-full p-3">
+      <EditProduct isOpen={showModal} handleClose={handleCancelEdit} />
       <Tab.Group>
         <Tab.List className="flex space-x-10 p-1">
           {tabs.map((tab) => (
@@ -45,7 +58,7 @@ export default function ProductManagement() {
                 {available.map((product, index) => (
                   <li
                     key={product.id}
-                    className="product border-gray-400 my-3 h-20"
+                    className="available border-gray-400 my-3 h-20"
                   >
                     <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
                       <div className="mx-5">
@@ -67,6 +80,7 @@ export default function ProductManagement() {
                           strokeWidth={1.5}
                           stroke="currentColor"
                           className="w-6 h-6"
+                          onClick={() => handleEdit(index)}
                         >
                           <path
                             strokeLinecap="round"
@@ -82,6 +96,7 @@ export default function ProductManagement() {
                           strokeWidth={1.5}
                           stroke="currentColor"
                           className="w-6 h-6"
+                          onClick={() => handleDelete(index)}
                         >
                           <path
                             strokeLinecap="round"
