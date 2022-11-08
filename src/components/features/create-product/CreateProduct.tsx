@@ -228,7 +228,7 @@ function CreateProduct() {
                   'w-52 rounded-lg text-xl font-normal',
                   selected
                     ? `${tab.id} text-purple-500 underline underline-offset-8`
-                    : 'text-gray-600'
+                    : 'text-gray-500'
                 )
               }
             >
