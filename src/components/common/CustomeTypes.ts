@@ -20,6 +20,7 @@ export interface Product {
   images: string;
   logisticMethod: string;
   logisticMethodComment: string;
+  isDeleted: boolean;
 }
 
 export interface User {

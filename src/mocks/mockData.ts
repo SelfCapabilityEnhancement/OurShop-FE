@@ -18,6 +18,7 @@ const product1: Product = {
     'https://ourshop-tw.netlify.app/assets/product1.04d88779.png,fake.jpeg',
   logisticMethod: 'office;address',
   logisticMethodComment: 'mock comment',
+  isDeleted: false,
 };
 
 const product2 = {
@@ -30,6 +31,7 @@ const product2 = {
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   logisticMethod: 'office',
   logisticMethodComment: '',
+  isDeleted: false,
 };
 
 const product3 = {
@@ -42,6 +44,7 @@ const product3 = {
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   logisticMethod: 'address',
   logisticMethodComment: '',
+  isDeleted: false,
 };
 
 export const tempProducts: Array<Product> = [product1, product2, product3];
