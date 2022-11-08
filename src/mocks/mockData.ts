@@ -12,6 +12,7 @@ const product1: Product = {
   name: '苹果',
   priceToken: 5,
   priceMoney: 10,
+  productCategory: '',
   description: 'yummy',
   stock: 1,
   images:
@@ -26,6 +27,7 @@ const product2 = {
   name: '橘子',
   priceToken: 3,
   priceMoney: 9,
+  productCategory: '',
   description: '水果 🍊',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
@@ -39,6 +41,7 @@ const product3 = {
   name: '手机',
   priceToken: 2,
   priceMoney: 899,
+  productCategory: '',
   description: '一部手机',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
