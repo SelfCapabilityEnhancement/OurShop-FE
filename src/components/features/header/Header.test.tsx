@@ -27,7 +27,9 @@ describe('Header test', () => {
     });
 
     it('should render navigation list', () => {
-      expect(screen.getByTestId('header')).toBeInTheDocument();
+      const navList = container.querySelector('.nav-list');
+
+      expect(navList?.children.length).toEqual(5);
     });
 
     it('should render user avatar', () => {

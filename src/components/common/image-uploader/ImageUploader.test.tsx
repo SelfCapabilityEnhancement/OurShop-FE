@@ -7,11 +7,11 @@ describe('Image Uploader', () => {
   let container: Container;
 
   beforeEach(() => {
-    const mockHandleNewImage = jest.fn(() => {});
     container = render(
       <ImageUploader
         images={[]}
-        handleNewImage={mockHandleNewImage}
+        handleNewImage={jest.fn}
+        handleRemoveImage={jest.fn}
         validation={false}
       />,
       { wrapper: BrowserRouter }
