@@ -2,13 +2,13 @@ import { OrdersItem } from '@/components/common/CustomeTypes';
 
 export default function OrderItem(props: { order: OrdersItem }) {
   const order = props.order;
-  const date = new Date(order.orders.purchaseDate);
+  const date = new Date(order.purchaseDate);
   return (
     <div className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
       <div className="flex-initial mx-5">
         <img
           alt="profile"
-          src={order.product.images.split(',')[0]}
+          src={order.images.split(',')[0]}
           className="w-20 h-16 mx-auto object-cover rounded-lg object-cover"
           data-testid="product-picture"
         />
@@ -17,7 +17,7 @@ export default function OrderItem(props: { order: OrdersItem }) {
         className="font-medium flex-initial w-2/5 mx-5"
         data-testid="product-name"
       >
-        {order.product.name}
+        {order.productName}
       </span>
       <div className="purchase-date w-1/3">
         <span data-testid="purchase-date-title">Date of Purchase: </span>
@@ -25,9 +25,7 @@ export default function OrderItem(props: { order: OrdersItem }) {
       </div>
       <div className="w-1/5">
         <span data-testid="number-title">Number: </span>
-        <span data-testid="purchase-number">
-          {order.orderProducts.purchaseNum}
-        </span>
+        <span data-testid="purchase-number">{order.purchaseNum}</span>
       </div>
     </div>
   );

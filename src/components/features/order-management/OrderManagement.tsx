@@ -83,27 +83,6 @@ const initCategoryOption = {
     },
   ],
 };
-const product = {
-  id: 1,
-  name: '',
-  priceToken: 1,
-  priceMoney: 1,
-  description: '',
-  stock: 1,
-  images: '',
-  logisticMethod: '',
-  logisticMethodComment: '',
-};
-const orders = {
-  id: 1,
-  userId: 1,
-  orderProductsId: 1,
-  orderAddress: '',
-  orderStatus: '',
-  purchaseDate: new Date(''),
-  vendorDate: new Date(''),
-  logisticMethod: '',
-};
 const titles = [
   { id: 'salesOverview', name: 'Sales Overview' },
   { id: 'pendingOrder', name: 'Pending Order' },
@@ -132,7 +111,7 @@ export default function OrderManagement() {
 
     setGoodOption((prevState) => {
       const tmp = cloneDeep(prevState);
-      tmp.yAxis.data = sortedItems.map((a) => a.product.name);
+      tmp.yAxis.data = sortedItems.map((a) => a.productName);
       tmp.series[0].data = sortedItems.map((a) => a.productNumAll);
       return tmp;
     });
@@ -145,9 +124,22 @@ export default function OrderManagement() {
   const [showWindow, setShowWindow] = useState(false);
   const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
     useState<OrdersItemAdmin>({
-      product,
+      productId: 0,
+      productName: '',
+      description: '',
+      images: '',
       productNumAll: 0,
-      ordersList: [orders],
+      ordersList: [
+        {
+          orderId: 0,
+          userId: 0,
+          vendorDate: new Date(''),
+          address: '',
+          purchaseDate: new Date(''),
+          status: '',
+          purchaseNum: 0,
+        },
+      ],
     });
   const [showOrderMadeButton, setShowOrderMadeButton] = useState(true);
   const [selectedTitle, setSelectedTitle] = useState(0);
@@ -166,15 +158,22 @@ export default function OrderManagement() {
     ordersItemList: OrdersItem[],
     index: number
   ) =>
-    ordersItemAdmin.product.id === ordersItemList[index].product.id
+    ordersItemAdmin.productId === ordersItemList[index].productId
       ? {
           ...ordersItemAdmin,
           productNumAll:
-            ordersItemAdmin.productNumAll +
-            ordersItemList[index].orderProducts.purchaseNum,
+            ordersItemAdmin.productNumAll + ordersItemList[index].purchaseNum,
           ordersList: [
             ...ordersItemAdmin.ordersList,
-            ordersItemList[index].orders,
+            {
+              orderId: ordersItemList[index].orderId,
+              userId: ordersItemList[index].userId,
+              vendorDate: ordersItemList[index].vendorDate,
+              address: ordersItemList[index].address,
+              purchaseDate: ordersItemList[index].purchaseDate,
+              status: ordersItemList[index].status,
+              purchaseNum: ordersItemList[index].purchaseNum,
+            },
           ],
         }
       : ordersItemAdmin;
@@ -185,16 +184,23 @@ export default function OrderManagement() {
     index: number,
     date: Date
   ) =>
-    ordersItemAdmin.product.id === ordersItemList[index].product.id &&
+    ordersItemAdmin.productId === ordersItemList[index].productId &&
     ordersItemAdmin.ordersList[0].vendorDate === date
       ? {
           ...ordersItemAdmin,
           productNumAll:
-            ordersItemAdmin.productNumAll +
-            ordersItemList[index].orderProducts.purchaseNum,
+            ordersItemAdmin.productNumAll + ordersItemList[index].purchaseNum,
           ordersList: [
             ...ordersItemAdmin.ordersList,
-            ordersItemList[index].orders,
+            {
+              orderId: ordersItemList[index].orderId,
+              userId: ordersItemList[index].userId,
+              vendorDate: ordersItemList[index].vendorDate,
+              address: ordersItemList[index].address,
+              purchaseDate: ordersItemList[index].purchaseDate,
+              status: ordersItemList[index].status,
+              purchaseNum: ordersItemList[index].purchaseNum,
+            },
           ],
         }
       : ordersItemAdmin;
@@ -205,32 +211,45 @@ export default function OrderManagement() {
     index: number
   ) => {
     ordersItemAdminList.push({
-      product: ordersItemList[index].product,
-      productNumAll: ordersItemList[index].orderProducts.purchaseNum,
-      ordersList: [ordersItemList[index].orders],
+      productId: ordersItemList[index].productId,
+      productName: ordersItemList[index].productName,
+      description: ordersItemList[index].description,
+      images: ordersItemList[index].images,
+      productNumAll: ordersItemList[index].purchaseNum,
+      ordersList: [
+        {
+          orderId: ordersItemList[index].orderId,
+          userId: ordersItemList[index].userId,
+          vendorDate: ordersItemList[index].vendorDate,
+          address: ordersItemList[index].address,
+          purchaseDate: ordersItemList[index].purchaseDate,
+          status: ordersItemList[index].status,
+          purchaseNum: ordersItemList[index].purchaseNum,
+        },
+      ],
     });
   };
 
   function getAdminOrdersList(ordersItemList: OrdersItem[], status: string) {
-    let ordersItemAdminList: OrdersItemAdmin[] = [];
+    let ordersItemAdmins: OrdersItemAdmin[] = [];
     for (let i: number = 0; i < ordersItemList.length; i++) {
       const productIds: number[] = [];
-      ordersItemAdminList.forEach((ordersItemAdmin) => {
-        productIds.push(ordersItemAdmin.product.id);
+      ordersItemAdmins.forEach((ordersItemAdmin) => {
+        productIds.push(ordersItemAdmin.productId);
       });
       const vendorDates: String[] = [];
       if (status === 'finished') {
-        ordersItemAdminList.forEach((ordersItemAdmin) => {
+        ordersItemAdmins.forEach((ordersItemAdmin) => {
           vendorDates.push(ordersItemAdmin.ordersList[0].vendorDate.toString());
         });
       }
-      const dateOrder = ordersItemList[i].orders.vendorDate;
+      const dateOrder = ordersItemList[i].vendorDate;
       if (status === 'finished') {
         if (
-          productIds.includes(ordersItemList[i].product.id) &&
+          productIds.includes(ordersItemList[i].productId) &&
           vendorDates.includes(dateOrder.toString())
         ) {
-          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+          ordersItemAdmins = ordersItemAdmins.map((ordersItemAdmin) =>
             countProductNumAllByProductIdAndVendorDate(
               ordersItemAdmin,
               ordersItemList,
@@ -239,23 +258,23 @@ export default function OrderManagement() {
             )
           );
         } else {
-          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+          addNewOrdersItemAdmin(ordersItemAdmins, ordersItemList, i);
         }
       }
       if (status !== 'finished') {
-        if (productIds.includes(ordersItemList[i].product.id)) {
-          ordersItemAdminList = ordersItemAdminList.map((ordersItemAdmin) =>
+        if (productIds.includes(ordersItemList[i].productId)) {
+          ordersItemAdmins = ordersItemAdmins.map((ordersItemAdmin) =>
             countProductNumAllByProductId(ordersItemAdmin, ordersItemList, i)
           );
         } else {
-          addNewOrdersItemAdmin(ordersItemAdminList, ordersItemList, i);
+          addNewOrdersItemAdmin(ordersItemAdmins, ordersItemList, i);
         }
       }
     }
     if (status === 'finished') {
-      return orderByVendorDate(ordersItemAdminList);
+      return orderByVendorDate(ordersItemAdmins);
     }
-    return ordersItemAdminList;
+    return ordersItemAdmins;
   }
 
   const filterOrdersByStatus = (
@@ -266,7 +285,7 @@ export default function OrderManagement() {
       return ordersItemList;
     } else {
       return ordersItemList.filter(
-        (ordersItem) => ordersItem.orders.orderStatus === status
+        (ordersItem) => ordersItem.status === status
       );
     }
   };
@@ -277,17 +296,17 @@ export default function OrderManagement() {
     if (startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
         return (
-          new Date(order.orders.purchaseDate) >= startDate &&
-          new Date(order.orders.purchaseDate) <= endDate
+          new Date(order.purchaseDate) >= startDate &&
+          new Date(order.purchaseDate) <= endDate
         );
       });
     } else if (startDate && !endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return new Date(order.orders.purchaseDate) >= startDate;
+        return new Date(order.purchaseDate) >= startDate;
       });
     } else if (!startDate && endDate) {
       return ordersItemsList.filter((order: OrdersItem) => {
-        return new Date(order.orders.purchaseDate) <= endDate;
+        return new Date(order.purchaseDate) <= endDate;
       });
     } else {
       return ordersItemsList;
@@ -357,10 +376,14 @@ export default function OrderManagement() {
   };
 
   const refreshData = async (status: string) => {
-    const ordersIdList: number[] = selectedOrdersItemAdmin.ordersList.map(
-      (orders) => orders.id
-    );
-    updateOrders(ordersIdList).then(() => {
+    const ordersProductIds: { orderId: number; productId: number }[] =
+      selectedOrdersItemAdmin.ordersList.map((orders) => {
+        return {
+          orderId: orders.orderId,
+          productId: selectedOrdersItemAdmin.productId,
+        };
+      });
+    updateOrders(ordersProductIds).then(() => {
       getAllOrdersItems().then((data) => {
         const adminOrdersList = getAdminOrdersList(
           filterOrdersByDateRange(filterOrdersByStatus(data, status)),

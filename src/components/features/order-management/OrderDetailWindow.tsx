@@ -82,12 +82,12 @@ export default function OrderDetailWindow(props: {
                 <div className="mt-2 flex mx-2">
                   <img
                     alt="profile"
-                    src={selectedOrdersItemAdmin.product.images.split(',')[0]}
+                    src={selectedOrdersItemAdmin.images.split(',')[0]}
                     className="my-2 mx-2 object-cover rounded-lg w-24 h-24"
                     data-testid="product-picture"
                   />
                   <p className="text-base font-semibold mx-auto mt-3 text-black text-center">
-                    {selectedOrdersItemAdmin.product.name}
+                    {selectedOrdersItemAdmin.productName}
                   </p>
                 </div>
                 <div>

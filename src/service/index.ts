@@ -89,8 +89,9 @@ export const payByToken = async (
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
   http.get(`/orders`).then((response) => response.data);
 
-export const updateOrders = async (ordersIdList: number[]) =>
-  await http.post('/orders', ordersIdList).then((response) => response.data);
+export const updateOrders = (
+  ordersProductIds: { orderId: number; productId: number }[]
+) => http.patch('/orders', ordersProductIds).then((response) => response.data);
 
 export const getOrdersItemsByUserId = (userId: number) =>
   http.get(`/orders/${userId}`).then((response) => response.data);
