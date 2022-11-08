@@ -71,7 +71,7 @@ export const shoppingCartItems = [
   },
 ];
 
-const count = [2, 1, 3];
+export const productCount = [2, 1, 3];
 
 export const shoppingCartIds = [53, 98, 24];
 
@@ -248,9 +248,6 @@ export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminPending[0],
   mockOrderItemAdminFinished[0],
 ];
-
-export const getProducts = () => tempProducts;
-export const getProductCount = () => count;
 
 export const mockBuyerInfos: BuyerInfo[] = [
   {

@@ -6,8 +6,8 @@ import * as ReactRouter from 'react-router';
 
 import userEvent from '@testing-library/user-event';
 import {
-  getProductCount,
-  getProducts,
+  productCount,
+  tempProducts,
   users,
   logisticMethods,
   productIds,
@@ -36,8 +36,8 @@ describe('purchase confirmation', () => {
     search: '',
     hash: '',
     state: {
-      products: getProducts(),
-      count: getProductCount(),
+      products: tempProducts,
+      count: productCount,
       shoppingCartIds,
       productIds,
       logisticMethods,
