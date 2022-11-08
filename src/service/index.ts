@@ -54,7 +54,7 @@ export const getShoppingCarts = async (userId: number) => {
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await http.get('/products');
+  const { data } = await http.get('/products/not-deleted');
 
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
