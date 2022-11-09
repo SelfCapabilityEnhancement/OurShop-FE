@@ -4,7 +4,7 @@ export interface UploadProduct {
   priceToken: number;
   priceMoney: number;
   stock: number;
-  productCategory: string;
+  // category: string;
   description: string;
   images: File[];
   logisticMethod: string;
@@ -17,7 +17,7 @@ export interface Product {
   priceToken: number;
   priceMoney: number;
   stock: number;
-  productCategory: string;
+  // category: string;
   description: string;
   images: string;
   logisticMethod: string;
