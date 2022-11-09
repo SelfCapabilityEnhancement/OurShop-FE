@@ -138,6 +138,8 @@ export default function OrderManagement() {
           purchaseDate: new Date(''),
           status: '',
           purchaseNum: 0,
+          username: '',
+          telephoneNum: '',
         },
       ],
     });
@@ -173,6 +175,8 @@ export default function OrderManagement() {
               purchaseDate: ordersItemList[index].purchaseDate,
               status: ordersItemList[index].status,
               purchaseNum: ordersItemList[index].purchaseNum,
+              username: ordersItemList[index].username,
+              telephoneNum: ordersItemList[index].telephoneNum,
             },
           ],
         }
@@ -200,6 +204,8 @@ export default function OrderManagement() {
               purchaseDate: ordersItemList[index].purchaseDate,
               status: ordersItemList[index].status,
               purchaseNum: ordersItemList[index].purchaseNum,
+              username: ordersItemList[index].username,
+              telephoneNum: ordersItemList[index].telephoneNum,
             },
           ],
         }
@@ -225,6 +231,8 @@ export default function OrderManagement() {
           purchaseDate: ordersItemList[index].purchaseDate,
           status: ordersItemList[index].status,
           purchaseNum: ordersItemList[index].purchaseNum,
+          username: ordersItemList[index].username,
+          telephoneNum: ordersItemList[index].telephoneNum,
         },
       ],
     });

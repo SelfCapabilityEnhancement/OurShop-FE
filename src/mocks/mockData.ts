@@ -2,8 +2,6 @@ import {
   OrdersItem,
   Product,
   OrdersItemAdmin,
-  BuyerInfo,
-  Orders,
   User,
 } from '@/components/common/CustomeTypes';
 
@@ -106,28 +104,6 @@ export const users: User[] = [
   },
 ];
 
-const orders1: Orders = {
-  id: 1,
-  userId: 1,
-  orderProductsId: 1,
-  orderAddress: 'wuhan',
-  orderStatus: 'pending',
-  purchaseDate: new Date('2022-10-01'),
-  vendorDate: new Date(''),
-  logisticMethod: 'office',
-};
-
-const orders2: Orders = {
-  id: 2,
-  userId: 2,
-  orderProductsId: 2,
-  orderAddress: 'Pudong road',
-  orderStatus: 'finished',
-  purchaseDate: new Date('2022-10-02'),
-  vendorDate: new Date('2022-10-12'),
-  logisticMethod: 'address',
-};
-
 export const mockOrder = [
   {
     productId: 1,
@@ -141,6 +117,8 @@ export const mockOrder = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
 ];
 
@@ -157,6 +135,8 @@ export const mockOrdersItems: OrdersItem[] = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
   {
     productId: 2,
@@ -170,6 +150,8 @@ export const mockOrdersItems: OrdersItem[] = [
     productName: '橘子',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Bobby',
+    telephoneNum: '123789',
   },
 ];
 
@@ -186,6 +168,8 @@ export const mockUpdatedOrdersItems: OrdersItem[] = [
     productName: '苹果',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Ann',
+    telephoneNum: '123456',
   },
   {
     productId: 2,
@@ -199,6 +183,8 @@ export const mockUpdatedOrdersItems: OrdersItem[] = [
     productName: '橘子',
     description: 'yummy',
     images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+    username: 'Bobby',
+    telephoneNum: '123789',
   },
 ];
 
@@ -218,6 +204,8 @@ export const mockOrderItemAdminPending: OrdersItemAdmin[] = [
         purchaseDate: new Date('2022-10-01'),
         status: 'pending',
         purchaseNum: 1,
+        username: 'Ann',
+        telephoneNum: '123456',
       },
     ],
   },
@@ -239,6 +227,8 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
         purchaseDate: new Date('2022-10-02'),
         status: 'finished',
         purchaseNum: 1,
+        username: 'Bobby',
+        telephoneNum: '123789',
       },
     ],
   },
@@ -247,17 +237,4 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
 export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminPending[0],
   mockOrderItemAdminFinished[0],
-];
-
-export const mockBuyerInfos: BuyerInfo[] = [
-  {
-    user: users[0],
-    orders: orders1,
-    productNum: 2,
-  },
-  {
-    user: users[1],
-    orders: orders2,
-    productNum: 3,
-  },
 ];

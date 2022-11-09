@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
 import BuyerInfoTable from '@/components/features/order-management/BuyerInfoTable';
+import * as XLSX from 'xlsx';
 
 export default function OrderDetailWindow(props: {
   setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,10 +22,24 @@ export default function OrderDetailWindow(props: {
   }
 
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
+
   const handleOrderMade = async () => {
     setButtonEnabled(false);
     props.refreshData('pending');
   };
+
+  const toExcel = useCallback(async () => {
+    const table = document.getElementById('BuyerInfoTable');
+    const sheet = XLSX.utils.table_to_sheet(table);
+    const wb = {
+      Sheets: { buyersInfo: sheet },
+      SheetNames: ['buyersInfo'],
+    };
+    XLSX.writeFile(
+      wb,
+      `${selectedOrdersItemAdmin.productName + '_BuyerInfo.xlsx'}`
+    );
+  }, [selectedOrdersItemAdmin]);
 
   return (
     <Transition appear show={props.showWindow} as={Fragment}>
@@ -96,19 +111,22 @@ export default function OrderDetailWindow(props: {
                   </p>
                 </div>
                 <div className="mx-2">
-                  <p className="taxt-base my-1">Buyer Information: </p>
-                  <p
+                  <p className="text-base my-1">Buyer Information: </p>
+                  <div
                     className="description bg-slate-100 rounded-xl h-[210px] overflow-auto"
                     data-testid="buyer-info-list"
                   >
-                    <BuyerInfoTable />
-                  </p>
+                    <BuyerInfoTable
+                      selectedOrdersItemAdmin={selectedOrdersItemAdmin}
+                    />
+                  </div>
                 </div>
                 <div className="mt-4 flex justify-evenly">
                   <button
                     type="button"
                     className="text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
                     data-testid="export-excel"
+                    onClick={toExcel}
                   >
                     Export to Excel
                   </button>

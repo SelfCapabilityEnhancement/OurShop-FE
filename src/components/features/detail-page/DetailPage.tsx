@@ -42,7 +42,7 @@ export default function DetailPage() {
     if (validate()) {
       setValidation(true);
       setShowLoading(true);
-      await addToCarts(user?.id as number, product.id, count);
+      await addToCarts(user?.id as number, product.id, count, logisticMethod);
       setShowLoading(false);
     } else {
       setValidation(false);
@@ -118,7 +118,7 @@ export default function DetailPage() {
             ))}
           </div>
         </section>
-        <section className="flex-1">
+        <section className="w-[500px]">
           <div className="self-center mb-3 font-medium text-3xl">
             {product.name}
           </div>
