@@ -122,17 +122,27 @@ export default function OrderDetailWindow(props: {
                   </div>
                 </div>
                 <div className="mt-4 flex justify-evenly">
+                  {props.showOrderMadeButton ? (
+                    ''
+                  ) : (
+                    <div className="flex-1"></div>
+                  )}
                   <button
                     type="button"
-                    className="text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
+                    className="text-sm px-5 py-2.5 mb-2 mx-5 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
                     data-testid="export-excel"
                     onClick={toExcel}
                   >
                     Export to Excel
                   </button>
                   {props.showOrderMadeButton ? (
+                    <div className="flex-1"></div>
+                  ) : (
+                    ''
+                  )}
+                  {props.showOrderMadeButton ? (
                     <button
-                      className="order-made text-sm px-5 py-2.5 mb-2 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg disabled:opacity-50"
+                      className="order-made text-sm px-5 py-2.5 mb-2 mx-5 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg disabled:opacity-50"
                       data-testid="order-made"
                       disabled={!buttonEnabled}
                       onClick={handleOrderMade}
