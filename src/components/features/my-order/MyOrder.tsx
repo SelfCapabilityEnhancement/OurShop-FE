@@ -8,9 +8,19 @@ export default function MyOrder() {
 
   useEffect(() => {
     getCurrentUser().then((user) => {
-      getOrdersItemsByUserId(user.id).then((data) => setOrdersItems(data));
+      getOrdersItemsByUserId(user.id).then((data) =>
+        setOrdersItems(orderByPurchaseDate(data))
+      );
     });
   }, []);
+
+  function orderByPurchaseDate(ordersItems: OrdersItem[]) {
+    return ordersItems.sort((objA, objB) => {
+      const date1 = new Date(objA.purchaseDate);
+      const date2 = new Date(objB.purchaseDate);
+      return date2.getTime() - date1.getTime();
+    });
+  }
 
   return (
     <div className="w-[1280px] mx-auto mt-5">
