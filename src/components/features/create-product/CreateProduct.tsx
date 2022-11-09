@@ -407,7 +407,7 @@ function CreateProduct() {
                   className={classNames(
                     'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
                     validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-violet-500'
+                      ? 'outline-none ring-inset ring ring-rose-500'
                       : ''
                   )}
                   onChange={(event) => handleCheckBox(event, 'office')}
@@ -423,7 +423,7 @@ function CreateProduct() {
                   className={classNames(
                     'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
                     validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-violet-500'
+                      ? 'outline-none ring-inset ring ring-rose-500'
                       : ''
                   )}
                   onChange={(event) => handleCheckBox(event, 'address')}
