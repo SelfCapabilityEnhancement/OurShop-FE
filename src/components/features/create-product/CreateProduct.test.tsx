@@ -30,10 +30,10 @@ describe('Create product test', () => {
     expect(screen.getByText('Product Name')).toBeInTheDocument();
     expect(screen.getByText('Price in USD')).toBeInTheDocument();
     expect(screen.getByText('Price in Token')).toBeInTheDocument();
-    // expect(screen.getByText('Product Category')).toBeInTheDocument();
-    // expect(screen.getByText('Clothes')).toBeInTheDocument();
-    // expect(screen.getByText('Book')).toBeInTheDocument();
-    // expect(screen.getByText('Souvenir')).toBeInTheDocument();
+    expect(screen.getByText('Product Category')).toBeInTheDocument();
+    expect(screen.getByText('Clothes')).toBeInTheDocument();
+    expect(screen.getByText('Book')).toBeInTheDocument();
+    expect(screen.getByText('Souvenir')).toBeInTheDocument();
     expect(screen.getByText('Product Description')).toBeInTheDocument();
     expect(screen.getByText('Picture')).toBeInTheDocument();
     expect(container.querySelector('button.next')).toBeInTheDocument();
