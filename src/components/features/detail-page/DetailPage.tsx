@@ -118,7 +118,7 @@ export default function DetailPage() {
             ))}
           </div>
         </section>
-        <section className="flex-1">
+        <section className="w-[500px]">
           <div className="self-center mb-3 font-medium text-3xl">
             {product.name}
           </div>
