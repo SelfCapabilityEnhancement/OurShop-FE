@@ -42,7 +42,7 @@ export default function DetailPage() {
     if (validate()) {
       setValidation(true);
       setShowLoading(true);
-      await addToCarts(user?.id as number, product.id, count);
+      await addToCarts(user?.id as number, product.id, count, logisticMethod);
       setShowLoading(false);
     } else {
       setValidation(false);

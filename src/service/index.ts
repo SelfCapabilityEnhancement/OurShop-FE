@@ -39,12 +39,14 @@ export const getCurrentUser = (): Promise<User> => {
 export const addToCarts = async (
   userId: number,
   productId: number,
-  productNum: number
+  productNum: number,
+  logisticMethod: string
 ) => {
   await http.post('/shopping-carts', {
     userId,
     productId,
     productNum,
+    logisticMethod,
   });
 };
 
