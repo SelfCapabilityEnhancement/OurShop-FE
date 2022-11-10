@@ -10,7 +10,7 @@ const product1: Product = {
   name: '苹果',
   priceToken: 5,
   priceMoney: 10,
-  productCategory: '',
+  category: '',
   description: 'yummy',
   stock: 1,
   images:
@@ -20,12 +20,12 @@ const product1: Product = {
   isDeleted: false,
 };
 
-const product2 = {
+const product2: Product = {
   id: 1,
   name: '橘子',
   priceToken: 3,
   priceMoney: 9,
-  productCategory: '',
+  category: '',
   description: '水果 🍊',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
@@ -34,12 +34,12 @@ const product2 = {
   isDeleted: false,
 };
 
-const product3 = {
+const product3: Product = {
   id: 97,
   name: '手机',
   priceToken: 2,
   priceMoney: 899,
-  productCategory: '',
+  category: '',
   description: '一部手机',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',

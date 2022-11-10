@@ -280,75 +280,71 @@ function CreateProduct() {
                     />
                   </div>
                 ))}
-                {false && (
-                  <div>
-                    <label htmlFor="category" className="mr-5 col-span-2">
-                      <span className="text-red-500 pr-1">*</span>
-                      Product Category
+                <div>
+                  <label htmlFor="category" className="mr-5 col-span-2">
+                    <span className="text-red-500 pr-1">*</span>
+                    Product Category
+                  </label>
+                  <div className="grid-rows-3">
+                    <label
+                      htmlFor="clothes"
+                      className="flex flex-row justify-items-start items-center mb-3"
+                    >
+                      <input
+                        id="clothes"
+                        type="checkbox"
+                        name="category"
+                        checked={categories.has('clothes')}
+                        className={classNames(
+                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
+                          validations.productCategory
+                            ? 'outline-none ring-inset ring ring-violet-500'
+                            : ''
+                        )}
+                        onChange={(event) => handleCategory(event, 'clothes')}
+                      />
+                      Clothes
                     </label>
-                    <div className="grid-rows-3">
-                      <label
-                        htmlFor="clothes"
-                        className="flex flex-row justify-items-start items-center mb-3"
-                      >
-                        <input
-                          id="clothes"
-                          type="checkbox"
-                          name="category"
-                          checked={categories.has('clothes')}
-                          className={classNames(
-                            'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                            validations.productCategory
-                              ? 'outline-none ring-inset ring ring-violet-500'
-                              : ''
-                          )}
-                          onChange={(event) => handleCategory(event, 'clothes')}
-                        />
-                        Clothes
-                      </label>
-                      <label
-                        htmlFor="books"
-                        className="flex flex-row justify-items-center items-center mb-3"
-                      >
-                        <input
-                          id="book"
-                          type="checkbox"
-                          name="category"
-                          checked={categories.has('book')}
-                          className={classNames(
-                            'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                            validations.productCategory
-                              ? 'outline-none ring-inset ring ring-violet-500'
-                              : ''
-                          )}
-                          onChange={(event) => handleCategory(event, 'book')}
-                        />
-                        Book
-                      </label>
-                      <label
-                        htmlFor="clothes"
-                        className="flex flex-row justify-items-end items-center mb-3 "
-                      >
-                        <input
-                          id="souvenir"
-                          type="checkbox"
-                          name="category"
-                          checked={categories.has('souvenir')}
-                          className={classNames(
-                            'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                            validations.productCategory
-                              ? 'outline-none ring-inset ring ring-violet-500'
-                              : ''
-                          )}
-                          onChange={(event) =>
-                            handleCategory(event, 'souvenir')
-                          }
-                        />
-                        Souvenir
-                      </label>
-                    </div>
+                    <label
+                      htmlFor="books"
+                      className="flex flex-row justify-items-center items-center mb-3"
+                    >
+                      <input
+                        id="book"
+                        type="checkbox"
+                        name="category"
+                        checked={categories.has('book')}
+                        className={classNames(
+                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
+                          validations.productCategory
+                            ? 'outline-none ring-inset ring ring-violet-500'
+                            : ''
+                        )}
+                        onChange={(event) => handleCategory(event, 'book')}
+                      />
+                      Book
+                    </label>
+                    <label
+                      htmlFor="clothes"
+                      className="flex flex-row justify-items-end items-center mb-3 "
+                    >
+                      <input
+                        id="souvenir"
+                        type="checkbox"
+                        name="category"
+                        checked={categories.has('souvenir')}
+                        className={classNames(
+                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
+                          validations.productCategory
+                            ? 'outline-none ring-inset ring ring-violet-500'
+                            : ''
+                        )}
+                        onChange={(event) => handleCategory(event, 'souvenir')}
+                      />
+                      Souvenir
+                    </label>
                   </div>
-                )}
+                </div>
 
                 <label htmlFor="description" className="mr-5 col-span-2">
                   <span className="text-red-500 pr-1">*</span>
