@@ -5,7 +5,7 @@ import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
 import * as utils from '@/utils';
 import * as service from '@/service';
-import { UploadProduct } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomeTypes';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),
@@ -57,7 +57,7 @@ describe('Create product test', () => {
     jest.spyOn(service, 'uploadFile').mockResolvedValue();
     jest
       .spyOn(service, 'newProduct')
-      .mockImplementation(async (product: UploadProduct) => {
+      .mockImplementation(async (product: Product) => {
         await setTimeout(() => product, 1000);
       });
 

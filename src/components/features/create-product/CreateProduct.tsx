@@ -1,39 +1,17 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import React, { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { UploadProduct } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomeTypes';
 import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { newProduct, uploadFile } from '@/service';
+import { initProduct, initValidateResult } from '@/constants';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
 
-const emptyProduct: UploadProduct = {
-  id: 1,
-  name: '',
-  priceToken: 0,
-  priceMoney: 0,
-  productCategory: 'book',
-  description: '',
-  stock: 1,
-  images: [],
-  logisticMethod: '',
-  logisticMethodComment: '',
-};
-
-const initValidateResult = {
-  name: false,
-  priceToken: false,
-  priceMoney: false,
-  productCategory: false,
-  description: false,
-  images: false,
-  logisticMethod: false,
-};
-
-const basicForm: { id: keyof UploadProduct; label: string; type: string }[] = [
+const basicForm: { id: keyof Product; label: string; type: string }[] = [
   { id: 'name', label: 'Product Name', type: 'string' },
   { id: 'priceMoney', label: 'Price in USD', type: 'number' },
   { id: 'priceToken', label: 'Price in Token', type: 'number' },
@@ -47,7 +25,7 @@ const tabs = [
 
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
-  const [product, setProduct] = useState<UploadProduct>(emptyProduct);
+  const [product, setProduct] = useState<Product>(initProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -76,7 +54,7 @@ function CreateProduct() {
       setProduct((prevState) => {
         return {
           ...prevState,
-          images: [...prevState.images, renamedFile],
+          imageFiles: [...prevState.imageFiles, renamedFile],
         };
       });
     }
@@ -90,11 +68,11 @@ function CreateProduct() {
     });
 
     setProduct((prevState) => {
-      const tmp = [...prevState.images];
+      const tmp = [...prevState.imageFiles];
       tmp.splice(index, 1);
       return {
         ...prevState,
-        images: tmp,
+        imageFiles: tmp,
       };
     });
   };
@@ -127,28 +105,28 @@ function CreateProduct() {
 
   const handleCategory = (
     event: React.ChangeEvent<HTMLInputElement>,
-    productCategory: string
+    category: string
   ) => {
     if (event.target.checked) {
       setCategories((prevState) => {
-        const tmp = [...prevState, productCategory];
+        const tmp = [...prevState, category];
         setProduct((prevState) => {
-          const productCategory = [...tmp].join(';');
+          const category = [...tmp].join(';');
           return {
             ...prevState,
-            productCategory,
+            category,
           };
         });
         return new Set(tmp);
       });
     } else {
       setCategories((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== productCategory);
+        const tmp = [...prevState].filter((x) => x !== category);
         setProduct((prevState) => {
-          const productCategory = [...tmp].join(';');
+          const category = [...tmp].join(';');
           return {
             ...prevState,
-            productCategory,
+            category,
           };
         });
         return new Set(tmp);
@@ -215,11 +193,11 @@ function CreateProduct() {
       setValidations(result);
     } else {
       setLoading(true);
-      await uploadFile(product.images);
+      await uploadFile(product.imageFiles);
       await newProduct(product);
 
       setLoading(false);
-      setProduct(() => emptyProduct);
+      setProduct(() => initProduct);
       setImageURL(() => []);
       setTimeout(() => {
         window.location.reload();
@@ -297,7 +275,7 @@ function CreateProduct() {
                         checked={categories.has('clothes')}
                         className={classNames(
                           'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.productCategory
+                          validations.category
                             ? 'outline-none ring-inset ring ring-violet-500'
                             : ''
                         )}
@@ -316,7 +294,7 @@ function CreateProduct() {
                         checked={categories.has('book')}
                         className={classNames(
                           'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.productCategory
+                          validations.category
                             ? 'outline-none ring-inset ring ring-violet-500'
                             : ''
                         )}
@@ -335,7 +313,7 @@ function CreateProduct() {
                         checked={categories.has('souvenir')}
                         className={classNames(
                           'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.productCategory
+                          validations.category
                             ? 'outline-none ring-inset ring ring-violet-500'
                             : ''
                         )}

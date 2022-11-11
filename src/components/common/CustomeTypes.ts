@@ -1,16 +1,3 @@
-export interface UploadProduct {
-  id: number;
-  name: string;
-  priceToken: number;
-  priceMoney: number;
-  stock: number;
-  productCategory: string;
-  description: string;
-  images: File[];
-  logisticMethod: string;
-  logisticMethodComment: string;
-}
-
 export interface Product {
   id: number;
   name: string;
@@ -20,6 +7,7 @@ export interface Product {
   category: string;
   description: string;
   images: string;
+  imageFiles: File[];
   logisticMethod: string;
   logisticMethodComment: string;
   isDeleted: boolean;
@@ -69,18 +57,6 @@ export interface OrderProducts {
   productId: number;
   purchaseNum: number;
 }
-
-// export interface OrdersItem {
-//   product: Product;
-//   orders: Orders;
-//   orderProducts: OrderProducts;
-// }
-//
-// export interface OrdersItemAdmin {
-//   product: Product;
-//   productNumAll: number;
-//   ordersList: Orders[];
-// }
 
 export interface BuyerInfo {
   user: User;

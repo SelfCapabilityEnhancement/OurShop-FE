@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { UploadProduct } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomeTypes';
 
 export const generateUniqueImageName = (name: string) => {
   return `${name.replace(/\.png/, '')}-${moment().unix()}.png`;
@@ -9,7 +9,7 @@ export function classNames(...classes: any): string {
   return classes.filter(Boolean).join(' ');
 }
 
-export const validateForm = (obj: UploadProduct, exclude: string[] = []) => {
+export const validateForm = (obj: Product, exclude: string[] = []) => {
   const result: any = {};
   for (const [key, value] of Object.entries(obj)) {
     if (!exclude.includes(key)) {

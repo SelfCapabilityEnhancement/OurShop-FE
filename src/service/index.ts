@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   Product,
   OrdersItem,
-  UploadProduct,
   User,
   PurchaseConfirmationItem,
 } from '@/components/common/CustomeTypes';
@@ -22,12 +21,29 @@ export const uploadFile = async (images: File[]) => {
   await Promise.all(images.map((image) => uploadFileToBlob(image)));
 };
 
-export const newProduct = async (product: UploadProduct) => {
+export const newProduct = async (product: Product) => {
   await http.post('/products', {
     ...product,
-    images: product.images
+    images: product.imageFiles
       .map((image) => `${imageUrlPrefix}${image.name}`)
       .join(','),
+    imageFiles: [],
+  });
+};
+
+export const updateProduct = async (product: Product) => {
+  const imageURLs = product.images.split(',');
+
+  await http.patch(`/products/${product.id}`, {
+    ...product,
+    images: imageURLs
+      .map((url, index) => {
+        return url.startsWith(imageUrlPrefix)
+          ? url
+          : `${imageUrlPrefix}${product.imageFiles[index].name}`;
+      })
+      .join(','),
+    imageFiles: [],
   });
 };
 
