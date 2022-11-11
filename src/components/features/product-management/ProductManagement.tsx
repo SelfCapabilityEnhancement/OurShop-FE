@@ -13,6 +13,7 @@ const tabs = [
 export default function ProductManagement() {
   const [available, setAvailable] = useState<Product[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [chosen, setChosen] = useState(0);
 
   useEffect(() => {
     getProducts().then((products) => {
@@ -21,6 +22,7 @@ export default function ProductManagement() {
   }, []);
 
   const handleEdit = (index: number) => {
+    setChosen(index);
     setShowModal(true);
   };
 
@@ -32,7 +34,13 @@ export default function ProductManagement() {
 
   return (
     <div className="w-full max-w-full p-3">
-      <EditProduct isOpen={showModal} handleClose={handleCancelEdit} />
+      {available.length > 0 && (
+        <EditProduct
+          isOpen={showModal}
+          handleClose={handleCancelEdit}
+          oldProduct={available[chosen]}
+        />
+      )}
       <Tab.Group>
         <Tab.List className="flex space-x-10 p-1">
           {tabs.map((tab) => (
