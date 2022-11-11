@@ -81,6 +81,16 @@ export const getProducts = async (): Promise<Product[]> => {
   return data;
 };
 
+export const getDeletedProducts = async (): Promise<Product[]> => {
+  const { data } = await http.get('/products/deleted');
+
+  data.sort((a: { id: number }, b: { id: number }) => {
+    return a.id > b.id ? -1 : 1;
+  });
+
+  return data;
+};
+
 export const updateUserInfo = async (
   userId: number,
   officeCity: string,
