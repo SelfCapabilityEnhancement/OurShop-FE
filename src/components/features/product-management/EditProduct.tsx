@@ -1,24 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Product } from '@/components/common/CustomeTypes';
-import { classNames } from '@/utils';
+import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
+import { updateProduct, uploadFile } from '@/service';
+import { imageUrlPrefix, initValidateResult } from '@/constants';
+import Banner from '@/components/common/banner/Banner';
+import Loading from '@/components/common/loading/Loading';
+
+const successMsg = 'The Product was Updated Successfully!';
+const failMsg = 'All Required Field Must be Filled';
 
 const basicForm: { id: keyof Product; label: string; type: string }[] = [
   { id: 'name', label: 'Product Name', type: 'string' },
   { id: 'priceMoney', label: 'Price in USD', type: 'number' },
   { id: 'priceToken', label: 'Price in Token', type: 'number' },
 ];
-
-const initValidateResult = {
-  name: false,
-  priceToken: false,
-  priceMoney: false,
-  productCategory: false,
-  description: false,
-  images: false,
-  logisticMethod: false,
-};
 
 export default function EditProduct({
   isOpen,
@@ -29,50 +26,45 @@ export default function EditProduct({
   handleClose: Function;
   oldProduct: Product;
 }) {
-  // eslint-disable-next-line no-unused-vars
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [product, setProduct] = useState<Product>(oldProduct);
-  const [images, setImages] = useState<{ imageURL: string; image: File }[]>([]);
   const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [categories, setCategories] = useState(new Set());
+  const [showLoading, setLoading] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    setProduct(oldProduct);
+    const imagesNum = oldProduct.images.split(',').length;
+    const imageFiles = new Array(imagesNum).fill(new File([], ''));
+    setProduct({ ...oldProduct, imageFiles });
     setLogisticMethods(new Set(oldProduct.logisticMethod.split(';')));
-    setCategories(new Set());
-    setImages(() => {
-      const tmp: { imageURL: string; image: File }[] = [];
-      oldProduct.images.split(',').forEach((imageURL) => {
-        tmp.push({ imageURL, image: new File([], '') });
-      });
-      return tmp;
-    });
-  }, [oldProduct]);
+    setCategories(new Set(oldProduct.category.split(';')));
+  }, [oldProduct, isOpen]);
 
   const handleCategory = (
     event: React.ChangeEvent<HTMLInputElement>,
-    productCategory: string
+    category: string
   ) => {
     if (event.target.checked) {
       setCategories((prevState) => {
-        const tmp = [...prevState, productCategory];
+        const tmp = [...prevState, category];
         setProduct((prevState) => {
-          const productCategory = [...tmp].join(';');
+          const category = [...tmp].join(';');
           return {
             ...prevState,
-            productCategory,
+            category,
           };
         });
         return new Set(tmp);
       });
     } else {
       setCategories((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== productCategory);
+        const tmp = [...prevState].filter((x) => x !== category);
         setProduct((prevState) => {
-          const productCategory = [...tmp].join(';');
+          const category = tmp.join(';');
           return {
             ...prevState,
-            productCategory,
+            category,
           };
         });
         return new Set(tmp);
@@ -80,7 +72,7 @@ export default function EditProduct({
     }
   };
 
-  const handleCheckBox = (
+  const handleLogisticMethod = (
     event: React.ChangeEvent<HTMLInputElement>,
     logisticMethod: string
   ) => {
@@ -88,7 +80,7 @@ export default function EditProduct({
       setLogisticMethods((prevState) => {
         const tmp = [...prevState, logisticMethod];
         setProduct((prevState) => {
-          const logisticMethod = [...tmp].join(';');
+          const logisticMethod = tmp.join(';');
           return {
             ...prevState,
             logisticMethod,
@@ -100,7 +92,7 @@ export default function EditProduct({
       setLogisticMethods((prevState) => {
         const tmp = [...prevState].filter((x) => x !== logisticMethod);
         setProduct((prevState) => {
-          const logisticMethod = [...tmp].join(';');
+          const logisticMethod = tmp.join(';');
           return {
             ...prevState,
             logisticMethod,
@@ -135,6 +127,73 @@ export default function EditProduct({
     }
 
     setProduct(tmp);
+  };
+
+  const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files !== null && files.length > 0) {
+      const newFileName = generateUniqueImageName(files[0].name);
+      const renamedFile = new File([files[0]], newFileName);
+      const newFileURL = URL.createObjectURL(renamedFile);
+
+      setProduct((prevState) => {
+        return {
+          ...prevState,
+          images: prevState.images
+            ? [prevState.images, newFileURL].join(',')
+            : newFileURL,
+          imageFiles: [...prevState.imageFiles, renamedFile],
+        };
+      });
+    }
+  };
+
+  const handleRemoveImage = async (index: number) => {
+    const tmpImages = product.images.split(',');
+    const tmpImageFiles = [...product.imageFiles];
+
+    tmpImages.splice(index, 1);
+    tmpImageFiles.splice(index, 1);
+
+    setProduct((prevState) => {
+      return {
+        ...prevState,
+        images: tmpImages.join(','),
+        imageFiles: tmpImageFiles,
+      };
+    });
+  };
+
+  const handleSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    const result = validateForm(product, [
+      'logisticMethodComment',
+      'imageFiles',
+    ]);
+
+    if (Object.values(result).includes(true)) {
+      setValidations(result);
+      setTimeout(() => setValidations(initValidateResult), 2000);
+    } else {
+      setLoading(true);
+      const imagesURL = product.images.split(',');
+      await uploadFile(
+        product.imageFiles.filter(
+          (_, index) => !imagesURL[index].startsWith(imageUrlPrefix)
+        )
+      );
+      await updateProduct(product);
+
+      setLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+
+    setShowBanner(true);
+    setTimeout(() => setShowBanner(false), 1500);
   };
 
   return (
@@ -191,6 +250,16 @@ export default function EditProduct({
                   </div>
                 </Dialog.Title>
                 <div className="mt-2">
+                  <Banner
+                    visible={showBanner}
+                    success={!Object.values(validations).includes(true)}
+                    message={
+                      Object.values(validations).includes(true)
+                        ? failMsg
+                        : successMsg
+                    }
+                  />
+                  <Loading message="Processing..." visible={showLoading} />
                   <form className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
                     {basicForm.map(({ id, label, type }) => (
                       <div
@@ -216,12 +285,12 @@ export default function EditProduct({
                       </div>
                     ))}
 
-                    <div>
+                    <div className="col-span-2">
                       <label htmlFor="category" className="mr-5 col-span-2">
                         <span className="text-red-500 pr-1">*</span>
                         Product Category
                       </label>
-                      <div className="grid-rows-3">
+                      <div className="grid grid-cols-3 justify-around">
                         <label
                           htmlFor="clothes"
                           className="flex flex-row justify-items-start items-center mb-3"
@@ -233,7 +302,7 @@ export default function EditProduct({
                             checked={categories.has('clothes')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.productCategory
+                              validations.category
                                 ? 'outline-none ring-inset ring ring-violet-500'
                                 : ''
                             )}
@@ -254,7 +323,7 @@ export default function EditProduct({
                             checked={categories.has('book')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.productCategory
+                              validations.category
                                 ? 'outline-none ring-inset ring ring-violet-500'
                                 : ''
                             )}
@@ -263,7 +332,7 @@ export default function EditProduct({
                           Book
                         </label>
                         <label
-                          htmlFor="clothes"
+                          htmlFor="souvenir"
                           className="flex flex-row justify-items-end items-center mb-3 "
                         >
                           <input
@@ -273,7 +342,7 @@ export default function EditProduct({
                             checked={categories.has('souvenir')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.productCategory
+                              validations.category
                                 ? 'outline-none ring-inset ring ring-violet-500'
                                 : ''
                             )}
@@ -292,7 +361,7 @@ export default function EditProduct({
                     </label>
                     <textarea
                       className={classNames(
-                        'col-span-2 h-32 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring',
+                        'col-span-2 h-28 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring',
                         validations.description
                           ? 'outline-none ring ring-rose-500'
                           : ''
@@ -305,9 +374,13 @@ export default function EditProduct({
                     />
 
                     <ImageUploader
-                      images={images.map(({ imageURL }) => imageURL)}
-                      handleNewImage={() => {}}
-                      handleRemoveImage={() => {}}
+                      images={
+                        product.images.length > 0
+                          ? product.images.split(',')
+                          : []
+                      }
+                      handleNewImage={handleNewImage}
+                      handleRemoveImage={handleRemoveImage}
                       validation={validations.images}
                     />
 
@@ -331,7 +404,9 @@ export default function EditProduct({
                               ? 'outline-none ring-inset ring ring-rose-500'
                               : ''
                           )}
-                          onChange={(event) => handleCheckBox(event, 'office')}
+                          onChange={(event) =>
+                            handleLogisticMethod(event, 'office')
+                          }
                         />
                         Collecting at Office
                       </label>
@@ -350,7 +425,9 @@ export default function EditProduct({
                               ? 'outline-none ring-inset ring ring-rose-500'
                               : ''
                           )}
-                          onChange={(event) => handleCheckBox(event, 'address')}
+                          onChange={(event) =>
+                            handleLogisticMethod(event, 'address')
+                          }
                         />
                         Shipping to an Address
                       </label>
@@ -369,6 +446,12 @@ export default function EditProduct({
                       }
                       id="logisticMethodComment"
                     />
+                    <button
+                      onClick={(event) => handleSubmit(event)}
+                      className="update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                    >
+                      Save
+                    </button>
                   </form>
                 </div>
               </Dialog.Panel>
