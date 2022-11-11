@@ -15,6 +15,7 @@ const product1: Product = {
   stock: 1,
   images:
     'https://ourshop-tw.netlify.app/assets/product1.04d88779.png,fake.jpeg',
+  imageFiles: [],
   logisticMethod: 'office;address',
   logisticMethodComment: 'mock comment',
   isDeleted: false,
@@ -29,6 +30,7 @@ const product2: Product = {
   description: '水果 🍊',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+  imageFiles: [],
   logisticMethod: 'office',
   logisticMethodComment: '',
   isDeleted: false,
@@ -43,6 +45,7 @@ const product3: Product = {
   description: '一部手机',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+  imageFiles: [],
   logisticMethod: 'address',
   logisticMethodComment: '',
   isDeleted: false,

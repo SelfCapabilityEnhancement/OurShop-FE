@@ -298,7 +298,7 @@ export default function EditProduct({
                           <input
                             id="clothes"
                             type="checkbox"
-                            name="category"
+                            name="clothes"
                             checked={categories.has('clothes')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',
@@ -319,7 +319,7 @@ export default function EditProduct({
                           <input
                             id="book"
                             type="checkbox"
-                            name="category"
+                            name="book"
                             checked={categories.has('book')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',
@@ -338,7 +338,7 @@ export default function EditProduct({
                           <input
                             id="souvenir"
                             type="checkbox"
-                            name="category"
+                            name="souvenir"
                             checked={categories.has('souvenir')}
                             className={classNames(
                               'w-5 h-5 mr-2 accent-violet-500 outline-none',

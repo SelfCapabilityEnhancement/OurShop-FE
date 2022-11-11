@@ -8,6 +8,10 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
+jest.mock('@/service', () => ({
+  updateProduct: jest.fn(),
+}));
+
 describe('Edit Product', () => {
   beforeEach(() => {
     render(
