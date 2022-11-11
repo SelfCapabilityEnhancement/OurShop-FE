@@ -18,8 +18,8 @@ export const http = axios.create({
   timeout: 10000,
 });
 
-export const uploadFile = async (product: UploadProduct) => {
-  await Promise.all(product.images.map((image) => uploadFileToBlob(image)));
+export const uploadFile = async (images: File[]) => {
+  await Promise.all(images.map((image) => uploadFileToBlob(image)));
 };
 
 export const newProduct = async (product: UploadProduct) => {

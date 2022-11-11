@@ -215,7 +215,7 @@ function CreateProduct() {
       setValidations(result);
     } else {
       setLoading(true);
-      await uploadFile(product);
+      await uploadFile(product.images);
       await newProduct(product);
 
       setLoading(false);
@@ -257,7 +257,7 @@ function CreateProduct() {
           <Tab.Panel>
             <div className="m-8">
               <Banner visible={showBanner} success={false} message={failMsg} />
-              <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-96">
+              <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-[500px]">
                 {basicForm.map(({ id, label, type }) => (
                   <div key={id} className="col-span-2 grid grid-cols-2 gap-y-4">
                     <label htmlFor={id} className="mr-5 w-30">
@@ -417,7 +417,7 @@ function CreateProduct() {
                   name="logistic"
                   checked={logisticMethods.has('address')}
                   className={classNames(
-                    'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
+                    'secondLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
                     validations.logisticMethod
                       ? 'outline-none ring-inset ring ring-rose-500'
                       : ''
