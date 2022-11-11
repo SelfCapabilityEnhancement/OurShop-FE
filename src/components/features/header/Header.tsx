@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
 import { getCurrentUser, getShoppingCarts } from '@/service';
 import { classNames } from '@/utils';
+import { useLocation } from 'react-router';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ export default function Header() {
 
   const handleClick = () => {
     navigate('/home');
+  };
+
+  const location = useLocation();
+
+  const isCurrentPage = ({ param }: { param: any }) => {
+    return location.pathname === `/${param}`;
   };
 
   return (
@@ -39,33 +46,53 @@ export default function Header() {
         <div className="nav-list flex justify-around flex-1">
           <NavLink
             to="product-management"
-            className="p-2 mx-3 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500 "
+            className={() =>
+              classNames(
+                'p-2 mx-3 text-center border-b-2 border-white',
+                isCurrentPage({ param: 'product-management' })
+                  ? 'text-pink-500 underline underline-offset-8'
+                  : ''
+              )
+            }
           >
             Product Management
           </NavLink>
           <NavLink
             to="order-management"
-            className="p-2 mx-3 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500 "
+            className={() =>
+              classNames(
+                'p-2 mx-3 text-center border-b-2 border-white',
+                isCurrentPage({ param: 'order-management' })
+                  ? 'text-pink-500 underline underline-offset-8'
+                  : ''
+              )
+            }
           >
             Order Management
           </NavLink>
           <NavLink
             to="create-product"
-            className="p-2 mx-3 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500"
+            className={() =>
+              classNames(
+                'p-2 mx-3 text-center border-b-2 border-white',
+                isCurrentPage({ param: 'create-product' })
+                  ? 'text-pink-500 underline underline-offset-8'
+                  : ''
+              )
+            }
           >
             Create Product
           </NavLink>
           <NavLink
             to="shopping-cart"
-            className="p-2 mx-3 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500"
+            className={() =>
+              classNames(
+                'p-2 mx-3 text-center border-b-2 border-white',
+                isCurrentPage({ param: 'shopping-cart' })
+                  ? 'text-pink-500 underline underline-offset-8'
+                  : ''
+              )
+            }
           >
             Shopping Cart
             <span
@@ -78,9 +105,14 @@ export default function Header() {
           </NavLink>
           <NavLink
             to="my-order"
-            className="p-2 mx-3 text-center border-b-2 border-white
-            hover:text-gray-600 hover:border-gray-300
-            focus:text-pink-500 focus:border-pink-500"
+            className={() =>
+              classNames(
+                'p-2 mx-3 text-center border-b-2 border-white',
+                isCurrentPage({ param: 'my-order' })
+                  ? 'text-pink-500 underline underline-offset-8'
+                  : ''
+              )
+            }
           >
             My Order
           </NavLink>
