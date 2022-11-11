@@ -56,6 +56,22 @@ const product3: Product = {
 
 export const tempProducts: Array<Product> = [product1, product2, product3];
 
+const deletedProduct: Product = {
+  id: 97,
+  name: '4K显示器',
+  priceToken: 500,
+  priceMoney: 500,
+  category: '',
+  description: '一台显示器',
+  stock: 1,
+  images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+  logisticMethod: 'address',
+  logisticMethodComment: '',
+  isDeleted: true,
+  deletedTime: new Date('2022-10-01'),
+};
+export const deletedProducts: Array<Product> = [deletedProduct];
+
 export const shoppingCartItems = [
   {
     product: product1,

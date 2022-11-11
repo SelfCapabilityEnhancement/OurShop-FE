@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Product } from '@/components/common/CustomeTypes';
+import { deleteProduct } from '@/service';
 
 export default function DeleteProduct({
   isOpen,
@@ -11,6 +12,14 @@ export default function DeleteProduct({
   handleClose: Function;
   product: Product | null;
 }) {
+  const handleDeleteBtn = () => {
+    if (product !== null) {
+      deleteProduct(product).then(() => {
+        handleClose();
+        window.location.reload();
+      });
+    }
+  };
   return (
     <div>
       <Transition appear show={isOpen} as={Fragment}>
@@ -67,13 +76,6 @@ export default function DeleteProduct({
                     )}
                   </div>
                   <div>
-                    {/* <button */}
-                    {/*   data-modal-toggle="popup-modal" */}
-                    {/*   type="button" */}
-                    {/*   className="text-white rounded-lg bg-gray-400 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 border border-gray-200 text-sm font-medium px-14 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 ml-6 mr-10" */}
-                    {/* > */}
-                    {/*   cancel */}
-                    {/* </button> */}
                     <button
                       onClick={() => handleClose()}
                       data-modal-toggle="popup-modal"
@@ -86,6 +88,7 @@ export default function DeleteProduct({
                       data-modal-toggle="popup-modal"
                       type="button"
                       className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-14 py-2.5 text-center"
+                      onClick={handleDeleteBtn}
                     >
                       delete
                     </button>

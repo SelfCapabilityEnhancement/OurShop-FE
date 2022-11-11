@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {
-  Product,
   OrdersItem,
-  User,
+  Product,
   PurchaseConfirmationItem,
+  UploadProduct,
+  User,
 } from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
@@ -89,6 +90,10 @@ export const getDeletedProducts = async (): Promise<Product[]> => {
   });
 
   return data;
+};
+
+export const deleteProduct = async (product: Product) => {
+  await http.patch('/products/delete/' + product.id);
 };
 
 export const updateUserInfo = async (

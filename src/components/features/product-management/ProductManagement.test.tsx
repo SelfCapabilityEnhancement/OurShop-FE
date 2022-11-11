@@ -4,11 +4,12 @@ import ProductManagement from '@/components/features/product-management/ProductM
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import * as service from '@/service';
-import { tempProducts } from '@/mocks/mockData';
+import { deletedProducts, tempProducts } from '@/mocks/mockData';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('@/service', () => ({
   getProducts: jest.fn(),
+  getDeletedProducts: jest.fn(),
 }));
 
 describe('Product Management', () => {
@@ -17,6 +18,9 @@ describe('Product Management', () => {
 
   beforeEach(async () => {
     jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
+    jest
+      .spyOn(service, 'getDeletedProducts')
+      .mockResolvedValue(deletedProducts);
     await act(async () => {
       container = render(<ProductManagement />, {
         wrapper: BrowserRouter,
@@ -42,6 +46,8 @@ describe('Product Management', () => {
     await user.click(tab);
 
     expect(container.querySelectorAll('li.available')).toHaveLength(0);
-    expect(container.querySelectorAll('li.deleted')).toHaveLength(0);
+    expect(container.querySelectorAll('li.deleted')).toHaveLength(
+      deletedProducts.length
+    );
   });
 });
