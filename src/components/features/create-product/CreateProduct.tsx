@@ -33,6 +33,8 @@ function CreateProduct() {
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
 
+  const categoryList = ['Clothes', 'Book', 'Souvenir'];
+
   useEffect(() => {
     if (Object.values(validations).includes(true)) {
       setTimeout(() => {
@@ -103,35 +105,35 @@ function CreateProduct() {
     setProduct(tmp);
   };
 
-  const handleCategory = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    category: string
-  ) => {
-    if (event.target.checked) {
-      setCategories((prevState) => {
-        const tmp = [...prevState, category];
-        setProduct((prevState) => {
-          const category = [...tmp].join(';');
-          return {
-            ...prevState,
-            category,
-          };
-        });
-        return new Set(tmp);
-      });
+  const handleCategory = (item: string) => {
+    if (!categories.has(item)) {
+      setCategories(categories.add(item));
+      const category = [...categories].join(';');
+      setProduct({ ...product, category });
     } else {
-      setCategories((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== category);
-        setProduct((prevState) => {
-          const category = [...tmp].join(';');
-          return {
-            ...prevState,
-            category,
-          };
-        });
-        return new Set(tmp);
-      });
+      const tmp = [...categories].filter((x) => x !== item);
+      setCategories(new Set([...tmp]));
+      const category = [...tmp].join(';');
+      setProduct({ ...product, category });
     }
+  };
+
+  const renderCategory = (item: string) => {
+    return (
+      <div
+        key={item}
+        onClick={() => handleCategory(item)}
+        className={classNames(
+          'w-20 h-10 mr-1 text-center text-base font-normal py-2',
+          categories.has(item) ? 'bg-purple-300' : 'bg-gray-200',
+          validations.category
+            ? 'outline-none ring-inset ring ring-rose-500'
+            : ''
+        )}
+      >
+        {item}
+      </div>
+    );
   };
 
   const handleCheckBox = (
@@ -259,69 +261,14 @@ function CreateProduct() {
                     />
                   </div>
                 ))}
-                <div>
-                  <label htmlFor="category" className="mr-5 col-span-2">
+
+                <div className="col-span-2">
+                  <div className="mr-5">
                     <span className="text-red-500 pr-1">*</span>
                     Product Category
-                  </label>
-                  <div className="grid-rows-3">
-                    <label
-                      htmlFor="clothes"
-                      className="flex flex-row justify-items-start items-center mb-3"
-                    >
-                      <input
-                        id="clothes"
-                        type="checkbox"
-                        name="category"
-                        checked={categories.has('clothes')}
-                        className={classNames(
-                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.category
-                            ? 'outline-none ring-inset ring ring-violet-500'
-                            : ''
-                        )}
-                        onChange={(event) => handleCategory(event, 'clothes')}
-                      />
-                      Clothes
-                    </label>
-                    <label
-                      htmlFor="books"
-                      className="flex flex-row justify-items-center items-center mb-3"
-                    >
-                      <input
-                        id="book"
-                        type="checkbox"
-                        name="category"
-                        checked={categories.has('book')}
-                        className={classNames(
-                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.category
-                            ? 'outline-none ring-inset ring ring-violet-500'
-                            : ''
-                        )}
-                        onChange={(event) => handleCategory(event, 'book')}
-                      />
-                      Book
-                    </label>
-                    <label
-                      htmlFor="clothes"
-                      className="flex flex-row justify-items-end items-center mb-3 "
-                    >
-                      <input
-                        id="souvenir"
-                        type="checkbox"
-                        name="category"
-                        checked={categories.has('souvenir')}
-                        className={classNames(
-                          'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                          validations.category
-                            ? 'outline-none ring-inset ring ring-violet-500'
-                            : ''
-                        )}
-                        onChange={(event) => handleCategory(event, 'souvenir')}
-                      />
-                      Souvenir
-                    </label>
+                  </div>
+                  <div className="grid grid-cols-3 mt-3">
+                    {categoryList.map((item) => renderCategory(item))}
                   </div>
                 </div>
 

@@ -290,7 +290,7 @@ export default function EditProduct({
                         <span className="text-red-500 pr-1">*</span>
                         Product Category
                       </label>
-                      <div className="grid grid-cols-3 justify-around">
+                      <div className="grid grid-cols-3 justify-around mt-4">
                         <label
                           htmlFor="clothes"
                           className="flex flex-row justify-items-start items-center mb-3"
