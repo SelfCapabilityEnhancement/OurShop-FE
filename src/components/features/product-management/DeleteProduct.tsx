@@ -5,18 +5,19 @@ import { deleteProduct } from '@/service';
 
 export default function DeleteProduct({
   isOpen,
-  handleClose,
+  handleCancel,
+  handleDelete,
   product,
 }: {
   isOpen: boolean;
-  handleClose: Function;
+  handleCancel: Function;
+  handleDelete: Function;
   product: Product | null;
 }) {
   const handleDeleteBtn = () => {
     if (product !== null) {
       deleteProduct(product).then(() => {
-        handleClose();
-        window.location.reload();
+        handleDelete();
       });
     }
   };
@@ -77,7 +78,7 @@ export default function DeleteProduct({
                   </div>
                   <div>
                     <button
-                      onClick={() => handleClose()}
+                      onClick={() => handleCancel()}
                       data-modal-toggle="popup-modal"
                       type="button"
                       className="text-white rounded-lg bg-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm font-medium px-14 py-2.5 ml-6 mr-10 focus:z-10 "

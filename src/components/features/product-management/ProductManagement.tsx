@@ -5,11 +5,14 @@ import { Product } from '@/components/common/CustomeTypes';
 import { getDeletedProducts, getProducts } from '@/service';
 import EditProduct from '@/components/features/product-management/EditProduct';
 import DeleteProduct from '@/components/features/product-management/DeleteProduct';
+import Banner from '@/components/common/banner/Banner';
 
 const tabs = [
   { id: 'available', name: 'Available Products' },
   { id: 'deleted', name: 'Deleted Products' },
 ];
+
+const deleteProductSuccessfullyMessage = 'The product was deleted successfully';
 
 export default function ProductManagement() {
   const [available, setAvailable] = useState<Product[]>([]);
@@ -18,6 +21,7 @@ export default function ProductManagement() {
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [chosen, setChosen] = useState(0);
+  const [showDeleteProductBanner, setShowDeleteProductBanner] = useState(false);
 
   useEffect(() => {
     getProducts().then((products) => {
@@ -39,6 +43,13 @@ export default function ProductManagement() {
 
   const handleDeleteModalEdit = () => {
     setShowDeletedModal(false);
+    setShowDeleteProductBanner(true);
+    setTimeout(() => setShowDeleteProductBanner(false), 1500);
+    setTimeout(() => window.location.reload(), 1500);
+  };
+
+  const handleCancelBtn = () => {
+    setShowDeletedModal(false);
   };
 
   const handleDelete = (index: number) => {
@@ -59,9 +70,15 @@ export default function ProductManagement() {
       )}
       <DeleteProduct
         isOpen={showDeletedModal}
-        handleClose={handleDeleteModalEdit}
+        handleCancel={handleCancelBtn}
+        handleDelete={handleDeleteModalEdit}
         product={selectedProduct}
       />
+      <Banner
+        visible={showDeleteProductBanner}
+        success={true}
+        message={deleteProductSuccessfullyMessage}
+      ></Banner>
       <Tab.Group>
         <Tab.List className="flex space-x-10 p-1">
           {tabs.map((tab) => (
