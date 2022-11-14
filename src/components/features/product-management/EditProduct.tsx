@@ -171,6 +171,7 @@ export default function EditProduct({
     const result = validateForm(product, [
       'logisticMethodComment',
       'imageFiles',
+      'deletedTime',
     ]);
 
     if (Object.values(result).includes(true)) {
