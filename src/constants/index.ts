@@ -14,7 +14,9 @@ export const initProduct: Product = {
   logisticMethod: '',
   logisticMethodComment: '',
   isDeleted: false,
+  deletedTime: null,
 };
+
 export const initValidateResult = {
   name: false,
   priceToken: false,

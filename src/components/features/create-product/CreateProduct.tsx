@@ -175,6 +175,7 @@ function CreateProduct() {
       'images',
       'logisticMethod',
       'logisticMethodComment',
+      'deletedTime',
     ]);
 
     if (Object.values(result).includes(true)) {
@@ -190,7 +191,11 @@ function CreateProduct() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const result = validateForm(product, ['images', 'logisticMethodComment']);
+    const result = validateForm(product, [
+      'images',
+      'logisticMethodComment',
+      'deletedTime',
+    ]);
 
     if (Object.values(result).includes(true)) {
       setValidations(result);
