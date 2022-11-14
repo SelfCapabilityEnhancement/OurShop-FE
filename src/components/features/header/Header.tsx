@@ -25,7 +25,7 @@ export default function Header() {
 
   const location = useLocation();
 
-  const isCurrentPage = ({ param }: { param: any }) => {
+  const isCurrentPage = (param: string) => {
     return location.pathname === `/${param}`;
   };
 
@@ -49,7 +49,7 @@ export default function Header() {
             className={() =>
               classNames(
                 'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage({ param: 'product-management' })
+                isCurrentPage('product-management')
                   ? 'text-pink-500 underline underline-offset-8'
                   : ''
               )
@@ -62,7 +62,7 @@ export default function Header() {
             className={() =>
               classNames(
                 'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage({ param: 'order-management' })
+                isCurrentPage('order-management')
                   ? 'text-pink-500 underline underline-offset-8'
                   : ''
               )
@@ -75,7 +75,7 @@ export default function Header() {
             className={() =>
               classNames(
                 'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage({ param: 'create-product' })
+                isCurrentPage('create-product')
                   ? 'text-pink-500 underline underline-offset-8'
                   : ''
               )
@@ -88,7 +88,7 @@ export default function Header() {
             className={() =>
               classNames(
                 'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage({ param: 'shopping-cart' })
+                isCurrentPage('shopping-cart')
                   ? 'text-pink-500 underline underline-offset-8'
                   : ''
               )
@@ -108,7 +108,7 @@ export default function Header() {
             className={() =>
               classNames(
                 'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage({ param: 'my-order' })
+                isCurrentPage('my-order')
                   ? 'text-pink-500 underline underline-offset-8'
                   : ''
               )
