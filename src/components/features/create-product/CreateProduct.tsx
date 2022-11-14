@@ -170,6 +170,7 @@ function CreateProduct() {
   ) => {
     event.preventDefault();
     const result = validateForm(product, [
+      'images',
       'logisticMethod',
       'logisticMethodComment',
     ]);
@@ -187,7 +188,7 @@ function CreateProduct() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const result = validateForm(product, ['logisticMethodComment']);
+    const result = validateForm(product, ['images', 'logisticMethodComment']);
 
     if (Object.values(result).includes(true)) {
       setValidations(result);
@@ -344,7 +345,7 @@ function CreateProduct() {
                   images={imageURL}
                   handleNewImage={handleNewImage}
                   handleRemoveImage={handleRemoveImage}
-                  validation={validations.images}
+                  validation={validations.imageFiles}
                 />
                 <button
                   onClick={(event) => handleNext(event)}
