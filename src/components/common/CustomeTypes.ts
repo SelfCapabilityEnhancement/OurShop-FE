@@ -11,6 +11,7 @@ export interface Product {
   logisticMethod: string;
   logisticMethodComment: string;
   isDeleted: boolean;
+  deletedTime: Date | null;
 }
 
 export interface User {

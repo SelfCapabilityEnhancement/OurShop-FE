@@ -19,6 +19,7 @@ const product1: Product = {
   logisticMethod: 'office;address',
   logisticMethodComment: 'mock comment',
   isDeleted: false,
+  deletedTime: null,
 };
 
 const product2: Product = {
@@ -34,6 +35,7 @@ const product2: Product = {
   logisticMethod: 'office',
   logisticMethodComment: '',
   isDeleted: false,
+  deletedTime: null,
 };
 
 const product3: Product = {
@@ -49,6 +51,7 @@ const product3: Product = {
   logisticMethod: 'address',
   logisticMethodComment: '',
   isDeleted: false,
+  deletedTime: null,
 };
 
 export const tempProducts: Array<Product> = [product1, product2, product3];
