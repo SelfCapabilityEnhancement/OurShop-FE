@@ -68,7 +68,7 @@ const deletedProduct: Product = {
   logisticMethod: 'address',
   logisticMethodComment: '',
   isDeleted: true,
-  deletedTime: new Date('2022-10-01'),
+  deletedTime: '2022-10-01 10:30:20',
 };
 export const deletedProducts: Array<Product> = [deletedProduct];
 

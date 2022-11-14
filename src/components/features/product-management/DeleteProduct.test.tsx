@@ -16,7 +16,8 @@ describe('Delete Product', () => {
     render(
       <DeleteProduct
         isOpen={true}
-        handleClose={jest.fn}
+        handleDelete={jest.fn}
+        handleCancel={jest.fn}
         product={deletedProducts[0]}
       />
     );

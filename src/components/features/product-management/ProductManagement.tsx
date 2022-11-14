@@ -159,7 +159,15 @@ export default function ProductManagement() {
                       <div className="font-medium w-2/5 mx-5">
                         {product.name}
                       </div>
-                      <div className="grid grid-cols-2 gap-x-2"></div>
+                      <div className="text-red-600 flex-1">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
+                      <div className="font-medium">
+                        delete time:
+                        <span>
+                          {product.deletedTime !== null
+                            ? product.deletedTime
+                            : ' '}
+                        </span>
+                      </div>
                     </div>
                   </li>
                 ))}
