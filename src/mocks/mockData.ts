@@ -65,6 +65,7 @@ const deletedProduct: Product = {
   description: '一台显示器',
   stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
+  imageFiles: [],
   logisticMethod: 'address',
   logisticMethodComment: '',
   isDeleted: true,
