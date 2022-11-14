@@ -4,10 +4,9 @@ import { Product } from '@/components/common/CustomeTypes';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import { updateProduct, uploadFile } from '@/service';
-import { imageUrlPrefix, initValidateResult } from '@/constants';
+import { categoryList, imageUrlPrefix, initValidateResult } from '@/constants';
 import Banner from '@/components/common/banner/Banner';
 import Loading from '@/components/common/loading/Loading';
-import { categoryList } from '@/components/features/create-product/CreateProduct';
 
 const successMsg = 'The Product was Updated Successfully!';
 const failMsg = 'All Required Field Must be Filled';

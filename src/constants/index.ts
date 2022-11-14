@@ -27,3 +27,5 @@ export const initValidateResult = {
   imageFiles: false,
   logisticMethod: false,
 };
+
+export const categoryList = ['Clothes', 'Book', 'Souvenir'];

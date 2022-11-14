@@ -6,7 +6,7 @@ import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { newProduct, uploadFile } from '@/service';
-import { initProduct, initValidateResult } from '@/constants';
+import { categoryList, initProduct, initValidateResult } from '@/constants';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -22,8 +22,6 @@ const tabs = [
   { id: 'logisticInfo', name: 'Logistic Information' },
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
-
-export const categoryList = ['Clothes', 'Book', 'Souvenir'];
 
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
