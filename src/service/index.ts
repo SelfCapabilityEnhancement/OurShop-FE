@@ -3,7 +3,6 @@ import {
   OrdersItem,
   Product,
   PurchaseConfirmationItem,
-  UploadProduct,
   User,
 } from '@/components/common/CustomeTypes';
 import { imageUrlPrefix } from '@/constants';
