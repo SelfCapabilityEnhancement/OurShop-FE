@@ -23,6 +23,8 @@ const tabs = [
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
+export const categoryList = ['Clothes', 'Book', 'Souvenir'];
+
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(initProduct);
@@ -32,8 +34,6 @@ function CreateProduct() {
   const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
-
-  const categoryList = ['Clothes', 'Book', 'Souvenir'];
 
   useEffect(() => {
     if (Object.values(validations).includes(true)) {

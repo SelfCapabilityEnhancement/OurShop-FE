@@ -7,6 +7,7 @@ import { updateProduct, uploadFile } from '@/service';
 import { imageUrlPrefix, initValidateResult } from '@/constants';
 import Banner from '@/components/common/banner/Banner';
 import Loading from '@/components/common/loading/Loading';
+import { categoryList } from '@/components/features/create-product/CreateProduct';
 
 const successMsg = 'The Product was Updated Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -41,35 +42,34 @@ export default function EditProduct({
     setCategories(new Set(oldProduct.category.split(';')));
   }, [oldProduct, isOpen]);
 
-  const handleCategory = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    category: string
-  ) => {
-    if (event.target.checked) {
-      setCategories((prevState) => {
-        const tmp = [...prevState, category];
-        setProduct((prevState) => {
-          const category = [...tmp].join(';');
-          return {
-            ...prevState,
-            category,
-          };
-        });
-        return new Set(tmp);
-      });
+  const handleCategory = (item: string) => {
+    if (!categories.has(item)) {
+      const tmp = [...categories, item];
+      setCategories(new Set(tmp));
+      setProduct({ ...product, category: tmp.join(';') });
     } else {
-      setCategories((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== category);
-        setProduct((prevState) => {
-          const category = tmp.join(';');
-          return {
-            ...prevState,
-            category,
-          };
-        });
-        return new Set(tmp);
-      });
+      const tmp = [...categories].filter((x) => x !== item);
+      setCategories(new Set(tmp));
+      setProduct({ ...product, category: tmp.join(';') });
     }
+  };
+
+  const renderCategory = (item: string) => {
+    return (
+      <div
+        key={item}
+        onClick={() => handleCategory(item)}
+        className={classNames(
+          'w-20 h-10 mr-1 text-center text-base font-normal py-2',
+          categories.has(item) ? 'bg-purple-300' : 'bg-gray-300',
+          validations.category
+            ? 'outline-none ring-inset ring ring-rose-500'
+            : ''
+        )}
+      >
+        {item}
+      </div>
+    );
   };
 
   const handleLogisticMethod = (
@@ -286,72 +286,12 @@ export default function EditProduct({
                     ))}
 
                     <div className="col-span-2">
-                      <label htmlFor="category" className="mr-5 col-span-2">
+                      <div className="mr-5">
                         <span className="text-red-500 pr-1">*</span>
                         Product Category
-                      </label>
-                      <div className="grid grid-cols-3 justify-around mt-4">
-                        <label
-                          htmlFor="clothes"
-                          className="flex flex-row justify-items-start items-center mb-3"
-                        >
-                          <input
-                            id="clothes"
-                            type="checkbox"
-                            name="clothes"
-                            checked={categories.has('clothes')}
-                            className={classNames(
-                              'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.category
-                                ? 'outline-none ring-inset ring ring-violet-500'
-                                : ''
-                            )}
-                            onChange={(event) =>
-                              handleCategory(event, 'clothes')
-                            }
-                          />
-                          Clothes
-                        </label>
-                        <label
-                          htmlFor="books"
-                          className="flex flex-row justify-items-center items-center mb-3"
-                        >
-                          <input
-                            id="book"
-                            type="checkbox"
-                            name="book"
-                            checked={categories.has('book')}
-                            className={classNames(
-                              'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.category
-                                ? 'outline-none ring-inset ring ring-violet-500'
-                                : ''
-                            )}
-                            onChange={(event) => handleCategory(event, 'book')}
-                          />
-                          Book
-                        </label>
-                        <label
-                          htmlFor="souvenir"
-                          className="flex flex-row justify-items-end items-center mb-3 "
-                        >
-                          <input
-                            id="souvenir"
-                            type="checkbox"
-                            name="souvenir"
-                            checked={categories.has('souvenir')}
-                            className={classNames(
-                              'w-5 h-5 mr-2 accent-violet-500 outline-none',
-                              validations.category
-                                ? 'outline-none ring-inset ring ring-violet-500'
-                                : ''
-                            )}
-                            onChange={(event) =>
-                              handleCategory(event, 'souvenir')
-                            }
-                          />
-                          Souvenir
-                        </label>
+                      </div>
+                      <div className="grid grid-cols-3 mt-3">
+                        {categoryList.map((item) => renderCategory(item))}
                       </div>
                     </div>
 
