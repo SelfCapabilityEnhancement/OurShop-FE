@@ -122,7 +122,7 @@ function CreateProduct() {
         key={item}
         onClick={() => handleCategory(item)}
         className={classNames(
-          'w-20 h-10 mr-1 text-center text-base font-normal py-2',
+          'w-20 h-8 ml-2 mr-2 text-center text-sm font-normal py-1.5',
           categories.has(item) ? 'bg-purple-300' : 'bg-gray-200',
           validations.category
             ? 'outline-none ring-inset ring ring-rose-500'
@@ -251,7 +251,7 @@ function CreateProduct() {
                     <input
                       type={type === 'string' ? 'text' : 'number'}
                       className={classNames(
-                        'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring',
+                        'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300',
                         validations[id] ? 'outline-none ring ring-rose-500' : ''
                       )}
                       onChange={(event) => handleInputField(event, id)}
@@ -266,11 +266,11 @@ function CreateProduct() {
                 ))}
 
                 <div className="col-span-2">
-                  <div className="mr-5">
+                  <div>
                     <span className="text-red-500 pr-1">*</span>
                     Product Category
                   </div>
-                  <div className="grid grid-cols-3 mt-3">
+                  <div className="grid grid-cols-3 mt-3 w-7/12">
                     {categoryList.map((item) => renderCategory(item))}
                   </div>
                 </div>
@@ -281,7 +281,7 @@ function CreateProduct() {
                 </label>
                 <textarea
                   className={classNames(
-                    'col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring',
+                    'col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300',
                     validations.description
                       ? 'outline-none ring ring-rose-500'
                       : ''
@@ -362,7 +362,7 @@ function CreateProduct() {
                 Comment
               </label>
               <textarea
-                className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded mb-5 focus:outline-none focus:ring"
+                className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded mb-5 focus:outline-none focus:ring focus:ring-purple-300"
                 value={product.logisticMethodComment}
                 onChange={(event) =>
                   handleInputField(event, 'logisticMethodComment')
