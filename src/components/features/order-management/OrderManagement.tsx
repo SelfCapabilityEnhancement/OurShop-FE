@@ -434,14 +434,14 @@ export default function OrderManagement() {
           ))}
         </Tab.List>
       </Tab.Group>
-      <div className="date-range-selection w-11/12 mx-auto mt-2 flex items-center">
+      <div className="date-range-selection  mx-auto mt-2 flex items-center">
         <Banner
           visible={showBanner}
           success={true}
           message={'Order is Made Successfully!'}
         />
-        <div className="start-end-date-picker flex">
-          <span className="mr-2 py-2 whitespace-nowrap font-semibold">
+        <div className="start-end-date-picker flex mb-4">
+          <span className="ml-5 mr-2 py-2 whitespace-nowrap font-semibold">
             Order Received From{' '}
           </span>
           <ReactDatePicker
@@ -458,17 +458,17 @@ export default function OrderManagement() {
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
-        <div className="apply-reset-button flex flex-1 justify-end">
+        <div className="apply-reset-button flex flex-1 ml-6 mb-4">
           <button
             type="button"
-            className="apply-button bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] mr-[20px]"
+            className="apply-button bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] h-10 mr-[20px]"
             onClick={dataRangeFilterHandler}
           >
             Apply
           </button>
           <button
             type="button"
-            className="reset-button add-in-cart-button py-2 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px]"
+            className="reset-button add-in-cart-button py-2 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px] h-10"
             onClick={resetHandler}
           >
             <svg
