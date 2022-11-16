@@ -5,7 +5,7 @@ import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
 import * as utils from '@/utils';
 import * as service from '@/service';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),

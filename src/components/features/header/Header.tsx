@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
 import { useEffect, useState } from 'react';
-import { ShoppingCartItem } from '@/components/common/CustomeTypes';
+import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import { getCurrentUser, getShoppingCarts } from '@/service';
 import { classNames } from '@/utils';
 import { useLocation } from 'react-router';

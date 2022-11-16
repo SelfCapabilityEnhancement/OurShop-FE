@@ -1,4 +1,4 @@
-import { OrdersItem } from '@/components/common/CustomeTypes';
+import { OrdersItem } from '@/components/common/CustomTypes';
 
 export default function OrderItem(props: { order: OrdersItem }) {
   const order = props.order;

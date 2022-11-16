@@ -1,4 +1,4 @@
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 
 export const imageUrlPrefix = `https://ourshopimages.blob.core.windows.net/images/`;
 export const initProduct: Product = {

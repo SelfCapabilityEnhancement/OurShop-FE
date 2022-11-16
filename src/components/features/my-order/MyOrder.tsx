@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
-import { OrdersItem } from '@/components/common/CustomeTypes';
+import { OrdersItem } from '@/components/common/CustomTypes';
 import { getCurrentUser, getOrdersItemsByUserId } from '@/service';
 
 export default function MyOrder() {

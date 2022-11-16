@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '@/service';
 import { useEffect, useState } from 'react';
-import { User } from '@/components/common/CustomeTypes';
+import { User } from '@/components/common/CustomTypes';
 
 export default function MyWallet() {
   const navigate = useNavigate();

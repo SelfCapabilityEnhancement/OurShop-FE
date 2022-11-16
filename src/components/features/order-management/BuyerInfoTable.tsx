@@ -1,4 +1,4 @@
-import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { OrdersItemAdmin } from '@/components/common/CustomTypes';
 
 export default function BuyerInfoTable(props: {
   selectedOrdersItemAdmin: OrdersItemAdmin;

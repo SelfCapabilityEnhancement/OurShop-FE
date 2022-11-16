@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { TextSubmission } from '@/components/common/TextSubmission/TextSubmission';
-import { User } from '@/components/common/CustomeTypes';
+import { User } from '@/components/common/CustomTypes';
 import { getCurrentUser, updateUserInfo } from '@/service';
 
 const baseCites = [

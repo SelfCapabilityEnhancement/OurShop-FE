@@ -3,7 +3,7 @@ import {
   Product,
   PurchaseConfirmationItem,
   User,
-} from '@/components/common/CustomeTypes';
+} from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
 import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';

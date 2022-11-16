@@ -4,7 +4,7 @@ import {
   Product,
   PurchaseConfirmationItem,
   User,
-} from '@/components/common/CustomeTypes';
+} from '@/components/common/CustomTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
 

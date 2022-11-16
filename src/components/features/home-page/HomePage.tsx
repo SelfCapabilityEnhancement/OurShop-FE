@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '@/service';
 
