@@ -160,7 +160,7 @@ export default function ProductManagement() {
           <Tab.Panel>
             <div className="flex justify-around">
               <ul className="flex flex-col w-11/12">
-                {deleted.map((product, index) => (
+                {deleted.map((product) => (
                   <li
                     key={product.id}
                     className="deleted border-gray-400 my-3 h-20"
