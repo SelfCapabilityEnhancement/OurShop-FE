@@ -67,12 +67,12 @@ export const addToCarts = async (
 };
 
 export const getShoppingCarts = async (userId: number) => {
-  const { data } = await http.get(`/shopping-carts/user/${userId}`);
+  const { data } = await http.get(`/users/${userId}/shopping-carts`);
   return data;
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await http.get('/products/not-deleted');
+  const { data } = await http.get('/products?deleted=' + false);
 
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
@@ -82,7 +82,7 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const getDeletedProducts = async (): Promise<Product[]> => {
-  const { data } = await http.get('/products/deleted');
+  const { data } = await http.get('/products?deleted=' + true);
 
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
@@ -92,7 +92,7 @@ export const getDeletedProducts = async (): Promise<Product[]> => {
 };
 
 export const deleteProduct = async (product: Product) => {
-  await http.patch('/products/delete/' + product.id);
+  await http.delete('/products/' + product.id);
 };
 
 export const updateUserInfo = async (
