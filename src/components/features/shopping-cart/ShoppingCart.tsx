@@ -30,16 +30,20 @@ export default function ShoppingCart() {
   }, []);
 
   const handlePlus = (index: number) => {
-    const tmp = [...shoppingCartItems];
-    tmp[index].productNum += 1;
-    setShoppingCartItems(tmp);
+    if (!shoppingCartItems[index].product.isDeleted) {
+      const tmp = [...shoppingCartItems];
+      tmp[index].productNum += 1;
+      setShoppingCartItems(tmp);
+    }
   };
 
   const handleMinus = (index: number) => {
-    if (shoppingCartItems[index].productNum > 1) {
-      const tmp = [...shoppingCartItems];
-      tmp[index].productNum -= 1;
-      setShoppingCartItems(tmp);
+    if (!shoppingCartItems[index].product.isDeleted) {
+      if (shoppingCartItems[index].productNum > 1) {
+        const tmp = [...shoppingCartItems];
+        tmp[index].productNum -= 1;
+        setShoppingCartItems(tmp);
+      }
     }
   };
 
@@ -82,7 +86,11 @@ export default function ShoppingCart() {
             return (
               <li
                 key={`product-${index}`}
-                className="product border-gray-400 my-3 h-20"
+                className={
+                  shoppingCartItem.product.isDeleted
+                    ? 'product border-gray-400 my-3 h-20 opacity-25'
+                    : 'product border-gray-400 my-3 h-20'
+                }
               >
                 <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
                   <div className="mx-5">
@@ -109,6 +117,7 @@ export default function ShoppingCart() {
                   <input
                     id={`product-checkbox-${index}`}
                     type="checkbox"
+                    disabled={shoppingCartItem.product.isDeleted}
                     value=""
                     className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700 focus:ring-2"
                     checked={checkedState[index]}
