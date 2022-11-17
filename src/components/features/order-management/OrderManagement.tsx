@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import './react-datepicker.css';
 import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomTypes';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
