@@ -44,8 +44,10 @@ export default function ProductManagement() {
   const handleDeleteModalEdit = () => {
     setShowDeletedModal(false);
     setShowDeleteProductBanner(true);
-    setTimeout(() => setShowDeleteProductBanner(false), 1500);
-    setTimeout(() => window.location.reload(), 1500);
+    setTimeout(() => {
+      setShowDeleteProductBanner(false);
+      window.location.reload();
+    }, 1500);
   };
 
   const handleCancelBtn = () => {
@@ -179,11 +181,7 @@ export default function ProductManagement() {
                       <div className="text-red-600 flex-1">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
                       <div className="font-medium">
                         delete time:
-                        <span>
-                          {product.deletedTime !== null
-                            ? product.deletedTime
-                            : ' '}
-                        </span>
+                        <span>{product.deletedTime}</span>
                       </div>
                     </div>
                   </li>
