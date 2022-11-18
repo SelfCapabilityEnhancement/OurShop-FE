@@ -25,9 +25,46 @@ export default function Header() {
 
   const location = useLocation();
 
+  const headerList = [
+    { id: 'product-management', name: 'Product Management' },
+    { id: 'order-management', name: 'Order Management' },
+    { id: 'create-product', name: 'Create Product' },
+    { id: 'shopping-cart', name: 'Shopping Cart' },
+    { id: 'my-order', name: 'My Order' },
+  ];
+
   const isCurrentPage = (param: string) => {
     return location.pathname === `/${param}`;
   };
+
+  const isLoginOrRegister = () => {
+    return ['/login', '/register'].includes(location.pathname);
+  };
+
+  const renderHeader = (item: { id: string; name: string }) => (
+    <NavLink
+      to={`${item.id}`}
+      className={() =>
+        classNames(
+          'p-2 mx-3 text-center border-b-2 border-white',
+          isCurrentPage(`${item.id}`)
+            ? 'text-pink-500 underline underline-offset-8'
+            : ''
+        )
+      }
+    >
+      {item.name}
+      {item.name === 'Shopping Cart' && (
+        <span
+          data-testid="redDot"
+          className={classNames(
+            'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1',
+            shoppingCartItems.length > 0 ? '' : 'hidden'
+          )}
+        ></span>
+      )}
+    </NavLink>
+  );
 
   return (
     <div className="flex justify-between items-center shadow-md h-[72px]">
@@ -42,82 +79,15 @@ export default function Header() {
           OurShop
         </span>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center ">
         <div className="nav-list flex justify-around flex-1">
-          <NavLink
-            to="product-management"
-            className={() =>
-              classNames(
-                'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage('product-management')
-                  ? 'text-pink-500 underline underline-offset-8'
-                  : ''
-              )
-            }
-          >
-            Product Management
-          </NavLink>
-          <NavLink
-            to="order-management"
-            className={() =>
-              classNames(
-                'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage('order-management')
-                  ? 'text-pink-500 underline underline-offset-8'
-                  : ''
-              )
-            }
-          >
-            Order Management
-          </NavLink>
-          <NavLink
-            to="create-product"
-            className={() =>
-              classNames(
-                'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage('create-product')
-                  ? 'text-pink-500 underline underline-offset-8'
-                  : ''
-              )
-            }
-          >
-            Create Product
-          </NavLink>
-          <NavLink
-            to="shopping-cart"
-            className={() =>
-              classNames(
-                'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage('shopping-cart')
-                  ? 'text-pink-500 underline underline-offset-8'
-                  : ''
-              )
-            }
-          >
-            Shopping Cart
-            <span
-              data-testid="redDot"
-              className={classNames(
-                'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1',
-                shoppingCartItems.length > 0 ? '' : 'hidden'
-              )}
-            ></span>
-          </NavLink>
-          <NavLink
-            to="my-order"
-            className={() =>
-              classNames(
-                'p-2 mx-3 text-center border-b-2 border-white',
-                isCurrentPage('my-order')
-                  ? 'text-pink-500 underline underline-offset-8'
-                  : ''
-              )
-            }
-          >
-            My Order
-          </NavLink>
+          {isLoginOrRegister() ? (
+            <div className="font-semibold mr-80">Language : English</div>
+          ) : (
+            headerList.map((item) => renderHeader(item))
+          )}
         </div>
-        <Profile></Profile>
+        {!isLoginOrRegister() && <Profile></Profile>}
       </div>
     </div>
   );
