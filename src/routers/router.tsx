@@ -1,5 +1,4 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import App from '../App';
 import ErrorPage from '../components/features/error-page/Error-page';
 import CreateProduct from '../components/features/create-product/CreateProduct';
 import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
@@ -11,6 +10,9 @@ import DetailPage from '@/components/features/detail-page/DetailPage';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import MyInformation from '@/components/features/my-information/MyInformation';
 import ProductManagement from '@/components/features/product-management/ProductManagement';
+import LoginPage from '@/components/features/login-page/LoginPage';
+import RegisterPage from '@/components/features/register-page/RegisterPage';
+import App from '@/App';
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +22,15 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Navigate to="home" />,
+        element: <Navigate to="login" />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
       },
       {
         path: 'home',
