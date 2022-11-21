@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
 import { useEffect, useState } from 'react';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 import { getDeletedProducts, getProducts } from '@/service';
 import EditProduct from '@/components/features/product-management/EditProduct';
 import DeleteProduct from '@/components/features/product-management/DeleteProduct';
@@ -160,7 +160,7 @@ export default function ProductManagement() {
           <Tab.Panel>
             <div className="flex justify-around">
               <ul className="flex flex-col w-11/12">
-                {deleted.map((product, index) => (
+                {deleted.map((product) => (
                   <li
                     key={product.id}
                     className="deleted border-gray-400 my-3 h-20"

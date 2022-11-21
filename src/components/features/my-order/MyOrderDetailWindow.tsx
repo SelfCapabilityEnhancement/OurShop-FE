@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
-import { OrdersItem } from '@/components/common/CustomeTypes';
+import { OrdersItem } from '@/components/common/CustomTypes';
 
 export default function MyOrderDetailWindow({
   showWindow,

@@ -1,4 +1,4 @@
-import { OrdersItem } from '@/components/common/CustomeTypes';
+import { OrdersItem } from '@/components/common/CustomTypes';
 import React from 'react';
 
 export default function OrderItem(props: {
