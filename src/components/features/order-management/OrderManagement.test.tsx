@@ -164,7 +164,7 @@ describe('display order management', () => {
     const ordersItems = container.querySelectorAll('.order-item-admin');
     expect(ordersItems.length).toBe(1);
     expect(ordersItems[0].textContent).toBe(
-      '橘子Order is Made on: 10/12/2022Number: 1View Detail'
+      '橘子Order is Made on: 2022-10-12Number: 1View Detail'
     );
   });
 

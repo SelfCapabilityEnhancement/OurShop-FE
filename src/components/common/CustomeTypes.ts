@@ -48,8 +48,8 @@ export interface Orders {
   orderProductsId: number;
   orderAddress: string;
   orderStatus: string;
-  purchaseDate: Date;
-  vendorDate: Date;
+  purchaseDate: string;
+  vendorDate: string;
   logisticMethod: string;
 }
 
@@ -71,14 +71,15 @@ export interface OrdersItem {
   orderId: number;
   address: string;
   status: string;
-  vendorDate: Date;
+  vendorDate: string;
   userId: number;
-  purchaseDate: Date;
+  purchaseDate: string;
   productName: string;
   description: string;
   images: string;
   username: string;
   telephoneNum: string;
+  logisticMethod: string;
 }
 
 export interface OrdersItemAdmin {
@@ -90,9 +91,9 @@ export interface OrdersItemAdmin {
   ordersList: {
     orderId: number;
     userId: number;
-    vendorDate: Date;
+    vendorDate: string;
     address: string;
-    purchaseDate: Date;
+    purchaseDate: string;
     status: string;
     purchaseNum: number;
     username: string;

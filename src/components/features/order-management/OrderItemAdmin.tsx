@@ -11,7 +11,8 @@ export default function OrderItemAdmin(props: {
   nowStatus: string;
 }) {
   const order = props.order;
-  const date = new Date(order.ordersList[0].vendorDate);
+  // const date = new Date(order.ordersList[0].vendorDate);
+  const date = order.ordersList[0].vendorDate;
 
   function openDetailWindow() {
     props.setShowOrderMadeButton(props.nowStatus === 'pending');
@@ -36,7 +37,7 @@ export default function OrderItemAdmin(props: {
         {props.nowStatus === 'finished' && (
           <div className="whitespace-nowrap w-[300px] ">
             <span data-testid="ordered-date-title">Order is Made on: </span>
-            <span data-testid="ordered-date">{date.toLocaleDateString()}</span>
+            <span data-testid="ordered-date">{date}</span>
           </div>
         )}
         <div
