@@ -19,7 +19,6 @@ export default function Header() {
       const items = await getShoppingCarts(id);
       setShoppingCartItems(items);
       setShoppingCartLength(items.length);
-      console.log(items.length);
     });
   }, []);
 
