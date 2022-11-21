@@ -226,9 +226,9 @@ function CreateProduct() {
               }}
               className={({ selected }) =>
                 classNames(
-                  'w-52 rounded-lg text-xl font-normal',
+                  'w-52 rounded-lg text-xl font-semibold mt-4',
                   selected
-                    ? `${tab.id} text-purple-500 underline underline-offset-8`
+                    ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
                     : 'text-gray-500'
                 )
               }

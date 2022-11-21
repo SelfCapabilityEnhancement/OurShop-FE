@@ -86,9 +86,9 @@ export default function ProductManagement() {
               key={tab.id}
               className={({ selected }) =>
                 classNames(
-                  'w-52 rounded-lg text-xl font-normal outline-0',
+                  'w-52 rounded-lg text-xl font-semibold outline-0 mt-4',
                   selected
-                    ? `${tab.id} text-purple-500 underline underline-offset-8`
+                    ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
                     : 'text-gray-800'
                 )
               }
@@ -178,8 +178,8 @@ export default function ProductManagement() {
                       </div>
                       <div className="text-red-600 flex-1">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
                       <div className="font-medium">
-                        delete time:
-                        <span>
+                        Delete Time:
+                        <span className="mx-1">
                           {product.deletedTime !== null
                             ? product.deletedTime
                             : ' '}
