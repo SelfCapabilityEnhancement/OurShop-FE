@@ -133,9 +133,9 @@ export default function OrderManagement() {
         {
           orderId: 0,
           userId: 0,
-          vendorDate: new Date(''),
+          vendorDate: '',
           address: '',
-          purchaseDate: new Date(''),
+          purchaseDate: '',
           status: '',
           purchaseNum: 0,
           username: '',
@@ -186,7 +186,7 @@ export default function OrderManagement() {
     ordersItemAdmin: OrdersItemAdmin,
     ordersItemList: OrdersItem[],
     index: number,
-    date: Date
+    date: string
   ) =>
     ordersItemAdmin.productId === ordersItemList[index].productId &&
     ordersItemAdmin.ordersList[0].vendorDate === date
@@ -409,7 +409,7 @@ export default function OrderManagement() {
   };
 
   return (
-    <div className="mt-10 mx-10">
+    <div className="mt-8 mx-10">
       <Tab.Group
         manual
         selectedIndex={selectedTitle}
@@ -458,17 +458,17 @@ export default function OrderManagement() {
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>
-        <div className="apply-reset-button flex flex-1 ml-6 mb-4">
+        <div className="apply-reset flex flex-1 ml-6 mb-4">
           <button
             type="button"
-            className="apply-button bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] h-10 mr-[20px]"
+            className="apply bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] h-10 mr-[20px]"
             onClick={dataRangeFilterHandler}
           >
             Apply
           </button>
           <button
             type="button"
-            className="reset-button add-in-cart-button py-2 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px] h-10"
+            className="reset add-in-cart-button py-1 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px] h-10"
             onClick={resetHandler}
           >
             <svg
