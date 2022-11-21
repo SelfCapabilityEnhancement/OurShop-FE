@@ -33,7 +33,6 @@ export default function ShoppingCart() {
     const tmp = [...shoppingCartItems];
     tmp[index].productNum += 1;
     setShoppingCartItems(tmp);
-    setShoppingCartLength(tmp.length);
   };
 
   const handleMinus = (index: number) => {
@@ -41,7 +40,6 @@ export default function ShoppingCart() {
       const tmp = [...shoppingCartItems];
       tmp[index].productNum -= 1;
       setShoppingCartItems(tmp);
-      setShoppingCartLength(tmp.length);
     }
   };
 
