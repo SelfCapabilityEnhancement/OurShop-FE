@@ -49,8 +49,8 @@ describe('display order management', () => {
     expect(
       container.querySelector('.start-end-date-picker')
     ).toBeInTheDocument();
-    expect(container.querySelector('.apply-button')).toBeInTheDocument();
-    expect(container.querySelector('.reset-button')).toBeInTheDocument();
+    expect(container.querySelector('.apply')).toBeInTheDocument();
+    expect(container.querySelector('.reset')).toBeInTheDocument();
   });
 
   test('should count total order number for each product', () => {
@@ -65,7 +65,7 @@ describe('display order management', () => {
   test('should filter orders by date range when input date range and count total order number for each product', async () => {
     const startDateInput = container.querySelector(' .start-date');
     const endDateInput = container.querySelector(' .end-date');
-    const applyButton = container.querySelector('.apply-button');
+    const applyButton = container.querySelector('.apply');
 
     await user.type(startDateInput as Element, '10/01/2022');
     await user.type(endDateInput as Element, '10/01/2022');
@@ -78,7 +78,7 @@ describe('display order management', () => {
 
   test('should filter orders by start date when only input start date and count total order number for each product', async () => {
     const startDateInput = container.querySelector('.start-date');
-    const applyButton = container.querySelector('.apply-button');
+    const applyButton = container.querySelector('.apply');
 
     await user.type(startDateInput as Element, '10/02/2022');
     await user.click(applyButton as Element);
@@ -90,7 +90,7 @@ describe('display order management', () => {
 
   test('should filter orders by end date when only input end date and count total order number for each product', async () => {
     const endDateInput = container.querySelector('.end-date');
-    const applyButton = container.querySelector('.apply-button');
+    const applyButton = container.querySelector('.apply');
 
     await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
@@ -101,7 +101,7 @@ describe('display order management', () => {
   });
 
   test('should show all orders when do not input any date and count total order number for each product', async () => {
-    const applyButton = container.querySelector('.apply-button');
+    const applyButton = container.querySelector('.apply');
     await user.click(applyButton as Element);
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
@@ -115,7 +115,7 @@ describe('display order management', () => {
   test('should do not show any order when input incoorect date range', async () => {
     const startDateInput = container.querySelector('.start-date');
     const endDateInput = container.querySelector('.end-date');
-    const applyButton = container.querySelector('.apply-button');
+    const applyButton = container.querySelector('.apply');
     await user.type(startDateInput as Element, '10/02/2022');
     await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
@@ -125,8 +125,8 @@ describe('display order management', () => {
   test('should clear date range input and show all orders when click reset button', async () => {
     const startDateInput = container.querySelector('.start-date');
     const endDateInput = container.querySelector('.end-date');
-    const applyButton = container.querySelector('.apply-button');
-    const resetButton = container.querySelector('.reset-button');
+    const applyButton = container.querySelector('.apply');
+    const resetButton = container.querySelector('.reset');
     await user.type(startDateInput as Element, '09/03/2022');
     await user.type(endDateInput as Element, '09/03/2022');
     await user.click(applyButton as Element);
