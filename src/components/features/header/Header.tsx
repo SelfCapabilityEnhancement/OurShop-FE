@@ -5,17 +5,21 @@ import { ShoppingCartItem } from '@/components/common/CustomeTypes';
 import { getCurrentUser, getShoppingCarts } from '@/service';
 import { classNames } from '@/utils';
 import { useLocation } from 'react-router';
+import useGlobalState from '@/state';
 
 export default function Header() {
   const navigate = useNavigate();
-  const [shoppingCartItems, setShoppingCartItems] = useState<
-    ShoppingCartItem[]
-  >([]);
+  const [, setShoppingCartItems] = useState<ShoppingCartItem[]>([]);
+
+  const [shoppingCartLength, setShoppingCartLength] =
+    useGlobalState('shoppingCartLength');
 
   useEffect(() => {
     getCurrentUser().then(async ({ id }) => {
       const items = await getShoppingCarts(id);
       setShoppingCartItems(items);
+      setShoppingCartLength(items.length);
+      console.log(items.length);
     });
   }, []);
 
@@ -59,7 +63,7 @@ export default function Header() {
           data-testid="redDot"
           className={classNames(
             'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1',
-            shoppingCartItems.length > 0 ? '' : 'hidden'
+            shoppingCartLength > 0 ? '' : 'hidden'
           )}
         ></span>
       )}

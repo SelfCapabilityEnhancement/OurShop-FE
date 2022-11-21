@@ -7,6 +7,7 @@ import { Product, User } from '@/components/common/CustomeTypes';
 import { useLocation } from 'react-router-dom';
 import { addToCarts, getCurrentUser } from '@/service';
 import { classNames } from '@/utils';
+import useGlobalState from '@/state';
 
 const logisticMethods = ['office', 'address'];
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';
@@ -23,6 +24,7 @@ export default function DetailPage() {
   const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
   const [user, setUser] = useState<User>();
+  const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
 
   useEffect(() => {
     getCurrentUser().then((user) => setUser(user));
@@ -43,6 +45,7 @@ export default function DetailPage() {
       setValidation(true);
       setShowLoading(true);
       await addToCarts(user?.id as number, product.id, count, logisticMethod);
+      setShoppingCartLength((prevState) => prevState + 1);
       setShowLoading(false);
     } else {
       setValidation(false);

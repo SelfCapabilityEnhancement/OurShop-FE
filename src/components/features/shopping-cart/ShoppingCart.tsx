@@ -4,12 +4,16 @@ import Counter from '@/components/common/counter/Counter';
 import { getCurrentUser, getShoppingCarts } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomeTypes';
 import Loading from '@/components/common/loading/Loading';
+import useGlobalState from '@/state';
 
 export default function ShoppingCart() {
   const navigate = useNavigate();
+
   const [shoppingCartItems, setShoppingCartItems] = useState<
     ShoppingCartItem[]
   >([]);
+  const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
+
   const [checkedState, setCheckedState] = useState(
     new Array(shoppingCartItems.length).fill(false)
   );
@@ -20,6 +24,7 @@ export default function ShoppingCart() {
     getCurrentUser().then(async ({ id }) => {
       const items = await getShoppingCarts(id);
       setShoppingCartItems(items);
+      setShoppingCartLength(items.length);
       setShowLoading(false);
     });
   }, []);
@@ -28,6 +33,7 @@ export default function ShoppingCart() {
     const tmp = [...shoppingCartItems];
     tmp[index].productNum += 1;
     setShoppingCartItems(tmp);
+    setShoppingCartLength(tmp.length);
   };
 
   const handleMinus = (index: number) => {
@@ -35,6 +41,7 @@ export default function ShoppingCart() {
       const tmp = [...shoppingCartItems];
       tmp[index].productNum -= 1;
       setShoppingCartItems(tmp);
+      setShoppingCartLength(tmp.length);
     }
   };
 
