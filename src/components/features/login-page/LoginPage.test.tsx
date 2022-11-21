@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import LoginPage from '@/components/features/login-page/LoginPage';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('display login page', () => {
   it('should display login page context', () => {
-    render(<LoginPage />);
+    render(<LoginPage />, { wrapper: MemoryRouter });
     expect(screen.getByText('Welcome')).toBeInTheDocument();
     expect(
       screen.getByText('Try this shopping platform for TWers')

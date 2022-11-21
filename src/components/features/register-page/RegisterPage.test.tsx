@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import RegisterPage from '@/components/features/register-page/RegisterPage';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('display register page', () => {
   it('should display register page context', () => {
-    render(<RegisterPage />);
+    render(<RegisterPage />, { wrapper: MemoryRouter });
     expect(screen.getByText('Welcome')).toBeInTheDocument();
     expect(
       screen.getByText('Try this shopping platform for TWers')
