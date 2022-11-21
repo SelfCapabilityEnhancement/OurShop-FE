@@ -56,8 +56,7 @@ describe('OrderItemAdmin', () => {
       'Order is Made on: '
     );
 
-    const dateString =
-      mockOrderItemAdminFinished[0].ordersList[0].vendorDate.toLocaleDateString();
+    const dateString = mockOrderItemAdminFinished[0].ordersList[0].vendorDate;
     expect(screen.getByTestId('ordered-date').textContent).toBe(dateString);
     expect(screen.getByTestId('view-detail')).toBeInTheDocument();
   });
