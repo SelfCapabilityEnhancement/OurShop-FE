@@ -1,10 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import OrderItem from '@/components/features/my-order/OrderItem';
-import { mockOrder } from '@/mocks/mockData';
+import { mockOrder, mockOrdersItems } from '@/mocks/mockData';
 
 describe('OrderItem', () => {
   beforeEach(() => {
-    render(<OrderItem order={mockOrder[0]} />);
+    render(
+      <OrderItem
+        order={mockOrdersItems[0]}
+        setShowWindow={() => {}}
+        setSelectedOrdersItem={() => {}}
+      />
+    );
   });
 
   test('should render picture, product name, purchase date and number in my order', async () => {
@@ -16,7 +22,7 @@ describe('OrderItem', () => {
       'Date of Purchase: '
     );
     expect(screen.getByTestId('purchase-date').textContent).toBe(
-      mockOrder[0].purchaseDate.toLocaleDateString()
+      mockOrder[0].purchaseDate
     );
     expect(screen.getByTestId('number-title').textContent).toBe('Number: ');
     expect(screen.getByTestId('purchase-number').textContent).toBe(
