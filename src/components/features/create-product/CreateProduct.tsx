@@ -1,7 +1,7 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import React, { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 import Banner from '@/components/common/banner/Banner';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';

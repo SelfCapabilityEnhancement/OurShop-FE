@@ -1,88 +1,20 @@
 import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import './react-datepicker.css';
+import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomTypes';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import { updateOrders, getAllOrdersItems } from '@/service';
+import { getAllOrdersItems, updateOrders } from '@/service';
 import ReactECharts from 'echarts-for-react';
 // @ts-ignore
 import cloneDeep from 'lodash.clonedeep';
 
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 import Banner from '@/components/common/banner/Banner';
+import { initCategoryOption, initGoodOption } from '@/constants';
 
-const initGoodOption = {
-  title: {
-    text: 'Most Popular Product',
-  },
-  grid: { containLabel: true },
-  tooltip: {},
-  xAxis: {},
-  yAxis: {
-    inverse: true,
-    max: 9,
-    data: ['1', '2', '3'],
-  },
-  series: [
-    {
-      realtimeSort: true,
-      name: '销量',
-      type: 'bar',
-      data: [1, 2, 3],
-      label: {
-        show: true,
-        position: 'right',
-      },
-    },
-  ],
-};
-const initCategoryOption = {
-  title: {
-    text: 'Sales by Product Category',
-  },
-  tooltip: {
-    trigger: 'item',
-  },
-  legend: {
-    top: '7%',
-    left: 'center',
-  },
-  series: [
-    {
-      name: 'Category',
-      type: 'pie',
-      radius: ['30%', '70%'],
-      avoidLabelOverlap: false,
-      itemStyle: {
-        borderRadius: 10,
-        borderColor: '#fff',
-        borderWidth: 2,
-      },
-      label: {
-        show: false,
-        position: 'center',
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '20',
-          fontWeight: 'bold',
-        },
-      },
-      labelLine: {
-        show: true,
-      },
-      data: [
-        { value: 1048, name: 'Clothes' },
-        { value: 735, name: 'Souvenir' },
-        { value: 580, name: 'Books' },
-      ],
-    },
-  ],
-};
 const titles = [
   { id: 'salesOverview', name: 'Sales Overview' },
   { id: 'pendingOrder', name: 'Pending Order' },

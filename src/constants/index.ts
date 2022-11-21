@@ -1,4 +1,4 @@
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 
 export const imageUrlPrefix = `https://ourshopimages.blob.core.windows.net/images/`;
 export const initProduct: Product = {
@@ -29,3 +29,74 @@ export const initValidateResult = {
 };
 
 export const categoryList = ['Clothes', 'Book', 'Souvenir'];
+
+export const initGoodOption = {
+  title: {
+    text: 'Most Popular Product',
+  },
+  grid: { containLabel: true },
+  tooltip: {},
+  xAxis: {},
+  yAxis: {
+    inverse: true,
+    max: 9,
+    data: ['1', '2', '3'],
+  },
+  series: [
+    {
+      realtimeSort: true,
+      name: '销量',
+      type: 'bar',
+      data: [1, 2, 3],
+      label: {
+        show: true,
+        position: 'right',
+      },
+    },
+  ],
+};
+
+export const initCategoryOption = {
+  title: {
+    text: 'Sales by Product Category',
+  },
+  tooltip: {
+    trigger: 'item',
+  },
+  legend: {
+    top: '7%',
+    left: 'center',
+  },
+  series: [
+    {
+      name: 'Category',
+      type: 'pie',
+      radius: ['30%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2,
+      },
+      label: {
+        show: false,
+        position: 'center',
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: '20',
+          fontWeight: 'bold',
+        },
+      },
+      labelLine: {
+        show: true,
+      },
+      data: [
+        { value: 1048, name: 'Clothes' },
+        { value: 735, name: 'Souvenir' },
+        { value: 580, name: 'Books' },
+      ],
+    },
+  ],
+};

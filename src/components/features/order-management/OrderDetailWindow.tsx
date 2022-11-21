@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { OrdersItemAdmin } from '@/components/common/CustomTypes';
 import BuyerInfoTable from '@/components/features/order-management/BuyerInfoTable';
 import * as XLSX from 'xlsx';
 

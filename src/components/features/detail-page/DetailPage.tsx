@@ -3,7 +3,7 @@ import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
-import { Product, User } from '@/components/common/CustomeTypes';
+import { Product, User } from '@/components/common/CustomTypes';
 import { useLocation } from 'react-router-dom';
 import { addToCarts, getCurrentUser } from '@/service';
 import { classNames } from '@/utils';

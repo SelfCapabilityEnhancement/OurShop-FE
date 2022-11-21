@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
 import { getCurrentUser, getShoppingCarts } from '@/service';
-import { ShoppingCartItem } from '@/components/common/CustomeTypes';
+import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import Loading from '@/components/common/loading/Loading';
 import useGlobalState from '@/state';
 

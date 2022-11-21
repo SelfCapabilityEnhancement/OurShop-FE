@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import EditProduct from '@/components/features/product-management/EditProduct';
 import { tempProducts } from '@/mocks/mockData';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),

@@ -1,4 +1,4 @@
-import { OrdersItemAdmin } from '@/components/common/CustomeTypes';
+import { OrdersItemAdmin } from '@/components/common/CustomTypes';
 import React from 'react';
 
 export default function OrderItemAdmin(props: {

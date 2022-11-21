@@ -3,7 +3,7 @@ import {
   Product,
   OrdersItemAdmin,
   User,
-} from '@/components/common/CustomeTypes';
+} from '@/components/common/CustomTypes';
 
 const product1: Product = {
   id: 2,

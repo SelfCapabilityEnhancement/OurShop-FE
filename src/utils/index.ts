@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 
 export const generateUniqueImageName = (name: string) => {
   return `${name.replace(/\.png/, '')}-${moment().unix()}.png`;

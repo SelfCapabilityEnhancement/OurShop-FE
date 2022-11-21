@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Product } from '@/components/common/CustomeTypes';
+import { Product } from '@/components/common/CustomTypes';
 import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import { updateProduct, uploadFile } from '@/service';
