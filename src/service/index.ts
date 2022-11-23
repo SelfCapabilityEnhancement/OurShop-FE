@@ -126,4 +126,4 @@ export const updateOrders = (
 ) => http.patch('/orders', ordersProductIds).then((response) => response.data);
 
 export const getOrdersItemsByUserId = (userId: number) =>
-  http.get(`/orders/${userId}`).then((response) => response.data);
+  http.get(`/users/${userId}/orders`).then((response) => response.data);
