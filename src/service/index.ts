@@ -127,3 +127,17 @@ export const updateOrders = (
 
 export const getOrdersItemsByUserId = (userId: number) =>
   http.get(`/orders/${userId}`).then((response) => response.data);
+
+export const register = async (name: string, password: string) => {
+  return await http.post('/users/register', {
+    name,
+    password,
+  });
+};
+
+export const login = async (username: string, password: string) => {
+  await http.post('/users/login', {
+    username,
+    password,
+  });
+};

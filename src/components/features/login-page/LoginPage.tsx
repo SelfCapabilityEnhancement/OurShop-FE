@@ -1,20 +1,36 @@
-import { NavLink } from 'react-router-dom';
-import LoginForm from '@/components/features/login-page/LoginForm';
+import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { login } from '@/service';
 
 export default function LoginPage() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const location = useLocation();
-  // const { handleLogin, handleLogout } = useAuthContext();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const from = (location.state && location.state.from.pathname) || '/';
+  const handleLogin = async () => {
+    if (loginValidate()) {
+      const result = await login(username, password);
+      console.log(result);
+    } else {
+      // setRegisterValidation(false);
+    }
+    navigate('/home');
+  };
 
-  // useEffect(() => {
-  //   handleLogout();
-  // }, [handleLogout]);
+  const loginValidate = () => {
+    return username !== '' && password !== '';
+  };
 
-  // const handleFinish = (params) => {
-  //   handleLogin(params).then(() => navigate(from, { replace: true }));
-  // };
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value } = e.target;
+    if (id === 'username') {
+      setUsername(value);
+    }
+    if (id === 'password') {
+      setPassword(value);
+    }
+  }
 
   return (
     <div className="login-page h-screen">
@@ -36,7 +52,26 @@ export default function LoginPage() {
             Hey TWer, Enter your detail to get in to OurShop
           </p>
           <div className="mt-6 place-content-center ml-24 mr-12 w-[300px]">
-            <LoginForm />
+            <form className="mt-4">
+              <input
+                type="text"
+                className="form-control block px-4 py-2 mb-6 text-base text-gray-900 font-normal
+                border-2 border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none"
+                placeholder="Username"
+                id="username"
+                value={username}
+                onChange={(e) => handleInputChange(e)}
+              />
+              <input
+                type="password"
+                className="form-control block px-4 py-2 mb-6 text-base text-gray-900 font-normal
+                border-2 border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none"
+                placeholder="Password"
+                id="password"
+                value={password}
+                onChange={(e) => handleInputChange(e)}
+              />
+            </form>
           </div>
           <p className="text-center text-gray-500">
             Do not have an account?
@@ -47,6 +82,7 @@ export default function LoginPage() {
           <button
             className="text-center text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
           transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-24 mx-[100px] py-2 "
+            onClick={handleLogin}
           >
             Sign In
           </button>
