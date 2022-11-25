@@ -1,9 +1,91 @@
 import { NavLink } from 'react-router-dom';
-import RegisterForm from '@/components/features/register-page/RegisterForm';
+import { register } from '@/service';
+import React, { useState } from 'react';
+
+const basicClassName =
+  'form-control block px-4 py-2 mb-5 text-base text-gray-900 font-normal border-2' +
+  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none';
+const getClassName = (error: string | undefined) =>
+  error ? basicClassName + ' border-red-500' : basicClassName;
+
+const initialError = {
+  usernameError: '',
+  passwordError: '',
+  confirmPasswordError: '',
+};
 
 export default function RegisterPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] =
+    useState<Partial<typeof initialError>>(initialError);
+
+  const [, setRegisterSuccess] = useState(false);
+
+  // const successMsg = 'Registered successfully,you can login now';
+
+  const handleRegister = async () => {
+    let { usernameError, passwordError, confirmPasswordError } = initialError;
+    if (!username) {
+      usernameError = 'Required field!';
+    }
+    if (!password) {
+      passwordError = 'Required field!';
+    }
+    if (!confirmPassword) {
+      confirmPasswordError = 'Required field!';
+    }
+    if (usernameError || passwordError || confirmPasswordError) {
+      return setError({ usernameError, passwordError, confirmPasswordError });
+    }
+
+    if (isPasswordMatch()) {
+      register(username, password)
+        .then((data) => {
+          if (data.data.message === 'error.http.200') {
+            // 先判断status，再判断tab
+            if (data.data.title === '用户名已存在') {
+              return setError({ usernameError: 'Username already exist!' });
+            }
+          }
+          setRegisterSuccess(true);
+        })
+        .catch(() => {
+          setRegisterSuccess(false);
+        });
+    } else {
+      setRegisterSuccess(false); // notify 不带参数
+      setError({ confirmPasswordError: 'Passwords does not match!' });
+    }
+  };
+
+  const isPasswordMatch = () => {
+    return password === confirmPassword;
+  };
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value } = e.target;
+    if (id === 'username') {
+      setUsername(value);
+    }
+    if (id === 'password') {
+      setPassword(value);
+    }
+    if (id === 'confirmPassword') {
+      setConfirmPassword(value);
+    }
+  }
+
+  const { usernameError, passwordError, confirmPasswordError } = error;
+
   return (
     <div className="Register-page h-screen">
+      {/* <Banner */}
+      {/*   visible={registerSuccess} */}
+      {/*   success={registerValidation} */}
+      {/*   message={registerValidation ? successMsg : failMsg} */}
+      {/* /> */}
       <div className="Register-page-body flex col-span-2 mx-60">
         <div className="Register-page-left">
           <p className="mt-24 text-5xl font-semibold">Welcome</p>
@@ -24,7 +106,47 @@ export default function RegisterPage() {
             Hey TWer, please fill the necessary information to register
           </p>
           <div className="mt-6 place-content-center ml-24 mr-12 w-[300px]">
-            <RegisterForm />
+            <form className="mt-4">
+              <>
+                {usernameError && (
+                  <p className="text-red-500">{usernameError}</p>
+                )}
+                <input
+                  type="text"
+                  className={getClassName(usernameError)}
+                  placeholder="Username"
+                  id="username"
+                  value={username}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </>
+              <>
+                {passwordError && (
+                  <p className="text-red-500">{passwordError}</p>
+                )}
+                <input
+                  type="password"
+                  className={getClassName(passwordError)}
+                  placeholder="Password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </>
+              <>
+                {confirmPasswordError && (
+                  <p className="text-red-500">{confirmPasswordError}</p>
+                )}
+                <input
+                  type="password"
+                  className={getClassName(confirmPasswordError)}
+                  placeholder="Confirm Password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </>
+            </form>
           </div>
           <p className="text-center text-gray-500">
             Already has an account?
@@ -34,7 +156,8 @@ export default function RegisterPage() {
           </p>
           <button
             className="text-center text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
-          transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-12 mx-[100px] py-2 "
+            transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-12 mx-[100px] py-2 "
+            onClick={handleRegister}
           >
             Register
           </button>
