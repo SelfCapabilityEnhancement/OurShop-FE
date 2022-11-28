@@ -32,6 +32,10 @@ export default function PurchaseConfirmation() {
     return cost;
   };
 
+  const callCostOfOneProduct = (index: number, token: number) => {
+    return allCount[index] * token;
+  };
+
   const [showBanner, SetShowBanner] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
@@ -122,7 +126,9 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal">Token: {priceToken}</div>
+                <div className="text-xl font-normal">
+                  Token: {callCostOfOneProduct(index, priceToken)}
+                </div>
               </div>
             </div>
           </li>
