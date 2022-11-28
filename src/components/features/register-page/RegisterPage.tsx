@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { register } from '@/service';
 import React, { useState } from 'react';
+import Banner from '@/components/common/banner/Banner';
 
 const basicClassName =
   'form-control block px-4 py-2 mb-5 text-base text-gray-900 font-normal border-2' +
@@ -21,9 +22,9 @@ export default function RegisterPage() {
   const [error, setError] =
     useState<Partial<typeof initialError>>(initialError);
 
-  const [, setRegisterSuccess] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
-  // const successMsg = 'Registered successfully,you can login now';
+  const successMsg = 'Registered successfully, you can login now';
 
   const handleRegister = async () => {
     let { usernameError, passwordError, confirmPasswordError } = initialError;
@@ -55,7 +56,7 @@ export default function RegisterPage() {
           setRegisterSuccess(false);
         });
     } else {
-      setRegisterSuccess(false); // notify 不带参数
+      setRegisterSuccess(false);
       setError({ confirmPasswordError: 'Passwords does not match!' });
     }
   };
@@ -81,11 +82,11 @@ export default function RegisterPage() {
 
   return (
     <div className="Register-page h-screen">
-      {/* <Banner */}
-      {/*   visible={registerSuccess} */}
-      {/*   success={registerValidation} */}
-      {/*   message={registerValidation ? successMsg : failMsg} */}
-      {/* /> */}
+      <Banner
+        visible={registerSuccess}
+        success={registerSuccess}
+        message={registerSuccess ? successMsg : ''}
+      />
       <div className="Register-page-body flex col-span-2 mx-60">
         <div className="Register-page-left">
           <p className="mt-24 text-5xl font-semibold">Welcome</p>
