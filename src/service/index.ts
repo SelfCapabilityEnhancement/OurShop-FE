@@ -21,13 +21,17 @@ export const uploadFile = async (images: File[]) => {
   await Promise.all(images.map((image) => uploadFileToBlob(image)));
 };
 
-export const newProduct = async (product: Product) => {
+export const newProduct = async ({
+  id,
+  imageFiles,
+  deletedTime,
+  ...product
+}: Product) => {
   await http.post('/products', {
     ...product,
-    images: product.imageFiles
+    images: imageFiles
       .map((image) => `${imageUrlPrefix}${image.name}`)
       .join(','),
-    imageFiles: [],
   });
 };
 
@@ -126,7 +130,7 @@ export const updateOrders = (
 ) => http.patch('/orders', ordersProductIds).then((response) => response.data);
 
 export const getOrdersItemsByUserId = (userId: number) =>
-  http.get(`/orders/${userId}`).then((response) => response.data);
+  http.get(`/users/${userId}/orders`).then((response) => response.data);
 
 export const register = async (name: string, password: string) => {
   return await http.post('/users/register', {
@@ -136,7 +140,7 @@ export const register = async (name: string, password: string) => {
 };
 
 export const login = async (username: string, password: string) => {
-  await http.post('/users/login', {
+  return await http.post('/users/login', {
     username,
     password,
   });
