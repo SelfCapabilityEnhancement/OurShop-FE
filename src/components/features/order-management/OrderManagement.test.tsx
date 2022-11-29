@@ -112,14 +112,14 @@ describe('display order management', () => {
     ).toBe('橘子Number: 1');
   });
 
-  test('should do not show any order when input incoorect date range', async () => {
+  test('should show origin orders when input incorrect date range', async () => {
     const startDateInput = container.querySelector('.start-date');
     const endDateInput = container.querySelector('.end-date');
     const applyButton = container.querySelector('.apply');
     await user.type(startDateInput as Element, '10/02/2022');
     await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
-    expect(container.querySelectorAll('.order-item-admin').length).toBe(0);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
   });
 
   test('should clear date range input and show all orders when click reset button', async () => {
