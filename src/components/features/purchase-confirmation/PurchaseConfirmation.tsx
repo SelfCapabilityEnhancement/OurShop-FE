@@ -5,7 +5,11 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import { addNumByPlus, getCurrentUser, payByToken } from '@/service';
+import {
+  updateShoppingCardProduct,
+  getCurrentUser,
+  payByToken,
+} from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -62,9 +66,9 @@ export default function PurchaseConfirmation() {
     navigate('/shopping-cart');
   };
 
-  const handleClickBuy = async () => {
-    setShowLoading(true);
-    const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+  const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+
+  const getPurchaseConfirmationItems = () => {
     allCount.forEach((count, index) => {
       purchaseConfirmationItems.push({
         productNum: count,
@@ -73,6 +77,11 @@ export default function PurchaseConfirmation() {
         logisticMethod: logisticMethods[index],
       });
     });
+  };
+
+  const handleClickBuy = async () => {
+    setShowLoading(true);
+    getPurchaseConfirmationItems();
     await payByToken(user?.id as number, cost, purchaseConfirmationItems);
 
     setShowLoading(false);
@@ -87,16 +96,8 @@ export default function PurchaseConfirmation() {
     const tmp = [...allCount];
     tmp[index] += 1;
     setAllCount(tmp);
-    const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
-    allCount.forEach((count, index) => {
-      purchaseConfirmationItems.push({
-        productNum: tmp[index],
-        productId: productIds[index],
-        shoppingCartId: shoppingCartIds[index],
-        logisticMethod: logisticMethods[index],
-      });
-    });
-    await addNumByPlus(
+    getPurchaseConfirmationItems();
+    await updateShoppingCardProduct(
       user?.id as number,
       calCostOfTokenByParam(products, tmp),
       purchaseConfirmationItems
@@ -108,16 +109,8 @@ export default function PurchaseConfirmation() {
       const tmp = [...allCount];
       tmp[index] -= 1;
       setAllCount(tmp);
-      const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
-      allCount.forEach((count, index) => {
-        purchaseConfirmationItems.push({
-          productNum: tmp[index],
-          productId: productIds[index],
-          shoppingCartId: shoppingCartIds[index],
-          logisticMethod: logisticMethods[index],
-        });
-      });
-      await addNumByPlus(
+      getPurchaseConfirmationItems();
+      await updateShoppingCardProduct(
         user?.id as number,
         calCostOfTokenByParam(products, tmp),
         purchaseConfirmationItems

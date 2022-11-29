@@ -118,7 +118,7 @@ export const payByToken = async (
   });
 };
 
-export const addNumByPlus = async (
+export const updateShoppingCardProduct = async (
   userId: number,
   cost: number,
   purchaseConfirmationItems: PurchaseConfirmationItem[]
