@@ -16,4 +16,5 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Test
+        shell: 'script -q -e -c "bash {0}"'
         run: ./docker-test.sh
