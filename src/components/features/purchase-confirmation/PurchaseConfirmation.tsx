@@ -5,7 +5,7 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import { getCurrentUser, payByToken } from '@/service';
+import { addNumByPlus, getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -25,6 +25,14 @@ export default function PurchaseConfirmation() {
   } = useLocation();
 
   const calCostOfToken = () => {
+    let cost = 0;
+    products.forEach((product, index) => {
+      cost += allCount[index] * product.priceToken;
+    });
+    return cost;
+  };
+
+  const calCostOfTokenByParam = (products: Product[], allCount: number[]) => {
     let cost = 0;
     products.forEach((product, index) => {
       cost += allCount[index] * product.priceToken;
@@ -75,17 +83,45 @@ export default function PurchaseConfirmation() {
     }, 1500);
   };
 
-  const handlePlus = (index: number) => {
+  const handlePlus = async (index: number) => {
     const tmp = [...allCount];
     tmp[index] += 1;
     setAllCount(tmp);
+    const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+    allCount.forEach((count, index) => {
+      purchaseConfirmationItems.push({
+        productNum: tmp[index],
+        productId: productIds[index],
+        shoppingCartId: shoppingCartIds[index],
+        logisticMethod: logisticMethods[index],
+      });
+    });
+    await addNumByPlus(
+      user?.id as number,
+      calCostOfTokenByParam(products, tmp),
+      purchaseConfirmationItems
+    );
   };
 
-  const handleMinus = (index: number) => {
+  const handleMinus = async (index: number) => {
     if (allCount[index] > 1) {
       const tmp = [...allCount];
       tmp[index] -= 1;
       setAllCount(tmp);
+      const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+      allCount.forEach((count, index) => {
+        purchaseConfirmationItems.push({
+          productNum: tmp[index],
+          productId: productIds[index],
+          shoppingCartId: shoppingCartIds[index],
+          logisticMethod: logisticMethods[index],
+        });
+      });
+      await addNumByPlus(
+        user?.id as number,
+        calCostOfTokenByParam(products, tmp),
+        purchaseConfirmationItems
+      );
     }
   };
 

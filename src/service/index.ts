@@ -118,6 +118,18 @@ export const payByToken = async (
   });
 };
 
+export const addNumByPlus = async (
+  userId: number,
+  cost: number,
+  purchaseConfirmationItems: PurchaseConfirmationItem[]
+) => {
+  await http.post('/shopping-carts/add-by-plus', {
+    userId,
+    token: cost,
+    purchaseConfirmationItems,
+  });
+};
+
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
   http.get(`/orders`).then((response) => response.data);
 
