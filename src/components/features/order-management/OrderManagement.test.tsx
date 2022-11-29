@@ -191,4 +191,14 @@ describe('display order management', () => {
   //   ).toBeInTheDocument();
   //   expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
   // });
+
+  test('should only choose endDate after startDate in calendar', async () => {
+    const startDateInput = container.querySelector(' .start-date');
+    const endDateInput = container.querySelector(' .end-date');
+
+    await user.type(startDateInput as Element, '10/29/2022');
+    await user.type(endDateInput as Element, '10/01/2022');
+    expect(screen.findByText('10/29/2022')).toBeTruthy();
+    expect(screen.findByText('Time')).toBeTruthy();
+  });
 });
