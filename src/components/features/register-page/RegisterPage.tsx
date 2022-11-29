@@ -166,7 +166,7 @@ export default function RegisterPage() {
               />
             </>
           </form>
-          <p className="text-center text-gray-500 mt-2 mb-8">
+          <p className="text-center text-gray-500 mt-3 mb-8">
             Already has an account?
             <NavLink to="/login" className="text-blue-500 ml-1">
               Login OurShop
@@ -174,7 +174,7 @@ export default function RegisterPage() {
           </p>
           <button
             className="text-center text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
-            transition ease-in font-medium rounded-lg text-l w-52 h-10 mx-[100px] py-2 "
+            transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-9 mx-[100px] py-2 "
             onClick={handleRegister}
           >
             Register
