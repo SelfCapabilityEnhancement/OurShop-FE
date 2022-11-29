@@ -192,13 +192,31 @@ describe('display order management', () => {
   //   expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
   // });
 
-  test('should only choose endDate after startDate in calendar', async () => {
+  test('should show orders after startDate when choose endDate after startDate in calendar', async () => {
     const startDateInput = container.querySelector(' .start-date');
     const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply');
 
-    await user.type(startDateInput as Element, '10/29/2022');
+    await user.type(startDateInput as Element, '10/01/2022');
+    await user.type(endDateInput as Element, '09/25/2022');
+    await user.click(applyButton as Element);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
+    expect(
+      container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('苹果Number: 1');
+  });
+
+  test('should show orders before endDate when choose startDate before endDate in calendar', async () => {
+    const startDateInput = container.querySelector(' .start-date');
+    const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply');
+
     await user.type(endDateInput as Element, '10/01/2022');
-    expect(screen.findByText('10/29/2022')).toBeTruthy();
-    expect(screen.findByText('Time')).toBeTruthy();
+    await user.type(startDateInput as Element, '10/29/2022');
+    await user.click(applyButton as Element);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
+    expect(
+      container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('苹果Number: 1');
   });
 });
