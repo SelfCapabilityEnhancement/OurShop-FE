@@ -17,4 +17,5 @@ jobs:
 
       - name: Test
         shell: 'script -q -e -c "bash {0}"'
-        run: ./docker-test.sh
+        #run: docker build --no-cache -f Dockerfile --target test .
+        run: docker-compose build --no-cache yarn-test
