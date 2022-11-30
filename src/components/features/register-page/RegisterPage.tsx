@@ -172,6 +172,7 @@ export default function RegisterPage() {
           <button
             className="text-center text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
             transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-9 mx-[100px] py-2 disabled:opacity-50"
+            data-testid="register-btn"
             onClick={handleRegister}
             disabled={!buttonEnabled}
           >
