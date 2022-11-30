@@ -5,11 +5,7 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import {
-  updateShoppingCardProduct,
-  getCurrentUser,
-  payByToken,
-} from '@/service';
+import { getCurrentUser, payByToken, verifyPurchaseInfo } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -29,14 +25,6 @@ export default function PurchaseConfirmation() {
   } = useLocation();
 
   const calCostOfToken = () => {
-    let cost = 0;
-    products.forEach((product, index) => {
-      cost += allCount[index] * product.priceToken;
-    });
-    return cost;
-  };
-
-  const calCostOfTokenByParam = (products: Product[], allCount: number[]) => {
     let cost = 0;
     products.forEach((product, index) => {
       cost += allCount[index] * product.priceToken;
@@ -80,6 +68,14 @@ export default function PurchaseConfirmation() {
   };
 
   const handleClickBuy = async () => {
+    let verifyFlag = false;
+    verifyPurchaseInfo(user?.id as number).then((resp) => {
+      verifyFlag = resp;
+    });
+    if (!verifyFlag) {
+      alert('verify false');
+      return;
+    }
     setShowLoading(true);
     getPurchaseConfirmationItems();
     await payByToken(user?.id as number, cost, purchaseConfirmationItems);
@@ -96,12 +92,6 @@ export default function PurchaseConfirmation() {
     const tmp = [...allCount];
     tmp[index] += 1;
     setAllCount(tmp);
-    getPurchaseConfirmationItems();
-    await updateShoppingCardProduct(
-      user?.id as number,
-      calCostOfTokenByParam(products, tmp),
-      purchaseConfirmationItems
-    );
   };
 
   const handleMinus = async (index: number) => {
@@ -110,11 +100,6 @@ export default function PurchaseConfirmation() {
       tmp[index] -= 1;
       setAllCount(tmp);
       getPurchaseConfirmationItems();
-      await updateShoppingCardProduct(
-        user?.id as number,
-        calCostOfTokenByParam(products, tmp),
-        purchaseConfirmationItems
-      );
     }
   };
 
