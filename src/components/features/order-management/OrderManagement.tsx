@@ -379,6 +379,7 @@ export default function OrderManagement() {
           <ReactDatePicker
             className="start-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={startDate}
+            maxDate={endDate}
             placeholderText="Time"
             onChange={(date: Date) => setStartDate(date)}
           />
@@ -387,6 +388,7 @@ export default function OrderManagement() {
             className="end-date bg-slate-100 rounded-lg w-28 py-2 text-center"
             selected={endDate}
             placeholderText="Time"
+            minDate={startDate}
             onChange={(date: Date) => setEndDate(date)}
           />
         </div>

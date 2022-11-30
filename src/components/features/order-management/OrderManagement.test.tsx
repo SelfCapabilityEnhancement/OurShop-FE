@@ -112,14 +112,14 @@ describe('display order management', () => {
     ).toBe('橘子Number: 1');
   });
 
-  test('should do not show any order when input incoorect date range', async () => {
+  test('should show origin orders when input incorrect date range', async () => {
     const startDateInput = container.querySelector('.start-date');
     const endDateInput = container.querySelector('.end-date');
     const applyButton = container.querySelector('.apply');
     await user.type(startDateInput as Element, '10/02/2022');
     await user.type(endDateInput as Element, '10/01/2022');
     await user.click(applyButton as Element);
-    expect(container.querySelectorAll('.order-item-admin').length).toBe(0);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
   });
 
   test('should clear date range input and show all orders when click reset button', async () => {
@@ -191,4 +191,32 @@ describe('display order management', () => {
   //   ).toBeInTheDocument();
   //   expect(screen.queryByText('View Detail')).not.toBeInTheDocument();
   // });
+
+  test('should show orders after startDate when choose endDate after startDate in calendar', async () => {
+    const startDateInput = container.querySelector(' .start-date');
+    const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply');
+
+    await user.type(startDateInput as Element, '10/01/2022');
+    await user.type(endDateInput as Element, '09/25/2022');
+    await user.click(applyButton as Element);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
+    expect(
+      container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('苹果Number: 1');
+  });
+
+  test('should show orders before endDate when choose startDate before endDate in calendar', async () => {
+    const startDateInput = container.querySelector(' .start-date');
+    const endDateInput = container.querySelector(' .end-date');
+    const applyButton = container.querySelector('.apply');
+
+    await user.type(endDateInput as Element, '10/01/2022');
+    await user.type(startDateInput as Element, '10/29/2022');
+    await user.click(applyButton as Element);
+    expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
+    expect(
+      container.querySelectorAll('.order-item-admin').item(0).textContent
+    ).toBe('苹果Number: 1');
+  });
 });

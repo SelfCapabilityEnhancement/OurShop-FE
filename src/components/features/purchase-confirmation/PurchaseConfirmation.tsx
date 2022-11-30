@@ -5,7 +5,11 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import { getCurrentUser, payByToken } from '@/service';
+import {
+  updateShoppingCardProduct,
+  getCurrentUser,
+  payByToken,
+} from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -32,6 +36,18 @@ export default function PurchaseConfirmation() {
     return cost;
   };
 
+  const calCostOfTokenByParam = (products: Product[], allCount: number[]) => {
+    let cost = 0;
+    products.forEach((product, index) => {
+      cost += allCount[index] * product.priceToken;
+    });
+    return cost;
+  };
+
+  const callCostOfOneProduct = (index: number, token: number) => {
+    return allCount[index] * token;
+  };
+
   const [showBanner, SetShowBanner] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
@@ -50,9 +66,9 @@ export default function PurchaseConfirmation() {
     navigate('/shopping-cart');
   };
 
-  const handleClickBuy = async () => {
-    setShowLoading(true);
-    const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+  const purchaseConfirmationItems: PurchaseConfirmationItem[] = [];
+
+  const getPurchaseConfirmationItems = () => {
     allCount.forEach((count, index) => {
       purchaseConfirmationItems.push({
         productNum: count,
@@ -61,6 +77,11 @@ export default function PurchaseConfirmation() {
         logisticMethod: logisticMethods[index],
       });
     });
+  };
+
+  const handleClickBuy = async () => {
+    setShowLoading(true);
+    getPurchaseConfirmationItems();
     await payByToken(user?.id as number, cost, purchaseConfirmationItems);
 
     setShowLoading(false);
@@ -71,17 +92,29 @@ export default function PurchaseConfirmation() {
     }, 1500);
   };
 
-  const handlePlus = (index: number) => {
+  const handlePlus = async (index: number) => {
     const tmp = [...allCount];
     tmp[index] += 1;
     setAllCount(tmp);
+    getPurchaseConfirmationItems();
+    await updateShoppingCardProduct(
+      user?.id as number,
+      calCostOfTokenByParam(products, tmp),
+      purchaseConfirmationItems
+    );
   };
 
-  const handleMinus = (index: number) => {
+  const handleMinus = async (index: number) => {
     if (allCount[index] > 1) {
       const tmp = [...allCount];
       tmp[index] -= 1;
       setAllCount(tmp);
+      getPurchaseConfirmationItems();
+      await updateShoppingCardProduct(
+        user?.id as number,
+        calCostOfTokenByParam(products, tmp),
+        purchaseConfirmationItems
+      );
     }
   };
 
@@ -122,7 +155,9 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal">Token: {priceToken}</div>
+                <div className="text-xl font-normal">
+                  Token: {callCostOfOneProduct(index, priceToken)}
+                </div>
               </div>
             </div>
           </li>

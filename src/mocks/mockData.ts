@@ -75,7 +75,7 @@ export const deletedProducts: Array<Product> = [deletedProduct];
 
 export const shoppingCartItems = [
   {
-    product: product1,
+    product: deletedProduct,
     shoppingCartProductsId: 53,
     productNum: 5,
   },

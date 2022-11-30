@@ -64,18 +64,48 @@ describe('display shopping cart page given nonempty products', () => {
   //   ).toBeInTheDocument();
   // });
 
-  it('should add one when click svg-plus', async () => {
+  it('should disable plus btn given deleted product', async () => {
     await waitFor(async () => {
       const plusBtn = screen.getAllByTestId('svg-plus')[0];
       await user.click(plusBtn);
     });
 
-    expect(screen.getAllByTestId('num')[0].textContent).toBe('6');
+    expect(screen.getAllByTestId('num')[0].textContent).toBe('5');
+  });
+
+  it('should disable minus btn given deleted product', async () => {
+    await waitFor(async () => {
+      const minusBtn = screen.getAllByTestId('svg-minus')[0];
+      await user.click(minusBtn);
+    });
+
+    expect(screen.getAllByTestId('num')[0].textContent).toBe('5');
+  });
+
+  it('checkbox should be disabled and unchecked given deleted product', async () => {
+    await waitFor(async () => {
+      const checkBox = screen.getAllByRole('checkbox')[0];
+      expect(checkBox).toBeDisabled();
+      await user.click(checkBox);
+    });
+
+    const checkBox = screen.getAllByRole('checkbox')[0];
+    expect(checkBox).not.toBeChecked();
+  });
+
+  it('should add one when click svg-plus', async () => {
+    await waitFor(async () => {
+      const plusBtn = screen.getAllByTestId('svg-plus')[1];
+      await user.click(plusBtn);
+    });
+
+    expect(screen.getAllByTestId('num')[1].textContent).toBe('6');
   });
 
   it('should minus one when click svg-minus', async () => {
     await waitFor(async () => {
       const minusBtn = screen.getAllByTestId('svg-minus')[1];
+      await user.click(minusBtn);
       await user.click(minusBtn);
     });
 
@@ -90,5 +120,16 @@ describe('display shopping cart page given nonempty products', () => {
 
     const count = screen.getAllByTestId('num')[2].textContent;
     expect(count).toBe('1');
+  });
+
+  it('checkbox should be checked when user click given not deleted product', async () => {
+    await waitFor(async () => {
+      const checkBox = screen.getAllByRole('checkbox')[1];
+      expect(checkBox).not.toBeDisabled();
+      await user.click(checkBox);
+    });
+
+    const checkBox = screen.getAllByRole('checkbox')[1];
+    expect(checkBox).toBeChecked();
   });
 });
