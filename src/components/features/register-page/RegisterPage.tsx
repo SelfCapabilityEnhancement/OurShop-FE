@@ -47,12 +47,12 @@ export default function RegisterPage() {
       setButtonEnabled(false);
       register(username, password)
         .then((data) => {
-          if (data.data.message === 'error.http.200') {
-            // 先判断status，再判断tab
-            if (data.data.title === 'username exists') {
-              setButtonEnabled(true);
-              return setError({ usernameError: 'Username already exist!' });
-            }
+          if (
+            data.data.message === 'error.http.200' &&
+            data.data.title === 'username exists'
+          ) {
+            setButtonEnabled(true);
+            return setError({ usernameError: 'Username already exist!' });
           }
           setRegisterSuccess(true);
           resetInput();
