@@ -5,7 +5,7 @@ import Banner from '@/components/common/banner/Banner';
 
 const basicClassName =
   'form-control block px-4 py-2 mt-5 h-10 text-base text-gray-900 font-normal border-2' +
-  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none';
+  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none bg-gray-100';
 const getClassName = (error: string | undefined) =>
   error ? basicClassName + ' border-red-500 mt-0' : basicClassName;
 
@@ -23,6 +23,7 @@ export default function RegisterPage() {
     useState<Partial<typeof initialError>>(initialError);
 
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [buttonEnabled, setButtonEnabled] = useState(true);
 
   const successMsg = 'Registered successfully, you can login now';
 
@@ -42,11 +43,14 @@ export default function RegisterPage() {
     }
 
     if (isPasswordMatch()) {
+      setError({});
+      setButtonEnabled(false);
       register(username, password)
         .then((data) => {
           if (data.data.message === 'error.http.200') {
             // 先判断status，再判断tab
             if (data.data.title === 'username exists') {
+              setButtonEnabled(true);
               return setError({ usernameError: 'Username already exist!' });
             }
           }
@@ -55,6 +59,7 @@ export default function RegisterPage() {
           setTimeout(() => {
             setRegisterSuccess(false);
           }, 2000);
+          setButtonEnabled(true);
         })
         .catch(() => {
           setRegisterSuccess(false);
@@ -70,7 +75,6 @@ export default function RegisterPage() {
   };
 
   function resetInput() {
-    setError({});
     setUsername('');
     setPassword('');
     setConfirmPassword('');
@@ -90,18 +94,11 @@ export default function RegisterPage() {
   }
 
   const { usernameError, passwordError, confirmPasswordError } = error;
-  const formClassName = `${
-    usernameError ? 'mt-0' : 'mt-5'
-  } place-content-center ml-24 mr-12 w-[300px]`;
 
   return (
     <div className="Register-page h-screen">
-      <Banner
-        visible={registerSuccess}
-        success={registerSuccess}
-        message={registerSuccess ? successMsg : ''}
-      />
-      <div className="Register-page-body flex col-span-2 ml-60">
+      <Banner visible={registerSuccess} success={true} message={successMsg} />
+      <div className="Register-page-body flex col-span-2 ml-64">
         <div className="Register-page-left">
           <p className="mt-24 text-5xl font-semibold">Welcome</p>
           <div className="flex col-span-2">
@@ -113,14 +110,14 @@ export default function RegisterPage() {
           <p className="mt-8 text-5xl text-fuchsia-600">Try it now.</p>
         </div>
 
-        <div className="Register-page-right bg-gray-100 ml-20 mt-12 w-[400px] h-[480px] rounded-xl">
+        <div className="Register-page-right bg-gray-100 ml-40 mt-12 w-[400px] h-[480px] rounded-xl">
           <p className="mt-6 text-center text-2xl font-semibold">
             Register with Us
           </p>
           <p className="mt-6 mx-[50px] text-center text-m text-gray-500">
             Hey TWer, please fill the necessary information to register
           </p>
-          <form className={formClassName}>
+          <form className="place-content-center ml-24 mr-12 w-[300px]">
             <>
               {usernameError && (
                 <p className="text-red-500 text-sm h-5">{usernameError}</p>
@@ -174,8 +171,9 @@ export default function RegisterPage() {
           </p>
           <button
             className="text-center text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
-            transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-9 mx-[100px] py-2 "
+            transition ease-in font-medium rounded-lg text-l w-52 h-10 mt-9 mx-[100px] py-2 disabled:opacity-50"
             onClick={handleRegister}
+            disabled={!buttonEnabled}
           >
             Register
           </button>
