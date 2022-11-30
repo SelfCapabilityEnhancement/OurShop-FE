@@ -118,16 +118,10 @@ export const payByToken = async (
   });
 };
 
-export const updateShoppingCardProduct = async (
-  userId: number,
-  cost: number,
-  purchaseConfirmationItems: PurchaseConfirmationItem[]
-) => {
-  await http.post('/shopping-carts/add-by-plus', {
-    userId,
-    token: cost,
-    purchaseConfirmationItems,
-  });
+export const verifyPurchaseInfo = (userId: number): Promise<boolean> => {
+  return http
+    .get(`/purchase-confirmation/verify?userId=${userId}`)
+    .then((response) => response.data);
 };
 
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
