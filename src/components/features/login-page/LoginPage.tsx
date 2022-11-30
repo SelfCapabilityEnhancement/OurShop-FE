@@ -5,7 +5,7 @@ import Banner from '@/components/common/banner/Banner';
 
 const basicClassName =
   'form-control block px-4 py-2 mt-5 h-10 text-base text-gray-900 font-normal border-2' +
-  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none';
+  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none bg-gray-100';
 const getClassName = (error: string | undefined) =>
   error ? basicClassName + ' border-red-500 mt-0' : basicClassName;
 
@@ -36,13 +36,18 @@ export default function LoginPage() {
       return setError({ usernameError, passwordError });
     }
 
+    setError({});
     login(username, password)
       .then((data) => {
         if (data.data.title === 'username & password does not match') {
           setLoginSuccess(false);
-          setError({ usernameError: 'Username & Password does not match!' });
+          setError({
+            usernameError: 'Username & Password does not match!',
+            passwordError: ' ',
+          });
         } else {
           setLoginSuccess(true);
+          resetInput();
           setTimeout(() => {
             navigate('/home');
           }, 1500);
@@ -63,19 +68,17 @@ export default function LoginPage() {
     }
   }
 
+  function resetInput() {
+    setUsername('');
+    setPassword('');
+  }
+
   const { usernameError, passwordError } = error;
-  const formClassName = `${
-    usernameError ? 'mt-0' : 'mt-5'
-  } place-content-center ml-24 mr-12 w-[300px]`;
 
   return (
     <div className="login-page h-screen">
-      <Banner
-        visible={loginSuccess}
-        success={loginSuccess}
-        message={loginSuccess ? successMsg : ''}
-      />
-      <div className="login-page-body flex col-span-2 ml-60">
+      <Banner visible={loginSuccess} success={true} message={successMsg} />
+      <div className="login-page-body flex col-span-2 ml-64">
         <div className="login-page-left">
           <p className="mt-24 text-5xl font-semibold">Welcome</p>
           <div className="flex col-span-2">
@@ -87,12 +90,12 @@ export default function LoginPage() {
           <p className="mt-8 text-5xl text-fuchsia-600">Try it now.</p>
         </div>
 
-        <div className="login-page-right bg-gray-100 ml-20 mt-12 w-[400px] h-[480px] rounded-xl">
+        <div className="login-page-right bg-gray-100 ml-40 mt-12 w-[400px] h-[480px] rounded-xl">
           <p className="mt-6 text-center text-2xl font-semibold">User Login</p>
           <p className="mt-6 mx-[100px] text-center text-m text-gray-500">
             Hey TWer, Enter your detail to get in to OurShop
           </p>
-          <form className={formClassName}>
+          <form className="place-content-center ml-24 mr-12 w-[300px]">
             <>
               {usernameError && (
                 <p className="text-red-500 text-sm h-5">{usernameError}</p>
