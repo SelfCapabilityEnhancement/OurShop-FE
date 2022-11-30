@@ -30,7 +30,7 @@ export default function MyOrderDetailWindow({
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto ">
+        <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -41,7 +41,7 @@ export default function MyOrderDetailWindow({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-200 max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-zinc-200">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 grid"
@@ -61,27 +61,25 @@ export default function MyOrderDetailWindow({
                     {selectedOrdersItem.productName}
                   </p>
                 </div>
-                <div>
-                  <p className="text-base m-3" data-testid="purchase-number">
-                    Number: {selectedOrdersItem.purchaseNum}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-base m-3" data-testid="purchase-date">
-                    Date of Purchase: {selectedOrdersItem.purchaseDate}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-base m-3" data-testid="address">
-                    Address: {selectedOrdersItem.address}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-base m-3" data-testid="order-status">
-                    Order Status: {selectedOrdersItem.status}
-                  </p>
-                </div>
-                <div className="mt-4 flex justify-end">
+                <p className="text-base m-4" data-testid="purchase-number">
+                  <span className="text-base font-semibold">Number</span>:{' '}
+                  {selectedOrdersItem.purchaseNum}
+                </p>
+                <p className="text-base m-4" data-testid="purchase-date">
+                  <span className="text-base font-semibold">
+                    Date of Purchase
+                  </span>
+                  : {selectedOrdersItem.purchaseDate}
+                </p>
+                <p className="text-base m-4" data-testid="address">
+                  <span className="text-base font-semibold">Address</span>:{' '}
+                  {selectedOrdersItem.address}
+                </p>
+                <p className="text-base m-4" data-testid="order-status">
+                  <span className="text-base font-semibold">Order Status</span>:{' '}
+                  {selectedOrdersItem.status}
+                </p>
+                <div className="mt-20 flex justify-end">
                   <button
                     type="button"
                     className="bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[120px] h-8 mr-[20px]"
