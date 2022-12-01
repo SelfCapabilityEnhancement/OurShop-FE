@@ -52,17 +52,13 @@ export default function Profile() {
           </div>
           <div className="px-1 py-1">
             <Menu.Item>
-              {({ active }) => (
-                <NavLink
-                  to="my-order"
-                  className={classNames(
-                    active ? 'bg-gray-100' : '',
-                    'settings block px-4 py-2 text-center text-base'
-                  )}
-                >
-                  Settings
-                </NavLink>
-              )}
+              <span
+                className={classNames(
+                  'settings block px-4 py-2 text-center text-base'
+                )}
+              >
+                Settings
+              </span>
             </Menu.Item>
           </div>
         </Menu.Items>
