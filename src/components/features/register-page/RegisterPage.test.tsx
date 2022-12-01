@@ -62,6 +62,7 @@ describe('display register page', () => {
     await user.click(registerBtn);
 
     expect(registerMock).toBeCalled();
+
     // expect(
     //   await screen.findByText('Registered successfully, you can login now')
     // ).toBeInTheDocument();
@@ -85,8 +86,6 @@ describe('display register page', () => {
   });
 
   it('should show error tips when passwords do not match', async () => {
-    jest.spyOn(service, 'register').mockResolvedValue({} as AxiosResponse);
-
     await user.type(screen.getByTestId('username'), 'tom');
     await user.type(screen.getByTestId('password'), '111');
     await user.type(screen.getByTestId('confirmPassword'), '123');
@@ -94,8 +93,6 @@ describe('display register page', () => {
     const registerBtn = screen.getByTestId('register-btn');
     await user.click(registerBtn);
 
-    expect(
-      await screen.findByText('Passwords does not match!')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Passwords does not match!')).toBeInTheDocument();
   });
 });
