@@ -7,10 +7,12 @@ import { AxiosResponse } from 'axios';
 
 jest.mock('@/service', () => ({
   login: jest.fn().mockResolvedValue({
-    detail: 'username & password does not match',
-    status: 401,
-    title: 'username & password does not match',
-    type: '/api/v1/users/login',
+    data: {
+      detail: 'username & password does not match',
+      status: 401,
+      title: 'username & password does not match',
+      type: '/api/v1/users/login',
+    },
   }),
 }));
 
@@ -62,7 +64,6 @@ describe('display login page', () => {
     await user.click(loginBtn);
 
     expect(loginMock).toBeCalled();
-    // expect(await screen.findByText('Login successfully')).toBeInTheDocument();
   });
 
   it('should show error tips when username is missing', async () => {
@@ -98,8 +99,7 @@ describe('display login page', () => {
     await user.click(loginBtn);
 
     expect(
-      screen.findByText('Username & Password does not match!')
-    ).toBeTruthy();
-    // expect(await screen.findByText('Username & Password does not match!')).toBeInTheDocument();
+      await screen.findByText('Username & Password does not match!')
+    ).toBeInTheDocument();
   });
 });
