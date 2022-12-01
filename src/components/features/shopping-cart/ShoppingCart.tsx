@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import { getCurrentUser, getShoppingCarts } from '@/service';
+import { getCurrentUser, getShoppingCarts, updateProductNum } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import Loading from '@/components/common/loading/Loading';
 import useGlobalState from '@/state';
@@ -18,10 +18,13 @@ export default function ShoppingCart() {
     new Array(shoppingCartItems.length).fill(false)
   );
   const [showLoading, setShowLoading] = useState(false);
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     setShowLoading(true);
     getCurrentUser().then(async ({ id }) => {
+      // @ts-ignore
+      setUserId(id);
       const items = await getShoppingCarts(id);
       setShoppingCartItems(items);
       setShoppingCartLength(items.length);
@@ -29,20 +32,38 @@ export default function ShoppingCart() {
     });
   }, []);
 
-  const handlePlus = (index: number) => {
+  const handlePlus = async (index: number) => {
     if (!shoppingCartItems[index].product.isDeleted) {
       const tmp = [...shoppingCartItems];
       tmp[index].productNum += 1;
-      setShoppingCartItems(tmp);
+      const numSavedFlag = await updateProductNum(
+        // @ts-ignore
+        userId,
+        shoppingCartItems[index].productId,
+        tmp[index].productNum
+      );
+      // @ts-ignore
+      if (numSavedFlag) {
+        setShoppingCartItems(tmp);
+      }
     }
   };
 
-  const handleMinus = (index: number) => {
+  const handleMinus = async (index: number) => {
     if (!shoppingCartItems[index].product.isDeleted) {
       if (shoppingCartItems[index].productNum > 1) {
         const tmp = [...shoppingCartItems];
         tmp[index].productNum -= 1;
-        setShoppingCartItems(tmp);
+        const numSavedFlag = await updateProductNum(
+          // @ts-ignore
+          userId,
+          shoppingCartItems[index].productId,
+          tmp[index].productNum
+        );
+        // @ts-ignore
+        if (numSavedFlag) {
+          setShoppingCartItems(tmp);
+        }
       }
     }
   };

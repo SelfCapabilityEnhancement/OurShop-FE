@@ -113,6 +113,19 @@ export const updateUserInfo = async (
   });
 };
 
+export const updateProductNum = async (
+  userId: number,
+  productId: number,
+  productNum: number
+) => {
+  const { data } = await http.patch('/shopping-carts/products-quantity', {
+    userId,
+    productId,
+    productNum,
+  });
+  return data;
+};
+
 export const payByToken = async (
   userId: number,
   cost: number,
