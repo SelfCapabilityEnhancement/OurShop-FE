@@ -10,6 +10,7 @@ import * as service from '@/service';
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue({ id: 2 }),
   getShoppingCarts: jest.fn(),
+  updateProductNum: jest.fn().mockResolvedValue(true),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
