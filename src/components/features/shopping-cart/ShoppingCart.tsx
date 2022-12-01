@@ -18,12 +18,11 @@ export default function ShoppingCart() {
     new Array(shoppingCartItems.length).fill(false)
   );
   const [showLoading, setShowLoading] = useState(false);
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState<number>();
 
   useEffect(() => {
     setShowLoading(true);
     getCurrentUser().then(async ({ id }) => {
-      // @ts-ignore
       setUserId(id);
       const items = await getShoppingCarts(id);
       setShoppingCartItems(items);
@@ -37,12 +36,10 @@ export default function ShoppingCart() {
       const tmp = [...shoppingCartItems];
       tmp[index].productNum += 1;
       const numSavedFlag = await updateProductNum(
-        // @ts-ignore
-        userId,
+        userId as number,
         shoppingCartItems[index].productId,
         tmp[index].productNum
       );
-      // @ts-ignore
       if (numSavedFlag) {
         setShoppingCartItems(tmp);
       }
@@ -55,12 +52,10 @@ export default function ShoppingCart() {
         const tmp = [...shoppingCartItems];
         tmp[index].productNum -= 1;
         const numSavedFlag = await updateProductNum(
-          // @ts-ignore
-          userId,
+          userId as number,
           shoppingCartItems[index].productId,
           tmp[index].productNum
         );
-        // @ts-ignore
         if (numSavedFlag) {
           setShoppingCartItems(tmp);
         }
