@@ -281,7 +281,7 @@ function CreateProduct() {
                 </label>
                 <textarea
                   className={classNames(
-                    'col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300',
+                    'h-[200px] col-span-2 shadow-sm bg-gray-50 resize-none border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300',
                     validations.description
                       ? 'outline-none ring ring-rose-500'
                       : ''
