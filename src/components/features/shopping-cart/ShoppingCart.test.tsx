@@ -47,6 +47,8 @@ describe('display shopping cart page given nonempty products', () => {
   it('should display pay button', () => {
     const payBtn = container.querySelectorAll('button');
     expect(payBtn.length).toBe(2);
+    expect(screen.getAllByRole('button')[0]).toHaveTextContent('Pay by Token');
+    expect(screen.getAllByRole('button')[1]).toHaveTextContent('Pay by Bank');
   });
 
   // it('should navigate to purchase-confirmation page', async () => {
