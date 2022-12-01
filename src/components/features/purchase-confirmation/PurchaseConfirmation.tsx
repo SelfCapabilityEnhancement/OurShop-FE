@@ -71,19 +71,24 @@ export default function PurchaseConfirmation() {
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
     setShowLoading(true);
-    try {
-      await payByToken(user?.id as number, cost, purchaseConfirmationItems);
-      setShowLoading(false);
-      SetShowBanner(true);
-      setVerifySuccess(true);
-      setTimeout(() => {
-        SetShowBanner(false);
-        navigate('/shopping-cart');
-      }, 1500);
-    } catch (e) {
+    const resp = await payByToken(
+      user?.id as number,
+      cost,
+      purchaseConfirmationItems
+    );
+    console.log(resp);
+    if (resp.data.code !== 20000) {
       SetShowBanner(true);
       setVerifySuccess(false);
+      return;
     }
+    setShowLoading(false);
+    SetShowBanner(true);
+    setVerifySuccess(true);
+    setTimeout(() => {
+      SetShowBanner(false);
+      navigate('/shopping-cart');
+    }, 1500);
   };
 
   const handlePlus = async (index: number) => {
