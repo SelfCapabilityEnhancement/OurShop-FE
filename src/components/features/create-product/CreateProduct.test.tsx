@@ -12,15 +12,16 @@ jest.mock('@/service', () => ({
   newProduct: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(() => {
-    window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-      observe: () => null,
-      disconnect: () => null,
-    }));
     container = render(<CreateProduct />, { wrapper: BrowserRouter }).container;
   });
 

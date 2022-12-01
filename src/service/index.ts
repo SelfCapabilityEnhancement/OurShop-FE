@@ -21,13 +21,17 @@ export const uploadFile = async (images: File[]) => {
   await Promise.all(images.map((image) => uploadFileToBlob(image)));
 };
 
-export const newProduct = async (product: Product) => {
+export const newProduct = async ({
+  id,
+  imageFiles,
+  deletedTime,
+  ...product
+}: Product) => {
   await http.post('/products', {
     ...product,
-    images: product.imageFiles
+    images: imageFiles
       .map((image) => `${imageUrlPrefix}${image.name}`)
       .join(','),
-    imageFiles: [],
   });
 };
 
@@ -133,3 +137,17 @@ export const updateOrders = (
 
 export const getOrdersItemsByUserId = (userId: number) =>
   http.get(`/users/${userId}/orders`).then((response) => response.data);
+
+export const register = async (name: string, password: string) => {
+  return await http.post('/users/register', {
+    name,
+    password,
+  });
+};
+
+export const login = async (username: string, password: string) => {
+  return await http.post('/users/login', {
+    username,
+    password,
+  });
+};

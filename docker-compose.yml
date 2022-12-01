@@ -1,0 +1,12 @@
+# docker-compose run --rm ourshop-fe-test
+version: '3.9'
+services:
+  yarn-test:
+    profiles:
+      - test
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    stdin_open: true
+    tty: true

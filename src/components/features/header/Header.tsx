@@ -44,9 +44,10 @@ export default function Header() {
     return ['/login', '/register'].includes(location.pathname);
   };
 
-  const renderHeader = (item: { id: string; name: string }) => (
+  const renderHeader = (item: { id: string; name: string }, index: number) => (
     <NavLink
       to={`${item.id}`}
+      key={index}
       className={() =>
         classNames(
           'p-2 mx-3 text-center border-b-2 border-white',
@@ -87,7 +88,7 @@ export default function Header() {
           {isLoginOrRegister() ? (
             <div className="font-semibold mr-80">Language : English</div>
           ) : (
-            headerList.map((item) => renderHeader(item))
+            headerList.map((item, index) => renderHeader(item, index))
           )}
         </div>
         {!isLoginOrRegister() && <Profile></Profile>}
