@@ -115,17 +115,11 @@ export const payByToken = async (
   cost: number,
   purchaseConfirmationItems: PurchaseConfirmationItem[]
 ) => {
-  await http.post('/shopping-carts/pay-by-token', {
+  return await http.post('/shopping-carts/pay-by-token', {
     userId,
     token: cost,
     purchaseConfirmationItems,
   });
-};
-
-export const verifyPurchaseInfo = (userId: number): Promise<boolean> => {
-  return http
-    .get(`/purchase-confirmation/verify?userId=${userId}`)
-    .then((response) => response.data);
 };
 
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>

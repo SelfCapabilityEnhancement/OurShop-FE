@@ -77,11 +77,9 @@ describe('purchase confirmation', () => {
     expect(screen.getByText('19')).toBeInTheDocument();
   });
 
-  it('should show banner when click buy by token btn', async () => {
+  it('should show banner when click buy by token btn and verify successfully', async () => {
     const element = container.querySelector('button.buy');
-
     await user.click(element as Element);
-
     expect(
       await screen.findByText('The Purchase Made Successfully!')
     ).toBeInTheDocument();

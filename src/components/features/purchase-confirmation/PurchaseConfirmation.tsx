@@ -5,7 +5,7 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import { getCurrentUser, payByToken, verifyPurchaseInfo } from '@/service';
+import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -37,6 +37,7 @@ export default function PurchaseConfirmation() {
   };
 
   const [showBanner, SetShowBanner] = useState(false);
+  const [isVerifySuccess, setVerifySuccess] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
   const [cost, setCost] = useState(calCostOfToken());
@@ -68,24 +69,21 @@ export default function PurchaseConfirmation() {
   };
 
   const handleClickBuy = async () => {
-    let verifyFlag = false;
-    verifyPurchaseInfo(user?.id as number).then((resp) => {
-      verifyFlag = resp;
-    });
-    if (!verifyFlag) {
-      alert('verify false');
-      return;
-    }
-    setShowLoading(true);
     getPurchaseConfirmationItems();
-    await payByToken(user?.id as number, cost, purchaseConfirmationItems);
-
-    setShowLoading(false);
-    SetShowBanner(true);
-    setTimeout(() => {
-      SetShowBanner(false);
-      navigate('/shopping-cart');
-    }, 1500);
+    setShowLoading(true);
+    try {
+      await payByToken(user?.id as number, cost, purchaseConfirmationItems);
+      setShowLoading(false);
+      SetShowBanner(true);
+      setVerifySuccess(true);
+      setTimeout(() => {
+        SetShowBanner(false);
+        navigate('/shopping-cart');
+      }, 1500);
+    } catch (e) {
+      SetShowBanner(true);
+      setVerifySuccess(false);
+    }
   };
 
   const handlePlus = async (index: number) => {
@@ -99,7 +97,6 @@ export default function PurchaseConfirmation() {
       const tmp = [...allCount];
       tmp[index] -= 1;
       setAllCount(tmp);
-      getPurchaseConfirmationItems();
     }
   };
 
@@ -107,8 +104,12 @@ export default function PurchaseConfirmation() {
     <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
       <Banner
         visible={showBanner}
-        success={true}
-        message={'The Purchase Made Successfully!'}
+        success={isVerifySuccess}
+        message={
+          isVerifySuccess
+            ? 'The Purchase Made Successfully!'
+            : 'Validation failure!'
+        }
       />
       <Loading visible={showLoading} message="Processing..." />
       <h1 className="wallet-header text-center text-3xl mb-10">
