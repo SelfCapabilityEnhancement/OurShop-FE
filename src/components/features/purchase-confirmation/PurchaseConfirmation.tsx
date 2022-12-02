@@ -67,6 +67,12 @@ export default function PurchaseConfirmation() {
       });
     });
   };
+  const handleVerify = () => {
+    setTimeout(() => {
+      SetShowBanner(false);
+      navigate('/shopping-cart');
+    }, 1500);
+  };
 
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
@@ -76,19 +82,15 @@ export default function PurchaseConfirmation() {
       cost,
       purchaseConfirmationItems
     );
-    console.log(resp);
-    if (resp.data.code !== 20000) {
-      SetShowBanner(true);
-      setVerifySuccess(false);
-      return;
-    }
     setShowLoading(false);
     SetShowBanner(true);
+    if (resp.data.code && resp.data.code !== 20000) {
+      setVerifySuccess(false);
+      handleVerify();
+      return;
+    }
     setVerifySuccess(true);
-    setTimeout(() => {
-      SetShowBanner(false);
-      navigate('/shopping-cart');
-    }, 1500);
+    // handleVerify();
   };
 
   const handlePlus = async (index: number) => {
