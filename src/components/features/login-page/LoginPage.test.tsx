@@ -4,16 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { AxiosResponse } from 'axios';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
-  login: jest.fn().mockResolvedValue({
-    data: {
-      detail: 'username & password does not match',
-      status: 401,
-      title: 'username & password does not match',
-      type: '/api/v1/users/login',
-    },
-  }),
+  login: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -24,8 +18,10 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 describe('display login page', () => {
   const user = userEvent.setup();
 
-  beforeEach(() => {
-    render(<LoginPage />, { wrapper: BrowserRouter });
+  beforeEach(async () => {
+    await act(async () => {
+      render(<LoginPage />, { wrapper: BrowserRouter });
+    });
   });
 
   afterEach(cleanup);
@@ -92,6 +88,15 @@ describe('display login page', () => {
   });
 
   it('should show error tips when username exists or password wrong', async () => {
+    jest.spyOn(service, 'login').mockResolvedValue({
+      data: {
+        detail: 'username & password does not match',
+        status: 401,
+        title: 'username & password does not match',
+        type: '/api/v1/users/login',
+      },
+    } as AxiosResponse);
+
     await user.type(screen.getByTestId('username'), 'name');
     await user.type(screen.getByTestId('password'), '123');
 
