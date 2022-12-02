@@ -14,7 +14,7 @@ describe('OrderItemAdminAll', () => {
         setShowWindow={() => {}}
         setSelectedOrdersItemAdmin={() => {}}
         setShowOrderMadeButton={() => {}}
-        nowStatus="all"
+        nowStatus="All"
       />
     );
   });
@@ -39,7 +39,7 @@ describe('OrderItemAdmin', () => {
         setShowWindow={() => {}}
         setSelectedOrdersItemAdmin={() => {}}
         setShowOrderMadeButton={() => {}}
-        nowStatus="finished"
+        nowStatus="Finished"
       />
     );
   });
@@ -70,7 +70,7 @@ describe('OrderItemAdminPending', () => {
         setShowWindow={() => {}}
         setSelectedOrdersItemAdmin={() => {}}
         setShowOrderMadeButton={() => {}}
-        nowStatus="pending"
+        nowStatus="Pending"
       />
     );
   });

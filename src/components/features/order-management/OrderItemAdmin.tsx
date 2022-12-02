@@ -15,7 +15,7 @@ export default function OrderItemAdmin(props: {
   const date = order.ordersList[0].vendorDate;
 
   function openDetailWindow() {
-    props.setShowOrderMadeButton(props.nowStatus === 'pending');
+    props.setShowOrderMadeButton(props.nowStatus === 'Pending');
     props.setShowWindow(true);
     props.setSelectedOrdersItemAdmin(order);
   }
@@ -34,7 +34,7 @@ export default function OrderItemAdmin(props: {
         </span>
       </div>
       <div className="flex items-center">
-        {props.nowStatus === 'finished' && (
+        {props.nowStatus === 'Finished' && (
           <div className="whitespace-nowrap w-[300px] ">
             <span data-testid="ordered-date-title">Order is Made on: </span>
             <span data-testid="ordered-date">{date}</span>
@@ -42,13 +42,13 @@ export default function OrderItemAdmin(props: {
         )}
         <div
           className={`whitespace-nowrap mr-5 ${
-            props.nowStatus === 'pending' ? 'w-[400px]' : 'w-[100px]'
+            props.nowStatus === 'Pending' ? 'w-[400px]' : 'w-[100px]'
           } `}
         >
           <span data-testid="number-title">Number: </span>
           <span data-testid="total-order-number">{order.productNumAll}</span>
         </div>
-        {props.nowStatus !== 'all' && (
+        {props.nowStatus !== 'All' && (
           <button
             className="view-detail whitespace-nowrap ml-24 px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
             data-testid="view-detail"

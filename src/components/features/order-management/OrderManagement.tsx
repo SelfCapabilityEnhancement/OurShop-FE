@@ -274,31 +274,31 @@ export default function OrderManagement() {
   };
 
   const showAll = () => {
-    setNowStatus('all');
+    setNowStatus('All');
     setAdminOrdersItems(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'all')),
-        'all'
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'All')),
+        'All'
       )
     );
   };
 
   const showPending = () => {
-    setNowStatus('pending');
+    setNowStatus('Pending');
     setAdminOrdersItems(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'pending')),
-        'pending'
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'Pending')),
+        'Pending'
       )
     );
   };
 
   const showFinished = () => {
-    setNowStatus('finished');
+    setNowStatus('Finished');
     setAdminOrdersItems(
       getAdminOrdersList(
-        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'finished')),
-        'finished'
+        filterOrdersByDateRange(filterOrdersByStatus(ordersItems, 'Finished')),
+        'Finished'
       )
     );
   };
