@@ -93,7 +93,7 @@ export default function LoginPage() {
         <div className="login-page-right bg-gray-100 ml-40 mt-12 w-[400px] h-[480px] rounded-xl">
           <p className="mt-6 text-center text-2xl font-semibold">User Login</p>
           <p className="mt-6 mx-[100px] text-center text-m text-gray-500">
-            Hey TWer, Enter your detail to get in to OurShop
+            Hey TWer, enter your detail to get in to OurShop
           </p>
           <form className="place-content-center ml-24 mr-12 w-[300px]">
             <>

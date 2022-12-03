@@ -34,7 +34,7 @@ describe('display login page', () => {
     expect(screen.getByText('Try it now.')).toBeInTheDocument();
     expect(screen.getByText('User Login')).toBeInTheDocument();
     expect(
-      screen.getByText('Hey TWer, Enter your detail to get in to OurShop')
+      screen.getByText('Hey TWer, enter your detail to get in to OurShop')
     ).toBeInTheDocument();
     expect(screen.getByText('Do not have an account?')).toBeInTheDocument();
     expect(screen.getByText('Register with us')).toBeInTheDocument();
