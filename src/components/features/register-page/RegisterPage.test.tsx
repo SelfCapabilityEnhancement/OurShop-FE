@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import * as service from '@/service';
 import userEvent from '@testing-library/user-event';
 import { AxiosResponse } from 'axios';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   register: jest.fn(),
@@ -17,8 +18,10 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 describe('display register page', () => {
   const user = userEvent.setup();
 
-  beforeEach(() => {
-    render(<RegisterPage />, { wrapper: BrowserRouter });
+  beforeEach(async () => {
+    await act(async () => {
+      render(<RegisterPage />, { wrapper: BrowserRouter });
+    });
   });
 
   afterEach(cleanup);
@@ -35,7 +38,7 @@ describe('display register page', () => {
         'Hey TWer, please fill the necessary information to register'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Already has an account?')).toBeInTheDocument();
+    expect(screen.getByText('Already have an account?')).toBeInTheDocument();
     expect(screen.getByText('Login OurShop')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /Register/ })
@@ -50,9 +53,12 @@ describe('display register page', () => {
   });
 
   it('should show register successful banner when information is filled correctly', async () => {
-    const registerMock = jest
-      .spyOn(service, 'register')
-      .mockResolvedValue({} as AxiosResponse);
+    jest.spyOn(service, 'register').mockResolvedValue({
+      data: {
+        name: 'tom',
+        password: '111',
+      },
+    } as AxiosResponse);
 
     await user.type(screen.getByTestId('username'), 'tom');
     await user.type(screen.getByTestId('password'), '111');
@@ -61,11 +67,9 @@ describe('display register page', () => {
     const registerBtn = screen.getByTestId('register-btn');
     await user.click(registerBtn);
 
-    expect(registerMock).toBeCalled();
-
-    // expect(
-    //   await screen.findByText('Registered successfully, you can login now')
-    // ).toBeInTheDocument();
+    expect(
+      await screen.findByText('Registered successfully, you can login now')
+    ).toBeInTheDocument();
   });
 
   it('should show error tips when username is missing', async () => {

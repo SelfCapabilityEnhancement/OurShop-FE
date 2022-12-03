@@ -164,7 +164,7 @@ export default function RegisterPage() {
             </>
           </form>
           <p className="text-center text-gray-500 mt-3 mb-8">
-            Already has an account?
+            Already have an account?
             <NavLink to="/login" className="text-blue-500 ml-1">
               Login OurShop
             </NavLink>
