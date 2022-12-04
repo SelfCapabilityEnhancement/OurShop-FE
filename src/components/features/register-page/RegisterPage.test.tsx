@@ -53,12 +53,7 @@ describe('display register page', () => {
   });
 
   it('should show register successful banner when information is filled correctly', async () => {
-    jest.spyOn(service, 'register').mockResolvedValue({
-      data: {
-        name: 'tom',
-        password: '111',
-      },
-    } as AxiosResponse);
+    jest.spyOn(service, 'register').mockResolvedValue({} as AxiosResponse);
 
     await user.type(screen.getByTestId('username'), 'tom');
     await user.type(screen.getByTestId('password'), '111');

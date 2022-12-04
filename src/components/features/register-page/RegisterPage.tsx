@@ -48,8 +48,8 @@ export default function RegisterPage() {
       register(username, password)
         .then((data) => {
           if (
-            data.data.message === 'error.http.200' &&
-            data.data.title === 'username exists'
+            data.data?.message === 'error.http.200' &&
+            data.data?.title === 'username exists'
           ) {
             setButtonEnabled(true);
             return setError({ usernameError: 'Username already exist!' });
