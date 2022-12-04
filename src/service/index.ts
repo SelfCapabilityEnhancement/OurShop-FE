@@ -35,19 +35,22 @@ export const newProduct = async ({
   });
 };
 
-export const updateProduct = async (product: Product) => {
-  const imageURLs = product.images.split(',');
-
-  await http.patch(`/products/${product.id}`, {
+export const updateProduct = async ({
+  id,
+  imageFiles,
+  deletedTime,
+  ...product
+}: Product) => {
+  await http.patch(`/products/${id}`, {
     ...product,
-    images: imageURLs
+    images: product.images
+      .split(',')
       .map((url, index) => {
         return url.startsWith(imageUrlPrefix)
           ? url
-          : `${imageUrlPrefix}${product.imageFiles[index].name}`;
+          : `${imageUrlPrefix}${imageFiles[index].name}`;
       })
       .join(','),
-    imageFiles: [],
   });
 };
 
