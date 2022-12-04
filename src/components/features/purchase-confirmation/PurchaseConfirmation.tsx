@@ -5,11 +5,7 @@ import {
   User,
 } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-import {
-  updateShoppingCardProduct,
-  getCurrentUser,
-  payByToken,
-} from '@/service';
+import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
@@ -36,19 +32,12 @@ export default function PurchaseConfirmation() {
     return cost;
   };
 
-  const calCostOfTokenByParam = (products: Product[], allCount: number[]) => {
-    let cost = 0;
-    products.forEach((product, index) => {
-      cost += allCount[index] * product.priceToken;
-    });
-    return cost;
-  };
-
   const callCostOfOneProduct = (index: number, token: number) => {
     return allCount[index] * token;
   };
 
   const [showBanner, SetShowBanner] = useState(false);
+  const [isVerifySuccess, setVerifySuccess] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
   const [cost, setCost] = useState(calCostOfToken());
@@ -78,30 +67,36 @@ export default function PurchaseConfirmation() {
       });
     });
   };
-
-  const handleClickBuy = async () => {
-    setShowLoading(true);
-    getPurchaseConfirmationItems();
-    await payByToken(user?.id as number, cost, purchaseConfirmationItems);
-
-    setShowLoading(false);
-    SetShowBanner(true);
+  const handleVerify = () => {
     setTimeout(() => {
       SetShowBanner(false);
       navigate('/shopping-cart');
     }, 1500);
   };
 
+  const handleClickBuy = async () => {
+    getPurchaseConfirmationItems();
+    setShowLoading(true);
+    const resp = await payByToken(
+      user?.id as number,
+      cost,
+      purchaseConfirmationItems
+    );
+    setShowLoading(false);
+    SetShowBanner(true);
+    if (resp.data.code && resp.data.code !== 20000) {
+      setVerifySuccess(false);
+      handleVerify();
+      return;
+    }
+    setVerifySuccess(true);
+    // handleVerify();
+  };
+
   const handlePlus = async (index: number) => {
     const tmp = [...allCount];
     tmp[index] += 1;
     setAllCount(tmp);
-    getPurchaseConfirmationItems();
-    await updateShoppingCardProduct(
-      user?.id as number,
-      calCostOfTokenByParam(products, tmp),
-      purchaseConfirmationItems
-    );
   };
 
   const handleMinus = async (index: number) => {
@@ -109,12 +104,6 @@ export default function PurchaseConfirmation() {
       const tmp = [...allCount];
       tmp[index] -= 1;
       setAllCount(tmp);
-      getPurchaseConfirmationItems();
-      await updateShoppingCardProduct(
-        user?.id as number,
-        calCostOfTokenByParam(products, tmp),
-        purchaseConfirmationItems
-      );
     }
   };
 
@@ -122,8 +111,12 @@ export default function PurchaseConfirmation() {
     <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
       <Banner
         visible={showBanner}
-        success={true}
-        message={'The Purchase Made Successfully!'}
+        success={isVerifySuccess}
+        message={
+          isVerifySuccess
+            ? 'The Purchase Made Successfully!'
+            : 'Validation failure!'
+        }
       />
       <Loading visible={showLoading} message="Processing..." />
       <h1 className="wallet-header text-center text-3xl mb-10">

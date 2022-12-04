@@ -118,19 +118,7 @@ export const payByToken = async (
   cost: number,
   purchaseConfirmationItems: PurchaseConfirmationItem[]
 ) => {
-  await http.post('/shopping-carts/pay-by-token', {
-    userId,
-    token: cost,
-    purchaseConfirmationItems,
-  });
-};
-
-export const updateShoppingCardProduct = async (
-  userId: number,
-  cost: number,
-  purchaseConfirmationItems: PurchaseConfirmationItem[]
-) => {
-  await http.post('/shopping-carts/add-by-plus', {
+  return await http.post('/shopping-carts/pay-by-token', {
     userId,
     token: cost,
     purchaseConfirmationItems,

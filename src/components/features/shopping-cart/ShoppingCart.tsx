@@ -144,7 +144,7 @@ export default function ShoppingCart() {
             className="money w-3/5 p-2 h-12 right-2 text-lg text-white font-semibold rounded-lg
             bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
           >
-            Pay by Money
+            Pay by Bank
           </button>
         </div>
       </div>
