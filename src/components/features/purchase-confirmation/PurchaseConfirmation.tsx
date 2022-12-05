@@ -78,7 +78,7 @@ export default function PurchaseConfirmation() {
     getPurchaseConfirmationItems();
     setShowLoading(true);
     try {
-      await payByToken(user?.id as number, cost + 1, purchaseConfirmationItems);
+      await payByToken(user?.id as number, cost, purchaseConfirmationItems);
       setShowLoading(false);
       SetShowBanner(true);
       setVerifySuccess(true);
