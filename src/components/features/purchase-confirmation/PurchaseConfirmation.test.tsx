@@ -96,6 +96,7 @@ describe('purchase confirmation', () => {
       .spyOn(service, 'payByToken')
       .mockResolvedValue(mockResp as AxiosResponse);
     await user.click(element as Element);
+    // change expect
     // expect(
     //   await screen.findByText('The Purchase Made Successfully!')
     // ).toBeInTheDocument();
