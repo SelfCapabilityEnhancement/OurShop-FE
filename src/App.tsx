@@ -4,7 +4,7 @@ import Header from './components/features/header/Header';
 
 function App() {
   return (
-    <div className="app flex flex-col min-w-[1200px]">
+    <div className="app flex flex-col">
       <Header />
       <Outlet />
     </div>
