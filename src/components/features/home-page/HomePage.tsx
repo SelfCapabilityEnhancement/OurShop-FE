@@ -17,17 +17,19 @@ export default function HomePage() {
   };
 
   return (
-    <div className="grid grid-cols-fluid justify-between my-10">
+    <div className="grid grid-cols-fluid gap-6 justify-between my-10 w-full">
       {products.map((product, key) => (
         <div
           key={product.id}
           onClick={() => handleClick(product)}
-          className="product w-60 h-72 mb-5 mx-auto flex flex-col bg-gray-100"
+          className="product w-full h-72 mb-5 flex flex-col bg-gray-100"
+          id="home-product"
         >
           <img
             src={product.images.split(',')[0]}
             alt="product"
-            className={`image${key} h-48 w-60 object-cover`}
+            className={`image${key} h-48 w-full object-cover`}
+            id="product-img"
           />
           <div className="bg-gray-100">
             <div className="text-xl font-normal">{product.name}</div>
