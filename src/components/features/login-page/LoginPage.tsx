@@ -48,6 +48,7 @@ export default function LoginPage() {
         } else {
           setLoginSuccess(true);
           resetInput();
+          localStorage.setItem('jwt', 'Bearer ' + data.data);
           setTimeout(() => {
             navigate('/home');
           }, 1500);

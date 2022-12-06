@@ -79,7 +79,11 @@ export const getShoppingCarts = async (userId: number) => {
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await http.get('/products?deleted=' + false);
+  const url = '/products?deleted=' + false;
+  const authorization = localStorage.getItem('jwt');
+  const { data } = await http.get(url, {
+    headers: { Authorization: authorization },
+  });
 
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
@@ -111,6 +115,19 @@ export const updateUserInfo = async (
     office: officeCity,
     address,
   });
+};
+
+export const updateProductNum = async (
+  userId: number,
+  productId: number,
+  productNum: number
+) => {
+  const { data } = await http.patch('/shopping-carts/products-quantity', {
+    userId,
+    productId,
+    productNum,
+  });
+  return data;
 };
 
 export const payByToken = async (

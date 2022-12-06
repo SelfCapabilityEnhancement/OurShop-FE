@@ -77,20 +77,17 @@ export default function PurchaseConfirmation() {
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
     setShowLoading(true);
-    const resp = await payByToken(
-      user?.id as number,
-      cost,
-      purchaseConfirmationItems
-    );
-    setShowLoading(false);
-    SetShowBanner(true);
-    if (resp.data.code && resp.data.code !== 20000) {
+    try {
+      await payByToken(user?.id as number, cost, purchaseConfirmationItems);
+      setShowLoading(false);
+      SetShowBanner(true);
+      setVerifySuccess(true);
+      handleVerify();
+    } catch (e) {
+      SetShowBanner(true);
       setVerifySuccess(false);
       handleVerify();
-      return;
     }
-    setVerifySuccess(true);
-    // handleVerify();
   };
 
   const handlePlus = async (index: number) => {
