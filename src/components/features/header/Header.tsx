@@ -72,7 +72,7 @@ export default function Header() {
 
   return (
     <div className="flex justify-between items-center shadow-md h-[72px]">
-      <div className="flex items-center ml-8">
+      <div className="flex items-center ml-8 min-w-[150px]">
         <img
           src="/logo.png"
           alt=""
