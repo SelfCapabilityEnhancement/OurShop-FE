@@ -25,7 +25,7 @@ export default function OrderDetailWindow(props: {
 
   const handleOrderMade = async () => {
     setButtonEnabled(false);
-    props.refreshData('pending');
+    props.refreshData('Pending');
   };
 
   const toExcel = useCallback(async () => {

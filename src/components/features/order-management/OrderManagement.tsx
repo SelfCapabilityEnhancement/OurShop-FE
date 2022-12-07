@@ -21,6 +21,9 @@ const titles = [
   { id: 'historicalOrder', name: 'Historical Order' },
 ];
 
+const statusAll = 'All';
+const statusFinished = 'Finished';
+
 export default function OrderManagement() {
   const [goodOption, setGoodOption] = useState(initGoodOption);
   // eslint-disable-next-line no-unused-vars
@@ -32,7 +35,7 @@ export default function OrderManagement() {
   useEffect(() => {
     getAllOrdersItems().then((data) => {
       setOrdersItems(data);
-      setAdminOrdersItems(getAdminOrdersList(data, 'all'));
+      setAdminOrdersItems(getAdminOrdersList(data, statusAll));
     });
   }, []);
 
@@ -51,7 +54,7 @@ export default function OrderManagement() {
 
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [nowStatus, setNowStatus] = useState('all');
+  const [nowStatus, setNowStatus] = useState(statusAll);
 
   const [showWindow, setShowWindow] = useState(false);
   const [selectedOrdersItemAdmin, setSelectedOrdersItemAdmin] =
@@ -178,13 +181,13 @@ export default function OrderManagement() {
         productIds.push(ordersItemAdmin.productId);
       });
       const vendorDates: String[] = [];
-      if (status === 'finished') {
+      if (status === statusFinished) {
         ordersItemAdmins.forEach((ordersItemAdmin) => {
           vendorDates.push(ordersItemAdmin.ordersList[0].vendorDate.toString());
         });
       }
       const dateOrder = ordersItemList[i].vendorDate;
-      if (status === 'finished') {
+      if (status === statusFinished) {
         if (
           productIds.includes(ordersItemList[i].productId) &&
           vendorDates.includes(dateOrder.toString())
@@ -201,7 +204,7 @@ export default function OrderManagement() {
           addNewOrdersItemAdmin(ordersItemAdmins, ordersItemList, i);
         }
       }
-      if (status !== 'finished') {
+      if (status !== statusFinished) {
         if (productIds.includes(ordersItemList[i].productId)) {
           ordersItemAdmins = ordersItemAdmins.map((ordersItemAdmin) =>
             countProductNumAllByProductId(ordersItemAdmin, ordersItemList, i)
@@ -211,7 +214,7 @@ export default function OrderManagement() {
         }
       }
     }
-    if (status === 'finished') {
+    if (status === statusFinished) {
       return orderByVendorDate(ordersItemAdmins);
     }
     return ordersItemAdmins;
@@ -221,7 +224,7 @@ export default function OrderManagement() {
     ordersItemList: OrdersItem[],
     status: string
   ) => {
-    if (status === 'all') {
+    if (status === statusAll) {
       return ordersItemList;
     } else {
       return ordersItemList.filter(

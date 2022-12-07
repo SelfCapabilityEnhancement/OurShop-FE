@@ -56,10 +56,10 @@ describe('display order management', () => {
   test('should count total order number for each product', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子Number: 1View Detail');
+    ).toBe('橘子Number: 1');
   });
 
   test('should filter orders by date range when input date range and count total order number for each product', async () => {
@@ -73,7 +73,7 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
   });
 
   test('should filter orders by start date when only input start date and count total order number for each product', async () => {
@@ -85,7 +85,7 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('橘子Number: 1View Detail');
+    ).toBe('橘子Number: 1');
   });
 
   test('should filter orders by end date when only input end date and count total order number for each product', async () => {
@@ -97,7 +97,7 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
   });
 
   test('should show all orders when do not input any date and count total order number for each product', async () => {
@@ -106,10 +106,10 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子Number: 1View Detail');
+    ).toBe('橘子Number: 1');
   });
 
   test('should show origin orders when input incorrect date range', async () => {
@@ -134,10 +134,10 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
     expect(
       container.querySelectorAll('.order-item-admin').item(1).textContent
-    ).toBe('橘子Number: 1View Detail');
+    ).toBe('橘子Number: 1');
     expect(screen.getAllByRole('textbox')[0].textContent).toBe('');
     expect(screen.getAllByRole('textbox')[1].textContent).toBe('');
   });
@@ -203,7 +203,7 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(2);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
   });
 
   test('should show orders before endDate when choose startDate before endDate in calendar', async () => {
@@ -217,6 +217,6 @@ describe('display order management', () => {
     expect(container.querySelectorAll('.order-item-admin').length).toBe(1);
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
-    ).toBe('苹果Number: 1View Detail');
+    ).toBe('苹果Number: 1');
   });
 });
