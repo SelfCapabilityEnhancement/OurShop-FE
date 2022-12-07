@@ -29,7 +29,7 @@ describe('Header test', () => {
     it('should render navigation list', () => {
       const navList = container.querySelector('.nav-list');
 
-      expect(navList?.children.length).toEqual(6);
+      expect(navList?.children.length).toEqual(5);
     });
 
     it('should render user avatar', () => {

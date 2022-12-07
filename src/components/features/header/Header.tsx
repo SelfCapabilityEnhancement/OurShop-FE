@@ -29,7 +29,7 @@ export default function Header() {
   const location = useLocation();
 
   const headerList = [
-    { id: 'account-management', name: 'Account Management' },
+    // { id: 'account-management', name: 'Account Management' },
     { id: 'product-management', name: 'Product Management' },
     { id: 'order-management', name: 'Order Management' },
     { id: 'create-product', name: 'Create Product' },
