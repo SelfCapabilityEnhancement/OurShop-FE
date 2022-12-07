@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  Account,
   OrdersItem,
   Product,
   PurchaseConfirmationItem,
@@ -164,4 +165,10 @@ export const login = async (username: string, password: string) => {
     username,
     password,
   });
+};
+
+export const getAccountList = async (): Promise<Account[]> => {
+  return await http
+    .get('/users/get-account-list')
+    .then((response) => response.data);
 };

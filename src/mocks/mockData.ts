@@ -3,6 +3,7 @@ import {
   Product,
   OrdersItemAdmin,
   User,
+  Account,
 } from '@/components/common/CustomTypes';
 
 const product1: Product = {
@@ -124,6 +125,21 @@ export const users: User[] = [
     bankAccount: '456',
     avatar: 'avatar',
     telephoneNum: 456789,
+  },
+];
+
+export const accounts: Account[] = [
+  {
+    username: 'Tom',
+    connection: 'username',
+    role: 'Admin',
+    createdTime: '2022-12-06 09:54:30',
+  },
+  {
+    username: 'Bob',
+    connection: 'username',
+    role: 'Buyer',
+    createdTime: '2022-12-07 06:52:37',
   },
 ];
 

@@ -27,6 +27,13 @@ export interface User {
   telephoneNum: number;
 }
 
+export interface Account {
+  username: string;
+  connection: string;
+  role: string;
+  createdTime: string;
+}
+
 export interface ShoppingCartItem {
   product: Product;
   productNum: number;
