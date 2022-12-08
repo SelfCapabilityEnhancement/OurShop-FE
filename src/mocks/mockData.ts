@@ -132,7 +132,7 @@ export const accounts: Account[] = [
   {
     username: 'Tom',
     connection: 'username',
-    role: 'Admin',
+    role: 'Site Admin',
     createdTime: '2022-12-06 09:54:30',
   },
   {
