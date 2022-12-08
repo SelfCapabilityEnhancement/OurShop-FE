@@ -54,7 +54,6 @@ export default function LoginPage() {
           localStorage.setItem('jwt', 'Bearer ' + data.data.token);
           setTimeout(() => {
             navigate('/home');
-            // window.location.reload();
           }, 1500);
         }
       })
