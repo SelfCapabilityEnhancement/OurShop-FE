@@ -13,7 +13,7 @@ import ProductManagement from '@/components/features/product-management/ProductM
 import LoginPage from '@/components/features/login-page/LoginPage';
 import RegisterPage from '@/components/features/register-page/RegisterPage';
 import App from '@/App';
-import AccountManagement from '@/components/features/account-management/AccountManagement';
+// import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 export const router = createBrowserRouter([
   {
@@ -73,10 +73,10 @@ export const router = createBrowserRouter([
         path: 'product-management',
         element: <ProductManagement />,
       },
-      {
-        path: 'account-management',
-        element: <AccountManagement />,
-      },
+      // {
+      //   path: 'account-management',
+      //   element: <AccountManagement />,
+      // },
     ],
   },
 ]);
