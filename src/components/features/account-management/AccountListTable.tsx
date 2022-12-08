@@ -21,7 +21,7 @@ export default function AccountListTable(props: { userList: Account[] }) {
                 scope="col"
                 className="font-normal"
                 key={item.id}
-                data-testid="account-tab-title"
+                data-testid="account-table-head"
               >
                 {item.name}
               </th>
@@ -31,9 +31,23 @@ export default function AccountListTable(props: { userList: Account[] }) {
         <tbody>
           {userList.map((user, index) => (
             <tr className="h-16 border-b border-gray-400" key={index}>
-              <td className="px-2">{user.username}</td>
+              <td
+                className="px-2"
+                title={user.username.length > 20 ? user.username : ''}
+              >
+                {user.username.length > 20
+                  ? user.username.substring(0, 19) + '...'
+                  : user.username}
+              </td>
               <td className="px-2">{user.connection}</td>
-              <td className="px-2">{user.role}</td>
+              <td
+                className="px-2"
+                title={user.role.length > 20 ? user.role : ''}
+              >
+                {user.role.length > 20
+                  ? user.role.substring(0, 19) + '...'
+                  : user.role}
+              </td>
               <td className="px-2">{user.createdTime}</td>
               <td className="px-2 text-blue-600">
                 <span className="mr-6">Access</span>

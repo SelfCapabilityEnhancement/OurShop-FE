@@ -25,13 +25,13 @@ describe('Account List', () => {
   afterEach(cleanup);
 
   it('should show account list tabs', () => {
-    const tableTitle = screen.getAllByTestId('account-tab-title');
-    expect(tableTitle).toHaveLength(5);
-    expect(tableTitle[0]).toHaveTextContent('Username');
-    expect(tableTitle[1]).toHaveTextContent('Connection');
-    expect(tableTitle[2]).toHaveTextContent('Role');
-    expect(tableTitle[3]).toHaveTextContent('Created at');
-    expect(tableTitle[4]).toHaveTextContent('Action');
+    const tableHead = screen.getAllByTestId('account-table-head');
+    expect(tableHead).toHaveLength(5);
+    expect(tableHead[0]).toHaveTextContent('Username');
+    expect(tableHead[1]).toHaveTextContent('Connection');
+    expect(tableHead[2]).toHaveTextContent('Role');
+    expect(tableHead[3]).toHaveTextContent('Created at');
+    expect(tableHead[4]).toHaveTextContent('Action');
   });
 
   it('should show account list items', () => {

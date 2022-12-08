@@ -17,7 +17,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 justify-between my-10 mx-4">
+    <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
       {products.map((product, key) => (
         <div
           key={product.id}
