@@ -56,33 +56,42 @@ export const updateProduct = async ({
 
 // this will be replaced by useContext in next iteration
 export const getCurrentUser = (): Promise<User> => {
-  return http.get('/users/13').then((response) => response.data);
+  return http
+    .get('/users', {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 };
 
 export const addToCarts = async (
-  userId: number,
   productId: number,
   productNum: number,
   logisticMethod: string
 ) => {
-  await http.post('/shopping-carts', {
-    userId,
-    productId,
-    productNum,
-    logisticMethod,
-  });
+  await http.post(
+    '/shopping-carts',
+    {
+      productId,
+      productNum,
+      logisticMethod,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
-export const getShoppingCarts = async (userId: number) => {
-  const { data } = await http.get(`/users/${userId}/shopping-carts`);
+export const getShoppingCarts = async () => {
+  const { data } = await http.get(`/users/shopping-carts`, {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
   return data;
 };
 
 export const getProducts = async (): Promise<Product[]> => {
   const url = '/products?deleted=' + false;
-  const authorization = localStorage.getItem('jwt');
   const { data } = await http.get(url, {
-    headers: { Authorization: authorization },
+    headers: { Authorization: localStorage.getItem('jwt') },
   });
 
   data.sort((a: { id: number }, b: { id: number }) => {
@@ -106,40 +115,50 @@ export const deleteProduct = async (product: Product) => {
   await http.delete('/products/' + product.id);
 };
 
-export const updateUserInfo = async (
-  userId: number,
-  officeCity: string,
-  address: string
-) => {
-  await http.patch('/users/' + userId, {
-    office: officeCity,
-    address,
-  });
+export const updateUserInfo = async (officeCity: string, address: string) => {
+  await http.patch(
+    '/users/',
+    {
+      office: officeCity,
+      address,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 export const updateProductNum = async (
-  userId: number,
   productId: number,
   productNum: number
 ) => {
-  const { data } = await http.patch('/shopping-carts/products-quantity', {
-    userId,
-    productId,
-    productNum,
-  });
+  const { data } = await http.patch(
+    '/shopping-carts/products-quantity',
+    {
+      productId,
+      productNum,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
   return data;
 };
 
 export const payByToken = async (
-  userId: number,
   cost: number,
   purchaseConfirmationItems: PurchaseConfirmationItem[]
 ) => {
-  return await http.post('/shopping-carts/pay-by-token', {
-    userId,
-    token: cost,
-    purchaseConfirmationItems,
-  });
+  return await http.post(
+    '/shopping-carts/pay-by-token',
+    {
+      token: cost,
+      purchaseConfirmationItems,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
@@ -149,8 +168,12 @@ export const updateOrders = (
   ordersProductIds: { orderId: number; productId: number }[]
 ) => http.patch('/orders', ordersProductIds).then((response) => response.data);
 
-export const getOrdersItemsByUserId = (userId: number) =>
-  http.get(`/users/${userId}/orders`).then((response) => response.data);
+export const getOrdersItemsByUserId = () =>
+  http
+    .get(`/users/orders`, {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 
 export const register = async (name: string, password: string) => {
   return await http.post('/users/register', {

@@ -25,8 +25,8 @@ export default function MyOrder() {
   });
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      getOrdersItemsByUserId(user.id).then((data) =>
+    getCurrentUser().then(() => {
+      getOrdersItemsByUserId().then((data) =>
         setOrdersItems(orderByPurchaseDate(data))
       );
     });

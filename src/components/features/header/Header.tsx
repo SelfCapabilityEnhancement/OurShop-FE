@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
 import { useEffect, useState } from 'react';
 import { ShoppingCartItem } from '@/components/common/CustomTypes';
-import { getCurrentUser, getShoppingCarts } from '@/service';
+import { getShoppingCarts } from '@/service';
 import { classNames } from '@/utils';
 import { useLocation } from 'react-router';
 import useGlobalState from '@/state';
@@ -14,19 +14,20 @@ export default function Header() {
   const [shoppingCartLength, setShoppingCartLength] =
     useGlobalState('shoppingCartLength');
 
+  const location = useLocation();
+
   useEffect(() => {
-    getCurrentUser().then(async ({ id }) => {
-      const items = await getShoppingCarts(id);
-      setShoppingCartItems(items);
-      setShoppingCartLength(items.length);
-    });
-  }, []);
+    if (localStorage.getItem('jwt') != null) {
+      getShoppingCarts().then((items) => {
+        setShoppingCartItems(items);
+        setShoppingCartLength(items.length);
+      });
+    }
+  }, [localStorage.getItem('jwt')]);
 
   const handleClick = () => {
     navigate('/home');
   };
-
-  const location = useLocation();
 
   const headerList = [
     { id: 'account-management', name: 'Account Management' },

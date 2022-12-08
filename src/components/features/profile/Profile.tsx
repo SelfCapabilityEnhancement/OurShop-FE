@@ -61,6 +61,21 @@ export default function Profile() {
               </span>
             </Menu.Item>
           </div>
+          <div className="px-1 py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <NavLink
+                  to="login"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'address block px-4 py-2 text-center text-base'
+                  )}
+                >
+                  Logout
+                </NavLink>
+              )}
+            </Menu.Item>
+          </div>
         </Menu.Items>
       </Transition>
     </Menu>
