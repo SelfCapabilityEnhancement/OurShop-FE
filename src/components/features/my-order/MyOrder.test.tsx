@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { users, mockOrdersItems } from '@/mocks/mockData';
+import { mockOrdersItems } from '@/mocks/mockData';
 import * as service from '@/service';
 
 jest.mock('@/service', () => ({
@@ -14,7 +14,6 @@ describe('display my order', () => {
   let container: Container;
 
   beforeEach(async () => {
-    jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);
     jest
       .spyOn(service, 'getOrdersItemsByUserId')
       .mockResolvedValue(mockOrdersItems);

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
-import { Product, User } from '@/components/common/CustomTypes';
+import { Product } from '@/components/common/CustomTypes';
 import { useLocation } from 'react-router-dom';
-import { addToCarts, getCurrentUser } from '@/service';
+import { addToCarts } from '@/service';
 import { classNames } from '@/utils';
 import useGlobalState from '@/state';
 
@@ -23,12 +23,7 @@ export default function DetailPage() {
   const [showLoading, setShowLoading] = useState(false);
   const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
-  const [user, setUser] = useState<User>();
   const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
-
-  useEffect(() => {
-    getCurrentUser().then((user) => setUser(user));
-  }, []);
 
   const handleMinus = () => {
     if (count > 1) {
@@ -44,7 +39,7 @@ export default function DetailPage() {
     if (validate()) {
       setValidation(true);
       setShowLoading(true);
-      await addToCarts(user?.id as number, product.id, count, logisticMethod);
+      await addToCarts(product.id, count, logisticMethod);
       setShoppingCartLength((prevState) => prevState + 1);
       setShowLoading(false);
     } else {

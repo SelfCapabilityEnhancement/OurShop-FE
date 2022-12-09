@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 
@@ -22,6 +22,9 @@ export default function LoginPage() {
     useState<Partial<typeof initialError>>(initialError);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   const successMsg = 'Login successfully';
 
   const handleLogin = async () => {
@@ -48,7 +51,7 @@ export default function LoginPage() {
         } else {
           setLoginSuccess(true);
           resetInput();
-          localStorage.setItem('jwt', 'Bearer ' + data.data);
+          localStorage.setItem('jwt', 'Bearer ' + data.data.token);
           setTimeout(() => {
             navigate('/home');
           }, 1500);

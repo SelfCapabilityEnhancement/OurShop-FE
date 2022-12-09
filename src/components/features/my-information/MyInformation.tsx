@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { TextSubmission } from '@/components/common/TextSubmission/TextSubmission';
-import { User } from '@/components/common/CustomTypes';
 import { getCurrentUser, updateUserInfo } from '@/service';
 
 const baseCites = [
@@ -15,11 +14,7 @@ const baseCites = [
 export default function MyInformation() {
   const navigate = useNavigate();
   const handleClick = async () => {
-    await updateUserInfo(
-      user?.id as number,
-      selectedCity.name,
-      shippingAddress
-    );
+    await updateUserInfo(selectedCity.name, shippingAddress);
     navigate('/home');
   };
   const [selectedCity, setSelectedCity] = useState(baseCites[0]);
@@ -27,7 +22,6 @@ export default function MyInformation() {
   const [saveShippingAddress, setSaveShippingAddress] =
     useState(shippingAddress);
   const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState<User>();
   const [pageVisible, setPageVisible] = useState(false);
 
   const handleEdit = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,7 +30,6 @@ export default function MyInformation() {
 
   useEffect(() => {
     getCurrentUser().then((user) => {
-      setUser(user);
       setShippingAddress(user.address);
       setSaveShippingAddress(user.address);
       baseCites.forEach((baseCity) => {

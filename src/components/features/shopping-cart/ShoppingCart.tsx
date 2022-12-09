@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Counter from '@/components/common/counter/Counter';
-import { getCurrentUser, getShoppingCarts, updateProductNum } from '@/service';
+import { getShoppingCarts, updateProductNum } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import Loading from '@/components/common/loading/Loading';
 import useGlobalState from '@/state';
@@ -18,13 +18,11 @@ export default function ShoppingCart() {
     new Array(shoppingCartItems.length).fill(false)
   );
   const [showLoading, setShowLoading] = useState(false);
-  const [userId, setUserId] = useState<number>();
+  // const [userId, setUserId] = useState<number>();
 
   useEffect(() => {
     setShowLoading(true);
-    getCurrentUser().then(async ({ id }) => {
-      setUserId(id);
-      const items = await getShoppingCarts(id);
+    getShoppingCarts().then((items) => {
       setShoppingCartItems(items);
       setShoppingCartLength(items.length);
       setShowLoading(false);
@@ -36,7 +34,6 @@ export default function ShoppingCart() {
       const tmp = [...shoppingCartItems];
       tmp[index].productNum += 1;
       const numSavedFlag = await updateProductNum(
-        userId as number,
         shoppingCartItems[index].productId,
         tmp[index].productNum
       );
@@ -52,7 +49,6 @@ export default function ShoppingCart() {
         const tmp = [...shoppingCartItems];
         tmp[index].productNum -= 1;
         const numSavedFlag = await updateProductNum(
-          userId as number,
           shoppingCartItems[index].productId,
           tmp[index].productNum
         );

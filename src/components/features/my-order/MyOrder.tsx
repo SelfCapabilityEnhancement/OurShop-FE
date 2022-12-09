@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
 import { OrdersItem } from '@/components/common/CustomTypes';
-import { getCurrentUser, getOrdersItemsByUserId } from '@/service';
+import { getOrdersItemsByUserId } from '@/service';
 import MyOrderDetailWindow from '@/components/features/my-order/MyOrderDetailWindow';
 
 export default function MyOrder() {
@@ -25,11 +25,9 @@ export default function MyOrder() {
   });
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      getOrdersItemsByUserId(user.id).then((data) =>
-        setOrdersItems(orderByPurchaseDate(data))
-      );
-    });
+    getOrdersItemsByUserId().then((data) =>
+      setOrdersItems(orderByPurchaseDate(data))
+    );
   }, []);
 
   function orderByPurchaseDate(ordersItems: OrdersItem[]) {
