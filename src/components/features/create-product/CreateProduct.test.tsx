@@ -80,7 +80,7 @@ describe('Create product test', () => {
   it('should display tabs', () => {
     const tabs = [
       { id: 'productInfo', name: 'Product Information' },
-      { id: 'logisticInfo', name: 'Logistic Information' },
+      { id: 'officeInventory', name: 'Office & Inventory' },
       { id: 'approvalFlow', name: 'Approval Flow' },
     ];
 

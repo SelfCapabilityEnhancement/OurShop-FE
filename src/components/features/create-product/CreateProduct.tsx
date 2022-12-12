@@ -19,7 +19,7 @@ const basicForm: { id: keyof Product; label: string; type: string }[] = [
 
 const tabs = [
   { id: 'productInfo', name: 'Product Information' },
-  { id: 'logisticInfo', name: 'Logistic Information' },
+  { id: 'officeInventory', name: 'Office & Inventory' },
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
