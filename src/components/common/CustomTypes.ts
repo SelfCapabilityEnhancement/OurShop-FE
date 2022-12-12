@@ -107,3 +107,13 @@ export interface OrdersItemAdmin {
     telephoneNum: string;
   }[];
 }
+
+// To prevent conflicts with the keyword Function,
+// it is defined here as Feature
+export interface Feature {
+  featureId: number;
+  featureName: string;
+  code: string;
+  description: string;
+  updateTime: string;
+}

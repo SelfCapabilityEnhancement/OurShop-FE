@@ -4,6 +4,7 @@ import {
   OrdersItemAdmin,
   User,
   Account,
+  Feature,
 } from '@/components/common/CustomTypes';
 
 const product1: Product = {
@@ -281,4 +282,21 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
 export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminPending[0],
   mockOrderItemAdminFinished[0],
+];
+
+export const features: Feature[] = [
+  {
+    featureId: 1,
+    featureName: 'Product Management',
+    code: '/product/product-management',
+    description: '',
+    updateTime: '2022-12-07 06:52:37',
+  },
+  {
+    featureId: 2,
+    featureName: 'Order Management',
+    code: '/order/order-management',
+    description: '',
+    updateTime: '2022-12-07 06:53:32',
+  },
 ];
