@@ -23,14 +23,6 @@ describe('Function List', () => {
   test('should show function list', () => {
     const tableHead = screen.getAllByTestId('account-table-head');
     expect(tableHead).toHaveLength(5);
-    expect(tableHead[0]).toHaveTextContent('Function');
-    expect(tableHead[1]).toHaveTextContent('Code');
-    expect(tableHead[2]).toHaveTextContent('Description');
-    expect(tableHead[3]).toHaveTextContent('Updated at');
-    expect(tableHead[4]).toHaveTextContent('Action');
-  });
-
-  test('should show function list items', () => {
     expect(screen.getByText('Product Management')).toBeInTheDocument();
     expect(screen.getByText('/product/product-management')).toBeInTheDocument();
     expect(screen.getByText('2022-12-07 06:52:37')).toBeInTheDocument();
