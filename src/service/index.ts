@@ -162,6 +162,16 @@ export const payByToken = async (
   );
 };
 
+export const getProductsByOfficeIds = async (
+  officeIds: number[]
+): Promise<Product[]> => {
+  const { data } = await http.get('/products/officeId?officeIds=' + officeIds);
+  data.sort((a: { id: number }, b: { id: number }) => {
+    return a.id > b.id ? -1 : 1;
+  });
+  return data;
+};
+
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
   http.get(`/orders`).then((response) => response.data);
 

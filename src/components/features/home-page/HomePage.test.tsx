@@ -27,6 +27,11 @@ describe('HomePage', () => {
     expect(products).toHaveLength(tempProducts.length);
   });
 
+  it('should show SearchBar', async () => {
+    expect(screen.getByPlaceholderText('Search a product')).toBeInTheDocument();
+    expect(screen.getAllByRole('button')[0]).toHaveTextContent('Filter');
+  });
+
   // it('should navigate to detail page when click product', async () => {
   //   const { name, description } = tempProducts[0];
   //

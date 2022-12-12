@@ -1,0 +1,25 @@
+@tailwind components;
+
+@layer compontents {
+  .dropbtn {
+    @apply flex text-[#606368] cursor-pointer border-none bg-[#EEEEEE] text-xl pt-[0.5rem] h-[45px] w-[7rem] rounded !important;
+  }
+  .after-apply {
+    @apply flex text-white cursor-pointer border-none bg-[#AC64C2] text-xl pt-[0.5rem] h-[45px] w-[7rem] rounded !important;
+  }
+  .arrow {
+    @apply pb-[0.5rem];
+  }
+
+  .dropdown {
+    @apply relative mt-16 inline-block;
+  }
+
+  .dropdown-content {
+    @apply absolute overflow-auto w-[41.5rem] h-[235px] bg-[#EEEEEE] rounded hidden z-[1];
+  }
+
+  .show {
+    @apply block;
+  }
+}
