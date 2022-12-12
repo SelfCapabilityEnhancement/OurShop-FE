@@ -284,19 +284,19 @@ export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminFinished[0],
 ];
 
-export const features: Feature[] = [
-  {
-    featureId: 1,
-    featureName: 'Product Management',
-    code: '/product/product-management',
-    description: '',
-    updateTime: '2022-12-07 06:52:37',
-  },
-  {
-    featureId: 2,
-    featureName: 'Order Management',
-    code: '/order/order-management',
-    description: '',
-    updateTime: '2022-12-07 06:53:32',
-  },
-];
+const feature2 = {
+  featureId: 2,
+  featureName: 'Order Management',
+  code: '/order/order-management',
+  description: 'order',
+  updateTime: '2022-12-07 06:53:32',
+};
+const feature1 = {
+  featureId: 1,
+  featureName: 'Product Management',
+  code: '/product/product-management',
+  description: 'product',
+  updateTime: '2022-12-07 06:52:37',
+};
+
+export const features: Array<Feature> = [feature1, feature2];

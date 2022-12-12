@@ -1,34 +1,26 @@
-import { cleanup, render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
 import FeatureTable from './FeatureTable';
 import { features } from '@/mocks/mockData';
-
-window.IntersectionObserver = jest.fn().mockImplementation(() => ({
-  observe: () => null,
-  disconnect: () => null,
-}));
+import { Feature } from '@/components/common/CustomTypes';
 
 describe('Function List', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<FeatureTable featureList={features} />, {
-        wrapper: BrowserRouter,
-      });
-    });
+  beforeEach(() => {
+    render(<FeatureTable featureList={features} />);
   });
 
-  afterEach(cleanup);
-
   test('should show function list', () => {
-    const tableHead = screen.getAllByTestId('account-table-head');
-    expect(tableHead).toHaveLength(5);
-    expect(screen.getByText('Product Management')).toBeInTheDocument();
-    expect(screen.getByText('/product/product-management')).toBeInTheDocument();
-    expect(screen.getByText('2022-12-07 06:52:37')).toBeInTheDocument();
-    expect(screen.getByText('Order Management')).toBeInTheDocument();
-    expect(screen.getByText('/order/order-management')).toBeInTheDocument();
-    expect(screen.getByText('2022-12-07 06:53:32')).toBeInTheDocument();
+    const items: { [key: string]: keyof Feature } = {
+      Function: 'featureName',
+      Code: 'code',
+      Description: 'description',
+      'Updated at': 'updateTime',
+    };
+
+    Object.entries(items).forEach(([k, v]) => {
+      expect(screen.getByText(k)).toBeInTheDocument();
+      const feature: Feature = features[0];
+      expect(screen.getByText(feature[v] as string)).toBeInTheDocument();
+    });
     expect(screen.getAllByText('Edit')).toHaveLength(2);
   });
 });

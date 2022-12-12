@@ -29,11 +29,12 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
           </tr>
         </thead>
         <tbody>
-          {featureList.map((feature, index) => (
-            <tr className="h-16 border-b border-gray-400" key={index}>
-              <td className="px-2" title={feature.featureName}>
-                {feature.featureName}
-              </td>
+          {featureList.map((feature) => (
+            <tr
+              className="h-16 border-b border-gray-400"
+              key={feature.featureId}
+            >
+              <td className="px-2">{feature.featureName}</td>
               <td className="px-2">{feature.code}</td>
               <td
                 className="px-2"
