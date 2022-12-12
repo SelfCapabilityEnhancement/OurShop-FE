@@ -190,8 +190,6 @@ export const login = async (username: string, password: string) => {
   });
 };
 
-export const getAccountList = async (): Promise<Account[]> => {
-  return await http
-    .get('/users/get-account-list')
-    .then((response) => response.data);
+export const getAccountList = (): Promise<Account[]> => {
+  return http.get('/users/get-account-list').then((response) => response.data);
 };
