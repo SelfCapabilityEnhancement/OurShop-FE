@@ -1,9 +1,11 @@
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
+import FeatureTable from '@/components/features/account-management/components/FunctionTable/FeatureTable';
 import { useEffect, useState } from 'react';
 import { getAccountList } from '@/service';
-import { Account } from '@/components/common/CustomTypes';
+import { getFeatureList } from '@/components/features/account-management/service';
+import { Account, Feature } from '@/components/common/CustomTypes';
 
 const tabs = [
   { id: 'account-list', name: 'Account List' },
@@ -13,10 +15,14 @@ const tabs = [
 
 export default function AccountManagement() {
   const [accountList, setAccountList] = useState<Account[]>([]);
+  const [featureList, setFeatureList] = useState<Feature[]>([]);
 
   useEffect(() => {
     getAccountList().then((data) => {
       setAccountList(data);
+    });
+    getFeatureList().then((data) => {
+      setFeatureList(data);
     });
   }, []);
 
@@ -43,6 +49,12 @@ export default function AccountManagement() {
         <Tab.Panels>
           <Tab.Panel>
             <AccountListTable userList={accountList} />
+          </Tab.Panel>
+          <Tab.Panel>
+            <p>To be prepared</p>
+          </Tab.Panel>
+          <Tab.Panel>
+            <FeatureTable featureList={featureList} />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
