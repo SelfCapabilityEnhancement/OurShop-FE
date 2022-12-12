@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   Account,
+  Feature,
   OrdersItem,
   Product,
   PurchaseConfirmationItem,
@@ -194,4 +195,8 @@ export const getAccountList = async (): Promise<Account[]> => {
   return await http
     .get('/users/get-account-list')
     .then((response) => response.data);
+};
+
+export const getFeatureList = async (): Promise<Feature[]> => {
+  return await http.get('/functions/').then((response) => response.data);
 };

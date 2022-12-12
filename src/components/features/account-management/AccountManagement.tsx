@@ -3,8 +3,7 @@ import { classNames } from '@/utils';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
 import FeatureTable from '@/components/features/account-management/components/FunctionTable/FeatureTable';
 import { useEffect, useState } from 'react';
-import { getAccountList } from '@/service';
-import { getFeatureList } from '@/components/features/account-management/service';
+import { getAccountList, getFeatureList } from '@/service';
 import { Account, Feature } from '@/components/common/CustomTypes';
 
 const tabs = [
