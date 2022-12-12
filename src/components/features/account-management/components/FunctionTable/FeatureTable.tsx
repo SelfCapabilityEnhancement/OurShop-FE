@@ -31,15 +31,8 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
         <tbody>
           {featureList.map((feature, index) => (
             <tr className="h-16 border-b border-gray-400" key={index}>
-              <td
-                className="px-2"
-                title={
-                  feature.featureName.length > 20 ? feature.featureName : ''
-                }
-              >
-                {feature.featureName.length > 20
-                  ? feature.featureName.substring(0, 19) + '...'
-                  : feature.featureName}
+              <td className="px-2" title={feature.featureName}>
+                {feature.featureName}
               </td>
               <td className="px-2">{feature.code}</td>
               <td
@@ -55,8 +48,6 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
               <td className="px-2">{feature.updateTime}</td>
               <td className="px-2 text-blue-600">
                 <button>Edit</button>
-                {/* <span className="mr-6">Access</span> */}
-                {/* <span>Delete</span> */}
               </td>
             </tr>
           ))}
