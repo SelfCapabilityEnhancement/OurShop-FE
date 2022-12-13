@@ -26,12 +26,12 @@ const tabs = [
 ];
 
 const officeList = [
-  { id: 'beijing', name: 'Beijing' },
-  { id: 'chengdu', name: 'Chengdu' },
-  { id: 'shanghai', name: 'Shanghai' },
-  { id: 'shenzhen', name: 'Shenzhen' },
-  { id: 'wuhan', name: 'Wuhan' },
-  { id: 'xian', name: 'Xian' },
+  { id: 1, name: 'Beijing' },
+  { id: 2, name: 'Chengdu' },
+  { id: 3, name: 'Shanghai' },
+  { id: 4, name: 'Shenzhen' },
+  { id: 5, name: 'Wuhan' },
+  { id: 6, name: 'Xian' },
 ];
 
 function CreateProduct() {
@@ -144,6 +144,8 @@ function CreateProduct() {
       </div>
     );
   };
+
+  const addOfficeList = () => {};
 
   const handleNext = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -307,12 +309,9 @@ function CreateProduct() {
                   title="Select an office"
                   className="bg-gray-100 w-40 h-12 py-2 text-lg text-center text-gray-500"
                 >
-                  <Dropdown.Item>{officeList[0].name}</Dropdown.Item>
-                  <Dropdown.Item>{officeList[1].name}</Dropdown.Item>
-                  <Dropdown.Item>{officeList[2].name}</Dropdown.Item>
-                  <Dropdown.Item>{officeList[3].name}</Dropdown.Item>
-                  <Dropdown.Item>{officeList[4].name}</Dropdown.Item>
-                  <Dropdown.Item>{officeList[5].name}</Dropdown.Item>
+                  {officeList.map((item) => (
+                    <Dropdown.Item key={item.id}>{item.name}</Dropdown.Item>
+                  ))}
                 </Dropdown>
                 <span className="text-lg text-center mx-8 py-2">has</span>
                 <input
@@ -320,6 +319,21 @@ function CreateProduct() {
                   className="w-52 h-12 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
                 />
                 <span className="text-lg text-center mx-8 py-2">Available</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1"
+                  stroke="green"
+                  className="w-10 h-10"
+                  onClick={addOfficeList}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
               </div>
 
               <button
