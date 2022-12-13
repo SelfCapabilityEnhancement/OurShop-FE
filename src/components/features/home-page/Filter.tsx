@@ -8,7 +8,7 @@ function Filter(props: { setProduct: Function }) {
   const [isApply, setIsApply] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
-  function getIsCheck(isCheckInBox: String[]) {
+  function getIsCheck(isCheckInBox: string[]) {
     // @ts-ignore
     setIsCheck(isCheckInBox);
   }
@@ -20,11 +20,22 @@ function Filter(props: { setProduct: Function }) {
   };
 
   const handleApply = () => {
+    if (isCheck.length === 0) {
+      getProductsByOfficeIds([1, 2, 3, 4, 5, 6]).then((filterProduct) =>
+        props.setProduct(filterProduct)
+      );
+      setIsApply(false);
+    } else {
+      showProductsAfterFilter();
+      setIsApply(true);
+    }
+    handleFilter();
+  };
+
+  const showProductsAfterFilter = () => {
     getProductsByOfficeIds(isCheck).then((filterProduct) =>
       props.setProduct(filterProduct)
     );
-    handleFilter();
-    setIsApply(true);
   };
 
   return (
