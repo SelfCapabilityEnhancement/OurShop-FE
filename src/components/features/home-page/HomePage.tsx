@@ -7,9 +7,12 @@ import SearchBar from '@/components/features/home-page/SearchBar';
 export default function HomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getProducts().then((products) => {
       setProducts(products);
+      setIsLoading(false);
     });
   }, []);
 
@@ -56,12 +59,16 @@ export default function HomePage() {
       <div className="flex justify-center">
         <SearchBar setProduct={setProducts} />
       </div>
-      <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
-        {renderProducts(products)}
-      </div>
-      <div className="mt-[3%] flex justify-center">
-        {renderNoProducts(products)}
-      </div>
+      {!isLoading && (
+        <div>
+          <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
+            {renderProducts(products)}
+          </div>
+          <div className="mt-[3%] flex justify-center">
+            {renderNoProducts(products)}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
