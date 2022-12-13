@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
-import FeatureTable from '@/components/features/account-management/components/FunctionTable/FeatureTable';
+import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import { useEffect, useState } from 'react';
 import { getAccountList, getFeatureList } from '@/service';
 import { Account, Feature } from '@/components/common/CustomTypes';
