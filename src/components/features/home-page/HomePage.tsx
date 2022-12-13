@@ -56,11 +56,11 @@ export default function HomePage() {
       <div className="flex justify-center">
         <SearchBar setProduct={setProducts} />
       </div>
-      <div className="mt-[3%] flex justify-center">
-        {renderNoProducts(products)}
-      </div>
       <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
         {renderProducts(products)}
+      </div>
+      <div className="mt-[3%] flex justify-center">
+        {renderNoProducts(products)}
       </div>
     </div>
   );
