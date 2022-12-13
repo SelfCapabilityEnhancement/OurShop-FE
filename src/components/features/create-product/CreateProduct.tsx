@@ -7,6 +7,8 @@ import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { newProduct, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
+// import Dropdown from 'react-bootstrap/Dropdown';
+import { Dropdown } from 'rsuite';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -23,13 +25,22 @@ const tabs = [
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
+const officeList = [
+  { id: 'beijing', name: 'Beijing' },
+  { id: 'chengdu', name: 'Chengdu' },
+  { id: 'shanghai', name: 'Shanghai' },
+  { id: 'shenzhen', name: 'Shenzhen' },
+  { id: 'wuhan', name: 'Wuhan' },
+  { id: 'xian', name: 'Xian' },
+];
+
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(initProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [logisticMethods, setLogisticMethods] = useState(new Set());
+  const [selectedTab, setSelectedTab] = useState(1);
+  // const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
 
@@ -132,37 +143,6 @@ function CreateProduct() {
         {item}
       </div>
     );
-  };
-
-  const handleCheckBox = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    logisticMethod: string
-  ) => {
-    if (event.target.checked) {
-      setLogisticMethods((prevState) => {
-        const tmp = [...prevState, logisticMethod];
-        setProduct((prevState) => {
-          const logisticMethod = [...tmp].join(';');
-          return {
-            ...prevState,
-            logisticMethod,
-          };
-        });
-        return new Set(tmp);
-      });
-    } else {
-      setLogisticMethods((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== logisticMethod);
-        setProduct((prevState) => {
-          const logisticMethod = [...tmp].join(';');
-          return {
-            ...prevState,
-            logisticMethod,
-          };
-        });
-        return new Set(tmp);
-      });
-    }
   };
 
   const handleNext = (
@@ -315,68 +295,42 @@ function CreateProduct() {
               }
             />
             <Loading message="Processing..." visible={showLoading} />
-            <div className="flex flex-col m-8 w-96">
-              <div className="text-xl mb-5">
+            <div className="flex flex-col m-8">
+              <p className="text-xl mb-5">
                 <span className="text-red-500 mb-1 pr-1">*</span>
-                Logistic Methods
+                Please indicate the office and number of product you want to
+                sell
+              </p>
+              <p className="text-2xl mb-5">Office 1</p>
+              <div className="flex">
+                <Dropdown
+                  title="Select an office"
+                  className="bg-gray-100 w-40 h-12 py-2 text-lg text-center text-gray-500"
+                >
+                  <Dropdown.Item>{officeList[0].name}</Dropdown.Item>
+                  <Dropdown.Item>{officeList[1].name}</Dropdown.Item>
+                  <Dropdown.Item>{officeList[2].name}</Dropdown.Item>
+                  <Dropdown.Item>{officeList[3].name}</Dropdown.Item>
+                  <Dropdown.Item>{officeList[4].name}</Dropdown.Item>
+                  <Dropdown.Item>{officeList[5].name}</Dropdown.Item>
+                </Dropdown>
+                <span className="text-lg text-center mx-8 py-2">has</span>
+                <input
+                  value="Number of Products"
+                  className="w-52 h-12 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+                <span className="text-lg text-center mx-8 py-2">Available</span>
               </div>
-              <label
-                htmlFor="office"
-                className="flex flex-row items-center mb-3"
-              >
-                <input
-                  id="office"
-                  type="checkbox"
-                  name="logistic"
-                  checked={logisticMethods.has('office')}
-                  className={classNames(
-                    'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
-                    validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-rose-500'
-                      : ''
-                  )}
-                  onChange={(event) => handleCheckBox(event, 'office')}
-                />
-                Collecting at Office
-              </label>
-              <label htmlFor="address" className="flex flex-row items-center">
-                <input
-                  id="address"
-                  type="checkbox"
-                  name="logistic"
-                  checked={logisticMethods.has('address')}
-                  className={classNames(
-                    'secondLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
-                    validations.logisticMethod
-                      ? 'outline-none ring-inset ring ring-rose-500'
-                      : ''
-                  )}
-                  onChange={(event) => handleCheckBox(event, 'address')}
-                />
-                Shipping to an Address
-              </label>
-              <label
-                htmlFor="logisticMethodComment"
-                className="text-xl mr-5 col-span-2 mt-10 mb-2"
-              >
-                Comment
-              </label>
-              <textarea
-                className="col-span-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded mb-5 focus:outline-none focus:ring focus:ring-purple-300"
-                value={product.logisticMethodComment}
-                onChange={(event) =>
-                  handleInputField(event, 'logisticMethodComment')
-                }
-                id="logisticMethodComment"
-              />
+
               <button
                 onClick={(event) => handleSubmit(event)}
-                className="create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                className="mt-80 create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
               >
                 Create Product
               </button>
             </div>
           </Tab.Panel>
+
           <Tab.Panel>Approval Flow</Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
