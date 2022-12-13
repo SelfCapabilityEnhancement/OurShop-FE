@@ -47,13 +47,6 @@ export default function RegisterPage() {
       setButtonEnabled(false);
       register(username, password)
         .then((data) => {
-          if (
-            data.data?.message === 'error.http.200' &&
-            data.data?.title === 'username exists'
-          ) {
-            setButtonEnabled(true);
-            return setError({ usernameError: 'Username already exist!' });
-          }
           setRegisterSuccess(true);
           resetInput();
           setTimeout(() => {
@@ -61,7 +54,14 @@ export default function RegisterPage() {
           }, 2000);
           setButtonEnabled(true);
         })
-        .catch(() => {
+        .catch((data) => {
+          if (
+            data.response.data?.status === 500 &&
+            data.response.data?.detail === 'username exists'
+          ) {
+            setButtonEnabled(true);
+            return setError({ usernameError: 'Username already exist!' });
+          }
           setRegisterSuccess(false);
         });
     } else {
