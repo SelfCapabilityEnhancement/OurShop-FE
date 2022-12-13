@@ -117,3 +117,16 @@ export interface Feature {
   description: string;
   updateTime: string;
 }
+
+export interface Role {
+  roleId: number;
+  roleName: string;
+  updateTime: string;
+  featureList: {
+    featureId: number;
+    featureName: string;
+    code: string;
+    description: string;
+    updateTime: string;
+  }[];
+}

@@ -5,6 +5,7 @@ import {
   User,
   Account,
   Feature,
+  Role,
 } from '@/components/common/CustomTypes';
 
 const product1: Product = {
@@ -300,3 +301,41 @@ const feature1 = {
 };
 
 export const features: Array<Feature> = [feature1, feature2];
+
+const role1 = {
+  roleId: 1,
+  roleName: 'buyer',
+  updateTime: '2022-12-08 06:52:37',
+  featureList: [
+    {
+      featureId: 1,
+      featureName: 'Product Management',
+      code: '/product/product-management',
+      description: 'product',
+      updateTime: '2022-12-07 06:52:37',
+    },
+    {
+      featureId: 2,
+      featureName: 'Order Management',
+      code: '/order/order-management',
+      description: 'order',
+      updateTime: '2022-12-07 06:53:32',
+    },
+  ],
+};
+const role2 = {
+  roleId: 2,
+  roleName: 'buyer admin',
+  updateTime: '2022-12-08 06:59:37',
+  featureList: [
+    {
+      featureId: 1,
+      featureName: 'Product Management',
+      code: '/product/product-management',
+      description: 'product',
+      updateTime: '2022-12-07 06:55:37',
+    },
+  ],
+};
+
+export const roles: Array<Role> = [role1, role2];
