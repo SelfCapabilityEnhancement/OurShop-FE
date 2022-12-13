@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {
   Account,
-  Feature,
-  OrdersItem,
   Product,
+  OrdersItem,
+  Feature,
   PurchaseConfirmationItem,
+  Role,
   User,
 } from '@/components/common/CustomTypes';
 import { imageUrlPrefix } from '@/constants';
@@ -199,4 +200,8 @@ export const getAccountList = async (): Promise<Account[]> => {
 
 export const getFeatureList = async (): Promise<Feature[]> => {
   return await http.get('/functions/').then((response) => response.data);
+};
+
+export const getRoleList = async (): Promise<Role[]> => {
+  return await http.get('/roles/').then((response) => response.data);
 };

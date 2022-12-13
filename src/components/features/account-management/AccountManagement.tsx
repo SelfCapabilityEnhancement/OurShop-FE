@@ -3,8 +3,9 @@ import { classNames } from '@/utils';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import { useEffect, useState } from 'react';
-import { getAccountList, getFeatureList } from '@/service';
-import { Account, Feature } from '@/components/common/CustomTypes';
+import { getAccountList, getFeatureList, getRoleList } from '@/service';
+import { Account, Feature, Role } from '@/components/common/CustomTypes';
+import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
 
 const tabs = [
   { id: 'account-list', name: 'Account List' },
@@ -15,6 +16,7 @@ const tabs = [
 export default function AccountManagement() {
   const [accountList, setAccountList] = useState<Account[]>([]);
   const [featureList, setFeatureList] = useState<Feature[]>([]);
+  const [roleList, setRoleList] = useState<Role[]>([]);
 
   useEffect(() => {
     getAccountList().then((data) => {
@@ -22,6 +24,9 @@ export default function AccountManagement() {
     });
     getFeatureList().then((data) => {
       setFeatureList(data);
+    });
+    getRoleList().then((data) => {
+      setRoleList(data);
     });
   }, []);
 
@@ -50,7 +55,7 @@ export default function AccountManagement() {
             <AccountListTable userList={accountList} />
           </Tab.Panel>
           <Tab.Panel>
-            <p>To be prepared</p>
+            <RoleTable roleList={roleList} />
           </Tab.Panel>
           <Tab.Panel>
             <FeatureTable featureList={featureList} />
