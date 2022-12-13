@@ -1,6 +1,6 @@
 [[redirects]]
 from = "/api/*"
-to = "https://ourshop.azurewebsites.net/api/v1/:splat"
+to = "https://ourshop-be-prod.azurewebsites.net/api/v1/:splat"
 status = 200
 force = true
 
