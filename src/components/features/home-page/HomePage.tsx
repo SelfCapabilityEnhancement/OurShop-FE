@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@/components/common/CustomTypes';
 import { useNavigate } from 'react-router-dom';
-import { getProducts } from '@/service';
+import { getCurrentUser, getProducts } from '@/service';
 import SearchBar from '@/components/features/home-page/SearchBar';
 import SaveUserInfo from '@/components/features/home-page/SaveUserInfo';
 
@@ -9,8 +9,14 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userRealName, setUserRealName] = useState('');
+  const [saveUserRealName, setSaveUserRealName] = useState(userRealName);
 
   useEffect(() => {
+    getCurrentUser().then((user) => {
+      setUserRealName(user.realName);
+      setSaveUserRealName(user.realName);
+    });
     getProducts().then((products) => {
       setProducts(products);
       setIsLoading(false);
@@ -60,9 +66,11 @@ export default function HomePage() {
       <div className="flex justify-center">
         <SearchBar setProduct={setProducts} />
       </div>
-      <div className="absolute inset-0 top-[60px]">
-        <SaveUserInfo isOpen={false} />
-      </div>
+      {saveUserRealName === '' && (
+        <div className="absolute inset-0 top-[60px]">
+          <SaveUserInfo isOpen={true} />
+        </div>
+      )}
       {!isLoading && (
         <div>
           <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
