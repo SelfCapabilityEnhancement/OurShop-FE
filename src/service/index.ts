@@ -5,6 +5,7 @@ import {
   Product,
   PurchaseConfirmationItem,
   User,
+  UserInfo,
 } from '@/components/common/CustomTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
@@ -199,16 +200,20 @@ export const login = async (username: string, password: string) => {
   });
 };
 
-export const saveUserInfo = async (
-  userRealName: string,
-  officeId: number,
-  telephoneNum: number
-) => {
-  return await http.post('/users/user-info', {
-    userRealName,
-    officeId,
-    telephoneNum,
-  });
+export const saveUserInfo = async (userInfo: UserInfo) => {
+  return await http
+    .post(
+      '/users/user-info',
+      {
+        userRealName: userInfo.userRealName,
+        officeId: userInfo.officeId,
+        phoneNumber: userInfo.telephoneNum,
+      },
+      {
+        headers: { Authorization: localStorage.getItem('jwt') },
+      }
+    )
+    .then((response) => response.data);
 };
 
 export const getAccountList = (): Promise<Account[]> => {
