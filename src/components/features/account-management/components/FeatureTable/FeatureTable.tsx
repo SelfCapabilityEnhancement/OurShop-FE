@@ -14,7 +14,7 @@ export const featureListTabs = [
 export default function FeatureTable() {
   const [showModal, setShowModal] = useState(false);
   const [featureList, setFeatureList] = useState<Feature[]>([]);
-  const [chosen, setChosen] = useState(1);
+  const [chosen, setChosen] = useState(0);
   useEffect(() => {
     getFeatureList().then((data) => {
       setFeatureList(data);
