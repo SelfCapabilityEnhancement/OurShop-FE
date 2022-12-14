@@ -56,12 +56,11 @@ export const updateProduct = async ({
 };
 
 // this will be replaced by useContext in next iteration
-export const getCurrentUser = (): Promise<User> => {
-  return http
-    .get('/users', {
-      headers: { Authorization: localStorage.getItem('jwt') },
-    })
-    .then((response) => response.data);
+export const getCurrentUser = async (): Promise<User> => {
+  const { data } = await http.get('/users', {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
+  return data;
 };
 
 export const addToCarts = async (
