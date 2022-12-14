@@ -2,10 +2,22 @@ import { render, screen } from '@testing-library/react';
 import FeatureTable from './FeatureTable';
 import { features } from '@/mocks/mockData';
 import { Feature } from '@/components/common/CustomTypes';
+import * as service from '@/service';
+import { act } from 'react-dom/test-utils';
+import { BrowserRouter } from 'react-router-dom';
+
+jest.mock('@/service', () => ({
+  getFeatureList: jest.fn(),
+}));
 
 describe('Function List', () => {
-  beforeEach(() => {
-    render(<FeatureTable featureList={features} />);
+  beforeEach(async () => {
+    jest.spyOn(service, 'getFeatureList').mockResolvedValue(features);
+    await act(async () => {
+      render(<FeatureTable />, {
+        wrapper: BrowserRouter,
+      });
+    });
   });
 
   test('should show function list', () => {
