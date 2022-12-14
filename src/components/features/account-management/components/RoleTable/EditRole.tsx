@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { updateRole } from '@/service';
+// import { updateRole } from '@/service';
 
 const featureList = [
   'Product Management',
@@ -30,17 +31,16 @@ export default function EditRole({
 
   const renderFeature = (feature: string, index: number) => {
     return (
-      <div
+      <span
         key={feature}
         onClick={() => handleSelect(index + 1)}
         className={classNames(
-          'text-center text-sm font-normal py-0.5',
-          // ' col-start-2 text-white hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center',
+          ' text-center text-sm font-normal mx-[3%] w-[300px] h-[100px]',
           featureIds.includes(index + 1) ? 'bg-purple-300' : 'bg-gray-300'
         )}
       >
         {feature}
-      </div>
+      </span>
     );
   };
 
@@ -53,10 +53,16 @@ export default function EditRole({
   };
 
   const handleSubmit = async () => {
-    setResult(await updateRole(oldRole.roleId, featureIds));
-    if (result) {
+    try {
+      await updateRole(oldRole.roleId, featureIds);
+      setResult(true);
       setShowBanner(true);
       setMessage('The Change was made Successfully!');
+      setTimeout(() => setShowBanner(false), 3000);
+    } catch (e) {
+      setResult(false);
+      setShowBanner(false);
+      setMessage('Wrong!');
       setTimeout(() => setShowBanner(false), 3000);
     }
   };
@@ -65,7 +71,7 @@ export default function EditRole({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10 justify-center"
+        className="mx-[30%] relative z-10 justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -94,8 +100,7 @@ export default function EditRole({
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
             >
               <div></div>
-              {/* TODO color:purple */}
-              <div className=" content-center justify-self-center font-semibold">
+              <div className="text-[#A45FB7] content-center justify-self-center font-semibold">
                 Role Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -122,21 +127,24 @@ export default function EditRole({
                 success={result}
                 message={message as string}
               />
-              <div className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
-                {/* TODO 获取到的feature的Name */}
+              {/* <div className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal"> */}
+              <div className="mb-6 text-xl font-normal">
                 {/* <section className="col-span-2 grid grid-cols-2 gap-y-4"> */}
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
                   Please select function for <b>{oldRole.roleName}</b>
                 </div>
-                <div className="grid grid-cols-3 mt-3 w-1/2">
-                  {featureList.map((feature, index) =>
-                    renderFeature(feature, index)
-                  )}
+                <div className="">
+                  <div className="">
+                    {featureList.map((feature, index) =>
+                      renderFeature(feature, index)
+                    )}
+                  </div>
                 </div>
+                <div></div>
                 <button
                   onClick={() => handleSubmit()}
-                  className="update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className="mt-[30%] mx-[50%] token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
                 >
                   Save
                 </button>

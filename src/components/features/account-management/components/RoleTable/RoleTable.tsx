@@ -1,8 +1,7 @@
 import { Role } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
-// import {getRoleList} from '@/service';
+import { getRoleList } from '@/service';
 import EditRole from '@/components/features/account-management/components/RoleTable/EditRole';
-import { roles } from '@/mocks/mockData';
 
 export const roleListTabs = [
   { id: 'role', name: 'Role' },
@@ -17,10 +16,9 @@ export default function RoleTable() {
   const [chosen, setChosen] = useState(0);
 
   useEffect(() => {
-    // getRoleList().then((data) => {
-    //   setRoleList(data);
-    // });
-    setRoleList(roles);
+    getRoleList().then((data) => {
+      setRoleList(data);
+    });
   }, []);
 
   const handleEdit = (index: number) => {
@@ -63,9 +61,10 @@ export default function RoleTable() {
             <tr className="h-16 border-b border-gray-400" key={role.roleId}>
               <td className="px-2">{role.roleName}</td>
               <td className="px-2">
-                {role.featureList.map((feature) => (
-                  <span key={feature.featureId}>{feature.featureName}</span>
-                ))}
+                {role.featureNameList.join(',')}
+                {/* {role.featureNameList.map((featureName) => ( */}
+                {/*   <span key={featureName}>{featureName + ','}</span> */}
+                {/* ))} */}
               </td>
               <td className="px-2">{role.updateTime}</td>
               <td className="px-2 text-blue-600">

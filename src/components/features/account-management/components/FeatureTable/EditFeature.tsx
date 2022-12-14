@@ -31,24 +31,25 @@ export default function EditFeature({
   const handleSubmit = async () => {
     if (feature.code === '') {
       setShowBanner(true);
-      setMessage('the code is required field!');
+      setResult(false);
+      setMessage('The code is required field!');
       setTimeout(() => setShowBanner(false), 3000);
     } else {
-      setResult(
+      try {
         await updateFeature(
           feature.featureId,
           feature.code,
           feature.description
-        )
-      );
-      if (result) {
+        );
         setShowBanner(true);
+        setResult(true);
         setMessage('The Change was made Successfully!');
         setTimeout(() => setShowBanner(false), 3000);
-      } else {
+      } catch (e) {
         setFeature(oldFeature);
         setShowBanner(true);
-        setMessage('All Required Field Must be Filled');
+        setResult(false);
+        setMessage('The code is wrong!');
         setTimeout(() => setShowBanner(false), 3000);
       }
     }
@@ -58,7 +59,7 @@ export default function EditFeature({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10 justify-center"
+        className="mx-[30%] relative z-10 justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -87,7 +88,7 @@ export default function EditFeature({
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
             >
               <div></div>
-              <div className=" content-center justify-self-center font-semibold">
+              <div className="text-[#A45FB7] content-center justify-self-center font-semibold">
                 Function Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -115,7 +116,6 @@ export default function EditFeature({
                 message={message as string}
               />
               <form className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
-                {/* TODO 获取到的feature的Name */}
                 {/* <section className="col-span-2 grid grid-cols-2 gap-y-4"> */}
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
@@ -124,9 +124,8 @@ export default function EditFeature({
                 <input
                   type={'string'}
                   className={classNames(
-                    'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
-                      'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300' +
-                      'className="col-span-8'
+                    'w-[650px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
+                      'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300'
                   )}
                   onChange={(event) => handleInputField(event, 'code')}
                   placeholder={feature.code as string}
@@ -141,7 +140,7 @@ export default function EditFeature({
                 />
                 <button
                   onClick={() => handleSubmit()}
-                  className="update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className="mx-[20%] mt-[30%] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                 >
                   Save
                 </button>

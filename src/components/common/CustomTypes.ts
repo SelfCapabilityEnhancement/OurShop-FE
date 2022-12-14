@@ -122,6 +122,7 @@ export interface Role {
   roleId: number;
   roleName: string;
   updateTime: string;
+  featureNameList: string[];
   featureList: {
     featureId: number;
     featureName: string;

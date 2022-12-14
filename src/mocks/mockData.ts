@@ -306,6 +306,7 @@ const role1 = {
   roleId: 1,
   roleName: 'buyer',
   updateTime: '2022-12-08 06:52:37',
+  featureNameList: ['Product Management', 'Order Management'],
   featureList: [
     {
       featureId: 1,
@@ -327,6 +328,7 @@ const role2 = {
   roleId: 2,
   roleName: 'buyer admin',
   updateTime: '2022-12-08 06:59:37',
+  featureNameList: ['Product Management'],
   featureList: [
     {
       featureId: 1,
