@@ -17,7 +17,7 @@ export default function EditRole({
 }) {
   const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(false);
-  const [result, setResult] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const [message, setMessage] = useState<string>();
   const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
   const [featureIds, setFeatureIds] = useState<number[]>(
@@ -55,7 +55,7 @@ export default function EditRole({
   const handleSubmit = async () => {
     try {
       await updateRole(oldRole.roleId, featureIds);
-      setResult(true);
+      setUpdateSuccess(true);
       setShowBanner(true);
       setMessage('The Change was made Successfully!');
       setTimeout(() => {
@@ -63,7 +63,7 @@ export default function EditRole({
         navigate('/account-management');
       }, 3000);
     } catch (e) {
-      setResult(false);
+      setUpdateSuccess(false);
       setShowBanner(false);
       setMessage('Wrong!');
       setTimeout(() => {
@@ -130,7 +130,7 @@ export default function EditRole({
             <div className="mt-2">
               <Banner
                 visible={showBanner}
-                success={result}
+                success={updateSuccess}
                 message={message as string}
               />
               <div className="mb-6 text-xl font-normal">

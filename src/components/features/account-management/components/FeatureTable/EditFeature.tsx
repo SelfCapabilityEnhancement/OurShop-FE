@@ -18,7 +18,7 @@ export default function EditFeature({
   const navigate = useNavigate();
   const [feature, setFeature] = useState<Feature>(oldFeature);
   const [showBanner, setShowBanner] = useState(false);
-  const [result, setResult] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const [message, setMessage] = useState<string>();
 
   const handleInputField = (
@@ -33,7 +33,7 @@ export default function EditFeature({
   const handleSubmit = async () => {
     if (feature.code === '') {
       setShowBanner(true);
-      setResult(false);
+      setUpdateSuccess(false);
       setMessage('The code is required field!');
       setTimeout(() => {
         setShowBanner(false);
@@ -47,7 +47,7 @@ export default function EditFeature({
           feature.description
         );
         setShowBanner(true);
-        setResult(true);
+        setUpdateSuccess(true);
         setMessage('The Change was made Successfully!');
         setTimeout(() => {
           setShowBanner(false);
@@ -56,7 +56,7 @@ export default function EditFeature({
       } catch (e) {
         setFeature(oldFeature);
         setShowBanner(true);
-        setResult(false);
+        setUpdateSuccess(false);
         setMessage('The code is wrong!');
         setTimeout(() => {
           setShowBanner(false);
@@ -123,7 +123,7 @@ export default function EditFeature({
             <div className="mt-2">
               <Banner
                 visible={showBanner}
-                success={result}
+                success={updateSuccess}
                 message={message as string}
               />
               <form className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
