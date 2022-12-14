@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "dev:local": "vite --mode local-api",
-    "dev:prod": "vite --mode prod-api",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview",
     "lint": "eslint -c .eslintrc.json . --ext .tsx",
