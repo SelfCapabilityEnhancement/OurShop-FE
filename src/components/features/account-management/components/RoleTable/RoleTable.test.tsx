@@ -2,10 +2,22 @@ import { render, screen } from '@testing-library/react';
 import RoleTable from './RoleTable';
 import { roles } from '@/mocks/mockData';
 import { Role } from '@/components/common/CustomTypes';
+import * as service from '@/service';
+import { act } from 'react-dom/test-utils';
+import { BrowserRouter } from 'react-router-dom';
+
+jest.mock('@/service', () => ({
+  getRoleList: jest.fn(),
+}));
 
 describe('Role List', () => {
-  beforeEach(() => {
-    render(<RoleTable roleList={roles} />);
+  beforeEach(async () => {
+    jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
+    await act(async () => {
+      render(<RoleTable />, {
+        wrapper: BrowserRouter,
+      });
+    });
   });
 
   test('should show function list', () => {
