@@ -60,12 +60,7 @@ export default function RoleTable() {
           {roleList.map((role, index) => (
             <tr className="h-16 border-b border-gray-400" key={role.roleId}>
               <td className="px-2">{role.roleName}</td>
-              <td className="px-2">
-                {role.featureNameList.join(',')}
-                {/* {role.featureNameList.map((featureName) => ( */}
-                {/*   <span key={featureName}>{featureName + ','}</span> */}
-                {/* ))} */}
-              </td>
+              <td className="px-2">{role.featureNameList.join(',')}</td>
               <td className="px-2">{role.updateTime}</td>
               <td className="px-2 text-blue-600">
                 <button onClick={() => handleEdit(index)}>Edit</button>

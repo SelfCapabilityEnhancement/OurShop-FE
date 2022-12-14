@@ -116,7 +116,6 @@ export default function EditFeature({
                 message={message as string}
               />
               <form className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
-                {/* <section className="col-span-2 grid grid-cols-2 gap-y-4"> */}
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
                   Please fill the code for <b>{feature.featureName}</b>

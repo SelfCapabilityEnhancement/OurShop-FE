@@ -1,17 +1,9 @@
-import { Role } from '@/components/common/CustomTypes';
-import { Fragment, useState } from 'react';
+import { Feature, Role } from '@/components/common/CustomTypes';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
-import { updateRole } from '@/service';
-// import { updateRole } from '@/service';
-
-const featureList = [
-  'Product Management',
-  'Order Management',
-  'Create Product',
-  'Account Management',
-];
+import { getFeatureList, updateRole } from '@/service';
 
 export default function EditRole({
   isOpen,
@@ -25,9 +17,15 @@ export default function EditRole({
   const [showBanner, setShowBanner] = useState(false);
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState<string>();
+  const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
   const [featureIds, setFeatureIds] = useState<number[]>(
     oldRole.featureList.map((feature) => feature.featureId)
   );
+  useEffect(() => {
+    getFeatureList().then((data) => {
+      setAllFeatures(data);
+    });
+  }, []);
 
   const renderFeature = (feature: string, index: number) => {
     return (
@@ -127,17 +125,15 @@ export default function EditRole({
                 success={result}
                 message={message as string}
               />
-              {/* <div className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal"> */}
               <div className="mb-6 text-xl font-normal">
-                {/* <section className="col-span-2 grid grid-cols-2 gap-y-4"> */}
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
                   Please select function for <b>{oldRole.roleName}</b>
                 </div>
                 <div className="">
                   <div className="">
-                    {featureList.map((feature, index) =>
-                      renderFeature(feature, index)
+                    {allFeatures.map((feature, index) =>
+                      renderFeature(feature.featureName, index)
                     )}
                   </div>
                 </div>
