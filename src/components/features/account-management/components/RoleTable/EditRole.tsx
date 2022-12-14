@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { getFeatureList, updateRole } from '@/service';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditRole({
   isOpen,
@@ -14,6 +15,7 @@ export default function EditRole({
   handleClose: Function;
   oldRole: Role;
 }) {
+  const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(false);
   const [result, setResult] = useState(false);
   const [message, setMessage] = useState<string>();
@@ -56,12 +58,18 @@ export default function EditRole({
       setResult(true);
       setShowBanner(true);
       setMessage('The Change was made Successfully!');
-      setTimeout(() => setShowBanner(false), 3000);
+      setTimeout(() => {
+        setShowBanner(false);
+        navigate('/account-management');
+      }, 3000);
     } catch (e) {
       setResult(false);
       setShowBanner(false);
       setMessage('Wrong!');
-      setTimeout(() => setShowBanner(false), 3000);
+      setTimeout(() => {
+        setShowBanner(false);
+        navigate('/account-management');
+      }, 3000);
     }
   };
 

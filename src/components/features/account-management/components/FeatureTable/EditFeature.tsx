@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { updateFeature } from '@/service';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditFeature({
   isOpen,
@@ -14,6 +15,7 @@ export default function EditFeature({
   handleClose: Function;
   oldFeature: Feature;
 }) {
+  const navigate = useNavigate();
   const [feature, setFeature] = useState<Feature>(oldFeature);
   const [showBanner, setShowBanner] = useState(false);
   const [result, setResult] = useState(false);
@@ -33,7 +35,10 @@ export default function EditFeature({
       setShowBanner(true);
       setResult(false);
       setMessage('The code is required field!');
-      setTimeout(() => setShowBanner(false), 3000);
+      setTimeout(() => {
+        setShowBanner(false);
+        navigate('/account-management');
+      }, 3000);
     } else {
       try {
         await updateFeature(
@@ -44,13 +49,19 @@ export default function EditFeature({
         setShowBanner(true);
         setResult(true);
         setMessage('The Change was made Successfully!');
-        setTimeout(() => setShowBanner(false), 3000);
+        setTimeout(() => {
+          setShowBanner(false);
+          navigate('/account-management');
+        }, 3000);
       } catch (e) {
         setFeature(oldFeature);
         setShowBanner(true);
         setResult(false);
         setMessage('The code is wrong!');
-        setTimeout(() => setShowBanner(false), 3000);
+        setTimeout(() => {
+          setShowBanner(false);
+          navigate('/account-management');
+        }, 3000);
       }
     }
   };
