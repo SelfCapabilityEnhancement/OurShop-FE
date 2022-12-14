@@ -3,8 +3,8 @@ import { classNames } from '@/utils';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import { useEffect, useState } from 'react';
-import { getAccountList, getFeatureList, getRoleList } from '@/service';
-import { Account, Feature, Role } from '@/components/common/CustomTypes';
+import { getAccountList, getRoleList } from '@/service';
+import { Account, Role } from '@/components/common/CustomTypes';
 import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
 
 const tabs = [
@@ -15,15 +15,11 @@ const tabs = [
 
 export default function AccountManagement() {
   const [accountList, setAccountList] = useState<Account[]>([]);
-  const [featureList, setFeatureList] = useState<Feature[]>([]);
   const [roleList, setRoleList] = useState<Role[]>([]);
 
   useEffect(() => {
     getAccountList().then((data) => {
       setAccountList(data);
-    });
-    getFeatureList().then((data) => {
-      setFeatureList(data);
     });
     getRoleList().then((data) => {
       setRoleList(data);
@@ -58,7 +54,7 @@ export default function AccountManagement() {
             <RoleTable roleList={roleList} />
           </Tab.Panel>
           <Tab.Panel>
-            <FeatureTable featureList={featureList} />
+            <FeatureTable />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

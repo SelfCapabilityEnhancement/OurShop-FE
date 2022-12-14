@@ -205,3 +205,15 @@ export const getFeatureList = async (): Promise<Feature[]> => {
 export const getRoleList = async (): Promise<Role[]> => {
   return await http.get('/roles/').then((response) => response.data);
 };
+
+export const updateFeature = async (
+  featureId: number,
+  code: string,
+  description: string
+) => {
+  const { data } = await http.patch(`/functions/${featureId}`, {
+    code,
+    description,
+  });
+  return data;
+};

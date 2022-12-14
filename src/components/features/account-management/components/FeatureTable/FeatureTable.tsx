@@ -1,4 +1,7 @@
 import { Feature } from '@/components/common/CustomTypes';
+import EditFeature from '@/components/features/account-management/components/FeatureTable/EditFeature';
+import { useEffect, useState } from 'react';
+import { getFeatureList } from '@/service';
 
 export const featureListTabs = [
   { id: 'function', name: 'Function' },
@@ -8,11 +11,36 @@ export const featureListTabs = [
   { id: 'action', name: 'Action' },
 ];
 
-export default function FeatureTable(props: { featureList: Feature[] }) {
-  const featureList = props.featureList;
+export default function FeatureTable() {
+  const [showModal, setShowModal] = useState(false);
+  const [featureList, setFeatureList] = useState<Feature[]>([]);
+  const [chosen, setChosen] = useState(1);
+  useEffect(() => {
+    getFeatureList().then((data) => {
+      setFeatureList(data);
+    });
+  }, []);
+
+  const handleEdit = (index: number) => {
+    setChosen(index);
+    setShowModal(true);
+  };
+
+  const handleCancelEdit = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
+      <div className="w-full max-w-full p-3">
+        {featureList.length > 0 && (
+          <EditFeature
+            isOpen={showModal}
+            handleClose={handleCancelEdit}
+            oldFeature={featureList[chosen]}
+          />
+        )}
+      </div>
       <table className="w-full text-center" id="AccountListTable">
         <thead className="text-gray-800 bg-gray-100 text-lg">
           <tr className="h-16">
@@ -29,7 +57,7 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
           </tr>
         </thead>
         <tbody>
-          {featureList.map((feature) => (
+          {featureList.map((feature, index) => (
             <tr
               className="h-16 border-b border-gray-400"
               key={feature.featureId}
@@ -48,7 +76,7 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
               </td>
               <td className="px-2">{feature.updateTime}</td>
               <td className="px-2 text-blue-600">
-                <button>Edit</button>
+                <button onClick={() => handleEdit(index)}>Edit</button>
               </td>
             </tr>
           ))}
