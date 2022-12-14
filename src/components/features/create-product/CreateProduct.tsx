@@ -7,8 +7,19 @@ import { classNames, generateUniqueImageName, validateForm } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { newProduct, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
-// import Dropdown from 'react-bootstrap/Dropdown';
-import { Dropdown } from 'rsuite';
+import { OfficeStoreItem } from '@/components/features/create-product/OfficeStoreItem';
+
+export type StoreItem = {
+  id: number;
+  officeId: number;
+  officeName: string;
+  inventory: number;
+};
+
+export type OfficeItem = {
+  id: number;
+  name: string;
+};
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -25,7 +36,7 @@ const tabs = [
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
-const officeList = [
+const officeList: OfficeItem[] = [
   { id: 1, name: 'Beijing' },
   { id: 2, name: 'Chengdu' },
   { id: 3, name: 'Shanghai' },
@@ -33,6 +44,11 @@ const officeList = [
   { id: 5, name: 'Wuhan' },
   { id: 6, name: 'Xian' },
 ];
+
+const getOfficeName = (id: number) => {
+  const target = officeList.find((item) => item.id === id);
+  return target!.name;
+};
 
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
@@ -43,6 +59,9 @@ function CreateProduct() {
   // const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
+  const [stores, setStores] = useState<StoreItem[]>([
+    { id: new Date().getTime(), officeId: 0, officeName: '', inventory: 0 },
+  ]);
 
   useEffect(() => {
     if (Object.values(validations).includes(true)) {
@@ -51,6 +70,34 @@ function CreateProduct() {
       }, 2000);
     }
   }, [validations]);
+
+  const setStoreItem = (
+    storeItem: StoreItem,
+    need2UpdateOfficeName = false
+  ) => {
+    if (need2UpdateOfficeName) {
+      storeItem.officeName = getOfficeName(storeItem.officeId);
+    }
+    const targetIndex = stores.findIndex((item) => item.id === storeItem.id);
+    stores.splice(targetIndex, 1, storeItem);
+    setStores([...stores]);
+  };
+
+  const addStoreItem = () => {
+    stores.push({
+      id: new Date().getTime(),
+      officeId: 0,
+      officeName: '',
+      inventory: 0,
+    });
+    setStores([...stores]);
+  };
+
+  const deleteStoreItem = (id: number) => {
+    const targetIndex = stores.findIndex((item) => item.id === id);
+    stores.splice(targetIndex, 1);
+    setStores([...stores]);
+  };
 
   const handleNewImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -145,8 +192,6 @@ function CreateProduct() {
     );
   };
 
-  const addOfficeList = () => {};
-
   const handleNext = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -196,6 +241,10 @@ function CreateProduct() {
     setTimeout(() => setShowBanner(false), 1500);
   };
 
+  const selectedOffices = stores.map((item) => item.officeId);
+  const newOfficeList = officeList.filter(
+    (item) => !selectedOffices.includes(item.id)
+  );
   return (
     <div className="w-full max-w-full p-3">
       <Tab.Group manual selectedIndex={selectedTab} onChange={setSelectedTab}>
@@ -303,42 +352,25 @@ function CreateProduct() {
                 Please indicate the office and number of product you want to
                 sell
               </p>
-              <p className="text-2xl mb-5">Office 1</p>
-              <div className="flex">
-                <Dropdown
-                  title="Select an office"
-                  className="bg-gray-100 w-40 h-12 py-2 text-lg text-center text-gray-500"
-                >
-                  {officeList.map((item) => (
-                    <Dropdown.Item key={item.id}>{item.name}</Dropdown.Item>
-                  ))}
-                </Dropdown>
-                <span className="text-lg text-center mx-8 py-2">has</span>
-                <input
-                  value="Number of Products"
-                  className="w-52 h-12 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                />
-                <span className="text-lg text-center mx-8 py-2">Available</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1"
-                  stroke="green"
-                  className="w-10 h-10"
-                  onClick={addOfficeList}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
 
+              {stores.map((item, index) => (
+                <>
+                  <p className="text-2xl mb-5">{`Office ${index + 1}`}</p>
+                  <OfficeStoreItem
+                    key={item.id}
+                    storeItem={item}
+                    officeList={newOfficeList}
+                    isMinCounts={stores.length === 1}
+                    isMaxCounts={stores.length === 6}
+                    setStoreItem={setStoreItem}
+                    addStoreItem={addStoreItem}
+                    deleteStoreItem={deleteStoreItem}
+                  />
+                </>
+              ))}
               <button
                 onClick={(event) => handleSubmit(event)}
-                className="mt-80 create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                className="create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
               >
                 Create Product
               </button>
