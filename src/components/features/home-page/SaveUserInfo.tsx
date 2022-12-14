@@ -8,7 +8,7 @@ const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
   { id: 'officeId', label: 'Select an Office', type: 'number' },
 ];
 
-export default function EditUserInfo({ isOpen }: { isOpen: boolean }) {
+export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <div className="mx-auto container flex items-center" id="nav">
@@ -22,7 +22,7 @@ export default function EditUserInfo({ isOpen }: { isOpen: boolean }) {
                 Please fill some information before purchases
               </p>
               <form>
-                {basicForm.map(({ id, label, type }) => (
+                {basicForm.map(({ id, label }) => (
                   <div key={id} className="mb-8">
                     <label
                       htmlFor={id}

@@ -3,6 +3,7 @@ import { Product } from '@/components/common/CustomTypes';
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '@/service';
 import SearchBar from '@/components/features/home-page/SearchBar';
+import SaveUserInfo from '@/components/features/home-page/SaveUserInfo';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -55,9 +56,12 @@ export default function HomePage() {
   }
 
   return (
-    <div>
+    <div className="relative">
       <div className="flex justify-center">
         <SearchBar setProduct={setProducts} />
+      </div>
+      <div className="absolute inset-0 top-[60px]">
+        <SaveUserInfo isOpen={false} />
       </div>
       {!isLoading && (
         <div>
