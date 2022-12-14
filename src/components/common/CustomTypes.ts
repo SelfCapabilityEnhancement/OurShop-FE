@@ -29,7 +29,6 @@ export interface User {
 }
 
 export interface UserInfo {
-  id: number;
   userRealName: string;
   officeId: number;
   telephoneNum: number;

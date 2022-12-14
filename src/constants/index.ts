@@ -1,4 +1,4 @@
-import { Product } from '@/components/common/CustomTypes';
+import { Product, UserInfo } from '@/components/common/CustomTypes';
 
 export const imageUrlPrefix = `https://ourshopimages.blob.core.windows.net/images/`;
 export const initProduct: Product = {
@@ -15,6 +15,12 @@ export const initProduct: Product = {
   logisticMethodComment: '',
   isDeleted: false,
   deletedTime: null,
+};
+
+export const initUserInfo: UserInfo = {
+  userRealName: '',
+  officeId: 0,
+  telephoneNum: 0,
 };
 
 export const initValidateResult = {
