@@ -3,6 +3,10 @@ import { Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 import { initUserInfo } from '@/constants';
 import { saveUserInfo } from '@/service';
+import Banner from '@/components/common/banner/Banner';
+
+const successMsg = 'Your information is saved!';
+const failMsg = 'All required field must be filled!';
 
 const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
   { id: 'userRealName', label: 'Name', type: 'string' },
@@ -12,6 +16,9 @@ const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
 
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
+  const [showBanner, setShowBanner] = useState(false);
+  const [message, setMessage] = useState('');
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,11 +40,32 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
 
     setUserInfo(tmp);
   };
+
   const handleSave = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    await saveUserInfo(userInfo);
+    if (
+      userInfo.userRealName === '' ||
+      userInfo.telephoneNum === 0 ||
+      userInfo.officeId === 0
+    ) {
+      setShowBanner(true);
+      setMessage(failMsg);
+      setSaveSuccess(false);
+      setTimeout(() => {
+        setShowBanner(false);
+      }, 2000);
+    } else {
+      await saveUserInfo(userInfo);
+      setShowBanner(true);
+      setMessage(successMsg);
+      setSaveSuccess(true);
+      setTimeout(() => {
+        setShowBanner(false);
+        window.location.reload();
+      }, 2000);
+    }
   };
 
   return (
@@ -52,6 +80,11 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
               <p className="mt-6 h-14 text-center text-lg text-black-500">
                 Please fill some information before purchases
               </p>
+              <Banner
+                visible={showBanner}
+                success={saveSuccess}
+                message={message}
+              />
               <form>
                 {basicForm.map(({ id, label }) => (
                   <div key={id} className="mb-8">
