@@ -1,6 +1,8 @@
 import { UserInfo } from '@/components/common/CustomTypes';
 import { Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { initUserInfo } from '@/constants';
+import { saveUserInfo } from '@/service';
 
 const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
   { id: 'userRealName', label: 'Name', type: 'string' },
@@ -9,6 +11,35 @@ const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
 ];
 
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
+  const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
+
+  const handleInputField = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    const value = event.target.value;
+    const tmp = { ...userInfo };
+    switch (field) {
+      case 'userRealName':
+        tmp.userRealName = value;
+        break;
+      case 'telephoneNum':
+        tmp.telephoneNum = Number(value);
+        break;
+      case 'officeId':
+        tmp.officeId = Number(value);
+        break;
+    }
+
+    setUserInfo(tmp);
+  };
+  const handleSave = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    await saveUserInfo(userInfo);
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <div className="mx-auto container flex items-center" id="nav">
@@ -35,6 +66,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                       <input
                         id={id}
                         className="block pr-10 bg-inherit shadow border-solid border border-black rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring focus:ring-purple-300 transition duration-500 ease-in-out"
+                        onChange={(event) => handleInputField(event, id)}
                       />
                     </div>
                   </div>
@@ -43,6 +75,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                 <div className="mb-4 ml-[70%]">
                   <button
                     className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-10 rounded "
+                    onClick={(event) => handleSave(event)}
                     type="submit"
                   >
                     Save
