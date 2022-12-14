@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { features, roles } from '@/mocks/mockData';
 import EditRole from '@/components/features/account-management/components/RoleTable/EditRole';
 import * as service from '@/service';
@@ -27,6 +27,8 @@ describe('Edit Role', () => {
       );
     });
   });
+
+  afterEach(cleanup);
 
   test('should show Modal', () => {
     expect(screen.getByText('Role Configuration')).toBeInTheDocument();

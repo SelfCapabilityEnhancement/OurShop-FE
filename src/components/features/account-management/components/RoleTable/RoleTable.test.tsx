@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import RoleTable from './RoleTable';
 import { features, roles } from '@/mocks/mockData';
 import { Role } from '@/components/common/CustomTypes';
@@ -21,6 +21,8 @@ describe('Role List', () => {
       });
     });
   });
+
+  afterEach(cleanup);
 
   test('should show function list', () => {
     const items: { [key: string]: keyof Role } = {

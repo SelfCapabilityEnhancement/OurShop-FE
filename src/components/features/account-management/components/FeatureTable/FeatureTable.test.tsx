@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import FeatureTable from './FeatureTable';
 import { features } from '@/mocks/mockData';
 import { Feature } from '@/components/common/CustomTypes';
@@ -19,6 +19,8 @@ describe('Function List', () => {
       });
     });
   });
+
+  afterEach(cleanup);
 
   test('should show function list', () => {
     const items: { [key: string]: keyof Feature } = {

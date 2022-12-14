@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import EditFeature from '@/components/features/account-management/components/FeatureTable/EditFeature';
 import { features } from '@/mocks/mockData';
 
@@ -21,6 +21,9 @@ describe('Edit Function', () => {
       />
     );
   });
+
+  afterEach(cleanup);
+
   test('should show old feature info', () => {
     expect(
       screen.getByPlaceholderText('/product/product-management')
