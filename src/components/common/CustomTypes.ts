@@ -28,6 +28,13 @@ export interface User {
   realName: string;
 }
 
+export interface UserInfo {
+  id: number;
+  userRealName: string;
+  officeId: number;
+  telephoneNum: number;
+}
+
 export interface Account {
   username: string;
   connection: string;

@@ -199,6 +199,18 @@ export const login = async (username: string, password: string) => {
   });
 };
 
+export const saveUserInfo = async (
+  userRealName: string,
+  officeId: number,
+  telephoneNum: number
+) => {
+  return await http.post('/users/user-info', {
+    userRealName,
+    officeId,
+    telephoneNum,
+  });
+};
+
 export const getAccountList = (): Promise<Account[]> => {
   return http.get('/users/get-account-list').then((response) => response.data);
 };
