@@ -219,7 +219,7 @@ export const updateFeature = async (
 };
 
 export const updateRole = async (roleId: number, featureIds: number[]) => {
-  const { data } = await http.patch(`/roles/${roleId}`, {
+  const { data } = await http.patch(`/roles/${roleId}/role_function`, {
     featureIds,
   });
   return data;
