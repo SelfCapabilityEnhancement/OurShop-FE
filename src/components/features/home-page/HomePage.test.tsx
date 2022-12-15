@@ -15,7 +15,7 @@ jest.mock('@/service', () => ({
 describe('HomePage', () => {
   // const user = userEvent.setup();
   jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
-  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[2]);
+  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[1]);
 
   beforeEach(async () => {
     await act(async () => {
