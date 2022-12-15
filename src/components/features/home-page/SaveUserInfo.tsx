@@ -8,10 +8,8 @@ import Banner from '@/components/common/banner/Banner';
 const successMsg = 'Your information is saved!';
 const failMsg = 'All required field must be filled!';
 
-const inputClassName =
-  'bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
-const inputErrorClassName =
-  'bg-inherit border border-red-500 text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+const basicInputClassName =
+  'bg-inherit border text-gray-700 text-base w-full h-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
 
 const basicForm: {
   id: keyof UserInfo;
@@ -27,15 +25,16 @@ const baseCites = [
   { id: 3, name: 'Shanghai' },
   { id: 4, name: 'Shenzhen' },
   { id: 5, name: 'Wuhan' },
-  { id: 6, name: `Xi'an` },
 ];
+const initCity = [{ id: 1, name: '' }];
+
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
   const [showBanner, setShowBanner] = useState(false);
-  const [message, setMessage] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(baseCites[0]);
+  const [selectedCity, setSelectedCity] = useState(initCity[0]);
   const [cities, setCities] = useState(baseCites);
+  const [border, setBorder] = useState(false);
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -49,9 +48,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         break;
       case 'telephoneNum':
         tmp.telephoneNum = Number(value);
-        break;
-      case 'officeId':
-        tmp.officeId = Number(value);
         break;
     }
     setUserInfo(tmp);
@@ -68,6 +64,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     tmp.officeId = Number(getOfficeId(event.name));
     setUserInfo(tmp);
     setCities(baseCites);
+    setBorder(false);
   };
 
   const getOfficeId = (currentName: string): number => {
@@ -81,7 +78,10 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     if (
       userInfo.userRealName === '' ||
       userInfo.telephoneNum === 0 ||
-      userInfo.officeId === 0
+      userInfo.officeId === 0 ||
+      userInfo.userRealName === undefined ||
+      userInfo.telephoneNum === undefined ||
+      userInfo.officeId === undefined
     ) {
       if (userInfo.userRealName === '') {
         userInfo.userRealName = undefined;
@@ -93,7 +93,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         userInfo.officeId = undefined;
       }
       setShowBanner(true);
-      setMessage(failMsg);
+      setBorder(true);
       setSaveSuccess(false);
       setTimeout(() => {
         setShowBanner(false);
@@ -101,7 +101,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     } else {
       await saveUserInfo(userInfo);
       setShowBanner(true);
-      setMessage(successMsg);
       setSaveSuccess(true);
       setTimeout(() => {
         setShowBanner(false);
@@ -126,7 +125,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
               <Banner
                 visible={showBanner}
                 success={saveSuccess}
-                message={message}
+                message={saveSuccess ? successMsg : failMsg}
               />
               <form>
                 {basicForm.map(({ id, label }) => (
@@ -140,11 +139,12 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     </label>
                     <div className="mt-1 relative rounded-md shadow-sm">
                       <input
+                        data-testid={id}
                         id={id}
                         className={
                           userInfo[id] === undefined
-                            ? inputErrorClassName
-                            : inputClassName
+                            ? basicInputClassName + ' border-red-500'
+                            : basicInputClassName + ' border-black'
                         }
                         onChange={(event) => handleInputField(event, id)}
                       />
@@ -161,9 +161,15 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     /* @ts-ignore */
                     onChange={(event) => handleListBoxField(event)}
                   >
-                    <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300">
-                        <span className="block truncate">
+                    <div className="relative mt-1 w-full h-full">
+                      <Listbox.Button
+                        className={
+                          border
+                            ? basicInputClassName + ' border-red-500'
+                            : basicInputClassName + ' border-black'
+                        }
+                      >
+                        <span className="block truncate h-[22px]">
                           {selectedCity.name}
                         </span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

@@ -68,7 +68,7 @@ export default function HomePage() {
           <div className="flex justify-center">
             <SearchBar setProduct={setProducts} />
           </div>
-          <div className="fixed inset-0">
+          <div>
             {saveUserRealName === '' && (
               <div className="absolute inset-0 top-[140px]">
                 <SaveUserInfo isOpen={true} />
