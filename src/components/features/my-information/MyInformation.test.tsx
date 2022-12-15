@@ -16,6 +16,7 @@ jest.mock('@/service', () => ({
     token: 23,
     bankAccount: '123',
     avatar: 'avatar',
+    telephoneNum: 123456789,
   }),
   updateUserInfo: jest.fn(),
 }));
@@ -38,6 +39,7 @@ describe('display user info', () => {
     expect(await screen.findByText('My Shipping Address')).toBeInTheDocument();
     expect(await screen.findByText('Shanghai')).toBeInTheDocument();
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
+    expect(await screen.findByText('123456789')).toBeInTheDocument();
     expect(await screen.findByText('Save')).toBeInTheDocument();
   });
 
