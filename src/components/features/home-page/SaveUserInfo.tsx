@@ -25,6 +25,7 @@ const baseCites = [
   { id: 3, name: 'Shanghai' },
   { id: 4, name: 'Shenzhen' },
   { id: 5, name: 'Wuhan' },
+  { id: 6, name: "Xi'an" },
 ];
 const initCity = [{ id: 1, name: '' }];
 
