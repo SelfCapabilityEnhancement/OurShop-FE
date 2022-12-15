@@ -46,7 +46,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         tmp.officeId = Number(value);
         break;
     }
-
     setUserInfo(tmp);
   };
 
@@ -57,7 +56,10 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     if (
       userInfo.userRealName === '' ||
       userInfo.telephoneNum === 0 ||
-      userInfo.officeId === 0
+      userInfo.officeId === 0 ||
+      userInfo.userRealName === undefined ||
+      userInfo.telephoneNum === undefined ||
+      userInfo.officeId === undefined
     ) {
       if (userInfo.userRealName === '') {
         userInfo.userRealName = undefined;
