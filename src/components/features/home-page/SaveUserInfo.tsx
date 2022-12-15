@@ -1,5 +1,5 @@
 import { UserInfo } from '@/components/common/CustomTypes';
-import { Transition } from '@headlessui/react';
+import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 import { initUserInfo } from '@/constants';
 import { saveUserInfo } from '@/service';
@@ -9,9 +9,9 @@ const successMsg = 'Your information is saved!';
 const failMsg = 'All required field must be filled!';
 
 const inputClassName =
-  'bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+  'bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
 const inputErrorClassName =
-  'bg-inherit border border-red-500 text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+  'bg-inherit border border-red-500 text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
 
 const basicForm: {
   id: keyof UserInfo;
@@ -34,6 +34,8 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   const [showBanner, setShowBanner] = useState(false);
   const [message, setMessage] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(baseCites[0]);
+  const [cities, setCities] = useState(baseCites);
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -55,12 +57,23 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     setUserInfo(tmp);
   };
 
-  const handleListBoxField = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleListBoxField = (
+    event: React.ExoticComponent<{
+      children?: React.ReactNode;
+    }>
+  ) => {
+    // @ts-ignore
+    setSelectedCity(event);
     const tmp = { ...userInfo };
-    tmp.officeId = Number(event.target.selectedIndex);
+    tmp.officeId = Number(getOfficeId(event.name));
     setUserInfo(tmp);
+    setCities(baseCites);
   };
 
+  const getOfficeId = (currentName: string): number => {
+    const result = cities.filter((city) => city.name === currentName);
+    return result[0].id;
+  };
   const handleSave = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -97,6 +110,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     }
   };
 
+  // @ts-ignore
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <div className="mx-auto container flex items-center" id="nav">
@@ -138,32 +152,76 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                   </div>
                 ))}
                 <div className="mb-8">
-                  <label
-                    // htmlFor={id}
-                    className="block text-gray-700 text-sm mb-2"
-                  >
+                  <label className="block text-gray-700 text-sm mb-2">
                     Select at Office
                     <span className="text-red-500">&nbsp;*</span>
                   </label>
-                  <select
-                    name="pets"
-                    id="pet-select"
-                    className="bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300"
+                  {/* @ts-ignore */}
+                  <Listbox
+                    value={selectedCity}
                     onChange={(event) => handleListBoxField(event)}
                   >
-                    <option value="" disabled selected hidden>
-                      Select Your Office
-                    </option>
-                    {baseCites.map((baseCity) => (
-                      <option key={baseCity.id} value={baseCity.id}>
-                        {baseCity.name}
-                      </option>
-                    ))}
-                  </select>
+                    <div className="relative mt-1 w-full">
+                      <Listbox.Button className="relative w-full bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-left rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300">
+                        <span className="block truncate">
+                          {selectedCity.name}
+                        </span>
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <svg
+                            className="h-10 w-10"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path
+                              className="png"
+                              fill={'rgb(217 217 217)'}
+                              d="M18 15l-6-6l-6 6h12"
+                              transform="rotate(180 12 12)"
+                            />
+                          </svg>
+                        </span>
+                      </Listbox.Button>
+                      <Transition
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-[#EEEEEE] py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          {baseCites.map((city) => (
+                            <Listbox.Option
+                              key={city.id}
+                              className={({ active }) =>
+                                `relative cursor-default select-none py-2 pl-3 pr-4 ${
+                                  active ? 'bg-slate-100' : 'text-gray-900'
+                                }`
+                              }
+                              value={city}
+                            >
+                              {({ selected }) => (
+                                <>
+                                  <span
+                                    className={`block truncate ${
+                                      selected ? 'font-medium' : 'font-normal'
+                                    }`}
+                                  >
+                                    {city.name}
+                                  </span>
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </Listbox>
                 </div>
-                <div className="mb-4 ml-[70%]">
+                <div className="mb-4 ml-[60%]">
                   <button
-                    className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-10 rounded "
+                    className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-14 rounded "
                     onClick={(event) => handleSave(event)}
                     type="submit"
                   >
