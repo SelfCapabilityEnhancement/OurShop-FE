@@ -29,9 +29,9 @@ export interface User {
 }
 
 export interface UserInfo {
-  userRealName: string;
-  officeId: number;
-  telephoneNum: number;
+  userRealName: string | undefined;
+  officeId: number | undefined;
+  telephoneNum: number | undefined;
 }
 
 export interface Account {
