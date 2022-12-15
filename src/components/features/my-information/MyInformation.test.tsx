@@ -42,7 +42,7 @@ describe('display user info', () => {
   });
 
   it('should display new shipping address after edit and save', async () => {
-    const edit = await screen.findByText('Edit');
+    const edit = await screen.findByTestId('edit-address');
     const newAddress = 'Poly International';
 
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();

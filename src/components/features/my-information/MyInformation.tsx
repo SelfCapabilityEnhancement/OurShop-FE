@@ -5,10 +5,12 @@ import { TextSubmission } from '@/components/common/TextSubmission/TextSubmissio
 import { getCurrentUser, updateUserInfo } from '@/service';
 
 const baseCites = [
-  { id: 1, name: 'Wuhan' },
-  { id: 2, name: `Xi'an` },
+  { id: 1, name: 'Beijing' },
+  { id: 2, name: 'Chengdu' },
   { id: 3, name: 'Shanghai' },
-  { id: 4, name: 'Chengdu' },
+  { id: 4, name: 'Shenzhen' },
+  { id: 4, name: 'Wuhan' },
+  { id: 4, name: `Xi'an` },
 ];
 
 export default function MyInformation() {
@@ -127,6 +129,17 @@ export default function MyInformation() {
           <div className="flex items-center justify-between m-8">
             <p className="text-2xl font-semibold">My Shipping Address</p>
             <p
+              data-testid="edit-address"
+              className="edit-btn text-2xl font-semibold text-indigo-400"
+              onClick={handleClickEdit()}
+            >
+              Edit
+            </p>
+          </div>
+          <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
+          <div className="flex items-center justify-between m-8">
+            <p className="text-2xl font-semibold">My Phone</p>
+            <p
               className="edit-btn text-2xl font-semibold text-indigo-400"
               onClick={handleClickEdit()}
             >
@@ -142,7 +155,7 @@ export default function MyInformation() {
             />
           ) : (
             <div>
-              <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
+              <p className="m-8 text-2xl font-light">12345678</p>
               <button
                 type="button"
                 onClick={handleClick}
