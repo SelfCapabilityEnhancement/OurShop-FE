@@ -117,7 +117,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         <div className="w-full pt-2 p-4">
           <div className="mx-auto md:p-6 md:w-1/3">
             <div className="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4">
-              <p className="mt-6 text-center text-3xl text-purple-400 font-normal">
+              <p className="text-center text-3xl text-purple-400 font-normal">
                 Welcome
               </p>
               <p className="mt-6 h-14 text-center text-lg text-black-500">
@@ -219,9 +219,9 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     </div>
                   </Listbox>
                 </div>
-                <div className="mb-4 ml-[60%]">
+                <div className="mb-4 ml-[55%]">
                   <button
-                    className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-14 rounded "
+                    className="transition duration-500 bg-violet-500 text-white bg-[#7F62C3] hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-16 rounded "
                     onClick={(event) => handleSave(event)}
                     type="submit"
                   >
