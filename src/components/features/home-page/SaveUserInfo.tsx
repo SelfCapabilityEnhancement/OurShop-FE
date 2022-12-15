@@ -8,10 +8,8 @@ import Banner from '@/components/common/banner/Banner';
 const successMsg = 'Your information is saved!';
 const failMsg = 'All required field must be filled!';
 
-const inputClassName =
-  'bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
-const inputErrorClassName =
-  'bg-inherit border border-red-500 text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+const basicInputClassName =
+  'bg-inherit border text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
 
 const basicForm: {
   id: keyof UserInfo;
@@ -26,7 +24,6 @@ const basicForm: {
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   const [userInfo, setUserInfo] = useState<UserInfo>(initUserInfo);
   const [showBanner, setShowBanner] = useState(false);
-  const [message, setMessage] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleInputField = (
@@ -71,7 +68,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         userInfo.officeId = undefined;
       }
       setShowBanner(true);
-      setMessage(failMsg);
       setSaveSuccess(false);
       setTimeout(() => {
         setShowBanner(false);
@@ -79,7 +75,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     } else {
       await saveUserInfo(userInfo);
       setShowBanner(true);
-      setMessage(successMsg);
       setSaveSuccess(true);
       setTimeout(() => {
         setShowBanner(false);
@@ -103,7 +98,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
               <Banner
                 visible={showBanner}
                 success={saveSuccess}
-                message={message}
+                message={saveSuccess ? successMsg : failMsg}
               />
               <form>
                 {basicForm.map(({ id, label }) => (
@@ -121,15 +116,14 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                         id={id}
                         className={
                           userInfo[id] === undefined
-                            ? inputErrorClassName
-                            : inputClassName
+                            ? basicInputClassName + ' border-red-500'
+                            : basicInputClassName + ' border-black'
                         }
                         onChange={(event) => handleInputField(event, id)}
                       />
                     </div>
                   </div>
                 ))}
-
                 <div className="mb-4 ml-[70%]">
                   <button
                     data-testid="save-btn"
