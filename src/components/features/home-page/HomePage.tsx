@@ -68,11 +68,13 @@ export default function HomePage() {
           <div className="flex justify-center">
             <SearchBar setProduct={setProducts} />
           </div>
-          {saveUserRealName === '' && (
-            <div className="absolute inset-0 top-[60px]">
-              <SaveUserInfo isOpen={true} />
-            </div>
-          )}
+          <div className="fixed inset-0">
+            {saveUserRealName === '' && (
+              <div className="absolute inset-0 top-[140px]">
+                <SaveUserInfo isOpen={true} />
+              </div>
+            )}
+          </div>
           <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
             {renderProducts(products)}
           </div>
