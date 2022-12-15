@@ -11,7 +11,15 @@ const failMsg = 'All required field must be filled!';
 const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
   { id: 'userRealName', label: 'Name', type: 'string' },
   { id: 'telephoneNum', label: 'Phone', type: 'number' },
-  { id: 'officeId', label: 'Select an Office', type: 'number' },
+];
+
+const baseCites = [
+  { id: 1, name: 'Beijing' },
+  { id: 2, name: 'Chengdu' },
+  { id: 3, name: 'Shanghai' },
+  { id: 4, name: 'Shenzhen' },
+  { id: 5, name: 'Wuhan' },
+  { id: 6, name: `Xi'an` },
 ];
 
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
@@ -33,11 +41,13 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
       case 'telephoneNum':
         tmp.telephoneNum = Number(value);
         break;
-      case 'officeId':
-        tmp.officeId = Number(value);
-        break;
     }
+    setUserInfo(tmp);
+  };
 
+  const handleListBoxField = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const tmp = { ...userInfo };
+    tmp.officeId = Number(event.target.selectedIndex);
     setUserInfo(tmp);
   };
 
@@ -104,7 +114,18 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     </div>
                   </div>
                 ))}
-
+                <select
+                  name="pets"
+                  id="pet-select"
+                  onChange={(event) => handleListBoxField(event)}
+                >
+                  <option value="">Select Your Office</option>
+                  {baseCites.map((baseCity) => (
+                    <option key={baseCity.id} value={baseCity.id}>
+                      {baseCity.name}
+                    </option>
+                  ))}
+                </select>
                 <div className="mb-4 ml-[70%]">
                   <button
                     className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-10 rounded "
