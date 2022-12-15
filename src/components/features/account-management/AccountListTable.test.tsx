@@ -3,8 +3,11 @@ import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import AccountListTable from '@/components/features/account-management/AccountListTable';
 import { accounts } from '@/mocks/mockData';
+import * as service from '@/service';
 
-jest.mock('@/service', () => ({}));
+jest.mock('@/service', () => ({
+  getAccountList: jest.fn(),
+}));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: () => null,
@@ -15,8 +18,9 @@ describe('Account List', () => {
   // const user = userEvent.setup();
 
   beforeEach(async () => {
+    jest.spyOn(service, 'getAccountList').mockResolvedValue(accounts);
     await act(async () => {
-      render(<AccountListTable userList={accounts} />, {
+      render(<AccountListTable />, {
         wrapper: BrowserRouter,
       });
     });
