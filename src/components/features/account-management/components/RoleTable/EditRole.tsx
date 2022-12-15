@@ -34,10 +34,10 @@ export default function EditRole({
     return (
       <span
         key={feature}
-        onClick={() => handleSelect(index + 1)}
+        onClick={() => handleSelect(index)}
         className={classNames(
           ' text-center text-sm font-normal mx-[3%] w-[300px] h-[100px]',
-          featureIds.includes(index + 1) ? 'bg-purple-300' : 'bg-gray-300'
+          featureIds.includes(index) ? 'bg-purple-300' : 'bg-gray-300'
         )}
       >
         {feature}
@@ -141,8 +141,8 @@ export default function EditRole({
                 </div>
                 <div className="">
                   <div className="">
-                    {allFeatures.map((feature, index) =>
-                      renderFeature(feature.featureName, index)
+                    {allFeatures.map((feature) =>
+                      renderFeature(feature.featureName, feature.featureId)
                     )}
                   </div>
                 </div>
