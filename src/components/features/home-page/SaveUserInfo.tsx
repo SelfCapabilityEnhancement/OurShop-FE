@@ -8,10 +8,19 @@ import Banner from '@/components/common/banner/Banner';
 const successMsg = 'Your information is saved!';
 const failMsg = 'All required field must be filled!';
 
-const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
-  { id: 'userRealName', label: 'Name', type: 'string' },
-  { id: 'telephoneNum', label: 'Phone', type: 'number' },
-  { id: 'officeId', label: 'Select an Office', type: 'number' },
+const inputClassName =
+  'bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+const inputErrorClassName =
+  'bg-inherit border border-red-500 text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300';
+
+const basicForm: {
+  id: keyof UserInfo;
+  label: string | undefined;
+  type: string | undefined;
+}[] = [
+  { id: 'userRealName', label: 'Name', type: 'string | undefined' },
+  { id: 'telephoneNum', label: 'Phone', type: 'number | undefined' },
+  { id: 'officeId', label: 'Select an Office', type: 'number | undefined' },
 ];
 
 export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
@@ -50,6 +59,15 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
       userInfo.telephoneNum === 0 ||
       userInfo.officeId === 0
     ) {
+      if (userInfo.userRealName === '') {
+        userInfo.userRealName = undefined;
+      }
+      if (userInfo.telephoneNum === 0) {
+        userInfo.telephoneNum = undefined;
+      }
+      if (userInfo.officeId === 0) {
+        userInfo.officeId = undefined;
+      }
       setShowBanner(true);
       setMessage(failMsg);
       setSaveSuccess(false);
@@ -98,7 +116,11 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     <div className="mt-1 relative rounded-md shadow-sm">
                       <input
                         id={id}
-                        className="bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300"
+                        className={
+                          userInfo[id] === undefined
+                            ? inputErrorClassName
+                            : inputClassName
+                        }
                         onChange={(event) => handleInputField(event, id)}
                       />
                     </div>
