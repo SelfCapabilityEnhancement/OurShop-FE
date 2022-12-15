@@ -30,14 +30,14 @@ export default function EditRole({
     setFeatureIds(oldRole.featureList.map((feature) => feature.featureId));
   }, [oldRole, isOpen]);
 
-  const renderFeature = (feature: string, index: number) => {
+  const renderFeature = (feature: string, id: number) => {
     return (
       <span
         key={feature}
-        onClick={() => handleSelect(index)}
+        onClick={() => handleSelect(id)}
         className={classNames(
           ' text-center text-sm font-normal mx-[3%] w-[300px] h-[100px]',
-          featureIds.includes(index) ? 'bg-purple-300' : 'bg-gray-300'
+          featureIds.includes(id) ? 'bg-purple-300' : 'bg-gray-300'
         )}
       >
         {feature}
