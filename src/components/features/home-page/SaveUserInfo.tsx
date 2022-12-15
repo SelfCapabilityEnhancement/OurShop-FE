@@ -98,7 +98,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     <div className="mt-1 relative rounded-md shadow-sm">
                       <input
                         id={id}
-                        className="block pr-10 bg-inherit shadow border-solid border border-black rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring focus:ring-purple-300 transition duration-500 ease-in-out"
+                        className="bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300"
                         onChange={(event) => handleInputField(event, id)}
                       />
                     </div>
