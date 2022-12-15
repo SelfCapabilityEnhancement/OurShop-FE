@@ -40,7 +40,7 @@ export default function EditFeature({
       setMessage('The code is required field!');
       setTimeout(() => {
         setShowBanner(false);
-        window.location.reload();
+        // window.location.reload();
       }, 3000);
     } else {
       try {
@@ -54,7 +54,7 @@ export default function EditFeature({
         setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
-          window.location.reload();
+          // window.location.reload();
         }, 3000);
       } catch (e) {
         setFeature(oldFeature);
@@ -63,7 +63,7 @@ export default function EditFeature({
         setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
-          window.location.reload();
+          // window.location.reload();
         }, 3000);
       }
     }
@@ -129,7 +129,7 @@ export default function EditFeature({
                 success={updateSuccess}
                 message={message as string}
               />
-              <form className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
+              <div className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
                   Please fill the code for <b>{feature.featureName}</b>
@@ -141,14 +141,14 @@ export default function EditFeature({
                       'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300'
                   )}
                   onChange={(event) => handleInputField(event, 'code')}
-                  placeholder={feature.code as string}
+                  value={feature.code as string}
                 />
                 <section className="col-span-8">Function Description</section>
                 <textarea
                   className={classNames(
                     'col-span-2 h-28 shadow-sm resize-none bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300'
                   )}
-                  placeholder={feature.description}
+                  value={feature.description}
                   onChange={(event) => handleInputField(event, 'description')}
                 />
                 <button
@@ -157,7 +157,7 @@ export default function EditFeature({
                 >
                   Save
                 </button>
-              </form>
+              </div>
             </div>
           </Dialog.Panel>
         </Transition.Child>

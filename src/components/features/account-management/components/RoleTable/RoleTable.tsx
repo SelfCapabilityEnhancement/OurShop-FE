@@ -11,7 +11,7 @@ export const roleListTabs = [
 ];
 
 export default function RoleTable() {
-  const [showModal, setShowModal] = useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
   const [roleList, setRoleList] = useState<Role[]>([]);
   const [chosen, setChosen] = useState(0);
 
@@ -23,11 +23,11 @@ export default function RoleTable() {
 
   const handleEdit = (index: number) => {
     setChosen(index);
-    setShowModal(true);
+    setShowRoleModal(true);
   };
 
   const handleCancelEdit = () => {
-    setShowModal(false);
+    setShowRoleModal(false);
   };
 
   return (
@@ -35,7 +35,7 @@ export default function RoleTable() {
       <div className="w-full max-w-full p-3">
         {roleList.length > 0 && (
           <EditRole
-            isOpen={showModal}
+            isOpen={showRoleModal}
             handleClose={handleCancelEdit}
             oldRole={roleList[chosen]}
           />

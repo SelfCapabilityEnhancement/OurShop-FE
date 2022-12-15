@@ -12,7 +12,7 @@ export const featureListTabs = [
 ];
 
 export default function FeatureTable() {
-  const [showModal, setShowModal] = useState(false);
+  const [showFeatureModal, setShowFeatureModal] = useState(false);
   const [featureList, setFeatureList] = useState<Feature[]>([]);
   const [chosen, setChosen] = useState(0);
   useEffect(() => {
@@ -23,11 +23,11 @@ export default function FeatureTable() {
 
   const handleEdit = (index: number) => {
     setChosen(index);
-    setShowModal(true);
+    setShowFeatureModal(true);
   };
 
   const handleCancelEdit = () => {
-    setShowModal(false);
+    setShowFeatureModal(false);
   };
 
   return (
@@ -35,7 +35,7 @@ export default function FeatureTable() {
       <div className="absolute w-full max-w-full p-3">
         {featureList.length > 0 && (
           <EditFeature
-            isOpen={showModal}
+            isOpen={showFeatureModal}
             handleClose={handleCancelEdit}
             oldFeature={featureList[chosen]}
           />
