@@ -5,6 +5,7 @@ export default function SearchBar(props: { setProduct: Function }) {
     <>
       <Filter setProduct={props.setProduct} />
       <input
+        data-testid="search-input"
         className="bg-gray-50 mt-[4rem] pr-[8rem] h-[45px] w-[31.5rem]"
         name="search"
         placeholder="  Search a product"

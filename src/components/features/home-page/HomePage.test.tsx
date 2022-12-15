@@ -34,6 +34,7 @@ describe('HomePage', () => {
   it('should show SearchBar', async () => {
     expect(screen.getByPlaceholderText('Search a product')).toBeInTheDocument();
     expect(screen.getAllByRole('button')[0]).toHaveTextContent('Filter');
+    expect(screen.getByTestId('search-input')).toHaveDisplayValue('');
   });
 
   // it('should navigate to detail page when click product', async () => {
