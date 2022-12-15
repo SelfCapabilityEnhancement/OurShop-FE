@@ -6,6 +6,10 @@ import { classNames } from '@/utils';
 import { updateFeature } from '@/service';
 import { initFeature } from '@/constants';
 
+const inputClassName =
+  'w-[550px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300';
+const inputErrorClassName =
+  'w-[550px] shadow-sm bg-gray-50 border border-red-500 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300';
 export default function EditFeature({
   isOpen,
   handleClose,
@@ -19,17 +23,23 @@ export default function EditFeature({
   const [showBanner, setShowBanner] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [message, setMessage] = useState<string>();
+  const [inputError, setInputError] = useState(true);
 
   useEffect(() => {
     setFeature(oldFeature);
   }, [oldFeature, isOpen]);
+
+  const changeInputErrorStatus = (code: string) => {
+    setFeature({ ...feature, code });
+    setInputError(true);
+  };
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
     field === 'code'
-      ? setFeature({ ...feature, code: event.target.value })
+      ? changeInputErrorStatus(event.target.value)
       : setFeature({ ...feature, description: event.target.value });
   };
 
@@ -37,6 +47,7 @@ export default function EditFeature({
     if (feature.code === '') {
       setShowBanner(true);
       setUpdateSuccess(false);
+      setInputError(false);
       setMessage('The code is required field!');
       setTimeout(() => {
         setShowBanner(false);
@@ -49,6 +60,7 @@ export default function EditFeature({
           feature.description
         );
         setUpdateSuccess(true);
+        setInputError(true);
         setMessage('The Change was made Successfully!');
         setShowBanner(true);
         setTimeout(() => {
@@ -58,6 +70,7 @@ export default function EditFeature({
       } catch (e) {
         setFeature(oldFeature);
         setUpdateSuccess(false);
+        setInputError(false);
         setMessage('The code is wrong!');
         setShowBanner(true);
         setTimeout(() => {
@@ -132,10 +145,7 @@ export default function EditFeature({
                 </div>
                 <input
                   type={'string'}
-                  className={classNames(
-                    'w-[550px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
-                      'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300'
-                  )}
+                  className={inputError ? inputClassName : inputErrorClassName}
                   onChange={(event) => handleInputField(event, 'code')}
                   value={feature.code as string}
                 />
