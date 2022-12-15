@@ -1,18 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import HomePage from '@/components/features/home-page/HomePage';
-import { tempProducts } from '@/mocks/mockData';
+import { tempProducts, users } from '@/mocks/mockData';
 import * as service from '@/service';
 // import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
 jest.mock('@/service', () => ({
   getProducts: jest.fn(),
+  getCurrentUser: jest.fn(),
 }));
 
 describe('HomePage', () => {
   // const user = userEvent.setup();
   jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
+  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[1]);
 
   beforeEach(async () => {
     await act(async () => {
