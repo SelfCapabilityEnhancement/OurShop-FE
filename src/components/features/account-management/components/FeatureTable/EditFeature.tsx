@@ -95,13 +95,10 @@ export default function EditFeature({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="absolute top-[-285px] w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
-            <Dialog.Title
-              as="h1"
-              className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
-            >
-              <div></div>
-              <div className="mb-[5%] text-[#A45FB7] text-2xl content-center justify-self-center font-semibold">
+          <Dialog.Panel className="absolute top-[-285px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
+            <Dialog.Title as="h1" className="flex">
+              {/* <div></div> */}
+              <div className="ml-[25%] mr-[25%] mb-[5%] text-[#A45FB7] text-2xl content-center justify-self-center font-semibold">
                 Function Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -136,7 +133,7 @@ export default function EditFeature({
                 <input
                   type={'string'}
                   className={classNames(
-                    'w-[650px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
+                    'w-[550px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
                       'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300'
                   )}
                   onChange={(event) => handleInputField(event, 'code')}
@@ -152,7 +149,7 @@ export default function EditFeature({
                 />
                 <button
                   onClick={() => handleSubmit()}
-                  className="mx-[20%] mt-[30%] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className="mx-[5%] mt-[30%] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                 >
                   Save
                 </button>
