@@ -1,4 +1,4 @@
-import { Product } from '@/components/common/CustomTypes';
+import { Feature, Product, Role } from '@/components/common/CustomTypes';
 
 export const imageUrlPrefix = `https://ourshopimages.blob.core.windows.net/images/`;
 export const initProduct: Product = {
@@ -97,6 +97,30 @@ export const initCategoryOption = {
         { value: 735, name: 'Souvenir' },
         { value: 580, name: 'Books' },
       ],
+    },
+  ],
+};
+
+export const initFeature: Feature = {
+  featureId: 0,
+  featureName: '',
+  code: '',
+  description: '',
+  updateTime: '',
+};
+
+export const initRole: Role = {
+  roleId: 0,
+  roleName: '',
+  updateTime: '',
+  featureNameList: [''],
+  featureList: [
+    {
+      featureId: 0,
+      featureName: '',
+      code: '',
+      description: '',
+      updateTime: '',
     },
   ],
 };

@@ -1,10 +1,10 @@
 import { Feature } from '@/components/common/CustomTypes';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { updateFeature } from '@/service';
-import { useNavigate } from 'react-router-dom';
+import { initFeature } from '@/constants';
 
 export default function EditFeature({
   isOpen,
@@ -15,11 +15,14 @@ export default function EditFeature({
   handleClose: Function;
   oldFeature: Feature;
 }) {
-  const navigate = useNavigate();
-  const [feature, setFeature] = useState<Feature>(oldFeature);
+  const [feature, setFeature] = useState<Feature>(initFeature);
   const [showBanner, setShowBanner] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [message, setMessage] = useState<string>();
+
+  useEffect(() => {
+    setFeature(oldFeature);
+  }, [oldFeature, isOpen]);
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,7 +40,7 @@ export default function EditFeature({
       setMessage('The code is required field!');
       setTimeout(() => {
         setShowBanner(false);
-        navigate('/account-management');
+        window.location.reload();
       }, 3000);
     } else {
       try {
@@ -51,7 +54,7 @@ export default function EditFeature({
         setMessage('The Change was made Successfully!');
         setTimeout(() => {
           setShowBanner(false);
-          navigate('/account-management');
+          window.location.reload();
         }, 3000);
       } catch (e) {
         setFeature(oldFeature);
@@ -60,7 +63,7 @@ export default function EditFeature({
         setMessage('The code is wrong!');
         setTimeout(() => {
           setShowBanner(false);
-          navigate('/account-management');
+          window.location.reload();
         }, 3000);
       }
     }

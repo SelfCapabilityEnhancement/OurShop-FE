@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { getFeatureList, updateRole } from '@/service';
-import { useNavigate } from 'react-router-dom';
+import { initRole } from '@/constants';
 
 export default function EditRole({
   isOpen,
@@ -15,19 +15,20 @@ export default function EditRole({
   handleClose: Function;
   oldRole: Role;
 }) {
-  const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [message, setMessage] = useState<string>();
   const [allFeatures, setAllFeatures] = useState<Feature[]>([]);
-  const [featureIds, setFeatureIds] = useState<number[]>(
-    oldRole.featureList.map((feature) => feature.featureId)
-  );
+  const [featureIds, setFeatureIds] = useState<number[]>([]);
+  const [role, setRole] = useState<Role>(initRole);
+
   useEffect(() => {
     getFeatureList().then((data) => {
       setAllFeatures(data);
     });
-  }, []);
+    setRole(oldRole);
+    setFeatureIds(oldRole.featureList.map((feature) => feature.featureId));
+  }, [oldRole, isOpen]);
 
   const renderFeature = (feature: string, index: number) => {
     return (
@@ -54,13 +55,13 @@ export default function EditRole({
 
   const handleSubmit = async () => {
     try {
-      await updateRole(oldRole.roleId, featureIds);
+      await updateRole(role.roleId, featureIds);
       setUpdateSuccess(true);
       setShowBanner(true);
       setMessage('The Change was made Successfully!');
       setTimeout(() => {
         setShowBanner(false);
-        navigate('/account-management');
+        window.location.reload();
       }, 3000);
     } catch (e) {
       setUpdateSuccess(false);
@@ -68,7 +69,7 @@ export default function EditRole({
       setMessage('Wrong!');
       setTimeout(() => {
         setShowBanner(false);
-        navigate('/account-management');
+        window.location.reload();
       }, 3000);
     }
   };
@@ -136,7 +137,7 @@ export default function EditRole({
               <div className="mb-6 text-xl font-normal">
                 <div className="col-span-8">
                   <span className="text-red-500 pr-1">*</span>
-                  Please select function for <b>{oldRole.roleName}</b>
+                  Please select function for <b>{role.roleName}</b>
                 </div>
                 <div className="">
                   <div className="">
