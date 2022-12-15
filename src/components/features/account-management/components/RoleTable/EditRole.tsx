@@ -57,8 +57,8 @@ export default function EditRole({
     try {
       await updateRole(role.roleId, featureIds);
       setUpdateSuccess(true);
-      setShowBanner(true);
       setMessage('The Change was made Successfully!');
+      setShowBanner(true);
       setTimeout(() => {
         setShowBanner(false);
         window.location.reload();
@@ -66,8 +66,8 @@ export default function EditRole({
     } catch (e) {
       setRole(oldRole);
       setUpdateSuccess(false);
-      setShowBanner(false);
       setMessage('Wrong!');
+      setShowBanner(false);
       setTimeout(() => {
         setShowBanner(false);
         window.location.reload();
@@ -102,7 +102,7 @@ export default function EditRole({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
+          <Dialog.Panel className="absolute top-[-285px] w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title
               as="h1"
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
@@ -137,7 +137,6 @@ export default function EditRole({
               />
               <div className="mb-6 text-xl font-normal">
                 <div className="col-span-8">
-                  <span className="text-red-500 pr-1">*</span>
                   Please select function for <b>{role.roleName}</b>
                 </div>
                 <div className="">

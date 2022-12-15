@@ -49,18 +49,18 @@ export default function EditFeature({
           feature.code,
           feature.description
         );
-        setShowBanner(true);
         setUpdateSuccess(true);
         setMessage('The Change was made Successfully!');
+        setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
           window.location.reload();
         }, 3000);
       } catch (e) {
         setFeature(oldFeature);
-        setShowBanner(true);
         setUpdateSuccess(false);
         setMessage('The code is wrong!');
+        setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
           window.location.reload();
@@ -96,7 +96,7 @@ export default function EditFeature({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
+          <Dialog.Panel className="absolute top-[-285px] w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title
               as="h1"
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"

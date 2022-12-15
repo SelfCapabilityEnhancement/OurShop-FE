@@ -31,8 +31,8 @@ export default function FeatureTable() {
   };
 
   return (
-    <div className="overflow-x-auto relative sm:rounded-lg mt-6">
-      <div className="w-full max-w-full p-3">
+    <div className="overflow-y-auto relative sm:rounded-lg mt-6">
+      <div className="absolute w-full max-w-full p-3">
         {featureList.length > 0 && (
           <EditFeature
             isOpen={showModal}
