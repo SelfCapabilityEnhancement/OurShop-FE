@@ -40,7 +40,6 @@ export default function EditFeature({
       setMessage('The code is required field!');
       setTimeout(() => {
         setShowBanner(false);
-        // window.location.reload();
       }, 3000);
     } else {
       try {
@@ -54,7 +53,7 @@ export default function EditFeature({
         setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
-          // window.location.reload();
+          window.location.reload();
         }, 3000);
       } catch (e) {
         setFeature(oldFeature);
@@ -63,7 +62,7 @@ export default function EditFeature({
         setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);
-          // window.location.reload();
+          window.location.reload();
         }, 3000);
       }
     }

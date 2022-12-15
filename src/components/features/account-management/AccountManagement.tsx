@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getAccountList } from '@/service';
 import { Account } from '@/components/common/CustomTypes';
 import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
+import { Link } from 'react-router-dom';
 
 const tabs = [
   { id: 'account-list', name: 'Account List' },
@@ -26,19 +27,21 @@ export default function AccountManagement() {
       <Tab.Group>
         <Tab.List className="flex gap-24 p-1 ml-16">
           {tabs.map((tab) => (
-            <Tab
-              key={tab.id}
-              className={({ selected }) =>
-                classNames(
-                  'rounded-lg text-xl font-semibold outline-0 mt-4',
-                  selected
-                    ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
-                    : 'text-gray-800'
-                )
-              }
-            >
-              {tab.name}
-            </Tab>
+            <Link to={tab.id} key={tab.id}>
+              <Tab
+                key={tab.id}
+                className={({ selected }) =>
+                  classNames(
+                    'rounded-lg text-xl font-semibold outline-0 mt-4',
+                    selected
+                      ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
+                      : 'text-gray-800'
+                  )
+                }
+              >
+                {tab.name}
+              </Tab>
+            </Link>
           ))}
         </Tab.List>
         <Tab.Panels>
