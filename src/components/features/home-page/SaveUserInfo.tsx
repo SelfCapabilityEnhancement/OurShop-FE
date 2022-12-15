@@ -11,6 +11,7 @@ const failMsg = 'All required field must be filled!';
 const basicForm: { id: keyof UserInfo; label: string; type: string }[] = [
   { id: 'userRealName', label: 'Name', type: 'string' },
   { id: 'telephoneNum', label: 'Phone', type: 'number' },
+  // {id: 'officeId',label: 'Select at Office',type: 'string'},
 ];
 
 const baseCites = [
@@ -114,18 +115,30 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     </div>
                   </div>
                 ))}
-                <select
-                  name="pets"
-                  id="pet-select"
-                  onChange={(event) => handleListBoxField(event)}
-                >
-                  <option value="">Select Your Office</option>
-                  {baseCites.map((baseCity) => (
-                    <option key={baseCity.id} value={baseCity.id}>
-                      {baseCity.name}
+                <div className="mb-8">
+                  <label
+                    // htmlFor={id}
+                    className="block text-gray-700 text-sm mb-2"
+                  >
+                    Select at Office
+                    <span className="text-red-500">&nbsp;*</span>
+                  </label>
+                  <select
+                    name="pets"
+                    id="pet-select"
+                    className="bg-inherit border border-black text-gray-700 text-base w-full py-2 px-4 text-center rounded leading-tight focus:border-none focus:outline-none focus:ring focus:ring-purple-300"
+                    onChange={(event) => handleListBoxField(event)}
+                  >
+                    <option value="" disabled selected hidden>
+                      Select Your Office
                     </option>
-                  ))}
-                </select>
+                    {baseCites.map((baseCity) => (
+                      <option key={baseCity.id} value={baseCity.id}>
+                        {baseCity.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <div className="mb-4 ml-[70%]">
                   <button
                     className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-10 rounded "
