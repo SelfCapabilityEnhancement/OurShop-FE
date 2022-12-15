@@ -15,7 +15,7 @@ import {
   validateStores,
 } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
-import { newProduct, uploadFile } from '@/service';
+import { createProduct, getAllOffices, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
 import OfficeStoreItem from '@/components/features/create-product/OfficeStoreItem';
 
@@ -34,7 +34,7 @@ const tabs = [
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
-export const officeList: OfficeItem[] = [
+export let officeList: OfficeItem[] = [
   { id: 1, name: 'Beijing' },
   { id: 2, name: 'Chengdu' },
   { id: 3, name: 'Shanghai' },
@@ -43,17 +43,12 @@ export const officeList: OfficeItem[] = [
   { id: 6, name: 'Xian' },
 ];
 
-const getOfficeName = (id: number) => {
-  const target = officeList.find((item) => item.id === id);
-  return target!.name;
-};
-
 function CreateProduct() {
   const [imageURL, setImageURL] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(initProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(1);
   // const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
@@ -61,6 +56,14 @@ function CreateProduct() {
     { id: new Date().getTime(), officeId: 0, officeName: '', inventory: 0 },
   ]);
   const [storesError, setStoresError] = useState<StoresError>({});
+  const [isInvalidStoreExist, setIsInvalidStoreExist] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getAllOffices();
+      officeList = res.map(({ id, office }) => ({ id, name: office }));
+    })();
+  }, []);
 
   useEffect(() => {
     if (Object.values(validations).includes(true)) {
@@ -69,6 +72,19 @@ function CreateProduct() {
       }, 2000);
     }
   }, [validations]);
+
+  const getOfficeName = (id: number) => {
+    const target = officeList.find((item) => item.id === id);
+    return target!.name;
+  };
+
+  const dispatchShowBanner = (callback?: () => void) => {
+    setShowBanner(true);
+    setTimeout(() => {
+      setShowBanner(false);
+      callback?.();
+    }, 1500);
+  };
 
   const setStoreItem = (
     storeItem: StoreItem,
@@ -204,8 +220,7 @@ function CreateProduct() {
 
     if (Object.values(result).includes(true)) {
       setValidations(result);
-      setShowBanner(true);
-      setTimeout(() => setShowBanner(false), 1500);
+      dispatchShowBanner();
     } else {
       setSelectedTab(1);
     }
@@ -216,23 +231,27 @@ function CreateProduct() {
   ) => {
     event.preventDefault();
     const storesValidateResult = validateStores(stores);
-    console.log(storesValidateResult);
     setStoresError(storesValidateResult);
 
-    const isInvalidStoreExist = Object.keys(storesValidateResult).length;
-    if (!isInvalidStoreExist) {
+    const isInvalidStoreExist = !!Object.keys(storesValidateResult).length;
+    setIsInvalidStoreExist(isInvalidStoreExist);
+    if (isInvalidStoreExist) {
+      dispatchShowBanner(() => setStoresError({}));
+    } else {
       setLoading(true);
+      const newProduct = {
+        ...product,
+        officeStockList: stores.map(({ officeId, inventory }) => ({
+          officeId,
+          stock: inventory,
+        })),
+      };
       await uploadFile(product.imageFiles);
-      await newProduct(product);
-
+      await createProduct(newProduct);
+      setProduct(newProduct);
       setLoading(false);
-      setProduct(() => initProduct);
       setImageURL(() => []);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-      setShowBanner(true);
-      setTimeout(() => setShowBanner(false), 1500);
+      dispatchShowBanner(window.location.reload);
     }
   };
 
@@ -336,10 +355,8 @@ function CreateProduct() {
           <Tab.Panel>
             <Banner
               visible={showBanner}
-              success={!Object.values(validations).includes(true)}
-              message={
-                Object.values(validations).includes(true) ? failMsg : successMsg
-              }
+              success={!isInvalidStoreExist}
+              message={isInvalidStoreExist ? failMsg : successMsg}
             />
             <Loading message="Processing..." visible={showLoading} />
             <div className="flex flex-col m-8">
@@ -348,7 +365,6 @@ function CreateProduct() {
                 Please indicate the office and number of product you want to
                 sell
               </p>
-
               {stores.map((item, index) => (
                 <>
                   <p className="text-xl font-semibold my-3">{`Office ${
@@ -367,12 +383,14 @@ function CreateProduct() {
                   />
                 </>
               ))}
-              <button
-                onClick={(event) => handleCreateProduct(event)}
-                className="mt-80 create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
-              >
-                Create Product
-              </button>
+              <footer className="flex float-left absolute mt-[640px]">
+                <button
+                  onClick={(event) => handleCreateProduct(event)}
+                  className=" create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                >
+                  Create Product
+                </button>
+              </footer>
             </div>
           </Tab.Panel>
 

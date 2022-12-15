@@ -1,6 +1,7 @@
 import { Dropdown } from 'rsuite';
 import React from 'react';
 import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
+import { classNames } from '@/utils';
 
 type Props = {
   storeItem: StoreItem;
@@ -17,9 +18,9 @@ type Props = {
 };
 
 const dropDownItemClassName =
-  'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-500';
+  'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-900';
 const inputClassName =
-  'w-48 h-10 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-48 h-10 py-2 bg-gray-100 text-lg text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreItem({
   storeItem,
@@ -42,14 +43,17 @@ export default function OfficeStoreItem({
     setStoreItem({ ...storeItem, inventory: Number(value) });
   };
 
-  let dropDownClassName = dropDownItemClassName;
+  let dropDownClassName = classNames(
+    dropDownItemClassName,
+    storeItem.officeName ? '' : 'text-slate-400'
+  );
   if (error.office) {
-    dropDownClassName += ' border-2 border-red-500';
+    dropDownClassName += ' outline-none ring-2 ring-rose-500';
   }
 
   let currentInputClassName = inputClassName;
   if (error.inventory) {
-    currentInputClassName += ' border-2 border-red-500';
+    currentInputClassName += ' outline-none ring-2 ring-rose-500';
   }
 
   return (
@@ -59,7 +63,7 @@ export default function OfficeStoreItem({
         className={dropDownClassName}
         activeKey={storeItem.officeId}
         onSelect={selectCity}
-        menuStyle={{ position: 'absolute' }}
+        menuStyle={{ position: 'absolute', color: 'black' }}
       >
         {officeList.map((item) => (
           <Dropdown.Item

@@ -21,11 +21,18 @@ export const http = axios.create({
   timeout: 10000,
 });
 
+export const getAllOffices = async (): Promise<
+  { id: number; office: string }[]
+> => {
+  const { data } = await http.get(`/offices`);
+  return data;
+};
+
 export const uploadFile = async (images: File[]) => {
   await Promise.all(images.map((image) => uploadFileToBlob(image)));
 };
 
-export const newProduct = async ({
+export const createProduct = async ({
   id,
   imageFiles,
   deletedTime,

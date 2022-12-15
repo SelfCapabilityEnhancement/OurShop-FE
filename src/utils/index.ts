@@ -28,7 +28,6 @@ export const validateForm = (obj: Product, exclude: string[] = []) => {
 };
 
 export const validateStores = (stores: StoreItem[]) => {
-  console.log(stores);
   const result: StoresError = {};
   stores.forEach((item) => {
     let office = false;

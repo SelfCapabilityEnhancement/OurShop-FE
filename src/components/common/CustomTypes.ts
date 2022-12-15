@@ -12,6 +12,7 @@ export interface Product {
   logisticMethodComment: string;
   isDeleted: boolean;
   deletedTime: string | null;
+  officeStockList: { officeId: number; stock: number }[];
 }
 
 export interface User {
@@ -127,10 +128,9 @@ export interface OfficeItem {
   name: string;
 }
 
-export type StoresError = Record<
-  string,
-  { office: boolean; inventory: boolean }
->;
+export interface StoresError {
+  [key: string]: { office: boolean; inventory: boolean };
+}
 
 // To prevent conflicts with the keyword Function,
 // it is defined here as Feature
