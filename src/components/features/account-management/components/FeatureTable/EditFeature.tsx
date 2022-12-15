@@ -101,7 +101,7 @@ export default function EditFeature({
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
             >
               <div></div>
-              <div className="text-[#A45FB7] content-center justify-self-center font-semibold">
+              <div className="mb-[5%] text-[#A45FB7] text-2xl content-center justify-self-center font-semibold">
                 Function Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
