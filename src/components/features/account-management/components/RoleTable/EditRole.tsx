@@ -64,6 +64,7 @@ export default function EditRole({
         window.location.reload();
       }, 3000);
     } catch (e) {
+      setRole(oldRole);
       setUpdateSuccess(false);
       setShowBanner(false);
       setMessage('Wrong!');
