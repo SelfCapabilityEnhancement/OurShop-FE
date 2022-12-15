@@ -32,16 +32,16 @@ export default function EditRole({
 
   const renderFeature = (feature: string, id: number) => {
     return (
-      <span
+      <button
         key={feature}
         onClick={() => handleSelect(id)}
         className={classNames(
-          ' text-center text-sm font-normal mx-[3%] w-[300px] h-[100px]',
+          'w-[175px] h-[50px] text-white text-[15px] text-center text-l font-normal ml-[3%] w-[250px] h-[100px] mt-[3%] rounded-xl',
           featureIds.includes(id) ? 'bg-purple-300' : 'bg-gray-300'
         )}
       >
         {feature}
-      </span>
+      </button>
     );
   };
 
@@ -108,7 +108,7 @@ export default function EditRole({
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
             >
               <div></div>
-              <div className="text-[#A45FB7] content-center justify-self-center font-semibold">
+              <div className="text-[#A45FB7] text-2xl content-center justify-self-center font-semibold mb-[20%]">
                 Role Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -140,7 +140,7 @@ export default function EditRole({
                   Please select function for <b>{role.roleName}</b>
                 </div>
                 <div className="">
-                  <div className="">
+                  <div className="flex flex-wrap mx-[5%]">
                     {allFeatures.map((feature) =>
                       renderFeature(feature.featureName, feature.featureId)
                     )}
