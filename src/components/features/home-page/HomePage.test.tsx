@@ -5,6 +5,7 @@ import { tempProducts, users } from '@/mocks/mockData';
 import * as service from '@/service';
 // import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import SaveUserInfo from '@/components/features/home-page/SaveUserInfo';
 
 jest.mock('@/service', () => ({
   getProducts: jest.fn(),
@@ -14,11 +15,12 @@ jest.mock('@/service', () => ({
 describe('HomePage', () => {
   // const user = userEvent.setup();
   jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
-  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[1]);
+  jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[2]);
 
   beforeEach(async () => {
     await act(async () => {
       render(<HomePage />, { wrapper: BrowserRouter });
+      render(<SaveUserInfo isOpen={false} />, { wrapper: BrowserRouter });
     });
   });
 
