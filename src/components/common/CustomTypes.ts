@@ -115,6 +115,23 @@ export interface OrdersItemAdmin {
   }[];
 }
 
+export interface StoreItem {
+  id: number;
+  officeId: number;
+  officeName: string;
+  inventory: number;
+}
+
+export interface OfficeItem {
+  id: number;
+  name: string;
+}
+
+export type StoresError = Record<
+  string,
+  { office: boolean; inventory: boolean }
+>;
+
 // To prevent conflicts with the keyword Function,
 // it is defined here as Feature
 export interface Feature {

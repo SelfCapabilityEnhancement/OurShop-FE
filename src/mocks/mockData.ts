@@ -4,6 +4,7 @@ import {
   OrdersItemAdmin,
   User,
   Account,
+  StoreItem,
   Feature,
   Role,
 } from '@/components/common/CustomTypes';
@@ -144,6 +145,21 @@ export const accounts: Account[] = [
     connection: 'username',
     role: 'Buyer',
     createdTime: '2022-12-07 06:52:37',
+  },
+];
+
+export const mockStoreItems: StoreItem[] = [
+  {
+    id: 1670995827718,
+    officeId: 1,
+    officeName: 'Beijing',
+    inventory: 10,
+  },
+  {
+    id: 1670995827728,
+    officeId: 2,
+    officeName: 'Chengdu',
+    inventory: 20,
   },
 ];
 

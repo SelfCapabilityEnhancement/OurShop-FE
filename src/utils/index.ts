@@ -1,5 +1,9 @@
 import moment from 'moment';
-import { Product } from '@/components/common/CustomTypes';
+import {
+  Product,
+  StoreItem,
+  StoresError,
+} from '@/components/common/CustomTypes';
 
 export const generateUniqueImageName = (name: string) => {
   return `${name.replace(/\.png/, '')}-${moment().unix()}.png`;
@@ -20,6 +24,28 @@ export const validateForm = (obj: Product, exclude: string[] = []) => {
       result[key] = false;
     }
   }
+  return result;
+};
+
+export const validateStores = (stores: StoreItem[]) => {
+  console.log(stores);
+  const result: StoresError = {};
+  stores.forEach((item) => {
+    let office = false;
+    let inventory = false;
+    if (item.officeId === 0 && item.officeName === '') {
+      office = true;
+    }
+    if (item.inventory === 0) {
+      inventory = true;
+    }
+    if (office || inventory) {
+      result[item.id] = {
+        office,
+        inventory,
+      };
+    }
+  });
   return result;
 };
 

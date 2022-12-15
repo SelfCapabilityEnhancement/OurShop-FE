@@ -1,25 +1,23 @@
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import React, { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { Product } from '@/components/common/CustomTypes';
+import {
+  OfficeItem,
+  StoreItem,
+  Product,
+  StoresError,
+} from '@/components/common/CustomTypes';
 import Banner from '@/components/common/banner/Banner';
-import { classNames, generateUniqueImageName, validateForm } from '@/utils';
+import {
+  classNames,
+  generateUniqueImageName,
+  validateForm,
+  validateStores,
+} from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { newProduct, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
-import { OfficeStoreItem } from '@/components/features/create-product/OfficeStoreItem';
-
-export type StoreItem = {
-  id: number;
-  officeId: number;
-  officeName: string;
-  inventory: number;
-};
-
-export type OfficeItem = {
-  id: number;
-  name: string;
-};
+import OfficeStoreItem from '@/components/features/create-product/OfficeStoreItem';
 
 const successMsg = 'The Product was Created Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -36,7 +34,7 @@ const tabs = [
   { id: 'approvalFlow', name: 'Approval Flow' },
 ];
 
-const officeList: OfficeItem[] = [
+export const officeList: OfficeItem[] = [
   { id: 1, name: 'Beijing' },
   { id: 2, name: 'Chengdu' },
   { id: 3, name: 'Shanghai' },
@@ -55,13 +53,14 @@ function CreateProduct() {
   const [product, setProduct] = useState<Product>(initProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(0);
   // const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());
   const [stores, setStores] = useState<StoreItem[]>([
     { id: new Date().getTime(), officeId: 0, officeName: '', inventory: 0 },
   ]);
+  const [storesError, setStoresError] = useState<StoresError>({});
 
   useEffect(() => {
     if (Object.values(validations).includes(true)) {
@@ -212,19 +211,16 @@ function CreateProduct() {
     }
   };
 
-  const handleSubmit = async (
+  const handleCreateProduct = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const result = validateForm(product, [
-      'images',
-      'logisticMethodComment',
-      'deletedTime',
-    ]);
+    const storesValidateResult = validateStores(stores);
+    console.log(storesValidateResult);
+    setStoresError(storesValidateResult);
 
-    if (Object.values(result).includes(true)) {
-      setValidations(result);
-    } else {
+    const isInvalidStoreExist = Object.keys(storesValidateResult).length;
+    if (!isInvalidStoreExist) {
       setLoading(true);
       await uploadFile(product.imageFiles);
       await newProduct(product);
@@ -235,16 +231,16 @@ function CreateProduct() {
       setTimeout(() => {
         window.location.reload();
       }, 1500);
+      setShowBanner(true);
+      setTimeout(() => setShowBanner(false), 1500);
     }
-
-    setShowBanner(true);
-    setTimeout(() => setShowBanner(false), 1500);
   };
 
   const selectedOffices = stores.map((item) => item.officeId);
   const newOfficeList = officeList.filter(
     (item) => !selectedOffices.includes(item.id)
   );
+
   return (
     <div className="w-full max-w-full p-3">
       <Tab.Group manual selectedIndex={selectedTab} onChange={setSelectedTab}>
@@ -347,19 +343,22 @@ function CreateProduct() {
             />
             <Loading message="Processing..." visible={showLoading} />
             <div className="flex flex-col m-8">
-              <p className="text-xl mb-5">
-                <span className="text-red-500 mb-1 pr-1">*</span>
+              <p className="text-xl font-medium mb-3">
+                <span className="text-red-500 pr-1">*</span>
                 Please indicate the office and number of product you want to
                 sell
               </p>
 
               {stores.map((item, index) => (
                 <>
-                  <p className="text-2xl mb-5">{`Office ${index + 1}`}</p>
+                  <p className="text-xl font-semibold my-3">{`Office ${
+                    index + 1
+                  }`}</p>
                   <OfficeStoreItem
                     key={item.id}
                     storeItem={item}
                     officeList={newOfficeList}
+                    error={storesError[item.id] || {}}
                     isMinCounts={stores.length === 1}
                     isMaxCounts={stores.length === 6}
                     setStoreItem={setStoreItem}
@@ -369,8 +368,8 @@ function CreateProduct() {
                 </>
               ))}
               <button
-                onClick={(event) => handleSubmit(event)}
-                className="create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                onClick={(event) => handleCreateProduct(event)}
+                className="mt-80 create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
               >
                 Create Product
               </button>

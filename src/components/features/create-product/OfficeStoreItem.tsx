@@ -1,9 +1,6 @@
 import { Dropdown } from 'rsuite';
-import {
-  StoreItem,
-  OfficeItem,
-} from '@/components/features/create-product/CreateProduct';
 import React from 'react';
+import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
 
 type Props = {
   storeItem: StoreItem;
@@ -13,20 +10,29 @@ type Props = {
   deleteStoreItem: (id: number) => void;
   isMinCounts: boolean;
   isMaxCounts: boolean;
+  error: {
+    office: boolean;
+    inventory: boolean;
+  };
 };
 
-const dropdownStyle =
+const dropDownItemClassName =
   'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-500';
+const inputClassName =
+  'w-48 h-10 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400';
 
-export function OfficeStoreItem({
+export default function OfficeStoreItem({
   storeItem,
   officeList,
   isMinCounts,
   isMaxCounts,
+  error,
   setStoreItem,
   addStoreItem,
   deleteStoreItem,
 }: Props) {
+  console.log(error);
+
   const selectCity = (officeId: number) => {
     setStoreItem({ ...storeItem, officeId }, true);
   };
@@ -36,11 +42,21 @@ export function OfficeStoreItem({
     setStoreItem({ ...storeItem, inventory: Number(value) });
   };
 
+  let dropDownClassName = dropDownItemClassName;
+  if (error.office) {
+    dropDownClassName += ' border-2 border-red-500';
+  }
+
+  let currentInputClassName = inputClassName;
+  if (error.inventory) {
+    currentInputClassName += ' border-2 border-red-500';
+  }
+
   return (
     <div className="flex">
       <Dropdown
         title={storeItem.officeName || 'Select an Office'}
-        className={dropdownStyle}
+        className={dropDownClassName}
         activeKey={storeItem.officeId}
         onSelect={selectCity}
         menuStyle={{ position: 'absolute' }}
@@ -48,7 +64,7 @@ export function OfficeStoreItem({
         {officeList.map((item) => (
           <Dropdown.Item
             active={item.id === storeItem.officeId}
-            className={dropdownStyle}
+            className={dropDownItemClassName}
             eventKey={item.id}
             key={item.id}
           >
@@ -58,8 +74,10 @@ export function OfficeStoreItem({
       </Dropdown>
       <span className="text-lg text-center mx-8 py-2">has</span>
       <input
-        value={storeItem.inventory}
-        className="w-52 h-10 py-2 bg-gray-100 text-lg text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+        type="number"
+        placeholder="Number of Products"
+        value={storeItem.inventory === 0 ? '' : storeItem.inventory}
+        className={currentInputClassName}
         onChange={changeInventory}
       />
       <span className="text-lg text-center mx-8 py-2">Available</span>
@@ -71,6 +89,7 @@ export function OfficeStoreItem({
           strokeWidth="1"
           stroke="green"
           className="w-10 h-10"
+          data-testid="add-store-item"
           onClick={addStoreItem}
         >
           <path
@@ -87,7 +106,8 @@ export function OfficeStoreItem({
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="red"
-          className="w-10 h-10"
+          className="w-10 h-10 mx-2"
+          data-testid="delete-store-item"
           onClick={() => deleteStoreItem(storeItem.id)}
         >
           <path
