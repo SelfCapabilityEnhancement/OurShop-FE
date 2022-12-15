@@ -117,6 +117,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     </label>
                     <div className="mt-1 relative rounded-md shadow-sm">
                       <input
+                        data-testid={id}
                         id={id}
                         className={
                           userInfo[id] === undefined
@@ -131,6 +132,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
 
                 <div className="mb-4 ml-[70%]">
                   <button
+                    data-testid="save-btn"
                     className="transition duration-500 bg-violet-500 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-10 rounded "
                     onClick={(event) => handleSave(event)}
                     type="submit"
