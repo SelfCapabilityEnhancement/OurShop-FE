@@ -156,9 +156,9 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                     Select at Office
                     <span className="text-red-500">&nbsp;*</span>
                   </label>
-                  {/* @ts-ignore */}
                   <Listbox
                     value={selectedCity}
+                    /* @ts-ignore */
                     onChange={(event) => handleListBoxField(event)}
                   >
                     <div className="relative mt-1 w-full">
