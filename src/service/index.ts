@@ -7,6 +7,7 @@ import {
   PurchaseConfirmationItem,
   Role,
   User,
+  UserInfo,
 } from '@/components/common/CustomTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
@@ -58,12 +59,11 @@ export const updateProduct = async ({
 };
 
 // this will be replaced by useContext in next iteration
-export const getCurrentUser = (): Promise<User> => {
-  return http
-    .get('/users', {
-      headers: { Authorization: localStorage.getItem('jwt') },
-    })
-    .then((response) => response.data);
+export const getCurrentUser = async (): Promise<User> => {
+  const { data } = await http.get('/users', {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
+  return data;
 };
 
 export const addToCarts = async (
@@ -164,6 +164,16 @@ export const payByToken = async (
   );
 };
 
+export const getProductsByOfficeIds = async (
+  officeIds: number[]
+): Promise<Product[]> => {
+  const { data } = await http.get('/products/officeId?officeIds=' + officeIds);
+  data.sort((a: { id: number }, b: { id: number }) => {
+    return a.id > b.id ? -1 : 1;
+  });
+  return data;
+};
+
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
   http.get(`/orders`).then((response) => response.data);
 
@@ -192,9 +202,19 @@ export const login = async (username: string, password: string) => {
   });
 };
 
-export const getAccountList = async (): Promise<Account[]> => {
+export const saveUserInfo = async (userInfo: UserInfo) => {
   return await http
-    .get('/users/get-account-list')
+    .post(
+      '/users/user-info',
+      {
+        userRealName: userInfo.userRealName,
+        officeId: userInfo.officeId,
+        phoneNumber: userInfo.telephoneNum,
+      },
+      {
+        headers: { Authorization: localStorage.getItem('jwt') },
+      }
+    )
     .then((response) => response.data);
 };
 
@@ -223,4 +243,8 @@ export const updateRole = async (roleId: number, featureIds: number[]) => {
     featureIds,
   });
   return data;
+};
+
+export const getAccountList = (): Promise<Account[]> => {
+  return http.get('/users/get-account-list').then((response) => response.data);
 };

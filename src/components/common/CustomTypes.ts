@@ -25,6 +25,13 @@ export interface User {
   bankAccount: string;
   avatar: string;
   telephoneNum: number;
+  realName: string;
+}
+
+export interface UserInfo {
+  userRealName: string | undefined;
+  officeId: number | undefined;
+  telephoneNum: number | undefined;
 }
 
 export interface Account {

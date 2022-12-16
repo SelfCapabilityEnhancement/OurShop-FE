@@ -16,6 +16,7 @@ jest.mock('@/service', () => ({
     token: 23,
     bankAccount: '123',
     avatar: 'avatar',
+    telephoneNum: 123456789,
   }),
   updateUserInfo: jest.fn(),
 }));
@@ -36,13 +37,15 @@ describe('display user info', () => {
     expect(await screen.findByText('My Information')).toBeInTheDocument();
     expect(await screen.findByText('My Office')).toBeInTheDocument();
     expect(await screen.findByText('My Shipping Address')).toBeInTheDocument();
+    expect(await screen.findByText('My Phone')).toBeInTheDocument();
     expect(await screen.findByText('Shanghai')).toBeInTheDocument();
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();
+    expect(await screen.findByText('123456789')).toBeInTheDocument();
     expect(await screen.findByText('Save')).toBeInTheDocument();
   });
 
   it('should display new shipping address after edit and save', async () => {
-    const edit = await screen.findByText('Edit');
+    const edit = await screen.findByTestId('edit-address');
     const newAddress = 'Poly International';
 
     expect(await screen.findByText('Guanshan Road')).toBeInTheDocument();

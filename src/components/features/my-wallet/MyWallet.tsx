@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '@/service';
 import { useEffect, useState } from 'react';
-import { User } from '@/components/common/CustomTypes';
 
 export default function MyWallet() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User>();
+  const [token, setToken] = useState(0);
 
   useEffect(() => {
-    getCurrentUser().then((user) => setUser(user));
+    getCurrentUser().then((user) => {
+      setToken(user.token);
+    });
   }, []);
 
   const handleClick = () => {
@@ -20,7 +21,7 @@ export default function MyWallet() {
       <h1 className="wallet-header text-center text-3xl mb-10">My Wallet</h1>
       <div className="flex items-center justify-between m-8">
         <p className="text-2xl font-semibold">My Tokens</p>
-        <p className="text-2xl font-semibold text-purple-500">{user?.token}</p>
+        <p className="text-2xl font-semibold text-purple-500">{token}</p>
       </div>
       <div className="flex items-center justify-between m-8">
         <p className="text-2xl font-semibold">My Bank Account</p>

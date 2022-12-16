@@ -115,6 +115,7 @@ export const users: User[] = [
     bankAccount: '123',
     avatar: 'avatar',
     telephoneNum: 123456,
+    realName: 'test',
   },
   {
     id: 3,
@@ -127,6 +128,7 @@ export const users: User[] = [
     bankAccount: '456',
     avatar: 'avatar',
     telephoneNum: 456789,
+    realName: 'test',
   },
 ];
 

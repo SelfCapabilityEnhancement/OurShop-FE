@@ -5,10 +5,12 @@ import { TextSubmission } from '@/components/common/TextSubmission/TextSubmissio
 import { getCurrentUser, updateUserInfo } from '@/service';
 
 const baseCites = [
-  { id: 1, name: 'Wuhan' },
-  { id: 2, name: `Xi'an` },
+  { id: 1, name: 'Beijing' },
+  { id: 2, name: 'Chengdu' },
   { id: 3, name: 'Shanghai' },
-  { id: 4, name: 'Chengdu' },
+  { id: 4, name: 'Shenzhen' },
+  { id: 5, name: 'Wuhan' },
+  { id: 6, name: `Xi'an` },
 ];
 
 export default function MyInformation() {
@@ -21,6 +23,7 @@ export default function MyInformation() {
   const [shippingAddress, setShippingAddress] = useState('');
   const [saveShippingAddress, setSaveShippingAddress] =
     useState(shippingAddress);
+  const [userTelephoneNum, setUserTelephoneNum] = useState(0);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
 
@@ -32,6 +35,7 @@ export default function MyInformation() {
     getCurrentUser().then((user) => {
       setShippingAddress(user.address);
       setSaveShippingAddress(user.address);
+      setUserTelephoneNum(user.telephoneNum);
       baseCites.forEach((baseCity) => {
         if (baseCity.name === user.office) {
           setSelectedCity(baseCity);
@@ -127,6 +131,17 @@ export default function MyInformation() {
           <div className="flex items-center justify-between m-8">
             <p className="text-2xl font-semibold">My Shipping Address</p>
             <p
+              data-testid="edit-address"
+              className="edit-btn text-2xl font-semibold text-indigo-400"
+              onClick={handleClickEdit()}
+            >
+              Edit
+            </p>
+          </div>
+          <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
+          <div className="flex items-center justify-between m-8">
+            <p className="text-2xl font-semibold">My Phone</p>
+            <p
               className="edit-btn text-2xl font-semibold text-indigo-400"
               onClick={handleClickEdit()}
             >
@@ -142,7 +157,7 @@ export default function MyInformation() {
             />
           ) : (
             <div>
-              <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
+              <p className="m-8 text-2xl font-light">{userTelephoneNum}</p>
               <button
                 type="button"
                 onClick={handleClick}
