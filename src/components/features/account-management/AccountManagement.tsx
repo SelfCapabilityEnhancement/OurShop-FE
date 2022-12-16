@@ -8,6 +8,7 @@ const tabs = [
 ];
 
 export default function AccountManagement() {
+  localStorage.setItem('selected', 'account-list');
   const [selected, setSelected] = useState<string>('account-list');
   useEffect(() => {
     setSelected(localStorage.getItem('selected') as string);
