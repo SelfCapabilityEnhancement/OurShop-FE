@@ -114,14 +114,14 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <div className="mx-auto container flex items-center" id="nav">
-        <div className="w-full pt-2 p-4">
+        <div className="w-full pt-2 p-4 mt-[7rem]">
           <div className="mx-auto md:p-6 md:w-1/3">
             <div className="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <p className="text-center text-3xl text-purple-400 font-normal">
                 Welcome
               </p>
-              <p className="mt-6 h-14 text-center text-lg text-black-500">
-                Please fill some information before purchases
+              <p className="mt-6 h-14 text-center text-[16px] text-black-500">
+                Please fill the required information before purchases
               </p>
               <Banner
                 visible={showBanner}

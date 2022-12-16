@@ -70,7 +70,7 @@ export default function HomePage() {
           </div>
           <div>
             {saveUserRealName === '' && (
-              <div className="absolute inset-0 top-[140px]">
+              <div className="absolute inset-0 top-[-50px]">
                 <SaveUserInfo isOpen={true} />
               </div>
             )}
