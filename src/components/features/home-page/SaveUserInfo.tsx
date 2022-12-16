@@ -164,6 +164,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                   >
                     <div className="relative mt-1 w-full h-full">
                       <Listbox.Button
+                        data-testid="officeId"
                         className={
                           border
                             ? basicInputClassName + ' border-red-500'
@@ -228,6 +229,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                 </div>
                 <div className="mb-4 ml-[55%]">
                   <button
+                    data-testid="save-btn"
                     className="transition duration-500 bg-violet-500 text-white bg-[#7F62C3] hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-16 rounded "
                     onClick={(event) => handleSave(event)}
                     type="submit"

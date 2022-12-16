@@ -24,7 +24,7 @@ describe('Edit UserInfo when user first login', () => {
   it('should show text in Popup', () => {
     expect(screen.getByText('Welcome')).toBeInTheDocument();
     expect(
-      screen.getByText('Please fill some information before purchases')
+      screen.getByText('Please fill the required information before purchases')
     ).toBeInTheDocument();
   });
 
@@ -35,15 +35,15 @@ describe('Edit UserInfo when user first login', () => {
 
     const newName = 'Poly International';
     const newPhone = '1233';
-    const newId = '3';
 
     const userRealName = await screen.findByTestId('userRealName');
     const telephoneNum = await screen.findByTestId('telephoneNum');
-    const officeId = await screen.findByTestId('officeId');
 
     await user.type(userRealName, newName);
     await user.type(telephoneNum, newPhone);
-    await user.type(officeId, newId);
+    const chooseOffice = screen.getByTestId('officeId');
+    await user.click(chooseOffice);
+    await user.click(screen.getByText('Beijing'));
 
     const saveBtn = screen.getByTestId('save-btn');
     await user.click(saveBtn);

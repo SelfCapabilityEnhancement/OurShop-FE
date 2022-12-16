@@ -4,11 +4,9 @@ import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  let targetURL = 'https://ourshop.azurewebsites.net/api/v1';
+  let targetURL = 'https://ourshop-be-prod.azurewebsites.net/api/v1';
   if (mode === 'local-api') {
     targetURL = 'http://127.0.0.1:8080/api/v1';
-  } else if (mode === 'prod-api') {
-    targetURL = 'https://ourshop-be-prod.azurewebsites.net/api/v1';
   }
 
   return {
