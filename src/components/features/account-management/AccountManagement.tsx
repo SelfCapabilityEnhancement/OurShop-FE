@@ -10,7 +10,7 @@ const tabs = [
 export default function AccountManagement() {
   const [selected, setSelected] = useState<string>('account-list');
   useEffect(() => {
-    if (localStorage.length <= 0) {
+    if (localStorage.length > 0 && localStorage.length === 1) {
       setSelected('account-list');
     } else {
       setSelected(localStorage.getItem('selected') as string);
