@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {
   Account,
-  Product,
   OrdersItem,
+  OfficeStock,
+  Product,
   Feature,
   PurchaseConfirmationItem,
   Role,
@@ -26,6 +27,14 @@ export const getAllOffices = async (): Promise<
 > => {
   const { data } = await http.get(`/offices`);
   return data;
+};
+
+export const getProductStockById = (
+  productId: number
+): Promise<OfficeStock[]> => {
+  return http
+    .get(`/product-office/product-id?productId=` + productId)
+    .then((response) => response.data);
 };
 
 export const uploadFile = async (images: File[]) => {
@@ -73,17 +82,12 @@ export const getCurrentUser = async (): Promise<User> => {
   return data;
 };
 
-export const addToCarts = async (
-  productId: number,
-  productNum: number,
-  logisticMethod: string
-) => {
+export const addToCarts = async (productId: number, productNum: number) => {
   await http.post(
     '/shopping-carts',
     {
       productId,
       productNum,
-      logisticMethod,
     },
     {
       headers: { Authorization: localStorage.getItem('jwt') },

@@ -5,6 +5,7 @@ import {
   User,
   Account,
   StoreItem,
+  StoresError,
   Feature,
   Role,
 } from '@/components/common/CustomTypes';
@@ -24,6 +25,10 @@ const product1: Product = {
   logisticMethodComment: 'mock comment',
   isDeleted: false,
   deletedTime: null,
+  officeStockList: [
+    { officeId: 1, stock: 50 },
+    { officeId: 2, stock: 60 },
+  ],
 };
 
 const product2: Product = {
@@ -40,6 +45,10 @@ const product2: Product = {
   logisticMethodComment: '',
   isDeleted: false,
   deletedTime: null,
+  officeStockList: [
+    { officeId: 3, stock: 40 },
+    { officeId: 4, stock: 50 },
+  ],
 };
 
 const product3: Product = {
@@ -56,6 +65,10 @@ const product3: Product = {
   logisticMethodComment: '',
   isDeleted: false,
   deletedTime: null,
+  officeStockList: [
+    { officeId: 5, stock: 40 },
+    { officeId: 6, stock: 50 },
+  ],
 };
 
 export const tempProducts: Array<Product> = [product1, product2, product3];
@@ -74,7 +87,12 @@ const deletedProduct: Product = {
   logisticMethodComment: '',
   isDeleted: true,
   deletedTime: '2022-10-01 10:30:20',
+  officeStockList: [
+    { officeId: 5, stock: 40 },
+    { officeId: 6, stock: 50 },
+  ],
 };
+
 export const deletedProducts: Array<Product> = [deletedProduct];
 
 export const shoppingCartItems = [
@@ -301,6 +319,11 @@ export const mockOrderItemAdminFinished: OrdersItemAdmin[] = [
 export const mockOrderItemAdmin: OrdersItemAdmin[] = [
   mockOrderItemAdminPending[0],
   mockOrderItemAdminFinished[0],
+];
+
+export const mockStoresError: StoresError[] = [
+  { '1671112015473': { office: true, inventory: true } },
+  { '1671112019164': { office: false, inventory: false } },
 ];
 
 const feature2 = {

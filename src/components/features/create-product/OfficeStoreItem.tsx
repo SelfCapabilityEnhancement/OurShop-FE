@@ -20,7 +20,7 @@ type Props = {
 const dropDownItemClassName =
   'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-900';
 const inputClassName =
-  'w-48 h-10 py-2 bg-gray-100 text-lg text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-50 h-10 py-2 bg-gray-100 text-lg text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreItem({
   storeItem,
@@ -32,8 +32,6 @@ export default function OfficeStoreItem({
   addStoreItem,
   deleteStoreItem,
 }: Props) {
-  console.log(error);
-
   const selectCity = (officeId: number) => {
     setStoreItem({ ...storeItem, officeId }, true);
   };
@@ -63,7 +61,7 @@ export default function OfficeStoreItem({
         className={dropDownClassName}
         activeKey={storeItem.officeId}
         onSelect={selectCity}
-        menuStyle={{ position: 'absolute', color: 'black' }}
+        menuStyle={{ position: 'absolute' }}
       >
         {officeList.map((item) => (
           <Dropdown.Item

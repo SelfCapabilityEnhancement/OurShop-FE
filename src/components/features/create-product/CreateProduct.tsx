@@ -48,7 +48,7 @@ function CreateProduct() {
   const [product, setProduct] = useState<Product>(initProduct);
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(0);
   // const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [categories, setCategories] = useState(new Set());

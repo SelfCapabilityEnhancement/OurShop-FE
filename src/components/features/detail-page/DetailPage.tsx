@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
-import { Product } from '@/components/common/CustomTypes';
+import { OfficeStock, Product } from '@/components/common/CustomTypes';
 import { useLocation } from 'react-router-dom';
-import { addToCarts } from '@/service';
+import { addToCarts, getProductStockById } from '@/service';
 import { classNames } from '@/utils';
 import useGlobalState from '@/state';
 
-const logisticMethods = ['office', 'address'];
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';
 const failMsg = 'Please Choose One Logistic Method!';
 
@@ -21,9 +20,17 @@ export default function DetailPage() {
   const [showBanner, setShowBanner] = useState(false);
   const [validation, setValidation] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [logisticMethod, setLogisticMethod] = useState('');
   const [count, setCount] = useState(1);
   const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
+  const [productOfficeStock, setProductOfficeStock] = useState<OfficeStock[]>(
+    []
+  );
+
+  useEffect(() => {
+    getProductStockById(product.id).then((officeStock) => {
+      setProductOfficeStock(officeStock);
+    });
+  }, []);
 
   const handleMinus = () => {
     if (count > 1) {
@@ -36,15 +43,11 @@ export default function DetailPage() {
   };
 
   const handleAddToCart = async () => {
-    if (validate()) {
-      setValidation(true);
-      setShowLoading(true);
-      await addToCarts(product.id, count, logisticMethod);
-      setShoppingCartLength((prevState) => prevState + 1);
-      setShowLoading(false);
-    } else {
-      setValidation(false);
-    }
+    setValidation(true);
+    setShowLoading(true);
+    await addToCarts(product.id, count);
+    setShoppingCartLength((prevState) => prevState + 1);
+    setShowLoading(false);
 
     setShowBanner(true);
     setTimeout(() => {
@@ -52,34 +55,11 @@ export default function DetailPage() {
     }, 1500);
   };
 
-  const validate = () => {
-    return logisticMethods.includes(logisticMethod);
-  };
-
-  const handleLogisticMethodClick = (value: string) => {
-    setLogisticMethod(value);
-  };
-
-  const renderLogisticMethod = (method: string) => {
+  const renderProductOfficeStock = (item: OfficeStock) => {
     return (
-      <label
-        htmlFor={method}
-        className={classNames(
-          'flex flex-row items-center text-xl',
-          product.logisticMethod.includes(method) ? '' : 'display: none'
-        )}
-        onClick={() => handleLogisticMethodClick(method)}
-      >
-        <input
-          id={method}
-          type="radio"
-          name="logistic"
-          className="firstLogisticMethod w-5 h-5 mr-1 accent-violet-500"
-        />
-        {method === 'office'
-          ? 'Collecting at Office'
-          : 'Shipping to an Address'}
-      </label>
+      <div className="text-xl my-2 " key={item.office}>
+        <span className="">{item.office}</span> : <span>{item.stock}</span>
+      </div>
     );
   };
 
@@ -141,19 +121,12 @@ export default function DetailPage() {
             />
           </div>
           <div className="self-center my-4 font-medium text-2xl">
-            Logistic Method
-            <span className="text-red-500">*</span>
+            Office & Inventory
           </div>
-          <div className="mb-4 ml-2 grid grid-cols-2 gap-x-5">
-            {product.logisticMethod.includes('office') &&
-              renderLogisticMethod('office')}
-            {product.logisticMethod.includes('address') &&
-              renderLogisticMethod('address')}
+          <div className="mb-4 ml-2 grid grid-cols-3">
+            {productOfficeStock.map((item) => renderProductOfficeStock(item))}
           </div>
-          <div className="self-center my-4 font-medium text-2xl">Comment</div>
-          <p className="description bg-slate-100 rounded-xl h-20 mb-10 p-3 text-xl">
-            {product.logisticMethodComment}
-          </p>
+
           <div className="flex justify-between">
             <button
               type="button"

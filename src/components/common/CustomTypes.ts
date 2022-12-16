@@ -123,6 +123,11 @@ export interface StoreItem {
   inventory: number;
 }
 
+export interface OfficeStock {
+  office: string;
+  stock: number;
+}
+
 export interface OfficeItem {
   id: number;
   name: string;
