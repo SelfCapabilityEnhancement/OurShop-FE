@@ -144,6 +144,7 @@ export default function EditFeature({
                   Please fill the code for <b>{feature.featureName}</b>
                 </div>
                 <input
+                  data-testid="code"
                   type={'string'}
                   className={inputError ? inputClassName : inputErrorClassName}
                   onChange={(event) => handleInputField(event, 'code')}
@@ -158,6 +159,7 @@ export default function EditFeature({
                   onChange={(event) => handleInputField(event, 'description')}
                 />
                 <button
+                  data-testid="saveBtn"
                   onClick={() => handleSubmit()}
                   className="mx-[5%] mt-[30%] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                 >

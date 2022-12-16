@@ -3,6 +3,9 @@ import EditFeature from '@/components/features/account-management/components/Fea
 import { features } from '@/mocks/mockData';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import * as service from '@/service';
+import { AxiosResponse } from 'axios';
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -14,6 +17,8 @@ jest.mock('@/service', () => ({
 }));
 
 describe('Edit Function', () => {
+  const user = userEvent.setup();
+
   beforeEach(async () => {
     await act(async () => {
       render(
@@ -31,10 +36,17 @@ describe('Edit Function', () => {
 
   afterEach(cleanup);
 
-  test('should show old feature info', () => {
-    expect(
-      screen.getByPlaceholderText('/product/product-management')
-    ).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('product')).toBeInTheDocument();
+  test('should show old feature info', async () => {
+    const updateMock = jest
+      .spyOn(service, 'updateFeature')
+      .mockResolvedValue({} as AxiosResponse);
+
+    const codeElement = await screen.findByTestId('code');
+    const saveBtn = await screen.findByTestId('saveBtn');
+
+    await user.type(codeElement, '/product/product-management');
+    await user.click(saveBtn);
+
+    expect(updateMock).toBeCalled();
   });
 });
