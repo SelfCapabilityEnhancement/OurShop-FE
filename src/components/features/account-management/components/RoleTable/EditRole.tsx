@@ -36,8 +36,8 @@ export default function EditRole({
         key={feature}
         onClick={() => handleSelect(id)}
         className={classNames(
-          'w-[175px] h-[50px] text-white text-[15px] text-center text-l font-normal ml-[3%] w-[250px] h-[100px] mt-[3%] rounded-xl',
-          featureIds.includes(id) ? 'bg-purple-300' : 'bg-gray-300'
+          'w-[160px] h-[30px] text-white text-[15px] text-center text-l font-normal mt-[3%] rounded-lg mr-[3%]',
+          featureIds.includes(id) ? 'bg-[#AE66C3]' : 'bg-gray-300'
         )}
       >
         {feature}
@@ -102,13 +102,13 @@ export default function EditRole({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="absolute top-[-285px] w-[700px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
+          <Dialog.Panel className="absolute top-[-285px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title
               as="h1"
               className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
             >
               <div></div>
-              <div className="text-[#A45FB7] text-2xl content-center justify-self-center font-semibold mb-[20%]">
+              <div className="text-[#A45FB7] text-xl content-center justify-self-center font-semibold mb-[20%]">
                 Role Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -135,12 +135,12 @@ export default function EditRole({
                 success={updateSuccess}
                 message={message as string}
               />
-              <div className="mb-6 text-xl font-normal">
+              <div className="mb-6 text-xl font-normal ">
                 <div className="col-span-8">
                   Please select function for <b>{role.roleName}</b>
                 </div>
                 <div className="">
-                  <div className="flex flex-wrap mx-[5%]">
+                  <div className="flex flex-wrap">
                     {allFeatures.map((feature) =>
                       renderFeature(feature.featureName, feature.featureId)
                     )}

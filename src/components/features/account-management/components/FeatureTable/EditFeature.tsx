@@ -85,7 +85,7 @@ export default function EditFeature({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="mx-[30%] relative z-10 justify-center"
+        className="mx-[31%] relative z-10 justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -110,7 +110,6 @@ export default function EditFeature({
         >
           <Dialog.Panel className="absolute top-[-285px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title as="h1" className="flex">
-              {/* <div></div> */}
               <div className="ml-[25%] mr-[25%] mb-[5%] text-[#A45FB7] text-2xl content-center justify-self-center font-semibold">
                 Function Configuration
               </div>
