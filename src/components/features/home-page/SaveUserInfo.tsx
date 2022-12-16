@@ -91,10 +91,10 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
         userInfo.telephoneNum = undefined;
       }
       if (userInfo.officeId === 0) {
+        setBorder(true);
         userInfo.officeId = undefined;
       }
       setShowBanner(true);
-      setBorder(true);
       setSaveSuccess(false);
       setTimeout(() => {
         setShowBanner(false);
