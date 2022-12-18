@@ -58,7 +58,9 @@ export default function DetailPage() {
   const renderProductOfficeStock = (item: OfficeStock) => {
     return (
       <div className="text-xl my-2 " key={item.office}>
-        <span className="">{item.office}</span> : <span>{item.stock}</span>
+        <span className="">
+          {item.office} : {item.stock}
+        </span>
       </div>
     );
   };

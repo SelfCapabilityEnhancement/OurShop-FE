@@ -5,8 +5,11 @@ import { tempProducts } from '@/mocks/mockData';
 import * as ReactRouter from 'react-router';
 import { BrowserRouter, Location } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
+import * as service from '@/service';
+import { OfficeStock } from '@/components/common/CustomTypes';
 
 jest.mock('@/service', () => ({
+  getProductStockById: jest.fn(),
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
   addToCarts: jest.fn().mockImplementation(async () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -27,10 +30,17 @@ describe('Detail Page', () => {
     hash: '',
     state: { product: mockProduct },
   };
+  const mockOfficeStock: OfficeStock[] = [
+    { office: 'Beijing', stock: 20 },
+    { office: 'Chengdu', stock: 50 },
+  ];
 
   jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
 
   beforeEach(async () => {
+    jest
+      .spyOn(service, 'getProductStockById')
+      .mockResolvedValue(mockOfficeStock as OfficeStock[]);
     await act(async () => {
       render(<DetailPage />, {
         wrapper: BrowserRouter,
@@ -69,32 +79,15 @@ describe('Detail Page', () => {
     expect(screen.queryByAltText('big product picture 1')).toBeInTheDocument();
   });
 
-  test('should show title of logistic method', () => {
-    expect(screen.getByText('Logistic Method')).toBeInTheDocument();
-    expect(screen.getByText('Collecting at Office')).toBeInTheDocument();
-    expect(screen.getByText('Shipping to an Address')).toBeInTheDocument();
-    expect(screen.getAllByRole('radio').length).toBe(2);
-  });
-
-  test('should show error prompt when not click any logistic method', async () => {
-    await user.click(screen.getByText('Add in Shopping Cart'));
-
-    expect(
-      screen.queryByText('Please Choose One Logistic Method!')
-    ).toBeInTheDocument();
-
-    setTimeout(() => {
-      expect(
-        screen.getByText('Please Choose One Logistic Method!')
-      ).not.toBeInTheDocument();
-    }, 3000);
+  test('should show title of Office & Inventory', () => {
+    expect(screen.getByText('Office & Inventory')).toBeInTheDocument();
+    expect(screen.getByText('Beijing : 20')).toBeInTheDocument();
+    expect(screen.getByText('Chengdu : 50')).toBeInTheDocument();
   });
 
   test('should show processing and success message when add in shopping cart', async () => {
-    const office = screen.getByText('Collecting at Office');
     const addInCart = screen.getByText('Add in Shopping Cart');
 
-    await user.click(office);
     await user.click(addInCart);
 
     expect(await screen.findByText('Processing...')).toBeInTheDocument();
@@ -124,12 +117,5 @@ describe('Detail Page', () => {
 
   test('should display breadcrumb', () => {
     expect(screen.getByText('Product Detail')).toBeInTheDocument();
-  });
-
-  test('should display comment', () => {
-    expect(screen.getByText('Comment')).toBeInTheDocument();
-    expect(
-      screen.getByText(mockProduct.logisticMethodComment)
-    ).toBeInTheDocument();
   });
 });

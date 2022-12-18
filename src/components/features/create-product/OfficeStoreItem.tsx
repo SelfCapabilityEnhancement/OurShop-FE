@@ -62,6 +62,7 @@ export default function OfficeStoreItem({
         activeKey={storeItem.officeId}
         onSelect={selectCity}
         menuStyle={{ position: 'absolute' }}
+        data-testid="drop-down"
       >
         {officeList.map((item) => (
           <Dropdown.Item
@@ -69,6 +70,7 @@ export default function OfficeStoreItem({
             className={dropDownItemClassName}
             eventKey={item.id}
             key={item.id}
+            data-testid="drop-down-item"
           >
             {item.name}
           </Dropdown.Item>

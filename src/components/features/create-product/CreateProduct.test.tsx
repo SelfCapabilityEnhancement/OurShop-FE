@@ -3,13 +3,14 @@ import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
 import userEvent from '@testing-library/user-event';
-// import * as utils from '@/utils';
-// import * as service from '@/service';
-// import { Product } from '@/components/common/CustomTypes';
+import * as utils from '@/utils';
+import * as service from '@/service';
+import { Product } from '@/components/common/CustomTypes';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),
-  newProduct: jest.fn(),
+  createProduct: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -22,6 +23,9 @@ describe('Create product test', () => {
   const user = userEvent.setup();
 
   beforeEach(() => {
+    jest
+      .spyOn(service, 'getAllOffices')
+      .mockResolvedValue([] as { id: number; office: string }[]);
     container = render(<CreateProduct />, { wrapper: BrowserRouter }).container;
   });
 
@@ -53,33 +57,33 @@ describe('Create product test', () => {
     });
   });
 
-  // it('should show processing banner when create product', async () => {
-  //   jest.spyOn(utils, 'validateForm').mockReturnValue({ mock: false });
-  //   jest.spyOn(service, 'uploadFile').mockResolvedValue();
-  //   jest
-  //     .spyOn(service, 'newProduct')
-  //     .mockImplementation(async (product: Product) => {
-  //       await setTimeout(() => product, 1000);
-  //     });
-  //
-  //   const next = container.querySelector('button.next');
-  //   expect(next).toBeInTheDocument();
-  //   await user.click(next as Element);
-  //   expect(
-  //     await screen.findByText(
-  //       'Please indicate the office and number of product you want to sell'
-  //     )
-  //   ).toBeInTheDocument();
-  //
-  //   const office = container.querySelector('#office');
-  //   await user.click(office as Element);
-  //
-  //   const submit = container.querySelector('button.create');
-  //   expect(submit).toBeInTheDocument();
-  //   await user.click(submit as Element);
-  //
-  //   expect(await screen.findByText('Processing...')).toBeInTheDocument();
-  // });
+  it('should show processing banner when create product', async () => {
+    jest.spyOn(utils, 'validateForm').mockReturnValue({ mock: false });
+    jest.spyOn(service, 'uploadFile').mockResolvedValue();
+    jest
+      .spyOn(service, 'createProduct')
+      .mockImplementation(async (product: Product) => {
+        await setTimeout(() => product, 1000);
+      });
+
+    const next = container.querySelector('button.next');
+    expect(next).toBeInTheDocument();
+    await user.click(next as Element);
+    expect(
+      await screen.findByText(
+        'Please indicate the office and number of product you want to sell'
+      )
+    ).toBeInTheDocument();
+
+    const office = container.querySelector('#office');
+    await user.click(office as Element);
+
+    const submit = container.querySelector('button.create');
+    expect(submit).toBeInTheDocument();
+    await user.click(submit as Element);
+
+    // expect(await screen.findByText('Processing...')).toBeInTheDocument();
+  });
 
   it('should display tabs', () => {
     const tabs = [
