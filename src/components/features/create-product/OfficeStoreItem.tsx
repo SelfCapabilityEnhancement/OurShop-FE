@@ -86,11 +86,11 @@ export default function OfficeStoreItem({
       {!isMaxCounts && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          fill="#22c55e"
           viewBox="0 0 24 24"
           strokeWidth="1"
-          stroke="green"
-          className="w-10 h-10"
+          stroke="white"
+          className="w-12 h-12"
           data-testid="add-store-item"
           onClick={addStoreItem}
         >
@@ -104,11 +104,11 @@ export default function OfficeStoreItem({
       {!isMinCounts && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          fill="#e11d48"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
-          stroke="red"
-          className="w-10 h-10 mx-2"
+          stroke="white"
+          className="w-12 h-12 mx-2"
           data-testid="delete-store-item"
           onClick={() => deleteStoreItem(storeItem.id)}
         >
