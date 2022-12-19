@@ -250,7 +250,11 @@ function CreateProduct() {
       setProduct(newProduct);
       setLoading(false);
       setImageURL(() => []);
-      dispatchShowBanner(window.location.reload);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+      setShowBanner(true);
+      setTimeout(() => setShowBanner(false), 1500);
     }
   };
 
