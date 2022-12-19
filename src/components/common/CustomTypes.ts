@@ -3,7 +3,6 @@ export interface Product {
   name: string;
   priceToken: number;
   priceMoney: number;
-  stock: number;
   category: string;
   description: string;
   images: string;
@@ -12,7 +11,7 @@ export interface Product {
   logisticMethodComment: string;
   isDeleted: boolean;
   deletedTime: string | null;
-  officeStockList: { officeId: number; stock: number }[];
+  officeStockList: { officeId: number; officeName: string; stock: number }[];
 }
 
 export interface User {
