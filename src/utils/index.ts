@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {
+  OfficeStockList,
   Product,
   StoreItem,
   StoresError,
@@ -40,6 +41,27 @@ export const validateStores = (stores: StoreItem[]) => {
     }
     if (office || inventory) {
       result[item.id] = {
+        office,
+        inventory,
+      };
+    }
+  });
+  return result;
+};
+
+export const validateOffices = (stores: OfficeStockList[]) => {
+  const result: StoresError = {};
+  stores.forEach((item) => {
+    let office = false;
+    let inventory = false;
+    if (item.officeId === 0 && item.officeName === '') {
+      office = true;
+    }
+    if (item.stock === 0) {
+      inventory = true;
+    }
+    if (office || inventory) {
+      result[item.officeId] = {
         office,
         inventory,
       };
