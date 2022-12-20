@@ -60,7 +60,7 @@ export default function RoleTable() {
           {roleList.map((role, index) => (
             <tr className="h-16 border-b border-gray-400" key={role.roleId}>
               <td className="px-2">{role.roleName}</td>
-              <td className="px-2 w-[500px]">
+              <td className="px-2 w-[400px]">
                 {role.featureNameList.join(', ')}
               </td>
               <td className="px-2">{role.updateTime}</td>
