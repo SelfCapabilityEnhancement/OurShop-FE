@@ -26,7 +26,9 @@
 
 ## issue for not found page after deployment
 
-- React Router it handles all the routes but when you directly goto an endpoint, netlify must know where to redirect you. That is what we are specifying in the netlify.toml file.
+- React Router it handles all the routes but when you directly goto an endpoint, netlify
+  must know where to redirect you. That is what we are specifying in the netlify.toml
+  file.
 
 ## issue that 3rd party modules can't be recognized by jest
 
@@ -34,4 +36,10 @@
 
 ## issue for CORS
 
-- proxy server request data with real server and browser just interact with the proxy server
+- proxy server request data with real server and browser just interact with the proxy
+  server
+
+## Run test
+
+- To test your code, use `yarn test` directly
+- To reproduce the result of pipeline, use `./auto/test`

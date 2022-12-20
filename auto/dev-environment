@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eu
+
+cd "$(dirname "$0")/.."
+
+trap "docker-compose down" Exit
+
+docker-compose build base
+docker-compose run --rm base "${@:-bash}"

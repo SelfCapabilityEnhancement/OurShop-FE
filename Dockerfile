@@ -1,5 +1,5 @@
-FROM node:16.18.1-slim as test
-WORKDIR /home/node/ourshop-fe
-COPY . .
+FROM node:16.19-slim
+WORKDIR /app
+COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-RUN yarn test
+ENTRYPOINT ["bash", "-c"]
