@@ -3,4 +3,4 @@ set -eu
 
 cd "$(dirname "$0")/.."
 
-./auto/dev-environment "yarn test"
+./auto/dev-environment "/bin/bash -c 'yarn test'"
