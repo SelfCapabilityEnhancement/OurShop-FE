@@ -1,12 +1,15 @@
 import { Dropdown } from 'rsuite';
 import React from 'react';
-import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
+import { OfficeItem, OfficeStockList } from '@/components/common/CustomTypes';
 import { classNames } from '@/utils';
 
 type Props = {
-  storeItem: StoreItem;
+  storeItem: OfficeStockList;
   officeList: OfficeItem[];
-  setStoreItem: (param: StoreItem, need2UpdateOfficeName?: boolean) => void;
+  setStoreItem: (
+    param: OfficeStockList,
+    need2UpdateOfficeName?: boolean
+  ) => void;
   addStoreItem: () => void;
   deleteStoreItem: (id: number) => void;
   isMinCounts: boolean;
@@ -38,7 +41,7 @@ export default function OfficeStoreSelect({
 
   const changeInventory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setStoreItem({ ...storeItem, inventory: Number(value) });
+    setStoreItem({ ...storeItem, stock: Number(value) });
   };
 
   let dropDownClassName = classNames(
@@ -80,7 +83,7 @@ export default function OfficeStoreSelect({
       <input
         type="number"
         placeholder="Number of Products"
-        value={storeItem.inventory === 0 ? '' : storeItem.inventory}
+        value={storeItem.stock === 0 ? '' : storeItem.stock}
         className={currentInputClassName}
         onChange={changeInventory}
       />
@@ -112,7 +115,7 @@ export default function OfficeStoreSelect({
           stroke="white"
           className="w-12 h-12 mx-2"
           data-testid="delete-store-item"
-          onClick={() => deleteStoreItem(storeItem.id)}
+          onClick={() => deleteStoreItem(storeItem.officeId)}
         >
           <path
             strokeLinecap="round"
