@@ -240,8 +240,9 @@ function CreateProduct() {
       setLoading(true);
       const newProduct = {
         ...product,
-        officeStockList: stores.map(({ officeId, inventory }) => ({
+        officeStockList: stores.map(({ officeId, officeName, inventory }) => ({
           officeId,
+          officeName,
           stock: inventory,
         })),
       };
