@@ -1,4 +1,4 @@
-import { UserInfo } from '@/components/common/CustomTypes';
+import { City, UserInfo } from '@/components/common/CustomTypes';
 import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
 import { initUserInfo } from '@/constants';
@@ -54,12 +54,7 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
     setUserInfo(tmp);
   };
 
-  const handleListBoxField = (
-    event: React.ExoticComponent<{
-      children?: React.ReactNode;
-    }>
-  ) => {
-    // @ts-ignore
+  const handleListBoxField = (event: City) => {
     setSelectedCity(event);
     const tmp = { ...userInfo };
     tmp.officeId = Number(getOfficeId(event.name));
@@ -159,7 +154,6 @@ export default function SaveUserInfo({ isOpen }: { isOpen: boolean }) {
                   </label>
                   <Listbox
                     value={selectedCity}
-                    /* @ts-ignore */
                     onChange={(event) => handleListBoxField(event)}
                   >
                     <div className="relative mt-1 w-full h-full">
