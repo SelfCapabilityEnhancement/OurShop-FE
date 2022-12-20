@@ -54,6 +54,7 @@ export default function EditProduct({
     const imageFiles = new Array(imagesNum).fill(new File([], ''));
     setProduct({ ...oldProduct, imageFiles });
     setCategories(new Set(oldProduct.category.split(';')));
+    setStores(oldProduct.officeStockList);
   }, [oldProduct, isOpen]);
 
   const setStoreItem = (
