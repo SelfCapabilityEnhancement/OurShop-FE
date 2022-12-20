@@ -16,4 +16,4 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Test
-        run: ./auto/test
+        run: bash -c "yarn && yarn test"
