@@ -8,6 +8,7 @@ import {
   StoresError,
   Feature,
   Role,
+  OfficeStockList,
 } from '@/components/common/CustomTypes';
 
 const product1: Product = {
@@ -378,3 +379,16 @@ const role2 = {
 };
 
 export const roles: Array<Role> = [role1, role2];
+
+export const mockStores: OfficeStockList[] = [
+  {
+    officeId: 1,
+    officeName: 'Beijing',
+    stock: 10,
+  },
+  {
+    officeId: 2,
+    officeName: 'Chengdu',
+    stock: 20,
+  },
+];

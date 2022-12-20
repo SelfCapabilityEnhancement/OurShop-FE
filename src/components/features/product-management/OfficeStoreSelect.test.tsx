@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
-import { mockStoreItems } from '@/mocks/mockData';
+import { mockStores } from '@/mocks/mockData';
 import { officeList } from '@/components/features/create-product/CreateProduct';
 import OfficeStoreSelect from '@/components/features/product-management/OfficeStoreSelect';
 
@@ -19,7 +19,7 @@ describe('Office store item', () => {
     await act(async () => {
       render(
         <OfficeStoreSelect
-          storeItem={mockStoreItems[0]}
+          storeItem={mockStores[0]}
           officeList={officeList}
           error={{ office: false, inventory: false }}
           isMinCounts={true}
