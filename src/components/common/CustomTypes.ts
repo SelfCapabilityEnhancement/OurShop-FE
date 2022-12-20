@@ -14,6 +14,12 @@ export interface Product {
   officeStockList: { officeId: number; officeName: string; stock: number }[];
 }
 
+export interface OfficeStockList {
+  officeId: number;
+  officeName: string;
+  stock: number;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -158,4 +164,9 @@ export interface Role {
     description: string;
     updateTime: string;
   }[];
+}
+
+export interface City {
+  id: number;
+  name: string;
 }
