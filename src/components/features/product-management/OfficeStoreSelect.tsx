@@ -1,13 +1,13 @@
 import { Dropdown } from 'rsuite';
 import React from 'react';
-import { OfficeItem, OfficeStockList } from '@/components/common/CustomTypes';
+import { OfficeItem, OfficeAndStock } from '@/components/common/CustomTypes';
 import { classNames } from '@/utils';
 
 type Props = {
-  storeItem: OfficeStockList;
+  storeItem: OfficeAndStock;
   officeList: OfficeItem[];
   setStoreItem: (
-    param: OfficeStockList,
+    param: OfficeAndStock,
     need2UpdateOfficeName?: boolean
   ) => void;
   addStoreItem: () => void;
@@ -21,9 +21,11 @@ type Props = {
 };
 
 const dropDownItemClassName =
-  'bg-gray-100 w-[100px] h-10 py-2 text-center text-gray-900';
+  'bg-gray-100 w-[150px] text-xl h-10 py-2 text-center text-gray-900';
+const dropDownTitleClassName =
+  'bg-gray-100 w-[150px] text-[0.25rem] h-10 py-2 text-center text-gray-900';
 const inputClassName =
-  'w-[100px] h-10 py-2 bg-gray-100 text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[150px] h-10 py-2 bg-gray-100 text-[0.25rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreSelect({
   storeItem,
@@ -61,7 +63,13 @@ export default function OfficeStoreSelect({
     <div className="flex">
       <Dropdown
         title={storeItem.officeName || 'Select an Office'}
-        className={dropDownClassName}
+        // title={storeItem.officeName}
+        className={
+          storeItem.officeName === ''
+            ? dropDownTitleClassName
+            : dropDownClassName
+        }
+        placement="bottomEnd"
         activeKey={storeItem.officeId}
         onSelect={selectCity}
         menuStyle={{ position: 'absolute' }}

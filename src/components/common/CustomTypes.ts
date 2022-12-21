@@ -14,7 +14,7 @@ export interface Product {
   officeStockList: { officeId: number; officeName: string; stock: number }[];
 }
 
-export interface OfficeStockList {
+export interface OfficeAndStock {
   officeId: number;
   officeName: string;
   stock: number;

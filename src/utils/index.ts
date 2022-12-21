@@ -1,6 +1,6 @@
 import moment from 'moment';
 import {
-  OfficeStockList,
+  OfficeAndStock,
   Product,
   StoreItem,
   StoresError,
@@ -49,7 +49,7 @@ export const validateStores = (stores: StoreItem[]) => {
   return result;
 };
 
-export const validateOffices = (stores: OfficeStockList[]) => {
+export const validateOffices = (stores: OfficeAndStock[]) => {
   const result: StoresError = {};
   stores.forEach((item) => {
     let office = false;
