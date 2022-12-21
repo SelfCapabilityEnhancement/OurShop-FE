@@ -141,10 +141,7 @@ export default function MyInformation() {
           <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
           <div className="flex items-center justify-between m-8">
             <p className="text-2xl font-semibold">My Phone</p>
-            <p
-              className="edit-btn text-2xl font-semibold text-indigo-400"
-              onClick={handleClickEdit()}
-            >
+            <p className="edit-btn text-2xl font-semibold text-indigo-400">
               Edit
             </p>
           </div>
