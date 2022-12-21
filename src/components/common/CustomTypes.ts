@@ -166,7 +166,7 @@ export interface Role {
   }[];
 }
 
-export interface City {
+export interface UserOffice {
   id: number;
   name: string;
 }
