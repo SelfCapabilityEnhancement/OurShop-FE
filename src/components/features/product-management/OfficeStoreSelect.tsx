@@ -25,6 +25,8 @@ const dropDownItemClassName =
 const dropDownTitleClassName =
   'bg-gray-100 w-[150px] text-[0.25rem] h-10 py-2 text-center text-gray-900';
 const inputClassName =
+  'w-[150px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+const inputClassTitleName =
   'w-[150px] h-10 py-2 bg-gray-100 text-[0.25rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreSelect({
@@ -54,7 +56,8 @@ export default function OfficeStoreSelect({
     dropDownClassName += ' outline-none ring-2 ring-rose-500';
   }
 
-  let currentInputClassName = inputClassName;
+  let currentInputClassName =
+    storeItem.stock === 0 ? inputClassTitleName : inputClassName;
   if (error.inventory) {
     currentInputClassName += ' outline-none ring-2 ring-rose-500';
   }
