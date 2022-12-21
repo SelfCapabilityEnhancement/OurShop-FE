@@ -1,4 +1,3 @@
-// import './CheckBox.css';
 export default function Checkbox(props: {
   id: string;
   type: string;
