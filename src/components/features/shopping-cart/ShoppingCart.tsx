@@ -131,7 +131,7 @@ export default function ShoppingCart() {
                     type="checkbox"
                     disabled={shoppingCartItem.product.isDeleted}
                     value=""
-                    className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700 focus:ring-2"
+                    className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                     checked={checkedState[index]}
                     onChange={() => handleOnCheck(index)}
                   />

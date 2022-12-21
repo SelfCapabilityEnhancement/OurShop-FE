@@ -1,4 +1,4 @@
-import './CheckBox.css';
+// import './CheckBox.css';
 export default function Checkbox(props: {
   id: string;
   type: string;
@@ -18,7 +18,7 @@ export default function Checkbox(props: {
           // @ts-ignore
           onChange={handleClick}
           checked={isChecked}
-          className="align-text-bottom leading-loose text-xl mx-[0.5rem] h-[1.25rem] w-[1.25rem] checked:bg-purple-500 test"
+          className="align-text-bottom leading-loose text-xl mx-[0.5rem] h-[1.25rem] w-[1.25rem] bg-gray-100 accent-violet-600 focus:ring-violet-700"
         />
         {children}
       </label>
