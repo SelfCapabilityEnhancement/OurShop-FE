@@ -32,7 +32,7 @@ export default function RoleTable() {
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
-      <div className="w-full max-w-full p-3">
+      <div className="absolute w-full max-w-full p-3">
         {roleList.length > 0 && (
           <EditRole
             isOpen={showRoleModal}
