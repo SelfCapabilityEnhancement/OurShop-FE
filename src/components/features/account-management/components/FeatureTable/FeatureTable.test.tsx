@@ -2,19 +2,20 @@ import { cleanup, render, screen } from '@testing-library/react';
 import FeatureTable from './FeatureTable';
 import { features } from '@/mocks/mockData';
 import { Feature } from '@/components/common/CustomTypes';
-import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 
-jest.mock('@/service', () => ({
-  getFeatureList: jest.fn(),
+jest.mock('@/service', () => ({}));
+
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
 }));
 
 describe('Function List', () => {
   beforeEach(async () => {
-    jest.spyOn(service, 'getFeatureList').mockResolvedValue(features);
     await act(async () => {
-      render(<FeatureTable />, {
+      render(<FeatureTable featureList={features} />, {
         wrapper: BrowserRouter,
       });
     });

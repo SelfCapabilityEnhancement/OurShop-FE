@@ -7,16 +7,20 @@ import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('@/service', () => ({
-  getRoleList: jest.fn(),
   getFeatureList: jest.fn(),
+}));
+
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
 }));
 
 describe('Role List', () => {
   beforeEach(async () => {
-    jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
+    // jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
     jest.spyOn(service, 'getFeatureList').mockResolvedValue(features);
     await act(async () => {
-      render(<RoleTable />, {
+      render(<RoleTable roleList={roles} />, {
         wrapper: BrowserRouter,
       });
     });
