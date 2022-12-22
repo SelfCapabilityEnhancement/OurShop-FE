@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "pm2 serve --spa ./dist 8080",
+    "start": "pm2 serve --spa --no-daemon ./dist 8080",
     "dev": "vite",
     "dev:local": "vite --mode local-api",
     "build": "tsc && vite build",

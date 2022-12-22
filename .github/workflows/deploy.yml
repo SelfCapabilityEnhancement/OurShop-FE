@@ -1,3 +1,5 @@
+name: Build and deploy main to Azure Web App
+
 on:
   push:
     branch:
@@ -18,11 +20,10 @@ jobs:
           node-version: '16.x'
           cache: 'npm'
 
-      - name: npm install, build, and test
+      - name: npm install, build
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          yarn
+          yarn run build
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
