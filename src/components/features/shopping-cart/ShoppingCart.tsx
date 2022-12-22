@@ -155,7 +155,10 @@ export default function ShoppingCart() {
                   <input
                     id={`product-checkbox-${index}`}
                     type="checkbox"
-                    disabled={shoppingCartItem.product.isDeleted}
+                    disabled={
+                      shoppingCartItem.product.isDeleted ||
+                      shoppingCartItem.offices === ''
+                    }
                     value=""
                     className="w-8 h-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                     checked={checkedState[index]}
