@@ -18,7 +18,7 @@ describe('Edit UserInfo when user first login', () => {
   const user = userEvent.setup();
 
   beforeEach(() => {
-    render(<SaveUserInfo isOpen={true} />);
+    render(<SaveUserInfo isOpen={true} setIsOpen={jest.fn} />);
   });
 
   it('should show text in Popup', () => {

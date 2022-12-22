@@ -20,7 +20,9 @@ describe('HomePage', () => {
   beforeEach(async () => {
     await act(async () => {
       render(<HomePage />, { wrapper: BrowserRouter });
-      render(<SaveUserInfo isOpen={false} />, { wrapper: BrowserRouter });
+      render(<SaveUserInfo isOpen={false} setIsOpen={jest.fn()} />, {
+        wrapper: BrowserRouter,
+      });
     });
   });
 
