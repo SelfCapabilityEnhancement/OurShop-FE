@@ -132,7 +132,6 @@ export default function OfficeStoreSelect({
 
       <span className="text-center mx-[2%] py-2">has</span>
       <input
-        type="number"
         placeholder="Product Number"
         value={storeItem.stock === 0 ? '' : storeItem.stock}
         className={currentInputClassName}
@@ -141,38 +140,42 @@ export default function OfficeStoreSelect({
       <span className="text-center mx-[2%] py-2">Available</span>
       {!isMaxCounts && (
         <svg
+          d="1671700379772"
+          className="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          fill="#22c55e"
-          viewBox="0 0 24 24"
-          strokeWidth="1"
-          stroke="white"
-          className="w-12 h-12"
+          p-id="1379"
+          width="40"
+          height="40"
           data-testid="add-store-item"
           onClick={addStoreItem}
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
+            d="M512.2 64.2c-247.4 0-448 200.6-448 448s200.6 448 448 448 448-200.6 448-448-200.6-448-448-448z m163 416.4c18 0 32.6 14.6 32.6 32.6s-14.6 32.6-32.6 32.6H545.6v129.6c0 18-14.6 32.6-32.6 32.6s-32.6-14.6-32.6-32.6V545.8H350.8c-18 0-32.6-14.6-32.6-32.6s14.6-32.6 32.6-32.6h129.6V351c0-18 14.6-32.6 32.6-32.6s32.6 14.6 32.6 32.6v129.6h129.6z"
+            fill="#22c55e"
+            p-id="1380"
+          ></path>
         </svg>
       )}
       {!isMinCounts && (
         <svg
+          d="1671700334164"
+          className="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          fill="#e11d48"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="white"
-          className="w-12 h-12 mx-2"
+          p-id="1230"
+          width="40"
+          height="40"
           data-testid="delete-store-item"
           onClick={() => deleteStoreItem(storeItem.officeId)}
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
+            d="M512.2 64.2c-247.4 0-448 200.6-448 448s200.6 448 448 448 448-200.6 448-448-200.6-448-448-448z m194.6 448c0 18-14.6 32.6-32.6 32.6H349.8c-18 0-32.6-14.6-32.6-32.6s14.6-32.6 32.6-32.6h324.5c17.9 0 32.5 14.6 32.5 32.6z"
+            fill="#e11d48"
+            p-id="1231"
+          ></path>
         </svg>
       )}
     </div>

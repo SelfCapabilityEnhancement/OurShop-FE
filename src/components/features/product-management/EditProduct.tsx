@@ -94,6 +94,16 @@ export default function EditProduct({
     const targetIndex = stores.findIndex((item) => item.officeId === id);
     stores.splice(targetIndex, 1);
     setStores([...stores]);
+    setProduct((product) => {
+      return {
+        ...product,
+        officeStockList: stores.map(({ officeId, officeName, stock }) => ({
+          officeId,
+          officeName,
+          stock,
+        })),
+      };
+    });
   };
 
   const getOfficeName = (id: number) => {
