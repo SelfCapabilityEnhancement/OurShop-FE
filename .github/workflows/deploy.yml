@@ -1,29 +1,17 @@
 name: Build and deploy main to Azure Web App
 
 on:
-  push:
-    branch:
-      - main
-  workflow_dispatch:
+  workflow_run:
+    workflows: [ "OurShop Unit test" ]
 
 jobs:
-  build-and-deploy:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           ref: main
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          cache: 'npm'
-
-      - name: npm install, build
-        run: |
-          yarn
-          yarn run build
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
