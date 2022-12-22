@@ -6,6 +6,8 @@ import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import Loading from '@/components/common/loading/Loading';
 import useGlobalState from '@/state';
 
+const notAvailableAtAnyOffice = 'The products is not available at any office';
+
 export default function ShoppingCart() {
   const navigate = useNavigate();
 
@@ -86,6 +88,27 @@ export default function ShoppingCart() {
     });
   };
 
+  function renderNoProductsAvailable(shoppingCartItem: { offices: string }) {
+    if (shoppingCartItem.offices === '') {
+      return (
+        <div className="flex w-[50%]">
+          <span className="w-[100px]">{notAvailableAtAnyOffice}</span>
+        </div>
+      );
+    }
+  }
+
+  function renderHasProductsAvailable(shoppingCartItem: { offices: string }) {
+    if (shoppingCartItem.offices !== '') {
+      return (
+        <div className="flex w-[50%]">
+          <span className="w-[100px]">Available at :</span>
+          <div className="mr-10">{shoppingCartItem.offices}</div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div
       data-testid="shopping-cart"
@@ -126,10 +149,8 @@ export default function ShoppingCart() {
                       handleMinus={() => handleMinus(index)}
                     />
                   </div>
-                  <div className="flex w-[50%]">
-                    <span className="w-[100px]">Available at :</span>
-                    <div className="mr-10">{shoppingCartItem.offices}</div>
-                  </div>
+                  {renderHasProductsAvailable(shoppingCartItem)}
+                  {renderNoProductsAvailable(shoppingCartItem)}
                   <input
                     id={`product-checkbox-${index}`}
                     type="checkbox"
