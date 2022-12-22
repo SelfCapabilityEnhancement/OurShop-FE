@@ -122,7 +122,8 @@ export default function ShoppingCart() {
               <li
                 key={`product-${index}`}
                 className={
-                  shoppingCartItem.product.isDeleted
+                  shoppingCartItem.product.isDeleted ||
+                  shoppingCartItem.offices === ''
                     ? 'product border-gray-400 my-3 h-20 opacity-25'
                     : 'product border-gray-400 my-3 h-20'
                 }
