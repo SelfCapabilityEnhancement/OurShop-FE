@@ -18,10 +18,10 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: yarn install, build
+      - name: npm install, build
         run: |
-          yarn
-          yarn run build
+          npm install
+          npm run build
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
