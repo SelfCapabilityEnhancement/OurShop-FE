@@ -92,7 +92,7 @@ export default function ShoppingCart() {
     if (shoppingCartItem.offices === '') {
       return (
         <div className="flex w-[50%]">
-          <span className="w-[100px]">{notAvailableAtAnyOffice}</span>
+          <span className="w-[500px]">{notAvailableAtAnyOffice}</span>
         </div>
       );
     }
