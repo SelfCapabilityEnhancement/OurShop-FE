@@ -54,7 +54,7 @@ export const validateOffices = (stores: OfficeAndStock[]) => {
   stores.forEach((item) => {
     let office = false;
     let inventory = false;
-    if (item.officeId === 0 && item.officeName === '') {
+    if (item.officeId === 0 && item.officeName === 'Select Office') {
       office = true;
     }
     if (item.stock === 0) {

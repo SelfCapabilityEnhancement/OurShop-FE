@@ -84,7 +84,7 @@ export default function EditProduct({
   const addStoreItem = () => {
     stores.push({
       officeId: 0,
-      officeName: '',
+      officeName: 'Select Office',
       stock: 0,
     });
     setStores([...stores]);
