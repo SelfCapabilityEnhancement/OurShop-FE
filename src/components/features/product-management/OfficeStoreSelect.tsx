@@ -75,7 +75,7 @@ export default function OfficeStoreSelect({
         onChange={(event) => selectCity(event)}
       >
         <div className="relative mt-1 w-[150px]">
-          <Listbox.Button className={dropDownClassName}>
+          <Listbox.Button className={dropDownClassName} data-testid="drop-down">
             <span className="block truncate">{storeItem.officeName}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
               <svg
