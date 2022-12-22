@@ -126,12 +126,16 @@ export default function ShoppingCart() {
                       handleMinus={() => handleMinus(index)}
                     />
                   </div>
+                  <div className="flex w-[50%]">
+                    <span className="w-[100px]">Available at :</span>
+                    <div className="mr-10">{shoppingCartItem.offices}</div>
+                  </div>
                   <input
                     id={`product-checkbox-${index}`}
                     type="checkbox"
                     disabled={shoppingCartItem.product.isDeleted}
                     value=""
-                    className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                    className="w-8 h-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                     checked={checkedState[index]}
                     onChange={() => handleOnCheck(index)}
                   />
