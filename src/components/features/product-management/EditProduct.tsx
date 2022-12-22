@@ -361,11 +361,13 @@ export default function EditProduct({
                     />
 
                     <div className="col-span-2 flex flex-col mt-3">
+                      <div>Logistic & Inventory</div>
                       <div>
-                        <span className="text-red-500 mb-1 pr-1">*</span>
-                        Logistic Methods
-                      </div>
-                      <div>
+                        <p className="mb-3 mt-3">
+                          <span className="text-red-500 pr-1">*</span>
+                          Please indicate the office and number of product you
+                          want to sell
+                        </p>
                         <div>
                           {stores.map((item, index) => (
                             <>

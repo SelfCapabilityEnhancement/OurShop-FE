@@ -25,9 +25,9 @@ const dropDownItemClassName =
 const dropDownTitleClassName =
   'bg-gray-100 w-[150px] text-[0.25rem] h-10 py-2 text-center text-gray-900';
 const inputClassName =
-  'w-[150px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[120px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 const inputClassTitleName =
-  'w-[150px] h-10 py-2 bg-gray-100 text-[0.25rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[120px] h-10 py-2 bg-gray-100 text-[0.25rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreSelect({
   storeItem,
@@ -50,7 +50,8 @@ export default function OfficeStoreSelect({
 
   let dropDownClassName = classNames(
     dropDownItemClassName,
-    storeItem.officeName ? '' : 'text-slate-400'
+    // storeItem.officeName ? '' : 'text-slate-400'
+    storeItem.officeName === '' ? dropDownTitleClassName : ''
   );
   if (error.office) {
     dropDownClassName += ' outline-none ring-2 ring-rose-500';
@@ -66,17 +67,18 @@ export default function OfficeStoreSelect({
     <div className="flex">
       <Dropdown
         title={storeItem.officeName || 'Select an Office'}
-        // title={storeItem.officeName}
         className={
-          storeItem.officeName === ''
-            ? dropDownTitleClassName
-            : dropDownClassName
+          // storeItem.officeName === ''
+          //   ? dropDownTitleClassName
+          //   : dropDownClassName
+          dropDownClassName
         }
         placement="bottomEnd"
         activeKey={storeItem.officeId}
         onSelect={selectCity}
         menuStyle={{ position: 'absolute' }}
         data-testid="drop-down"
+        noCaret
       >
         {officeList.map((item) => (
           <Dropdown.Item
@@ -90,10 +92,27 @@ export default function OfficeStoreSelect({
           </Dropdown.Item>
         ))}
       </Dropdown>
+      <span className="h-10 bg-[#F3F4F6]">
+        <svg
+          className="h-10 w-10"
+          viewBox="0 0 24 24"
+          strokeWidth="1"
+          fill="white"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            className="png"
+            fill={'rgb(217 217 217)'}
+            d="M18 15l-6-6l-6 6h12"
+            transform="rotate(180 12 12)"
+          />
+        </svg>
+      </span>
       <span className="text-center mx-[2%] py-2">has</span>
       <input
         type="number"
-        placeholder="Number of Products"
+        placeholder="Product Number"
         value={storeItem.stock === 0 ? '' : storeItem.stock}
         className={currentInputClassName}
         onChange={changeInventory}
