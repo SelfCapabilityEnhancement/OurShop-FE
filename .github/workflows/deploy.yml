@@ -13,6 +13,16 @@ jobs:
         with:
           ref: main
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - name: yarn install, build
+        run: |
+          yarn
+          yarn run build
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
