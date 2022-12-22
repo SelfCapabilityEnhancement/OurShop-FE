@@ -88,23 +88,15 @@ export default function ShoppingCart() {
     });
   };
 
-  function renderNoProductsAvailable(shoppingCartItem: { offices: string }) {
+  function renderProductAvailableOrNot(shoppingCartItem: { offices: string }) {
     if (shoppingCartItem.offices === '') {
+      return <span className="w-[500px]">{notAvailableAtAnyOffice}</span>;
+    } else {
       return (
-        <div className="flex w-[50%]">
-          <span className="w-[500px]">{notAvailableAtAnyOffice}</span>
-        </div>
-      );
-    }
-  }
-
-  function renderHasProductsAvailable(shoppingCartItem: { offices: string }) {
-    if (shoppingCartItem.offices !== '') {
-      return (
-        <div className="flex w-[50%]">
+        <>
           <span className="w-[100px]">Available at :</span>
           <div className="mr-10">{shoppingCartItem.offices}</div>
-        </div>
+        </>
       );
     }
   }
@@ -150,8 +142,9 @@ export default function ShoppingCart() {
                       handleMinus={() => handleMinus(index)}
                     />
                   </div>
-                  {renderHasProductsAvailable(shoppingCartItem)}
-                  {renderNoProductsAvailable(shoppingCartItem)}
+                  <div className="flex w-[50%]">
+                    {renderProductAvailableOrNot(shoppingCartItem)}
+                  </div>
                   <input
                     id={`product-checkbox-${index}`}
                     type="checkbox"
