@@ -48,6 +48,7 @@ export interface ShoppingCartItem {
   productId: number;
   shoppingCartId: number;
   logisticMethod: string;
+  offices: string;
 }
 
 export interface PurchaseConfirmationItem {
