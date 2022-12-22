@@ -9,14 +9,17 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [userRealName, setUserRealName] = useState('');
-  const [saveUserRealName, setSaveUserRealName] = useState(userRealName);
+  const [, setUserRealName] = useState('');
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     getCurrentUser().then((user) => {
       setUserRealName(user.realName);
-      setSaveUserRealName(user.realName);
+      user.realName === '' ? setIsOpen(true) : setIsOpen(false);
     });
+  }, [isOpen]);
+
+  useEffect(() => {
     getProducts().then((products) => {
       setProducts(products);
       setIsLoading(false);
@@ -68,13 +71,7 @@ export default function HomePage() {
           <div className="flex justify-center">
             <SearchBar setProduct={setProducts} />
           </div>
-          <div>
-            {saveUserRealName === '' && (
-              <div className="absolute inset-0 top-[-50px]">
-                <SaveUserInfo isOpen={true} />
-              </div>
-            )}
-          </div>
+          <SaveUserInfo isOpen={isOpen} setIsOpen={setIsOpen} />
           <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
             {renderProducts(products)}
           </div>
