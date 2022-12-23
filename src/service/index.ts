@@ -234,7 +234,7 @@ export const getFeatureList = async (): Promise<Feature[]> => {
 };
 
 export const getRoleList = async (): Promise<Role[]> => {
-  return await http.get('/roles/').then((response) => response.data);
+  return await http.get('/roles/functions/').then((response) => response.data);
 };
 
 export const updateFeature = async (
