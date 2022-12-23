@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
-import AccountListTable from '@/components/features/account-management/AccountListTable';
+import AccountListTable from '@/components/features/account-management/components/AccountListTable/AccountListTable';
 import { accounts } from '@/mocks/mockData';
 import * as service from '@/service';
 

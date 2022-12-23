@@ -16,7 +16,7 @@ import App from '@/App';
 import AccountManagement from '@/components/features/account-management/AccountManagement';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
-import AccountListTable from '@/components/features/account-management/AccountListTable';
+import AccountListTable from '@/components/features/account-management/components/AccountListTable/AccountListTable';
 
 export const router = createBrowserRouter([
   {
