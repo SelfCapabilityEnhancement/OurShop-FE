@@ -13,14 +13,13 @@ export const initProduct: Product = {
   priceMoney: 0,
   category: '',
   description: '',
-  stock: 1,
   images: '',
   imageFiles: [],
   logisticMethod: '',
   logisticMethodComment: '',
   isDeleted: false,
   deletedTime: null,
-  officeStockList: [{ officeId: 1, stock: 0 }],
+  officeStockList: [{ officeId: 1, officeName: 'Beijing', stock: 0 }],
 };
 
 export const initUserInfo: UserInfo = {

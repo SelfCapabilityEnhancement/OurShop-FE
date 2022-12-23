@@ -40,7 +40,7 @@ export let officeList: OfficeItem[] = [
   { id: 3, name: 'Shanghai' },
   { id: 4, name: 'Shenzhen' },
   { id: 5, name: 'Wuhan' },
-  { id: 6, name: 'Xian' },
+  { id: 6, name: "Xi'an" },
 ];
 
 function CreateProduct() {
@@ -240,8 +240,9 @@ function CreateProduct() {
       setLoading(true);
       const newProduct = {
         ...product,
-        officeStockList: stores.map(({ officeId, inventory }) => ({
+        officeStockList: stores.map(({ officeId, officeName, inventory }) => ({
           officeId,
+          officeName,
           stock: inventory,
         })),
       };

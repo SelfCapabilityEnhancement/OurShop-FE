@@ -8,6 +8,7 @@ import {
   StoresError,
   Feature,
   Role,
+  OfficeAndStock,
 } from '@/components/common/CustomTypes';
 
 const product1: Product = {
@@ -17,7 +18,6 @@ const product1: Product = {
   priceMoney: 10,
   category: '',
   description: 'yummy',
-  stock: 1,
   images:
     'https://ourshop-tw.netlify.app/assets/product1.04d88779.png,fake.jpeg',
   imageFiles: [],
@@ -26,8 +26,8 @@ const product1: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 1, stock: 50 },
-    { officeId: 2, stock: 60 },
+    { officeId: 1, officeName: 'Beijing', stock: 50 },
+    { officeId: 2, officeName: 'Chengdu', stock: 60 },
   ],
 };
 
@@ -38,7 +38,6 @@ const product2: Product = {
   priceMoney: 9,
   category: '',
   description: '水果 🍊',
-  stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   imageFiles: [],
   logisticMethod: 'office',
@@ -46,8 +45,8 @@ const product2: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 3, stock: 40 },
-    { officeId: 4, stock: 50 },
+    { officeId: 3, officeName: 'Shanghai', stock: 40 },
+    { officeId: 4, officeName: 'Shenzhen', stock: 50 },
   ],
 };
 
@@ -58,7 +57,6 @@ const product3: Product = {
   priceMoney: 899,
   category: '',
   description: '一部手机',
-  stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   imageFiles: [],
   logisticMethod: 'address',
@@ -66,8 +64,8 @@ const product3: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 5, stock: 40 },
-    { officeId: 6, stock: 50 },
+    { officeId: 5, officeName: 'Wuhan', stock: 40 },
+    { officeId: 6, officeName: "Xi'an", stock: 50 },
   ],
 };
 
@@ -80,7 +78,6 @@ const deletedProduct: Product = {
   priceMoney: 500,
   category: '',
   description: '一台显示器',
-  stock: 1,
   images: 'https://ourshop-tw.netlify.app/assets/product1.04d88779.png',
   imageFiles: [],
   logisticMethod: 'address',
@@ -88,8 +85,8 @@ const deletedProduct: Product = {
   isDeleted: true,
   deletedTime: '2022-10-01 10:30:20',
   officeStockList: [
-    { officeId: 5, stock: 40 },
-    { officeId: 6, stock: 50 },
+    { officeId: 1, officeName: 'Chengdu', stock: 40 },
+    { officeId: 6, officeName: 'Shenzhen', stock: 50 },
   ],
 };
 
@@ -382,3 +379,16 @@ const role2 = {
 };
 
 export const roles: Array<Role> = [role1, role2];
+
+export const mockStores: OfficeAndStock[] = [
+  {
+    officeId: 1,
+    officeName: 'Beijing',
+    stock: 10,
+  },
+  {
+    officeId: 2,
+    officeName: 'Chengdu',
+    stock: 20,
+  },
+];

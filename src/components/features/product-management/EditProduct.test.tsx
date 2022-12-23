@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import EditProduct from '@/components/features/product-management/EditProduct';
 import { tempProducts } from '@/mocks/mockData';
 import { Product } from '@/components/common/CustomTypes';
+import userEvent from '@testing-library/user-event';
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -13,7 +14,9 @@ jest.mock('@/service', () => ({
 }));
 
 describe('Edit Product', () => {
-  beforeEach(() => {
+  const user = userEvent.setup();
+
+  it('should show edit product modal', () => {
     render(
       <EditProduct
         isOpen={true}
@@ -21,13 +24,17 @@ describe('Edit Product', () => {
         oldProduct={tempProducts[0]}
       />
     );
-  });
-
-  it('should show edit product modal', () => {
     expect(screen.getByText('Edit Product')).toBeInTheDocument();
   });
 
   it('should show old product info', function () {
+    render(
+      <EditProduct
+        isOpen={true}
+        handleClose={jest.fn}
+        oldProduct={tempProducts[0]}
+      />
+    );
     const items: { [key: string]: keyof Product } = {
       'Product Name': 'name',
       'Price in USD': 'priceMoney',
@@ -42,5 +49,22 @@ describe('Edit Product', () => {
         screen.getByDisplayValue(product[v] as string)
       ).toBeInTheDocument();
     });
+  });
+
+  it('should handleClose to be called', async () => {
+    const handleClose = jest.fn();
+
+    render(
+      <EditProduct
+        isOpen={true}
+        handleClose={handleClose}
+        oldProduct={tempProducts[0]}
+      />
+    );
+
+    const closeBtn = await screen.findByTestId('closeBtn');
+    await user.click(closeBtn);
+
+    expect(handleClose).toBeCalled();
   });
 });

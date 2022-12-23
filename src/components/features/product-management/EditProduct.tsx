@@ -1,12 +1,23 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Product } from '@/components/common/CustomTypes';
-import { classNames, generateUniqueImageName, validateForm } from '@/utils';
+import {
+  OfficeAndStock,
+  Product,
+  StoresError,
+} from '@/components/common/CustomTypes';
+import {
+  classNames,
+  generateUniqueImageName,
+  validateForm,
+  validateOffices,
+} from '@/utils';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
 import { updateProduct, uploadFile } from '@/service';
 import { categoryList, imageUrlPrefix, initValidateResult } from '@/constants';
 import Banner from '@/components/common/banner/Banner';
 import Loading from '@/components/common/loading/Loading';
+import { officeList } from '@/components/features/create-product/CreateProduct';
+import OfficeStoreSelect from '@/components/features/product-management/OfficeStoreSelect';
 
 const successMsg = 'The Product was Updated Successfully!';
 const failMsg = 'All Required Field Must be Filled';
@@ -28,18 +39,82 @@ export default function EditProduct({
 }) {
   const [validations, setValidations] = useState<any>(initValidateResult);
   const [product, setProduct] = useState<Product>(oldProduct);
-  const [logisticMethods, setLogisticMethods] = useState(new Set());
   const [categories, setCategories] = useState(new Set());
   const [showLoading, setLoading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
+
+  const [stores, setStores] = useState<OfficeAndStock[]>(
+    oldProduct.officeStockList
+  );
+
+  const [storesError, setStoresError] = useState<StoresError>({});
 
   useEffect(() => {
     const imagesNum = oldProduct.images.split(',').length;
     const imageFiles = new Array(imagesNum).fill(new File([], ''));
     setProduct({ ...oldProduct, imageFiles });
-    setLogisticMethods(new Set(oldProduct.logisticMethod.split(';')));
     setCategories(new Set(oldProduct.category.split(';')));
+    setStores(oldProduct.officeStockList);
   }, [oldProduct, isOpen]);
+
+  const setStoreItem = (
+    storeItem: OfficeAndStock,
+    need2UpdateOfficeName = false
+  ) => {
+    if (need2UpdateOfficeName) {
+      storeItem.officeName = getOfficeName(storeItem.officeId);
+    }
+    const targetIndex = stores.findIndex(
+      (item) => item.officeId === storeItem.officeId
+    );
+    stores.splice(targetIndex, 1, storeItem);
+    setStores([...stores]);
+    setProduct((product) => {
+      return {
+        ...product,
+        officeStockList: stores.map(({ officeId, officeName, stock }) => ({
+          officeId,
+          officeName,
+          stock,
+        })),
+      };
+    });
+  };
+
+  const addStoreItem = () => {
+    stores.push({
+      officeId: 0,
+      officeName: 'Select Office',
+      stock: 0,
+    });
+    setStores([...stores]);
+  };
+
+  const deleteStoreItem = (id: number) => {
+    const targetIndex = stores.findIndex((item) => item.officeId === id);
+    stores.splice(targetIndex, 1);
+    setStores([...stores]);
+    setProduct((product) => {
+      return {
+        ...product,
+        officeStockList: stores.map(({ officeId, officeName, stock }) => ({
+          officeId,
+          officeName,
+          stock,
+        })),
+      };
+    });
+  };
+
+  const getOfficeName = (id: number) => {
+    const target = officeList.find((item) => item.id === id);
+    return target!.name;
+  };
+
+  const selectedOffices = stores.map((item) => item.officeId);
+  const newOfficeList = officeList.filter(
+    (item) => !selectedOffices.includes(item.id)
+  );
 
   const handleCategory = (item: string) => {
     if (!categories.has(item)) {
@@ -69,37 +144,6 @@ export default function EditProduct({
         {item}
       </div>
     );
-  };
-
-  const handleLogisticMethod = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    logisticMethod: string
-  ) => {
-    if (event.target.checked) {
-      setLogisticMethods((prevState) => {
-        const tmp = [...prevState, logisticMethod];
-        setProduct((prevState) => {
-          const logisticMethod = tmp.join(';');
-          return {
-            ...prevState,
-            logisticMethod,
-          };
-        });
-        return new Set(tmp);
-      });
-    } else {
-      setLogisticMethods((prevState) => {
-        const tmp = [...prevState].filter((x) => x !== logisticMethod);
-        setProduct((prevState) => {
-          const logisticMethod = tmp.join(';');
-          return {
-            ...prevState,
-            logisticMethod,
-          };
-        });
-        return new Set(tmp);
-      });
-    }
   };
 
   const handleInputField = (
@@ -167,13 +211,14 @@ export default function EditProduct({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const result = validateForm(product, [
-      'logisticMethodComment',
-      'imageFiles',
-      'deletedTime',
-    ]);
+    const result = validateForm(product, ['imageFiles', 'deletedTime']);
+    // TODO 判错昨天下午和吕靖测得时候还好，后来就不好了
+    const storesValidateResult = validateOffices(stores);
+    setStoresError(storesValidateResult);
 
-    if (Object.values(result).includes(true)) {
+    const isInvalidStoreExist = !!Object.keys(storesValidateResult).length;
+
+    if (Object.values(result).includes(true) && isInvalidStoreExist) {
       setValidations(result);
       setTimeout(() => setValidations(initValidateResult), 2000);
     } else {
@@ -188,7 +233,7 @@ export default function EditProduct({
 
       setLoading(false);
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 1500);
     }
 
@@ -239,6 +284,7 @@ export default function EditProduct({
                       strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-6 h-6"
+                      data-testid="closeBtn"
                       onClick={() => handleClose()}
                     >
                       <path
@@ -326,70 +372,40 @@ export default function EditProduct({
                     />
 
                     <div className="col-span-2 flex flex-col mt-3">
-                      <div className="text-xl mb-3">
-                        <span className="text-red-500 mb-1 pr-1">*</span>
-                        Logistic Methods
+                      <div>Logistic & Inventory</div>
+                      <div>
+                        <p className="mb-3 mt-3">
+                          <span className="text-red-500 pr-1">*</span>
+                          Please indicate the office and number of product you
+                          want to sell
+                        </p>
+                        <div>
+                          {stores.map((item, index) => (
+                            <>
+                              <p className=" font-semibold my-3">{`Office ${
+                                index + 1
+                              }`}</p>
+                              <OfficeStoreSelect
+                                key={item.officeId}
+                                storeItem={item}
+                                officeList={newOfficeList}
+                                error={storesError[item.officeId] || {}}
+                                isMinCounts={stores.length === 1}
+                                isMaxCounts={stores.length === 6}
+                                setStoreItem={setStoreItem}
+                                addStoreItem={addStoreItem}
+                                deleteStoreItem={deleteStoreItem}
+                              />
+                            </>
+                          ))}
+                        </div>
                       </div>
-                      <label
-                        htmlFor="office"
-                        className="flex flex-row items-center mb-2"
-                      >
-                        <input
-                          id="office"
-                          type="checkbox"
-                          name="logistic"
-                          checked={logisticMethods.has('office')}
-                          className={classNames(
-                            'firstLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
-                            validations.logisticMethod
-                              ? 'outline-none ring-inset ring ring-rose-500'
-                              : ''
-                          )}
-                          onChange={(event) =>
-                            handleLogisticMethod(event, 'office')
-                          }
-                        />
-                        Collecting at Office
-                      </label>
-                      <label
-                        htmlFor="address"
-                        className="flex flex-row items-center"
-                      >
-                        <input
-                          id="address"
-                          type="checkbox"
-                          name="logistic"
-                          checked={logisticMethods.has('address')}
-                          className={classNames(
-                            'secondLogisticMethod w-5 h-5 mr-2 accent-violet-500 outline-none',
-                            validations.logisticMethod
-                              ? 'outline-none ring-inset ring ring-rose-500'
-                              : ''
-                          )}
-                          onChange={(event) =>
-                            handleLogisticMethod(event, 'address')
-                          }
-                        />
-                        Shipping to an Address
-                      </label>
                     </div>
-                    <label
-                      htmlFor="logisticMethodComment"
-                      className="text-xl mr-5 col-span-2 mt-2"
-                    >
-                      Comment
-                    </label>
-                    <textarea
-                      className="col-span-2 shadow-sm bg-gray-50 resize-none border border-gray-300 text-gray-900 text-base p-2 rounded mb-5 focus:outline-none focus:ring focus:ring-purple-300"
-                      value={product.logisticMethodComment}
-                      onChange={(event) =>
-                        handleInputField(event, 'logisticMethodComment')
-                      }
-                      id="logisticMethodComment"
-                    />
+
                     <button
+                      data-testid="save-btn"
                       onClick={(event) => handleSubmit(event)}
-                      className="update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                      className="mt-[100px] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
                     >
                       Save
                     </button>
