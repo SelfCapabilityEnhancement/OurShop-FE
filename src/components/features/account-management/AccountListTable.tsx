@@ -50,11 +50,13 @@ export default function AccountListTable() {
               <td className="px-2">{user.connection}</td>
               <td
                 className="px-2"
-                title={user.role.length > 20 ? user.role : ''}
+                title={
+                  user.roleNames.join(',').length > 30
+                    ? user.roleNames.join(', ')
+                    : ''
+                }
               >
-                {user.role.length > 20
-                  ? user.role.substring(0, 19) + '...'
-                  : user.role}
+                {user.roleNames.join(', ')}
               </td>
               <td className="px-2">{user.createdTime}</td>
               <td className="px-2 text-blue-600">
