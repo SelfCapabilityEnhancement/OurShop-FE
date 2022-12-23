@@ -48,7 +48,7 @@ describe('Edit Product', () => {
     });
   });
 
-  it('should show old product info', async () => {
+  it('should updateProduct to be called', async () => {
     const items: { [key: string]: keyof Product } = {
       'Product Name': 'name',
       'Price in USD': 'priceMoney',
