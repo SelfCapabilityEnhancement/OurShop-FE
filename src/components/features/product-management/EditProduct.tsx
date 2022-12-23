@@ -284,6 +284,7 @@ export default function EditProduct({
                       strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-6 h-6"
+                      data-testid="closeBtn"
                       onClick={() => handleClose()}
                     >
                       <path
