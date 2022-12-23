@@ -132,6 +132,7 @@ export default function OfficeStoreSelect({
 
       <span className="text-center mx-[2%] py-2">has</span>
       <input
+        data-testid="product-number"
         placeholder="Product Number"
         value={storeItem.stock === 0 ? '' : storeItem.stock}
         className={currentInputClassName}
