@@ -212,7 +212,7 @@ export default function EditProduct({
   ) => {
     event.preventDefault();
     const result = validateForm(product, ['imageFiles', 'deletedTime']);
-
+    // TODO 判错昨天下午和吕靖测得时候还好，后来就不好了
     const storesValidateResult = validateOffices(stores);
     setStoresError(storesValidateResult);
 
@@ -233,7 +233,7 @@ export default function EditProduct({
 
       setLoading(false);
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 1500);
     }
 
