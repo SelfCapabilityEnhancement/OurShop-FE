@@ -35,13 +35,6 @@ export interface UserInfo {
   telephoneNum: number | undefined;
 }
 
-export interface Account {
-  username: string;
-  connection: string;
-  role: string;
-  createdTime: string;
-}
-
 export interface ShoppingCartItem {
   product: Product;
   productNum: number;
@@ -160,4 +153,13 @@ export interface Role {
     description: string;
     updateTime: string;
   }[];
+}
+
+export interface Account {
+  useId: number;
+  username: string;
+  connection: string;
+  roleNames: string[];
+  roles: Role[];
+  createdTime: string;
 }
