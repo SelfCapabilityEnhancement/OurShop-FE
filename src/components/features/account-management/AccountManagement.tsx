@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
-import AccountListTable from '@/components/features/account-management/AccountListTable';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
 import { Account, Feature, Role } from '@/components/common/CustomTypes';
 import { getAccountList, getFeatureList, getRoleList } from '@/service';
+import AccountListTable from '@/components/features/account-management/components/AccountListTable/AccountListTable';
 
 const tabs = [
   { id: 'account-list', name: 'Account List' },
