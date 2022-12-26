@@ -1,6 +1,7 @@
 import { Account } from '@/components/common/CustomTypes';
 import { useEffect, useState } from 'react';
 import { getAccountList } from '@/service';
+import AccessRole from '@/components/features/account-management/components/AccountListTable/AccessRole';
 
 const accountListTabs = [
   { id: 'user-name', name: 'Username' },
@@ -21,6 +22,9 @@ export default function AccountListTable() {
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
+      <div className="flex justify-center">
+        <AccessRole isOpen={false} />
+      </div>
       <table className="w-full text-center" id="AccountListTable">
         <thead className="text-gray-800 bg-gray-100 text-lg">
           <tr className="h-16">
