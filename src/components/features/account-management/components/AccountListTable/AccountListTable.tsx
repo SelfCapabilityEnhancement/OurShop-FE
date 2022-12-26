@@ -12,6 +12,7 @@ const accountListTabs = [
 ];
 
 export default function AccountListTable() {
+  const [showRoleModal, setShowRoleModal] = useState(false);
   const [userList, setUserList] = useState<Account[]>([]);
 
   useEffect(() => {
@@ -20,10 +21,18 @@ export default function AccountListTable() {
     });
   }, []);
 
+  const handleAccess = () => {
+    setShowRoleModal(true);
+  };
+
+  const handleCancel = () => {
+    setShowRoleModal(false);
+  };
+
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
       <div className="flex justify-center">
-        <AccessRole isOpen={false} />
+        <AccessRole isOpen={showRoleModal} handleClose={handleCancel} />
       </div>
       <table className="w-full text-center" id="AccountListTable">
         <thead className="text-gray-800 bg-gray-100 text-lg">
@@ -64,7 +73,9 @@ export default function AccountListTable() {
               </td>
               <td className="px-2">{user.createdTime}</td>
               <td className="px-2 text-blue-600">
-                <span className="mr-6">Access</span>
+                <button onClick={() => handleAccess()} className="mr-6">
+                  Access
+                </button>
                 <span>Delete</span>
               </td>
             </tr>

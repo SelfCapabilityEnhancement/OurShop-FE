@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import CancelIcon from '@/components/common/cancel-icon/Cancel-icon';
 
 const roleList = ['Buyer', 'Platform Ops', 'Site Admin'];
 
@@ -14,7 +15,13 @@ const renderRole = (item: string) => {
   );
 };
 
-export default function AccessRole({ isOpen }: { isOpen: boolean }) {
+export default function AccessRole({
+  isOpen,
+  handleClose,
+}: {
+  isOpen: boolean;
+  handleClose: Function;
+}) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -50,20 +57,7 @@ export default function AccessRole({ isOpen }: { isOpen: boolean }) {
                 Access Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <CancelIcon handleClose={handleClose} />
               </div>
             </Dialog.Title>
 
