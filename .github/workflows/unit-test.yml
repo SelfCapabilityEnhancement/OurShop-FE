@@ -5,15 +5,17 @@ name: OurShop Unit test
 
 on:
   push:
-    branches: ['main']
+    branches: [ 'main', 'test' ]
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
 
       - name: Test
         run: bash -c "yarn && yarn test"

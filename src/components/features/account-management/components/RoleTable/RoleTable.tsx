@@ -1,6 +1,5 @@
 import { Role } from '@/components/common/CustomTypes';
-import { useEffect, useState } from 'react';
-import { getRoleList } from '@/service';
+import { useState } from 'react';
 import EditRole from '@/components/features/account-management/components/RoleTable/EditRole';
 
 export const roleListTabs = [
@@ -10,16 +9,10 @@ export const roleListTabs = [
   { id: 'action', name: 'Action' },
 ];
 
-export default function RoleTable() {
+export default function RoleTable(props: { roleList: Role[] }) {
   const [showRoleModal, setShowRoleModal] = useState(false);
-  const [roleList, setRoleList] = useState<Role[]>([]);
   const [chosen, setChosen] = useState(0);
-
-  useEffect(() => {
-    getRoleList().then((data) => {
-      setRoleList(data);
-    });
-  }, []);
+  const roleList = props.roleList;
 
   const handleEdit = (index: number) => {
     setChosen(index);

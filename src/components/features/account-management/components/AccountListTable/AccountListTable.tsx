@@ -1,6 +1,5 @@
 import { Account } from '@/components/common/CustomTypes';
-import { useEffect, useState } from 'react';
-import { getAccountList } from '@/service';
+import { useState } from 'react';
 import AccessRole from '@/components/features/account-management/components/AccountListTable/AccessRole';
 
 const accountListTabs = [
@@ -11,16 +10,10 @@ const accountListTabs = [
   { id: 'action', name: 'Action' },
 ];
 
-export default function AccountListTable() {
+export default function AccountListTable(props: { userList: Account[] }) {
+  const userList = props.userList;
   const [showRoleModal, setShowRoleModal] = useState(false);
-  const [userList, setUserList] = useState<Account[]>([]);
   const [chosen, setChosen] = useState(0);
-
-  useEffect(() => {
-    getAccountList().then((data) => {
-      setUserList(data);
-    });
-  }, []);
 
   const handleAccess = (index: number) => {
     setChosen(index);

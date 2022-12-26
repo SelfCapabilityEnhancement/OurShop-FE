@@ -1,7 +1,6 @@
 import { Feature } from '@/components/common/CustomTypes';
 import EditFeature from '@/components/features/account-management/components/FeatureTable/EditFeature';
-import { useEffect, useState } from 'react';
-import { getFeatureList } from '@/service';
+import { useState } from 'react';
 
 export const featureListTabs = [
   { id: 'function', name: 'Function' },
@@ -11,15 +10,10 @@ export const featureListTabs = [
   { id: 'action', name: 'Action' },
 ];
 
-export default function FeatureTable() {
+export default function FeatureTable(props: { featureList: Feature[] }) {
+  const featureList = props.featureList;
   const [showFeatureModal, setShowFeatureModal] = useState(false);
-  const [featureList, setFeatureList] = useState<Feature[]>([]);
   const [chosen, setChosen] = useState(0);
-  useEffect(() => {
-    getFeatureList().then((data) => {
-      setFeatureList(data);
-    });
-  }, []);
 
   const handleEdit = (index: number) => {
     setChosen(index);
