@@ -75,8 +75,7 @@ export default function OfficeStoreSelect({
     <div className="flex">
       {/* @ts-ignore */}
       <Listbox
-        name={storeItem.officeName}
-        value={index}
+        value={storeItem.officeName}
         onChange={(event) => selectCity(event, index)}
       >
         <div className="relative mt-1 w-[150px]">
