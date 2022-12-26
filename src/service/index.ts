@@ -259,3 +259,7 @@ export const updateRole = async (roleId: number, featureIds: number[]) => {
 export const getAccountList = (): Promise<Account[]> => {
   return http.get('/users/get-account-list').then((response) => response.data);
 };
+
+// export const getAllRoles = (): Promise<Role[]> => {
+//   return http.get('/roles').then((response) => response.data);
+// };

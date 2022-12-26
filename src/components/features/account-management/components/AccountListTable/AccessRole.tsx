@@ -1,27 +1,37 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import CancelIcon from '@/components/common/cancel-icon/Cancel-icon';
+import { Account } from '@/components/common/CustomTypes';
+import { initAccount } from '@/constants';
 
-const roleList = ['Buyer', 'Platform Ops', 'Site Admin'];
-
-const renderRole = (item: string) => {
-  return (
-    <button
-      key={item}
-      className="w-44 h-9 text-center text-sm text-white font-normal py-2 rounded-lg mb-80 bg-[#AE66C3]"
-    >
-      {item}
-    </button>
-  );
-};
+const roles = ['Buyer', 'Platform Ops', 'Site Admin'];
 
 export default function AccessRole({
   isOpen,
   handleClose,
+  oldAccount,
 }: {
   isOpen: boolean;
   handleClose: Function;
+  oldAccount: Account;
 }) {
+  const [account, setAccount] = useState<Account>(initAccount);
+
+  useEffect(() => {
+    setAccount(oldAccount);
+  }, [isOpen]);
+
+  const renderRole = (item: string) => {
+    return (
+      <button
+        key={item}
+        className="w-44 h-9 text-center text-sm text-white font-normal py-2 rounded-lg mb-80 bg-[#AE66C3]"
+      >
+        {item}
+      </button>
+    );
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -63,10 +73,10 @@ export default function AccessRole({
 
             <div className="col-span-2">
               <div className="text-xl text-gray-900 mb-8">
-                Please select role for the user aaa
+                Please select role for the user {account.username}
               </div>
               <div className="flex justify-start gap-6 mt-3">
-                {roleList.map((item) => renderRole(item))}
+                {roles.map((item) => renderRole(item))}
               </div>
             </div>
 
