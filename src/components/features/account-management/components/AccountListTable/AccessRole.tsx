@@ -60,7 +60,7 @@ export default function AccessRole({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Dialog.Panel className="absolute top-[-1300px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle transition-all">
+          <Dialog.Panel className="fixed top-[19%] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle transition-all">
             <Dialog.Title as="h1" className="leading-6 grid grid-cols-3">
               <div></div>
               <div className="text-[#A45FB7] flex text-[18px] content-center font-semibold my-[20%]">
