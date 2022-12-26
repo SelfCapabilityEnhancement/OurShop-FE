@@ -40,7 +40,7 @@ describe('Account List', () => {
 
   it('should show account list items', () => {
     expect(screen.getByText('Tom')).toBeInTheDocument();
-    expect(screen.getByText('Site Admin')).toBeInTheDocument();
+    expect(screen.getByText('Buyer')).toBeInTheDocument();
     expect(screen.getByText('2022-12-06 09:54:30')).toBeInTheDocument();
     expect(screen.getByText('Bob')).toBeInTheDocument();
     expect(screen.getByText('Buyer')).toBeInTheDocument();
