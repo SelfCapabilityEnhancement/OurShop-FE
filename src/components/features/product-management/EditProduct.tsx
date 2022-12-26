@@ -82,7 +82,7 @@ export default function EditProduct({
   const addStoreItem = () => {
     stores.push({
       officeId: 0,
-      officeName: 'Select Office',
+      officeName: 'Select an Office',
       stock: 0,
     });
     setStores([...stores]);
@@ -373,7 +373,7 @@ export default function EditProduct({
                         <p className="mb-3 mt-3">
                           <span className="text-red-500 pr-1">*</span>
                           Please indicate the office and number of product you
-                          want to sell
+                          want to sell.
                         </p>
                         <div>
                           {stores.map((item, index) => (

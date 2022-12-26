@@ -59,7 +59,7 @@ export default function OfficeStoreSelect({
 
   let dropDownClassName = classNames(
     dropDownItemClassName,
-    storeItem.officeName === 'Select Office' ? 'text-[#9DA3AE]' : ''
+    storeItem.officeName === 'Select an Office' ? 'text-[#9DA3AE]' : ''
   );
   if (error.office) {
     dropDownClassName += ' outline-none ring-2 ring-rose-500';
