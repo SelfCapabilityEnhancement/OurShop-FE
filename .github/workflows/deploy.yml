@@ -26,7 +26,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ourshop-fe-prod'
+          app-name: 'ourshop-fe-qa-stable-quetzal'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_QA }}
           package: '.'
