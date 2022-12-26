@@ -8,11 +8,13 @@ import { classNames } from '@/utils';
 import { Listbox, Transition } from '@headlessui/react';
 
 type Props = {
+  index: number;
   storeItem: OfficeAndStock;
   officeList: OfficeItem[];
   setStoreItem: (
     param: OfficeAndStock,
-    need2UpdateOfficeName?: boolean
+    needToUpdateOfficeName: boolean,
+    index: number
   ) => void;
   addStoreItem: () => void;
   deleteStoreItem: (id: number) => void;
@@ -29,9 +31,10 @@ const dropDownItemClassName =
 const inputClassName =
   'w-[120px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 const inputClassTitleName =
-  'w-[120px] h-10 py-2 bg-gray-100 text-[0.25rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[120px] h-10 py-2 bg-gray-100 text-[0.9rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreSelect({
+  index,
   storeItem,
   officeList,
   isMinCounts,
@@ -41,16 +44,17 @@ export default function OfficeStoreSelect({
   addStoreItem,
   deleteStoreItem,
 }: Props) {
-  const selectCity = (event: Office) => {
+  const selectCity = (event: Office, index: number) => {
     setStoreItem(
       { ...storeItem, officeId: event.id, officeName: event.name },
-      true
+      true,
+      index
     );
   };
 
   const changeInventory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setStoreItem({ ...storeItem, stock: Number(value) });
+    setStoreItem({ ...storeItem, stock: Number(value) }, false, index);
   };
 
   let dropDownClassName = classNames(
@@ -71,8 +75,9 @@ export default function OfficeStoreSelect({
     <div className="flex">
       {/* @ts-ignore */}
       <Listbox
-        value={storeItem.officeName}
-        onChange={(event) => selectCity(event)}
+        name={storeItem.officeName}
+        value={index}
+        onChange={(event) => selectCity(event, index)}
       >
         <div className="relative mt-1 w-[150px]">
           <Listbox.Button className={dropDownClassName} data-testid="drop-down">

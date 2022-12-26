@@ -59,15 +59,13 @@ export default function EditProduct({
 
   const setStoreItem = (
     storeItem: OfficeAndStock,
-    need2UpdateOfficeName = false
+    needToUpdateOfficeName: boolean,
+    index: number
   ) => {
-    if (need2UpdateOfficeName) {
+    if (needToUpdateOfficeName) {
       storeItem.officeName = getOfficeName(storeItem.officeId);
     }
-    const targetIndex = stores.findIndex(
-      (item) => item.officeId === storeItem.officeId
-    );
-    stores.splice(targetIndex, 1, storeItem);
+    stores.splice(index, 1, storeItem);
     setStores([...stores]);
     setProduct((product) => {
       return {
@@ -115,7 +113,6 @@ export default function EditProduct({
   const newOfficeList = officeList.filter(
     (item) => !selectedOffices.includes(item.id)
   );
-
   const handleCategory = (item: string) => {
     if (!categories.has(item)) {
       const tmp = [...categories, item];
@@ -212,7 +209,6 @@ export default function EditProduct({
   ) => {
     event.preventDefault();
     const result = validateForm(product, ['imageFiles', 'deletedTime']);
-    // TODO 判错昨天下午和吕靖测得时候还好，后来就不好了
     const storesValidateResult = validateOffices(stores);
     setStoresError(storesValidateResult);
 
@@ -233,7 +229,7 @@ export default function EditProduct({
 
       setLoading(false);
       setTimeout(() => {
-        // window.location.reload();
+        window.location.reload();
       }, 1500);
     }
 
@@ -385,7 +381,9 @@ export default function EditProduct({
                               <p className=" font-semibold my-3">{`Office ${
                                 index + 1
                               }`}</p>
+
                               <OfficeStoreSelect
+                                index={index}
                                 key={item.officeId}
                                 storeItem={item}
                                 officeList={newOfficeList}
