@@ -3,10 +3,12 @@ import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import AccountManagement from '@/components/features/account-management/AccountManagement';
 import * as service from '@/service';
-import { Account } from '@/components/common/CustomTypes';
+import { Account, Feature, Role } from '@/components/common/CustomTypes';
 
 jest.mock('@/service', () => ({
   getAccountList: jest.fn(),
+  getRoleList: jest.fn(),
+  getFeatureList: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -19,6 +21,8 @@ describe('Account Management', () => {
 
   beforeEach(async () => {
     jest.spyOn(service, 'getAccountList').mockResolvedValue([] as Account[]);
+    jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
+    jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
     await act(async () => {
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
