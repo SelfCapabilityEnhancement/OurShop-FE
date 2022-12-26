@@ -20,6 +20,7 @@ describe('Office store item', () => {
   it('should show Office 1 item', async () => {
     render(
       <OfficeStoreSelect
+        index={0}
         storeItem={mockStores[0]}
         officeList={officeList}
         error={{ office: false, inventory: false }}
@@ -42,6 +43,7 @@ describe('Office store item', () => {
     const addStoreItem = jest.fn();
     render(
       <OfficeStoreSelect
+        index={0}
         storeItem={mockStores[0]}
         officeList={officeList}
         error={{ office: false, inventory: false }}
@@ -63,6 +65,7 @@ describe('Office store item', () => {
     const setStoreItem = jest.fn();
     render(
       <OfficeStoreSelect
+        index={0}
         storeItem={mockStores[0]}
         officeList={officeList}
         error={{ office: false, inventory: false }}
