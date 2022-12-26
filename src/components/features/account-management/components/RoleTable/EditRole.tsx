@@ -5,6 +5,7 @@ import Banner from '@/components/common/banner/Banner';
 import { classNames } from '@/utils';
 import { getFeatureList, updateRole } from '@/service';
 import { initRole } from '@/constants';
+import CancelIcon from '@/components/common/cancel-icon/Cancel-icon';
 
 export default function EditRole({
   isOpen,
@@ -112,21 +113,7 @@ export default function EditRole({
                 Role Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                  onClick={() => handleClose()}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <CancelIcon handleClose={handleClose} />
               </div>
             </Dialog.Title>
             <div className="mt-2">
