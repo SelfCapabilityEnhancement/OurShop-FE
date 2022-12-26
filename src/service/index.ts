@@ -233,8 +233,10 @@ export const getFeatureList = async (): Promise<Feature[]> => {
   return await http.get('/functions/').then((response) => response.data);
 };
 
-export const getRoleList = async (): Promise<Role[]> => {
-  return await http.get('/roles/functions/').then((response) => response.data);
+export const getRoleList = async (hasFunction: boolean): Promise<Role[]> => {
+  return await http
+    .get('/roles?hasFunction=' + hasFunction)
+    .then((response) => response.data);
 };
 
 export const updateFeature = async (
@@ -259,7 +261,3 @@ export const updateRole = async (roleId: number, featureIds: number[]) => {
 export const getAccountList = (): Promise<Account[]> => {
   return http.get('/users/get-account-list').then((response) => response.data);
 };
-
-// export const getAllRoles = (): Promise<Role[]> => {
-//   return http.get('/roles').then((response) => response.data);
-// };

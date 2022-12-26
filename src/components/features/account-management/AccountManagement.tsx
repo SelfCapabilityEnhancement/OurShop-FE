@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { Link, Outlet } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import { Tab } from '@headlessui/react';
 import { classNames } from '@/utils';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
@@ -24,7 +22,7 @@ export default function AccountManagement() {
     getAccountList().then((data) => {
       setUserList(data);
     });
-    getRoleList().then((data) => {
+    getRoleList(false).then((data) => {
       setRoleList(data);
     });
     getFeatureList().then((data) => {
