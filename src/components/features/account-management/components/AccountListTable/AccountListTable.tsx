@@ -26,13 +26,15 @@ export default function AccountListTable(props: { userList: Account[] }) {
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
-      <div className="flex justify-center">
-        <AccessRole
-          isOpen={showRoleModal}
-          handleClose={handleCancel}
-          oldAccount={userList[chosen]}
-        />
-      </div>
+      {userList.length > 0 && (
+        <div className="flex justify-center">
+          <AccessRole
+            isOpen={showRoleModal}
+            handleClose={handleCancel}
+            oldAccount={userList[chosen]}
+          />
+        </div>
+      )}
       <table className="w-full text-center" id="AccountListTable">
         <thead className="text-gray-800 bg-gray-100 text-lg">
           <tr className="h-16">

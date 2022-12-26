@@ -16,6 +16,7 @@ export default function RoleTable(props: { roleList: Role[] }) {
 
   const handleEdit = (index: number) => {
     setChosen(index);
+    console.log(index);
     setShowRoleModal(true);
   };
 
