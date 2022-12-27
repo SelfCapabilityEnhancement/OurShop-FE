@@ -7,7 +7,7 @@ on:
     branches: [ 'test' ]
 
 jobs:
-  deploy:
+  build-and-deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ourshop-fe-qa-stable-quetzal'
+          app-name: 'ourshop-qa'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_QA }}
           package: '.'
