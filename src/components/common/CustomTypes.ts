@@ -156,7 +156,7 @@ export interface Role {
 }
 
 export interface Account {
-  useId: number;
+  userId: number;
   username: string;
   connection: string;
   roleNames: string[];

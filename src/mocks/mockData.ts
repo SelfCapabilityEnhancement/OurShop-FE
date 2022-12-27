@@ -368,21 +368,22 @@ const role2 = {
 
 export const roles: Array<Role> = [role1, role2];
 
-export const accounts: Account[] = [
-  {
-    useId: 1,
-    username: 'Tom',
-    connection: 'username',
-    roleNames: ['Buyer', 'Site admin'],
-    roles: [role2],
-    createdTime: '2022-12-06 09:54:30',
-  },
-  {
-    useId: 2,
-    username: 'Bob',
-    connection: 'username',
-    roleNames: ['Buyer'],
-    roles: [role1],
-    createdTime: '2022-12-07 06:52:37',
-  },
-];
+export const account1 = {
+  userId: 1,
+  username: 'Tom',
+  connection: 'username',
+  roleNames: ['Buyer', 'Site admin'],
+  roles: [role2],
+  createdTime: '2022-12-06 09:54:30',
+};
+
+const account2 = {
+  userId: 2,
+  username: 'Bob',
+  connection: 'username',
+  roleNames: ['Buyer'],
+  roles: [role1],
+  createdTime: '2022-12-07 06:52:37',
+};
+
+export const accounts: Account[] = [account1, account2];

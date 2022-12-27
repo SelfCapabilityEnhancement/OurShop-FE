@@ -138,7 +138,7 @@ export const initRole: Role = {
 };
 
 export const initAccount = {
-  useId: 0,
+  userId: 0,
   username: '',
   connection: '',
   roleNames: [''],
