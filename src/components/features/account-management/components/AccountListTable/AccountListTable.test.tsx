@@ -2,7 +2,8 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import AccountListTable from '@/components/features/account-management/components/AccountListTable/AccountListTable';
-import { accounts } from '@/mocks/mockData';
+import { accounts, roles } from '@/mocks/mockData';
+import * as service from '@/service';
 
 jest.mock('@/service', () => ({}));
 
@@ -11,8 +12,12 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+jest.mock('@/service', () => ({
+  getRoleList: jest.fn(),
+}));
+
 describe('Account List', () => {
-  // const user = userEvent.setup();
+  jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
 
   beforeEach(async () => {
     await act(async () => {
