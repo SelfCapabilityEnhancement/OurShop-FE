@@ -74,6 +74,7 @@ export default function OfficeStoreSelect({
   return (
     <div className="flex">
       <div className="">
+        {/* @ts-ignore */}
         <Listbox
           value={storeItem.officeName}
           onChange={(event) => selectCity(event as any as UserOffice, index)}
