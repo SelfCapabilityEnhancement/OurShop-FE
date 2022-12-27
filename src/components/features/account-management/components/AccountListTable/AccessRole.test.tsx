@@ -42,12 +42,12 @@ describe('Access roleNames', () => {
     expect(screen.getByText('Access Configuration')).toBeInTheDocument();
   });
 
-  test('should show roleNames info', async () => {
+  test('should show Access Configuration popup', async () => {
     const updateMock = jest
       .spyOn(service, 'updateRoleNames')
       .mockResolvedValue({} as AxiosResponse);
 
-    const saveBtn = await screen.findByTestId('saveBtn');
+    const saveBtn = screen.getByTestId('saveBtn');
 
     await user.click(saveBtn);
 
