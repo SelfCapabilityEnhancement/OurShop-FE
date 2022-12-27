@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import ErrorPage from '../components/features/error-page/Error-page';
+import ErrorPage from '../components/features/error-page/ErrorPage';
 import CreateProduct from '../components/features/create-product/CreateProduct';
 import ShoppingCart from '../components/features/shopping-cart/ShoppingCart';
 import MyOrder from '../components/features/my-order/MyOrder';
