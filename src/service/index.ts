@@ -261,3 +261,10 @@ export const updateRole = async (roleId: number, featureIds: number[]) => {
 export const getAccountList = (): Promise<Account[]> => {
   return http.get('/users/get-account-list').then((response) => response.data);
 };
+
+export const updateRoleNames = async (userId: number, roleIds: number[]) => {
+  const { data } = await http.patch(`/users/${userId}/user-roles`, {
+    roleIds,
+  });
+  return data;
+};
