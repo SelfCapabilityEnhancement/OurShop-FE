@@ -39,22 +39,21 @@ export default function OfficeBox(props: { getIsCheck: Function }) {
 
   const officeNames = officeList.map(({ id, name }) => {
     return (
-      <>
-        <Checkbox
-          id={id}
-          type="checkbox"
-          name={name}
-          handleClick={handleClick}
-          isChecked={isCheck.includes(id)}
-        >
-          {name}
-        </Checkbox>
-      </>
+      <Checkbox
+        id={id}
+        key={id}
+        type="checkbox"
+        name={name}
+        handleClick={handleClick}
+        isChecked={isCheck.includes(id)}
+      >
+        {name}
+      </Checkbox>
     );
   });
 
   return (
-    <>
+    <div>
       {officeNames}
       <Checkbox
         id="selectAll"
@@ -65,6 +64,6 @@ export default function OfficeBox(props: { getIsCheck: Function }) {
       >
         All
       </Checkbox>
-    </>
+    </div>
   );
 }

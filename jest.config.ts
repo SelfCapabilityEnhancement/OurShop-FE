@@ -23,16 +23,18 @@ const config: Config = {
     '!<rootDir>/src/assets/**',
     '!<rootDir>/src/service/*',
     '!<rootDir>/src/routers/*',
+    '!<rootDir>/src/utils/*',
+    '!<rootDir>/src/main.tsx',
     '!<rootDir>/src/azure-storage-blob.ts',
     '!<rootDir>/src/components/common/CustomTypes.ts',
     '!<rootDir>/src/vite-env.d.ts',
   ],
   coverageThreshold: {
     global: {
+      statements: 72,
       branches: 65,
       functions: 59,
       lines: 73,
-      statements: 72,
     },
   },
 };
