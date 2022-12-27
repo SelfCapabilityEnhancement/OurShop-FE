@@ -135,6 +135,7 @@ export default function AccessRole({
 
               <div className="flex justify-end mr-8">
                 <button
+                  data-testid="saveBtn"
                   onClick={() => handleSubmit()}
                   className="text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-2xl text-2xl w-44 h-12 px-5 py-2 text-center"
                 >
