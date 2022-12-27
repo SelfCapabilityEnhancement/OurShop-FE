@@ -135,6 +135,7 @@ export default function EditRole({
                 </div>
                 <div></div>
                 <button
+                  data-testid="saveBtn"
                   onClick={() => handleSubmit()}
                   className="mt-[30%] mx-[50%] token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
                 >
