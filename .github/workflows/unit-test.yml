@@ -19,4 +19,4 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Test
-        run: bash -c "yarn && yarn test"
+        run: auto/test
