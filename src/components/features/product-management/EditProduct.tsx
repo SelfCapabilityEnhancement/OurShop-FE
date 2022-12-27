@@ -272,7 +272,11 @@ export default function EditProduct({
                   <div className="justify-self-center font-semibold">
                     Edit Product
                   </div>
-                  <div className="justify-self-end" data-testid="cancel-icon">
+                  <div
+                    className="justify-self-end"
+                    data-testid="cancelIcon"
+                    onClick={() => handleClose()}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -280,8 +284,6 @@ export default function EditProduct({
                       strokeWidth="1.5"
                       stroke="currentColor"
                       className="w-6 h-6"
-                      data-testid="closeBtn"
-                      onClick={() => handleClose()}
                     >
                       <path
                         strokeLinecap="round"
@@ -368,7 +370,7 @@ export default function EditProduct({
                     />
 
                     <div className="col-span-2 flex flex-col mt-3">
-                      <div>Logistic & Inventory</div>
+                      <div>Office & Inventory</div>
                       <div>
                         <p className="mb-3 mt-3">
                           <span className="text-red-500 pr-1">*</span>
@@ -377,14 +379,13 @@ export default function EditProduct({
                         </p>
                         <div>
                           {stores.map((item, index) => (
-                            <>
+                            <div key={item.officeId}>
                               <p className=" font-semibold my-3">{`Office ${
                                 index + 1
                               }`}</p>
 
                               <OfficeStoreSelect
                                 index={index}
-                                key={item.officeId}
                                 storeItem={item}
                                 officeList={newOfficeList}
                                 error={storesError[item.officeId] || {}}
@@ -394,7 +395,7 @@ export default function EditProduct({
                                 addStoreItem={addStoreItem}
                                 deleteStoreItem={deleteStoreItem}
                               />
-                            </>
+                            </div>
                           ))}
                         </div>
                       </div>

@@ -2,7 +2,7 @@ name: Build and deploy main to Azure Web App
 
 on:
   workflow_run:
-    workflows: [ "OurShop Unit test" ]
+    workflows: ['OurShop Unit test']
 
 jobs:
   deploy:

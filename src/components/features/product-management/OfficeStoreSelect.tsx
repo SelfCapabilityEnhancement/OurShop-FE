@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import {
   OfficeItem,
   OfficeAndStock,
-  UserOffice as Office,
+  UserOffice,
 } from '@/components/common/CustomTypes';
 import { classNames } from '@/utils';
 import { Listbox, Transition } from '@headlessui/react';
@@ -44,7 +44,7 @@ export default function OfficeStoreSelect({
   addStoreItem,
   deleteStoreItem,
 }: Props) {
-  const selectCity = (event: Office, index: number) => {
+  const selectCity = (event: UserOffice, index: number) => {
     setStoreItem(
       { ...storeItem, officeId: event.id, officeName: event.name },
       true,
@@ -73,11 +73,10 @@ export default function OfficeStoreSelect({
 
   return (
     <div className="flex">
-      {/* @ts-ignore */}
       <div className="">
         <Listbox
           value={storeItem.officeName}
-          onChange={(event) => selectCity(event, index)}
+          onChange={(event) => selectCity(event as any as UserOffice, index)}
         >
           <div className="relative mt-1 w-[150px]">
             <Listbox.Button
@@ -155,7 +154,6 @@ export default function OfficeStoreSelect({
           viewBox="0 0 1024 1024"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          p-id="1379"
           width="40"
           height="40"
           data-testid="add-store-item"
@@ -164,7 +162,6 @@ export default function OfficeStoreSelect({
           <path
             d="M512.2 64.2c-247.4 0-448 200.6-448 448s200.6 448 448 448 448-200.6 448-448-200.6-448-448-448z m163 416.4c18 0 32.6 14.6 32.6 32.6s-14.6 32.6-32.6 32.6H545.6v129.6c0 18-14.6 32.6-32.6 32.6s-32.6-14.6-32.6-32.6V545.8H350.8c-18 0-32.6-14.6-32.6-32.6s14.6-32.6 32.6-32.6h129.6V351c0-18 14.6-32.6 32.6-32.6s32.6 14.6 32.6 32.6v129.6h129.6z"
             fill="#22c55e"
-            p-id="1380"
           ></path>
         </svg>
       )}
@@ -175,7 +172,6 @@ export default function OfficeStoreSelect({
           viewBox="0 0 1024 1024"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          p-id="1230"
           width="40"
           height="40"
           data-testid="delete-store-item"
@@ -184,7 +180,6 @@ export default function OfficeStoreSelect({
           <path
             d="M512.2 64.2c-247.4 0-448 200.6-448 448s200.6 448 448 448 448-200.6 448-448-200.6-448-448-448z m194.6 448c0 18-14.6 32.6-32.6 32.6H349.8c-18 0-32.6-14.6-32.6-32.6s14.6-32.6 32.6-32.6h324.5c17.9 0 32.5 14.6 32.5 32.6z"
             fill="#e11d48"
-            p-id="1231"
           ></path>
         </svg>
       )}
