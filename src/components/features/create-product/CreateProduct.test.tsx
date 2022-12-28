@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import * as utils from '@/utils';
 import * as service from '@/service';
 import { Product } from '@/components/common/CustomTypes';
-import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),
@@ -108,7 +107,7 @@ describe('Create product test', () => {
 describe('When user not login to access create-products', () => {
   beforeEach(async () => {
     await act(async () => {
-      render(<AccountManagement />, { wrapper: BrowserRouter });
+      render(<CreateProduct />, { wrapper: BrowserRouter });
     });
   });
 
@@ -123,7 +122,7 @@ describe('When user not have access to access create-products', () => {
   beforeEach(async () => {
     localStorage.setItem('router', 'testForCreate-Products');
     await act(async () => {
-      render(<AccountManagement />, { wrapper: BrowserRouter });
+      render(<CreateProduct />, { wrapper: BrowserRouter });
     });
   });
 
