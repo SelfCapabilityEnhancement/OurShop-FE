@@ -18,7 +18,7 @@ type Props = {
 };
 
 const dropDownItemClassName =
-  'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-900';
+  'bg-gray-100 w-[200px] h-10 py-2 text-lg text-center text-gray-900';
 const inputClassName =
   'w-50 h-10 py-2 bg-gray-100 text-lg text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
@@ -58,12 +58,16 @@ export default function OfficeStoreItem({
     <div className="flex">
       <div className="">
         <Listbox value={storeItem.officeId} onChange={selectCity}>
-          <div className="relative mt-1 w-[150px]">
+          <div className="relative mt-1 w-[200px]">
             <Listbox.Button
               className={dropDownClassName}
               data-testid="drop-down"
             >
-              <span className="block truncate">{storeItem.officeName}</span>
+              <span className="block truncate">
+                {storeItem.officeName
+                  ? storeItem.officeName
+                  : 'Select an Office'}
+              </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
                 <svg
                   className="h-8 w-8"

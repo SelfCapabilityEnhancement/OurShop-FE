@@ -2,9 +2,9 @@ name: Build and deploy to Azure Web App
 
 on:
   workflow_run:
-    workflows: [ "OurShop Unit test" ]
-    types: [ completed ]
-    branches: [ 'test' ]
+    workflows: ['OurShop Unit test']
+    types: [completed]
+    branches: ['test']
 
 jobs:
   build-and-deploy:
