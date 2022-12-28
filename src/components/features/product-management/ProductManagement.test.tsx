@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Container } from 'react-dom';
 import ProductManagement from '@/components/features/product-management/ProductManagement';
 import { act } from 'react-dom/test-utils';
@@ -17,6 +17,7 @@ describe('Product Management', () => {
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'product-management');
     jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
     jest
       .spyOn(service, 'getDeletedProducts')
@@ -27,6 +28,8 @@ describe('Product Management', () => {
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should show tabs', () => {
     expect(screen.getByText('Available Products')).toBeInTheDocument();
