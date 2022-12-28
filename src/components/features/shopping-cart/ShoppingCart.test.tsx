@@ -6,7 +6,6 @@ import { Container } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { shoppingCartItems } from '@/mocks/mockData';
 import * as service from '@/service';
-import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue({ id: 2 }),
@@ -144,7 +143,7 @@ describe('display shopping cart page given nonempty products', () => {
 describe('When user not login to access shopping-cart', () => {
   beforeEach(async () => {
     await act(async () => {
-      render(<AccountManagement />, { wrapper: BrowserRouter });
+      render(<ShoppingCart />, { wrapper: BrowserRouter });
     });
   });
 
@@ -152,20 +151,5 @@ describe('When user not login to access shopping-cart', () => {
 
   it('should show tabs', () => {
     expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
-describe('When user not have access to access shopping-cart', () => {
-  beforeEach(async () => {
-    localStorage.setItem('router', 'testForShopping-Cart');
-    await act(async () => {
-      render(<AccountManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });
