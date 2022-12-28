@@ -50,3 +50,17 @@ describe('HomePage', () => {
   //   expect(await screen.findByText(description)).toBeInTheDocument();
   // });
 });
+
+describe('When user not login to access HomePage', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<HomePage />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
