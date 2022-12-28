@@ -75,6 +75,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'account-management',
+        // @ts-ignore
         element: <AccountManagement />,
       },
     ],

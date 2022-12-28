@@ -24,6 +24,7 @@ describe('Account Management', () => {
     jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
     jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
     await act(async () => {
+      // @ts-ignore
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
   });

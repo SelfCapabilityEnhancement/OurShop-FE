@@ -52,6 +52,7 @@ export default function LoginPage() {
           setLoginSuccess(true);
           resetInput();
           localStorage.setItem('jwt', 'Bearer ' + data.data.token);
+          localStorage.setItem('router', data.data.routerResponses);
           setTimeout(() => {
             navigate('/home');
           }, 1500);
