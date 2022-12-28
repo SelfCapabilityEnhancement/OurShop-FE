@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import ShoppingCart from '@/components/features/shopping-cart/ShoppingCart';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -27,12 +27,15 @@ describe('display shopping cart page given nonempty products', () => {
   });
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'shopping-cart');
     await act(async () => {
       container = render(<ShoppingCart />, {
         wrapper: BrowserRouter,
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should display loading when startup', async () => {
     expect(await screen.findByText('Loading...')).toBeInTheDocument();
