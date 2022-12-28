@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 import { Container } from 'react-dom';
@@ -14,10 +14,22 @@ describe('Header test', () => {
   let container: Container;
 
   beforeEach(async () => {
+    const list = [
+      'account-management',
+      'product-management',
+      'order-management',
+      'create-product',
+      'shopping-cart',
+      'my-order',
+    ];
+    // @ts-ignore
+    localStorage.setItem('router', list);
     await act(async () => {
       container = render(<Header />, { wrapper: BrowserRouter }).container;
     });
   });
+
+  afterEach(cleanup);
 
   describe('display part', () => {
     it('should render logo', () => {
