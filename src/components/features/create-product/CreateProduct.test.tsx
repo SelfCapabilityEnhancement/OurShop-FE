@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import * as utils from '@/utils';
 import * as service from '@/service';
 import { Product } from '@/components/common/CustomTypes';
+import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),
@@ -101,5 +102,34 @@ describe('Create product test', () => {
 
       expect(container.querySelector(`.${tab.id}`)).toBeInTheDocument();
     });
+  });
+});
+
+describe('When user not login to access create-products', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access create-products', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForCreate-Products');
+    await act(async () => {
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });
