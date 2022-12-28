@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   Account,
   OrdersItem,
-  OfficeStock,
   Product,
   Feature,
   PurchaseConfirmationItem,
@@ -27,14 +26,6 @@ export const getAllOffices = async (): Promise<
 > => {
   const { data } = await http.get(`/offices`);
   return data;
-};
-
-export const getProductStockById = (
-  productId: number
-): Promise<OfficeStock[]> => {
-  return http
-    .get(`/product-office/product-id?productId=` + productId)
-    .then((response) => response.data);
 };
 
 export const uploadFile = async (images: File[]) => {

@@ -12,7 +12,7 @@ export interface Product {
   logisticMethodComment: string;
   isDeleted: boolean;
   deletedTime: string | null;
-  officeStockList: { officeId: number; stock: number }[];
+  officeStockList: { officeId: number; officeName: string; stock: number }[];
 }
 
 export interface User {
@@ -125,7 +125,8 @@ export interface StoreItem {
 }
 
 export interface OfficeStock {
-  office: string;
+  officeId: number;
+  officeName: string;
   stock: number;
 }
 

@@ -20,7 +20,7 @@ export const initProduct: Product = {
   logisticMethodComment: '',
   isDeleted: false,
   deletedTime: null,
-  officeStockList: [{ officeId: 1, stock: 0 }],
+  officeStockList: [{ officeId: 1, officeName: 'chengdu', stock: 0 }],
 };
 
 export const initUserInfo: UserInfo = {

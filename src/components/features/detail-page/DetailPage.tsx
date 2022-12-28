@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Counter from '@/components/common/counter/Counter';
 import Banner from '@/components/common/banner/Banner';
 import Breadcrumb from '@/components/common/breadcrumb/Breadcrumb';
 import Loading from '@/components/common/loading/Loading';
 import { OfficeStock, Product } from '@/components/common/CustomTypes';
 import { useLocation } from 'react-router-dom';
-import { addToCarts, getProductStockById } from '@/service';
+import { addToCarts } from '@/service';
 import { classNames } from '@/utils';
 import useGlobalState from '@/state';
 
@@ -22,15 +22,6 @@ export default function DetailPage() {
   const [showLoading, setShowLoading] = useState(false);
   const [count, setCount] = useState(1);
   const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
-  const [productOfficeStock, setProductOfficeStock] = useState<OfficeStock[]>(
-    []
-  );
-
-  useEffect(() => {
-    getProductStockById(product.id).then((officeStock) => {
-      setProductOfficeStock(officeStock);
-    });
-  }, []);
 
   const handleMinus = () => {
     if (count > 1) {
@@ -57,9 +48,9 @@ export default function DetailPage() {
 
   const renderProductOfficeStock = (item: OfficeStock) => {
     return (
-      <div className="text-xl my-2 " key={item.office}>
+      <div className="text-xl my-2 " key={item.officeId}>
         <span className="">
-          {item.office} : {item.stock}
+          {item.officeName} : {item.stock}
         </span>
       </div>
     );
@@ -126,7 +117,9 @@ export default function DetailPage() {
             Office & Inventory
           </div>
           <div className="mb-4 ml-2 grid grid-cols-3">
-            {productOfficeStock.map((item) => renderProductOfficeStock(item))}
+            {product.officeStockList.map((item) =>
+              renderProductOfficeStock(item)
+            )}
           </div>
 
           <div className="flex justify-between">

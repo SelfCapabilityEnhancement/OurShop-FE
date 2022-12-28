@@ -26,8 +26,8 @@ const product1: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 1, stock: 50 },
-    { officeId: 2, stock: 60 },
+    { officeId: 1, officeName: 'chengdu', stock: 50 },
+    { officeId: 2, officeName: 'shanghai', stock: 60 },
   ],
 };
 
@@ -46,8 +46,8 @@ const product2: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 3, stock: 40 },
-    { officeId: 4, stock: 50 },
+    { officeId: 3, officeName: 'chengdu', stock: 40 },
+    { officeId: 4, officeName: 'chengdu', stock: 50 },
   ],
 };
 
@@ -66,8 +66,8 @@ const product3: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 5, stock: 40 },
-    { officeId: 6, stock: 50 },
+    { officeId: 5, officeName: 'xian', stock: 40 },
+    { officeId: 6, officeName: 'wuhan', stock: 50 },
   ],
 };
 
@@ -88,8 +88,8 @@ const deletedProduct: Product = {
   isDeleted: true,
   deletedTime: '2022-10-01 10:30:20',
   officeStockList: [
-    { officeId: 5, stock: 40 },
-    { officeId: 6, stock: 50 },
+    { officeId: 5, officeName: 'shenzhen', stock: 40 },
+    { officeId: 6, officeName: 'hongkong', stock: 50 },
   ],
 };
 
