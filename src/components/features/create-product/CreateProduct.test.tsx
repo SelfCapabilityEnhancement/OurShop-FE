@@ -23,6 +23,7 @@ describe('Create product test', () => {
   const user = userEvent.setup();
 
   beforeEach(() => {
+    localStorage.setItem('router', 'create-product');
     jest
       .spyOn(service, 'getAllOffices')
       .mockResolvedValue([] as { id: number; office: string }[]);
