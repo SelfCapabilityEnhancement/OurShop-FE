@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { mockOrdersItems, mockUpdatedOrdersItems } from '@/mocks/mockData';
-import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 jest.mock('echarts-for-react', () => ({
   default: jest.fn().mockReturnValue(<div></div>),
@@ -228,8 +227,7 @@ describe('display order management', () => {
 describe('When user not login to access order-management', () => {
   beforeEach(async () => {
     await act(async () => {
-      // @ts-ignore
-      render(<AccountManagement />, { wrapper: BrowserRouter });
+      render(<OrderManagement />, { wrapper: BrowserRouter });
     });
   });
 
@@ -244,8 +242,7 @@ describe('When user not have access to access order-management', () => {
   beforeEach(async () => {
     localStorage.setItem('router', 'testForOrder-Management');
     await act(async () => {
-      // @ts-ignore
-      render(<AccountManagement />, { wrapper: BrowserRouter });
+      render(<OrderManagement />, { wrapper: BrowserRouter });
     });
   });
 
