@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { cleanup, act, render, screen } from '@testing-library/react';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -32,6 +32,7 @@ describe('display order management', () => {
   }));
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'order-management');
     jest
       .spyOn(service, 'getAllOrdersItems')
       .mockResolvedValueOnce(mockOrdersItems)
@@ -43,6 +44,8 @@ describe('display order management', () => {
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   test('should render datePicker, apply button, reset button and OrderItem for Admin', () => {
     expect(container.querySelectorAll('.order-item-admin')).toBeTruthy();
