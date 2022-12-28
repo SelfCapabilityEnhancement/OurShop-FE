@@ -1,6 +1,6 @@
 import { Container } from 'react-dom';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import MyWallet from '@/components/features/my-wallet/MyWallet';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
@@ -26,10 +26,13 @@ describe('display wallet info', () => {
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-wallet');
     await act(async () => {
       container = render(<MyWallet />, { wrapper: BrowserRouter }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should display wallet info', async () => {
     const wallet = container.querySelector('.wallet-header');
