@@ -1,6 +1,6 @@
 import { Container } from 'react-dom';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
@@ -26,12 +26,15 @@ describe('display user info', () => {
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-information');
     await act(async () => {
       container = render(<MyInformation />, {
         wrapper: BrowserRouter,
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should display user info', async () => {
     expect(await screen.findByText('My Information')).toBeInTheDocument();
