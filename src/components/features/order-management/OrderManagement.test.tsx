@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { mockOrdersItems, mockUpdatedOrdersItems } from '@/mocks/mockData';
+import AccountManagement from '@/components/features/account-management/AccountManagement';
 
 jest.mock('echarts-for-react', () => ({
   default: jest.fn().mockReturnValue(<div></div>),
@@ -221,5 +222,36 @@ describe('display order management', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
     ).toBe('苹果Number: 1');
+  });
+});
+
+describe('When user not login to access order-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      // @ts-ignore
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access order-management', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForOrder-Management');
+    await act(async () => {
+      // @ts-ignore
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });
