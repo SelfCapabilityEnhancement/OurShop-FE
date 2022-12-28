@@ -39,10 +39,9 @@ describe('Account Management', () => {
   });
 });
 
-describe('When user not login', () => {
+describe('When user not login to access account-management', () => {
   beforeEach(async () => {
     await act(async () => {
-      // @ts-ignore
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
   });
@@ -58,7 +57,6 @@ describe('When user not have access', () => {
   beforeEach(async () => {
     localStorage.setItem('router', 'test');
     await act(async () => {
-      // @ts-ignore
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
   });
