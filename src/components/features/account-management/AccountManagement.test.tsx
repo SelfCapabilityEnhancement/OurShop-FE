@@ -38,3 +38,34 @@ describe('Account Management', () => {
     expect(screen.getByText('Function Configuration')).toBeInTheDocument();
   });
 });
+
+describe('When user not login', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      // @ts-ignore
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'test');
+    await act(async () => {
+      // @ts-ignore
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+});
