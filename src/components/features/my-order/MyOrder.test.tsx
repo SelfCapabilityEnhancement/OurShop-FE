@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, cleanup, render } from '@testing-library/react';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -14,6 +14,7 @@ describe('display my order', () => {
   let container: Container;
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-order');
     jest
       .spyOn(service, 'getOrdersItemsByUserId')
       .mockResolvedValue(mockOrdersItems);
@@ -23,6 +24,8 @@ describe('display my order', () => {
         .container;
     });
   });
+
+  afterEach(cleanup);
 
   test('render all OrderItems', () => {
     expect(container.querySelectorAll('.order-item').length).toBe(2);
