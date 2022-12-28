@@ -4,6 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
+import MyWallet from '@/components/features/my-wallet/MyWallet';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue({
@@ -19,6 +20,11 @@ jest.mock('@/service', () => ({
     telephoneNum: 123456789,
   }),
   updateUserInfo: jest.fn(),
+}));
+
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
 }));
 
 describe('display user info', () => {
@@ -73,5 +79,19 @@ describe('display user info', () => {
     await user.click(button as Element);
 
     expect(screen.findByText('HomePage')).toBeTruthy();
+  });
+});
+
+describe('When user not login to access to MyInformation', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyWallet />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
   });
 });
