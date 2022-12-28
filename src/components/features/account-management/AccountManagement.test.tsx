@@ -20,6 +20,7 @@ describe('Account Management', () => {
   // const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'account-management');
     jest.spyOn(service, 'getAccountList').mockResolvedValue([] as Account[]);
     jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
     jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
