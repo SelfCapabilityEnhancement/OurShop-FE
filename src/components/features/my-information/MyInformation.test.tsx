@@ -27,6 +27,20 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access to MyInformation', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyWallet />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display user info', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -79,19 +93,5 @@ describe('display user info', () => {
     await user.click(button as Element);
 
     expect(screen.findByText('HomePage')).toBeTruthy();
-  });
-});
-
-describe('When user not login to access to MyInformation', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<MyWallet />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
   });
 });
