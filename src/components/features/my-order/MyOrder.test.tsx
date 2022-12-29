@@ -16,6 +16,20 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access my-order', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyOrder />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display my order', () => {
   let container: Container;
 
@@ -35,19 +49,5 @@ describe('display my order', () => {
 
   test('render all OrderItems', () => {
     expect(container.querySelectorAll('.order-item').length).toBe(2);
-  });
-});
-
-describe('When user not login to access my-order', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<MyOrder />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
   });
 });
