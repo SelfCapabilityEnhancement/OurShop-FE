@@ -1,6 +1,6 @@
 import { Container } from 'react-dom';
 import userEvent from '@testing-library/user-event';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import MyWallet from '@/components/features/my-wallet/MyWallet';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
@@ -26,6 +26,18 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access to MyWallet', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyWallet />, { wrapper: BrowserRouter });
+    });
+  });
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display wallet info', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -36,8 +48,6 @@ describe('display wallet info', () => {
       container = render(<MyWallet />, { wrapper: BrowserRouter }).container;
     });
   });
-
-  afterEach(cleanup);
 
   it('should display wallet info', async () => {
     const wallet = container.querySelector('.wallet-header');
@@ -54,19 +64,5 @@ describe('display wallet info', () => {
     await user.click(button as Element);
 
     expect(screen.findByText('HomePage')).toBeTruthy();
-  });
-});
-
-describe('When user not login to access to MyWallet', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<MyWallet />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
   });
 });
