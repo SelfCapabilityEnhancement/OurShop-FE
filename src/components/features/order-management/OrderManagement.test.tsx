@@ -23,6 +23,35 @@ window.IntersectionObserver = jest
   .fn()
   .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
+describe('When user not login to access order-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<OrderManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access order-management', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForOrder-Management');
+    await act(async () => {
+      render(<OrderManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+});
+
 describe('display order management', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -221,34 +250,5 @@ describe('display order management', () => {
     expect(
       container.querySelectorAll('.order-item-admin').item(0).textContent
     ).toBe('苹果Number: 1');
-  });
-});
-
-describe('When user not login to access order-management', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<OrderManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
-describe('When user not have access to access order-management', () => {
-  beforeEach(async () => {
-    localStorage.setItem('router', 'testForOrder-Management');
-    await act(async () => {
-      render(<OrderManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });
