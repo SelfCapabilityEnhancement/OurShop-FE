@@ -18,6 +18,35 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access create-products', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<CreateProduct />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access create-products', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForCreate-Products');
+    await act(async () => {
+      render(<CreateProduct />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+});
+
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -101,34 +130,5 @@ describe('Create product test', () => {
 
       expect(container.querySelector(`.${tab.id}`)).toBeInTheDocument();
     });
-  });
-});
-
-describe('When user not login to access create-products', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<CreateProduct />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
-describe('When user not have access to access create-products', () => {
-  beforeEach(async () => {
-    localStorage.setItem('router', 'testForCreate-Products');
-    await act(async () => {
-      render(<CreateProduct />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });
