@@ -16,29 +16,6 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
-describe('Account Management', () => {
-  // const user = userEvent.setup();
-
-  beforeEach(async () => {
-    localStorage.setItem('router', 'account-management');
-    jest.spyOn(service, 'getAccountList').mockResolvedValue([] as Account[]);
-    jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
-    jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
-    await act(async () => {
-      // @ts-ignore
-      render(<AccountManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Account List')).toBeInTheDocument();
-    expect(screen.getByText('Role Configuration')).toBeInTheDocument();
-    expect(screen.getByText('Function Configuration')).toBeInTheDocument();
-  });
-});
-
 describe('When user not login to access account-management', () => {
   beforeEach(async () => {
     await act(async () => {
@@ -65,5 +42,28 @@ describe('When user not have access', () => {
 
   it('should show tabs', () => {
     expect(screen.getByText('Home')).toBeInTheDocument();
+  });
+});
+
+describe('Account Management', () => {
+  // const user = userEvent.setup();
+
+  beforeEach(async () => {
+    localStorage.setItem('router', 'account-management');
+    jest.spyOn(service, 'getAccountList').mockResolvedValue([] as Account[]);
+    jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
+    jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
+    await act(async () => {
+      // @ts-ignore
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Account List')).toBeInTheDocument();
+    expect(screen.getByText('Role Configuration')).toBeInTheDocument();
+    expect(screen.getByText('Function Configuration')).toBeInTheDocument();
   });
 });
