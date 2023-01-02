@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import DeleteProduct from '@/components/features/product-management/DeleteProduct';
 import { deletedProducts } from '@/mocks/mockData';
 
@@ -8,15 +8,21 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.mock('@/service', () => ({
-  deleteProduct: jest.fn(),
+  deleteProduct: jest.fn().mockImplementation(() => Promise.resolve()),
 }));
 
 describe('Delete Product', () => {
+  const handleDelete = jest.fn();
+  let wrapper: RenderResult<
+    typeof import('@testing-library/dom/types/queries'),
+    HTMLElement,
+    HTMLElement
+  >;
   beforeEach(() => {
-    render(
+    wrapper = render(
       <DeleteProduct
         isOpen={true}
-        handleDelete={jest.fn}
+        handleDelete={handleDelete}
         handleCancel={jest.fn}
         product={deletedProducts[0]}
       />
@@ -30,5 +36,10 @@ describe('Delete Product', () => {
     ).toBeInTheDocument();
     const product = deletedProducts[0];
     expect(screen.getByText(product.name)).toBeInTheDocument();
+  });
+
+  it('should execution handleDelete after delete product', async () => {
+    await wrapper.getByTestId('delete-btn').click();
+    expect(handleDelete).toHaveBeenCalled();
   });
 });
