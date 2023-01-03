@@ -12,6 +12,40 @@ jest.mock('@/service', () => ({
   getDeletedProducts: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access product-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<ProductManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to product-management', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForProduct-management');
+    await act(async () => {
+      render(<ProductManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('here')).toBeInTheDocument();
+  });
+});
+
 describe('Product Management', () => {
   let container: Container;
   const user = userEvent.setup();

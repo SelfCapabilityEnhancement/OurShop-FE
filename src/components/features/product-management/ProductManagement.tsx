@@ -43,7 +43,12 @@ export default function ProductManagement() {
       />
     );
   } else if (!routerList.includes('product-management')) {
-    return <NavLink to="/home">Home</NavLink>;
+    return (
+      <>
+        You are forbidden to access this page.Please click{' '}
+        <NavLink to="/home">here</NavLink> to home page.
+      </>
+    );
   } else {
     useEffect(() => {
       getProducts().then((products) => {
