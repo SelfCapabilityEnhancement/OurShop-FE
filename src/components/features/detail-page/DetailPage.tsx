@@ -50,7 +50,7 @@ export default function DetailPage() {
     return (
       <div className="text-xl my-2 " key={item.officeId}>
         <span className="">
-          {item.officeName} : {item.stock}
+          {item.officeName}: {item.stock}
         </span>
       </div>
     );
