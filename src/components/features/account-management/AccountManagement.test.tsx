@@ -16,14 +16,45 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access account-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'test');
+    await act(async () => {
+      render(<AccountManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('here')).toBeInTheDocument();
+  });
+});
+
 describe('Account Management', () => {
   // const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'account-management');
     jest.spyOn(service, 'getAccountList').mockResolvedValue([] as Account[]);
     jest.spyOn(service, 'getRoleList').mockResolvedValue([] as Role[]);
     jest.spyOn(service, 'getFeatureList').mockResolvedValue([] as Feature[]);
     await act(async () => {
+      // @ts-ignore
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
   });

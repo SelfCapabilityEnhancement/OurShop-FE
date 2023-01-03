@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import CreateProduct from '@/components/features/create-product/CreateProduct';
@@ -18,11 +18,41 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+describe('When user not login to access create-products', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<CreateProduct />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access create-products', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForCreate-Products');
+    await act(async () => {
+      render(<CreateProduct />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('here')).toBeInTheDocument();
+  });
+});
+
 describe('Create product test', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(() => {
+    localStorage.setItem('router', 'create-product');
     jest
       .spyOn(service, 'getAllOffices')
       .mockResolvedValue([] as { id: number; office: string }[]);

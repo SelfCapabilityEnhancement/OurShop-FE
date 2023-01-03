@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Container } from 'react-dom';
 import ProductManagement from '@/components/features/product-management/ProductManagement';
 import { act } from 'react-dom/test-utils';
@@ -12,11 +12,46 @@ jest.mock('@/service', () => ({
   getDeletedProducts: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access product-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<ProductManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to product-management', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForProduct-management');
+    await act(async () => {
+      render(<ProductManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('here')).toBeInTheDocument();
+  });
+});
+
 describe('Product Management', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'product-management');
     jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
     jest
       .spyOn(service, 'getDeletedProducts')
@@ -27,6 +62,8 @@ describe('Product Management', () => {
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should show tabs', () => {
     expect(screen.getByText('Available Products')).toBeInTheDocument();

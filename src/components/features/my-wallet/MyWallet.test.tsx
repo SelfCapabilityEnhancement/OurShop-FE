@@ -21,11 +21,29 @@ jest.mock('@/service', () => ({
   ]),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access to MyWallet', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyWallet />, { wrapper: BrowserRouter });
+    });
+  });
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display wallet info', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-wallet');
     await act(async () => {
       container = render(<MyWallet />, { wrapper: BrowserRouter }).container;
     });

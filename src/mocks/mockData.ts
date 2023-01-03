@@ -148,21 +148,6 @@ export const users: User[] = [
   },
 ];
 
-export const accounts: Account[] = [
-  {
-    username: 'Tom',
-    connection: 'username',
-    role: 'Site Admin',
-    createdTime: '2022-12-06 09:54:30',
-  },
-  {
-    username: 'Bob',
-    connection: 'username',
-    role: 'Buyer',
-    createdTime: '2022-12-07 06:52:37',
-  },
-];
-
 export const mockStoreItems: StoreItem[] = [
   {
     id: 1670995827718,
@@ -392,3 +377,23 @@ export const mockStores: OfficeAndStock[] = [
     stock: 20,
   },
 ];
+
+export const account1 = {
+  userId: 1,
+  username: 'Tom',
+  connection: 'username',
+  roleNames: ['Buyer', 'Site admin'],
+  roles: [role2],
+  createdTime: '2022-12-06 09:54:30',
+};
+
+const account2 = {
+  userId: 2,
+  username: 'Bob',
+  connection: 'username',
+  roleNames: ['Buyer'],
+  roles: [role1],
+  createdTime: '2022-12-07 06:52:37',
+};
+
+export const accounts: Account[] = [account1, account2];

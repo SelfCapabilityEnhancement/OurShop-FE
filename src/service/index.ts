@@ -24,7 +24,9 @@ export const http = axios.create({
 export const getAllOffices = async (): Promise<
   { id: number; office: string }[]
 > => {
-  const { data } = await http.get(`/offices`);
+  const { data } = await http.get(`/offices`, {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
   return data;
 };
 
@@ -38,12 +40,18 @@ export const createProduct = async ({
   deletedTime,
   ...product
 }: Product) => {
-  await http.post('/products', {
-    ...product,
-    images: imageFiles
-      .map((image) => `${imageUrlPrefix}${image.name}`)
-      .join(','),
-  });
+  await http.post(
+    '/products',
+    {
+      ...product,
+      images: imageFiles
+        .map((image) => `${imageUrlPrefix}${image.name}`)
+        .join(','),
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 export const updateProduct = async ({
@@ -56,11 +64,16 @@ export const updateProduct = async ({
     ...product,
     images: product.images
       .split(',')
-      .map((url, index) => {
-        return url.startsWith(imageUrlPrefix)
-          ? url
-          : `${imageUrlPrefix}${imageFiles[index].name}`;
-      })
+      .map(
+        (url, index) => {
+          return url.startsWith(imageUrlPrefix)
+            ? url
+            : `${imageUrlPrefix}${imageFiles[index].name}`;
+        },
+        {
+          headers: { Authorization: localStorage.getItem('jwt') },
+        }
+      )
       .join(','),
   });
 };
@@ -107,7 +120,9 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const getDeletedProducts = async (): Promise<Product[]> => {
-  const { data } = await http.get('/products?deleted=' + true);
+  const { data } = await http.get('/products?deleted=' + true, {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
 
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
@@ -117,7 +132,9 @@ export const getDeletedProducts = async (): Promise<Product[]> => {
 };
 
 export const deleteProduct = async (product: Product) => {
-  await http.delete('/products/' + product.id);
+  await http.delete('/products/' + product.id, {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
 };
 
 export const updateUserInfo = async (officeCity: string, address: string) => {
@@ -169,7 +186,9 @@ export const payByToken = async (
 export const getProductsByOfficeIds = async (
   officeIds: number[]
 ): Promise<Product[]> => {
-  const { data } = await http.get('/products/officeId?officeIds=' + officeIds);
+  const { data } = await http.get('/products/officeId?officeIds=' + officeIds, {
+    headers: { Authorization: localStorage.getItem('jwt') },
+  });
   data.sort((a: { id: number }, b: { id: number }) => {
     return a.id > b.id ? -1 : 1;
   });
@@ -177,11 +196,20 @@ export const getProductsByOfficeIds = async (
 };
 
 export const getAllOrdersItems = (): Promise<OrdersItem[]> =>
-  http.get(`/orders`).then((response) => response.data);
+  http
+    .get(`/orders`, {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 
 export const updateOrders = (
   ordersProductIds: { orderId: number; productId: number }[]
-) => http.patch('/orders', ordersProductIds).then((response) => response.data);
+) =>
+  http
+    .patch('/orders', ordersProductIds, {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 
 export const getOrdersItemsByUserId = () =>
   http
@@ -191,17 +219,29 @@ export const getOrdersItemsByUserId = () =>
     .then((response) => response.data);
 
 export const register = async (name: string, password: string) => {
-  return await http.post('/users/register', {
-    name,
-    password,
-  });
+  return await http.post(
+    '/users/register',
+    {
+      name,
+      password,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 export const login = async (username: string, password: string) => {
-  return await http.post('/users/login', {
-    username,
-    password,
-  });
+  return await http.post(
+    '/users/login',
+    {
+      username,
+      password,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 export const saveUserInfo = async (userInfo: UserInfo) => {
@@ -221,11 +261,19 @@ export const saveUserInfo = async (userInfo: UserInfo) => {
 };
 
 export const getFeatureList = async (): Promise<Feature[]> => {
-  return await http.get('/functions/').then((response) => response.data);
+  return await http
+    .get('/functions/', {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 };
 
-export const getRoleList = async (): Promise<Role[]> => {
-  return await http.get('/roles/').then((response) => response.data);
+export const getRoleList = async (hasFunction: boolean): Promise<Role[]> => {
+  return await http
+    .get('/roles?hasFunction=' + hasFunction, {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
 };
 
 export const updateFeature = async (
@@ -233,20 +281,49 @@ export const updateFeature = async (
   code: string,
   description: string
 ) => {
-  const { data } = await http.patch(`/functions/${featureId}`, {
-    code,
-    description,
-  });
+  const { data } = await http.patch(
+    `/functions/${featureId}`,
+    {
+      code,
+      description,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
   return data;
 };
 
 export const updateRole = async (roleId: number, featureIds: number[]) => {
-  const { data } = await http.patch(`/roles/${roleId}/role_function`, {
-    featureIds,
-  });
+  const { data } = await http.patch(
+    `/roles/${roleId}/role_function`,
+    {
+      featureIds,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
   return data;
 };
 
 export const getAccountList = (): Promise<Account[]> => {
-  return http.get('/users/get-account-list').then((response) => response.data);
+  return http
+    .get('/users/get-account-list', {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    })
+    .then((response) => response.data);
+};
+
+export const updateRoleNames = async (userId: number, roleIds: number[]) => {
+  const { data } = await http.patch(
+    `/users/${userId}/user-roles`,
+    {
+      roleIds,
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
+  return data;
 };

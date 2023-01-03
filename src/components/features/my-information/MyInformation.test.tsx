@@ -1,9 +1,10 @@
 import { Container } from 'react-dom';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import MyInformation from '@/components/features/my-information/MyInformation';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
+import MyWallet from '@/components/features/my-wallet/MyWallet';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue({
@@ -21,17 +22,39 @@ jest.mock('@/service', () => ({
   updateUserInfo: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access to MyInformation', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyWallet />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display user info', () => {
   let container: Container;
   const user = userEvent.setup();
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-information');
     await act(async () => {
       container = render(<MyInformation />, {
         wrapper: BrowserRouter,
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   it('should display user info', async () => {
     expect(await screen.findByText('My Information')).toBeInTheDocument();

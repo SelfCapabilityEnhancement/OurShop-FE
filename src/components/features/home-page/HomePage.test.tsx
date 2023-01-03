@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import HomePage from '@/components/features/home-page/HomePage';
 import { tempProducts, users } from '@/mocks/mockData';
@@ -12,12 +12,32 @@ jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access HomePage', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<HomePage />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('HomePage', () => {
   // const user = userEvent.setup();
   jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
   jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[1]);
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'home');
     await act(async () => {
       render(<HomePage />, { wrapper: BrowserRouter });
       render(<SaveUserInfo isOpen={false} setIsOpen={jest.fn()} />, {
@@ -25,6 +45,8 @@ describe('HomePage', () => {
       });
     });
   });
+
+  afterEach(cleanup);
 
   it('should display products', async () => {
     const products = await screen.findAllByRole('img');

@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { cleanup, act, render, screen } from '@testing-library/react';
 import OrderManagement from '@/components/features/order-management/OrderManagement';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,6 +23,35 @@ window.IntersectionObserver = jest
   .fn()
   .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
+describe('When user not login to access order-management', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<OrderManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
+describe('When user not have access to access order-management', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'testForOrder-Management');
+    await act(async () => {
+      render(<OrderManagement />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('here')).toBeInTheDocument();
+  });
+});
+
 describe('display order management', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -32,6 +61,7 @@ describe('display order management', () => {
   }));
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'order-management');
     jest
       .spyOn(service, 'getAllOrdersItems')
       .mockResolvedValueOnce(mockOrdersItems)
@@ -43,6 +73,8 @@ describe('display order management', () => {
       }).container;
     });
   });
+
+  afterEach(cleanup);
 
   test('should render datePicker, apply button, reset button and OrderItem for Admin', () => {
     expect(container.querySelectorAll('.order-item-admin')).toBeTruthy();

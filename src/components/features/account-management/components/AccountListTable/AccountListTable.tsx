@@ -1,4 +1,6 @@
 import { Account } from '@/components/common/CustomTypes';
+import { useState } from 'react';
+import AccessRole from '@/components/features/account-management/components/AccountListTable/AccessRole';
 
 const accountListTabs = [
   { id: 'user-name', name: 'Username' },
@@ -10,9 +12,29 @@ const accountListTabs = [
 
 export default function AccountListTable(props: { userList: Account[] }) {
   const userList = props.userList;
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [chosen, setChosen] = useState(0);
+
+  const handleAccess = (index: number) => {
+    setChosen(index);
+    setShowRoleModal(true);
+  };
+
+  const handleCancel = () => {
+    setShowRoleModal(false);
+  };
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">
+      {userList.length > 0 && (
+        <div className="flex justify-center">
+          <AccessRole
+            isOpen={showRoleModal}
+            handleClose={handleCancel}
+            oldAccount={userList[chosen]}
+          />
+        </div>
+      )}
       <table className="w-full text-center" id="AccountListTable">
         <thead className="text-gray-800 bg-gray-100 text-lg">
           <tr className="h-16">
@@ -42,15 +64,19 @@ export default function AccountListTable(props: { userList: Account[] }) {
               <td className="px-2">{user.connection}</td>
               <td
                 className="px-2"
-                title={user.role.length > 20 ? user.role : ''}
+                title={
+                  user.roles.map((role) => role.roleName).join(',').length > 30
+                    ? user.roles.map((role) => role.roleName).join(', ')
+                    : ''
+                }
               >
-                {user.role.length > 20
-                  ? user.role.substring(0, 19) + '...'
-                  : user.role}
+                {user.roles.map((role) => role.roleName).join(', ')}
               </td>
               <td className="px-2">{user.createdTime}</td>
               <td className="px-2 text-blue-600">
-                <span className="mr-6">Access</span>
+                <button onClick={() => handleAccess(index)} className="mr-6">
+                  Access
+                </button>
                 <span>Delete</span>
               </td>
             </tr>

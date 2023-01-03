@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -10,6 +10,12 @@ jest.mock('@/service', () => ({
 }));
 
 describe('App test', () => {
+  beforeEach(async () => {
+    localStorage.setItem('router', 'create-product');
+  });
+
+  afterEach(cleanup);
+
   describe('should render Header component', () => {
     it('should navigate to corresponding page when click the create product menu item', async () => {
       render(<App />, { wrapper: BrowserRouter });

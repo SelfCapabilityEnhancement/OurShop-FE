@@ -17,6 +17,9 @@ export default function Header() {
   const location = useLocation();
 
   useEffect(() => {
+    if (isLoginOrRegister()) {
+      localStorage.clear();
+    }
     if (localStorage.getItem('jwt') != null) {
       getShoppingCarts().then((items) => {
         setShoppingCartItems(items);
@@ -37,6 +40,7 @@ export default function Header() {
     { id: 'shopping-cart', name: 'Shopping Cart' },
     { id: 'my-order', name: 'My Order' },
   ];
+  const routerList = localStorage.getItem('router');
 
   const isCurrentPage = (param: string) => {
     return location.pathname === `/${param}`;
@@ -87,10 +91,15 @@ export default function Header() {
       </div>
       <div className="flex items-center ">
         <div className="nav-list flex justify-around flex-1">
-          {isLoginOrRegister() ? (
+          {routerList === null ? (
             <div className="font-semibold mr-80">Language : English</div>
           ) : (
-            headerList.map((item) => renderHeader(item))
+            headerList
+              // @ts-ignore
+              .filter((list) => routerList.includes(list.id))
+              .concat({ id: 'shopping-cart', name: 'Shopping Cart' })
+              .concat({ id: 'my-order', name: 'My Order' })
+              .map((item) => renderHeader(item))
           )}
         </div>
         {!isLoginOrRegister() && <Profile></Profile>}

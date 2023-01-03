@@ -1,9 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { features, roles } from '@/mocks/mockData';
-import EditRole from '@/components/features/account-management/components/RoleTable/EditRole';
+import { account1, roles } from '@/mocks/mockData';
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
+import AccessRole from '@/components/features/account-management/components/AccountListTable/AccessRole';
 import userEvent from '@testing-library/user-event';
 import { AxiosResponse } from 'axios';
 
@@ -13,18 +13,22 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.mock('@/service', () => ({
-  updateRole: jest.fn(),
-  getFeatureList: jest.fn(),
+  updateRoleNames: jest.fn(),
+  getRoleList: jest.fn(),
 }));
 
-describe('Edit Role', () => {
+describe('Access roleNames', () => {
   const user = userEvent.setup();
 
   beforeEach(async () => {
-    jest.spyOn(service, 'getFeatureList').mockResolvedValue(features);
+    jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
     await act(async () => {
       render(
-        <EditRole isOpen={true} handleClose={jest.fn} oldRole={roles[0]} />,
+        <AccessRole
+          isOpen={true}
+          handleClose={jest.fn}
+          oldAccount={account1}
+        />,
         {
           wrapper: BrowserRouter,
         }
@@ -35,12 +39,12 @@ describe('Edit Role', () => {
   afterEach(cleanup);
 
   test('should show Modal', () => {
-    expect(screen.getByText('Role Configuration')).toBeInTheDocument();
+    expect(screen.getByText('Access Configuration')).toBeInTheDocument();
   });
 
-  test('should show Role Configuration popup', async () => {
+  test('should show Access Configuration popup', async () => {
     const updateMock = jest
-      .spyOn(service, 'updateRole')
+      .spyOn(service, 'updateRoleNames')
       .mockResolvedValue({} as AxiosResponse);
 
     const saveBtn = screen.getByTestId('saveBtn');

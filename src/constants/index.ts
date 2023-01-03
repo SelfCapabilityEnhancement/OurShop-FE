@@ -135,3 +135,12 @@ export const initRole: Role = {
     },
   ],
 };
+
+export const initAccount = {
+  userId: 0,
+  username: '',
+  connection: '',
+  roleNames: [''],
+  roles: [initRole],
+  createdTime: '',
+};

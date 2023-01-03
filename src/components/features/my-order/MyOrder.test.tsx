@@ -1,4 +1,5 @@
-import { act, render } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,10 +11,30 @@ jest.mock('@/service', () => ({
   getOrdersItemsByUserId: jest.fn(),
 }));
 
+window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: () => null,
+  disconnect: () => null,
+}));
+
+describe('When user not login to access my-order', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<MyOrder />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should show tabs', () => {
+    expect(screen.getByText('Not Login')).toBeInTheDocument();
+  });
+});
+
 describe('display my order', () => {
   let container: Container;
 
   beforeEach(async () => {
+    localStorage.setItem('router', 'my-order');
     jest
       .spyOn(service, 'getOrdersItemsByUserId')
       .mockResolvedValue(mockOrdersItems);
@@ -23,6 +44,8 @@ describe('display my order', () => {
         .container;
     });
   });
+
+  afterEach(cleanup);
 
   test('render all OrderItems', () => {
     expect(container.querySelectorAll('.order-item').length).toBe(2);
