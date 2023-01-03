@@ -41,10 +41,10 @@ describe('Account List', () => {
 
   it('should show account list items', () => {
     expect(screen.getByText('Tom')).toBeInTheDocument();
-    expect(screen.getByText('Buyer')).toBeInTheDocument();
+    expect(screen.getByText('buyer admin')).toBeInTheDocument();
     expect(screen.getByText('2022-12-06 09:54:30')).toBeInTheDocument();
     expect(screen.getByText('Bob')).toBeInTheDocument();
-    expect(screen.getByText('Buyer')).toBeInTheDocument();
+    expect(screen.getByText('buyer')).toBeInTheDocument();
     expect(screen.getByText('2022-12-07 06:52:37')).toBeInTheDocument();
     expect(screen.getAllByText('username')).toHaveLength(2);
     expect(screen.getAllByText('Access')).toHaveLength(2);
