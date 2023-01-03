@@ -5,6 +5,9 @@ import avatarUrl from 'images/avatar.png';
 import { classNames } from '@/utils';
 
 export default function Profile() {
+  const handleLogout = () => {
+    localStorage.clear();
+  };
   return (
     <Menu as="div" className="relative flex justify-end mx-8">
       <Menu.Button>
@@ -70,6 +73,7 @@ export default function Profile() {
                     active ? 'bg-gray-100' : '',
                     'address block px-4 py-2 text-center text-base'
                   )}
+                  onClick={handleLogout}
                 >
                   Logout
                 </NavLink>
