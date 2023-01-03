@@ -19,8 +19,6 @@ describe('Header test', () => {
       'product-management',
       'order-management',
       'create-product',
-      'shopping-cart',
-      'my-order',
     ];
     // @ts-ignore
     localStorage.setItem('router', list);

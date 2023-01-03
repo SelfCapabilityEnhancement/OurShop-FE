@@ -17,6 +17,9 @@ export default function Header() {
   const location = useLocation();
 
   useEffect(() => {
+    if (isLoginOrRegister()) {
+      localStorage.clear();
+    }
     if (localStorage.getItem('jwt') != null) {
       getShoppingCarts().then((items) => {
         setShoppingCartItems(items);
@@ -94,6 +97,8 @@ export default function Header() {
             headerList
               // @ts-ignore
               .filter((list) => routerList.includes(list.id))
+              .concat({ id: 'shopping-cart', name: 'Shopping Cart' })
+              .concat({ id: 'my-order', name: 'My Order' })
               .map((item) => renderHeader(item))
           )}
         </div>

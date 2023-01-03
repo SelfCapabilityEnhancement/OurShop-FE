@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 
@@ -22,9 +22,6 @@ export default function LoginPage() {
     useState<Partial<typeof initialError>>(initialError);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
   const successMsg = 'Login successfully';
 
   const handleLogin = async () => {
