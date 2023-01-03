@@ -37,7 +37,7 @@ export default function AccessRole({
     return (
       <button
         key={role.roleId}
-        onClick={() => handleSelect(id)}
+        onClick={() => handleSelect(role)}
         className={
           roleIds.includes(id)
             ? basicRoleName + ' bg-[#AE66C3]'
@@ -49,12 +49,12 @@ export default function AccessRole({
     );
   };
 
-  const handleSelect = (id: number) => {
-    if (id === 1) return;
-    if (!roleIds.includes(id)) {
-      setRoleIds([...roleIds, id]);
+  const handleSelect = (role: Role) => {
+    if (role.roleName === 'Buyer') return;
+    if (!roleIds.includes(role.roleId)) {
+      setRoleIds([...roleIds, role.roleId]);
     } else {
-      setRoleIds(roleIds.filter((x) => x !== id));
+      setRoleIds(roleIds.filter((x) => x !== role.roleId));
     }
   };
 
