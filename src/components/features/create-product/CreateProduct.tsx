@@ -19,8 +19,8 @@ import { createProduct, getAllOffices, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
 import OfficeStoreItem from '@/components/features/create-product/OfficeStoreItem';
 
-const successMsg = 'The Product was Created Successfully!';
-const failMsg = 'All Required Field Must be Filled';
+const successMsg = 'The product was created successfully!';
+const failMsg = 'All required field must be filled.';
 
 const basicForm: { id: keyof Product; label: string; type: string }[] = [
   { id: 'name', label: 'Product Name', type: 'string' },
@@ -387,15 +387,16 @@ function CreateProduct() {
                   />
                 </>
               ))}
-              <footer className="flex float-left absolute mt-[640px]">
-                <button
-                  onClick={(event) => handleCreateProduct(event)}
-                  className=" create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
-                >
-                  Create Product
-                </button>
-              </footer>
             </div>
+
+            <footer className="flex float-left">
+              <button
+                onClick={(event) => handleCreateProduct(event)}
+                className=" create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+              >
+                Create New Product
+              </button>
+            </footer>
           </Tab.Panel>
 
           <Tab.Panel>Approval Flow</Tab.Panel>

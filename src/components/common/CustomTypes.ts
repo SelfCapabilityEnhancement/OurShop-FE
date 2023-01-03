@@ -130,7 +130,8 @@ export interface StoreItem {
 }
 
 export interface OfficeStock {
-  office: string;
+  officeId: number;
+  officeName: string;
   stock: number;
 }
 

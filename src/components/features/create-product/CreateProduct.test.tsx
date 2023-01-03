@@ -52,7 +52,7 @@ describe('Create product test', () => {
 
     await waitFor(async () => {
       expect(
-        await screen.findByText('All Required Field Must be Filled')
+        await screen.findByText('All required field must be filled.')
       ).toBeInTheDocument();
     });
   });

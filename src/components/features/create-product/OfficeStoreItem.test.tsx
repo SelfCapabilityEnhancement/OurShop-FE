@@ -42,6 +42,6 @@ describe('Office store item', () => {
     expect(screen.getByText('has')).toBeInTheDocument();
     expect(screen.getByText('Available')).toBeInTheDocument();
     expect(screen.getByTestId('add-store-item')).toBeInTheDocument();
-    expect(screen.getAllByTestId('drop-down-item')).toHaveLength(6);
+    expect(screen.getByTestId('drop-down')).toBeInTheDocument();
   });
 });

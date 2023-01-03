@@ -5,8 +5,6 @@ import { tempProducts } from '@/mocks/mockData';
 import * as ReactRouter from 'react-router';
 import { BrowserRouter, Location } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
-import * as service from '@/service';
-import { OfficeStock } from '@/components/common/CustomTypes';
 
 jest.mock('@/service', () => ({
   getProductStockById: jest.fn(),
@@ -30,17 +28,10 @@ describe('Detail Page', () => {
     hash: '',
     state: { product: mockProduct },
   };
-  const mockOfficeStock: OfficeStock[] = [
-    { office: 'Beijing', stock: 20 },
-    { office: 'Chengdu', stock: 50 },
-  ];
 
   jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
 
   beforeEach(async () => {
-    jest
-      .spyOn(service, 'getProductStockById')
-      .mockResolvedValue(mockOfficeStock as OfficeStock[]);
     await act(async () => {
       render(<DetailPage />, {
         wrapper: BrowserRouter,
@@ -81,8 +72,8 @@ describe('Detail Page', () => {
 
   test('should show title of Office & Inventory', () => {
     expect(screen.getByText('Office & Inventory')).toBeInTheDocument();
-    expect(screen.getByText('Beijing : 20')).toBeInTheDocument();
-    expect(screen.getByText('Chengdu : 50')).toBeInTheDocument();
+    expect(screen.getByText('shanghai : 60')).toBeInTheDocument();
+    expect(screen.getByText('chengdu : 50')).toBeInTheDocument();
   });
 
   test('should show processing and success message when add in shopping cart', async () => {

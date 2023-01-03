@@ -1,17 +1,19 @@
-name: Build and deploy main to Azure Web App
+name: Build and deploy to Azure Web App
 
 on:
   workflow_run:
     workflows: ['OurShop Unit test']
+    types: [completed]
+    branches: ['test']
 
 jobs:
-  deploy:
+  build-and-deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: main
+          ref: test
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -27,7 +29,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ourshop-fe-prod'
+          app-name: 'ourshop-qa'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_PROD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_QA }}
           package: '.'

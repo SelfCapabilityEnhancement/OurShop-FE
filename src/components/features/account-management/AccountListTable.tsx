@@ -1,6 +1,4 @@
 import { Account } from '@/components/common/CustomTypes';
-import { useEffect, useState } from 'react';
-import { getAccountList } from '@/service';
 
 const accountListTabs = [
   { id: 'user-name', name: 'Username' },
@@ -10,14 +8,8 @@ const accountListTabs = [
   { id: 'action', name: 'Action' },
 ];
 
-export default function AccountListTable() {
-  const [userList, setUserList] = useState<Account[]>([]);
-
-  useEffect(() => {
-    getAccountList().then((data) => {
-      setUserList(data);
-    });
-  }, []);
+export default function AccountListTable(props: { userList: Account[] }) {
+  const userList = props.userList;
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg mt-6">

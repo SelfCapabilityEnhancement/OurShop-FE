@@ -1,7 +1,7 @@
-import { Dropdown } from 'rsuite';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
 import { classNames } from '@/utils';
+import { Listbox, Transition } from '@headlessui/react';
 
 type Props = {
   storeItem: StoreItem;
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const dropDownItemClassName =
-  'bg-gray-100 w-40 h-10 py-2 text-lg text-center text-gray-900';
+  'bg-gray-100 w-[200px] h-10 py-2 text-lg text-center text-gray-900';
 const inputClassName =
   'w-50 h-10 py-2 bg-gray-100 text-lg text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
@@ -56,26 +56,71 @@ export default function OfficeStoreItem({
 
   return (
     <div className="flex">
-      <Dropdown
-        title={storeItem.officeName || 'Select an Office'}
-        className={dropDownClassName}
-        activeKey={storeItem.officeId}
-        onSelect={selectCity}
-        menuStyle={{ position: 'absolute' }}
-        data-testid="drop-down"
-      >
-        {officeList.map((item) => (
-          <Dropdown.Item
-            active={item.id === storeItem.officeId}
-            className={dropDownItemClassName}
-            eventKey={item.id}
-            key={item.id}
-            data-testid="drop-down-item"
-          >
-            {item.name}
-          </Dropdown.Item>
-        ))}
-      </Dropdown>
+      <div className="">
+        <Listbox value={storeItem.officeId} onChange={selectCity}>
+          <div className="relative mt-1 w-[200px]">
+            <Listbox.Button
+              className={dropDownClassName}
+              data-testid="drop-down"
+            >
+              <span className="block truncate">
+                {storeItem.officeName
+                  ? storeItem.officeName
+                  : 'Select an Office'}
+              </span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                <svg
+                  className="h-8 w-8"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path
+                    className="png"
+                    fill={'rgb(217 217 217)'}
+                    d="M18 15l-6-6l-6 6h12"
+                    transform="rotate(180 12 12)"
+                  />
+                </svg>
+              </span>
+            </Listbox.Button>
+            <Transition
+              as={Fragment}
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-[#F3F4F6] py-1 text-center ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {officeList.map((city) => (
+                  <Listbox.Option
+                    key={city.id}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-3 pr-4 ${
+                        active ? 'text-amber-900' : 'text-gray-900'
+                      }`
+                    }
+                    value={city.id}
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span
+                          className={`block truncate ${
+                            selected ? 'font-medium' : 'font-normal'
+                          }`}
+                        >
+                          {city.name}
+                        </span>
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Listbox.Options>
+            </Transition>
+          </div>
+        </Listbox>
+      </div>
       <span className="text-lg text-center mx-8 py-2">has</span>
       <input
         type="number"

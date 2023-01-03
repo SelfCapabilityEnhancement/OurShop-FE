@@ -14,9 +14,6 @@ import LoginPage from '@/components/features/login-page/LoginPage';
 import RegisterPage from '@/components/features/register-page/RegisterPage';
 import App from '@/App';
 import AccountManagement from '@/components/features/account-management/AccountManagement';
-import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
-import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
-import AccountListTable from '@/components/features/account-management/AccountListTable';
 
 export const router = createBrowserRouter([
   {
@@ -79,24 +76,6 @@ export const router = createBrowserRouter([
       {
         path: 'account-management',
         element: <AccountManagement />,
-        children: [
-          {
-            path: '',
-            element: <AccountListTable />,
-          },
-          {
-            path: 'account-list',
-            element: <AccountListTable />,
-          },
-          {
-            path: 'function-configuration',
-            element: <FeatureTable />,
-          },
-          {
-            path: 'role-configuration',
-            element: <RoleTable />,
-          },
-        ],
       },
     ],
   },
