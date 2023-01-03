@@ -41,7 +41,7 @@ describe('When user not have access', () => {
   afterEach(cleanup);
 
   it('should show tabs', () => {
-    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('here')).toBeInTheDocument();
   });
 });
 

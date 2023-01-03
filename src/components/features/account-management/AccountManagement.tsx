@@ -35,7 +35,12 @@ export default function AccountManagement() {
       <Banner visible={showBanner} success={false} message={'Not Login'} />
     );
   } else if (!routerList.includes('account-management')) {
-    return <NavLink to="/home">Home</NavLink>;
+    return (
+      <>
+        You are forbidden to access this page.Please click{' '}
+        <NavLink to="/home">here</NavLink> to home page.
+      </>
+    );
   } else {
     // @ts-ignore
     useEffect(() => {
