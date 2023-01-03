@@ -43,7 +43,7 @@ describe('When user not have access to access create-products', () => {
   afterEach(cleanup);
 
   it('should show tabs', () => {
-    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('here')).toBeInTheDocument();
   });
 });
 
