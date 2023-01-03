@@ -72,8 +72,8 @@ describe('Detail Page', () => {
 
   test('should show title of Office & Inventory', () => {
     expect(screen.getByText('Office & Inventory')).toBeInTheDocument();
-    expect(screen.getByText('shanghai : 60')).toBeInTheDocument();
-    expect(screen.getByText('chengdu : 50')).toBeInTheDocument();
+    expect(screen.getByText('Beijing : 50')).toBeInTheDocument();
+    expect(screen.getByText('Chengdu : 60')).toBeInTheDocument();
   });
 
   test('should show processing and success message when add in shopping cart', async () => {
