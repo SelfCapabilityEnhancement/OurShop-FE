@@ -60,22 +60,23 @@ export const updateProduct = async ({
   deletedTime,
   ...product
 }: Product) => {
-  await http.patch(`/products/${id}`, {
-    ...product,
-    images: product.images
-      .split(',')
-      .map(
-        (url, index) => {
+  await http.patch(
+    `/products/${id}`,
+    {
+      ...product,
+      images: product.images
+        .split(',')
+        .map((url, index) => {
           return url.startsWith(imageUrlPrefix)
             ? url
             : `${imageUrlPrefix}${imageFiles[index].name}`;
-        },
-        {
-          headers: { Authorization: localStorage.getItem('jwt') },
-        }
-      )
-      .join(','),
-  });
+        })
+        .join(','),
+    },
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
 };
 
 // this will be replaced by useContext in next iteration
