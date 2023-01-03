@@ -53,7 +53,12 @@ export default function OrderManagement() {
       />
     );
   } else if (!routerList.includes('order-management')) {
-    return <NavLink to="/home">Home</NavLink>;
+    return (
+      <>
+        You are forbidden to access this page.Please click{' '}
+        <NavLink to="/home">here</NavLink> to home page.
+      </>
+    );
   } else {
     useEffect(() => {
       getAllOrdersItems().then((data) => {

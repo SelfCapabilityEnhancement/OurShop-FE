@@ -65,12 +65,12 @@ export default function AccountListTable(props: { userList: Account[] }) {
               <td
                 className="px-2"
                 title={
-                  user.roleNames.join(',').length > 30
-                    ? user.roleNames.join(', ')
+                  user.roles.map((role) => role.roleName).join(',').length > 30
+                    ? user.roles.map((role) => role.roleName).join(', ')
                     : ''
                 }
               >
-                {user.roleNames.join(', ')}
+                {user.roles.map((role) => role.roleName).join(', ')}
               </td>
               <td className="px-2">{user.createdTime}</td>
               <td className="px-2 text-blue-600">
