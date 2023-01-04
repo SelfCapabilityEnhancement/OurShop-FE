@@ -1,15 +1,22 @@
 import Checkbox from '@/components/features/home-page/CheckBox';
 import { useEffect, useState } from 'react';
-import { officeList } from '@/components/features/home-page/mockOffice';
+import { getAllOffices } from '@/service';
 
 export default function OfficeBox(props: { getIsCheck: Function }) {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState<String[]>([]);
-  const [list, setList] = useState<any[]>([]);
+  const [officeList, setOfficeList] = useState<{ id: string; name: string }[]>(
+    []
+  );
 
   useEffect(() => {
-    setList(officeList);
-  }, [list]);
+    (async () => {
+      const res = await getAllOffices();
+      setOfficeList(
+        res.map(({ id, office }) => ({ id: id.toString(), name: office }))
+      );
+    })();
+  }, []);
 
   useEffect(() => props.getIsCheck(isCheck), [isCheck]);
 
