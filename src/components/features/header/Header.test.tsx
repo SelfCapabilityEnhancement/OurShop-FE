@@ -4,13 +4,39 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 import { Container } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
+
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate,
+}));
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
   getShoppingCarts: jest.fn().mockResolvedValue({}),
 }));
 
-describe('Header test', () => {
+describe('Header test when user not login', () => {
+  beforeEach(async () => {
+    await act(async () => {
+      render(<Header />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  describe('navigation event part', () => {
+    const user = userEvent.setup();
+    it('should not navigate to home when click ourshop img in login page', async function () {
+      await user.click(screen.getAllByRole('img')[0]);
+      expect(mockedNavigate).not.toHaveBeenCalledWith('/home');
+    });
+  });
+});
+
+describe('Header test when user has authority', () => {
   let container: Container;
 
   beforeEach(async () => {
