@@ -208,11 +208,11 @@ export default function ShoppingCart() {
                     </div>
                     <label
                       htmlFor="product-checkbox-1"
-                      className="mx-5 w-2/5 font-medium"
+                      className="font-medium w-2/5 mx-5"
                     >
                       {shoppingCartItem.product.name}
                     </label>
-                    <div className="mx-5 flex w-2/5 items-center text-2xl font-medium">
+                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
                       <span className="mr-5">Number</span>
                       <Counter
                         count={shoppingCartItem.productNum}
@@ -223,18 +223,20 @@ export default function ShoppingCart() {
                     <div className="flex w-[50%]">
                       {renderProductAvailableOrNot(shoppingCartItem)}
                     </div>
-                    <input
-                      id={`product-checkbox-${index}`}
-                      type="checkbox"
-                      disabled={
-                        shoppingCartItem.product.isDeleted ||
-                        shoppingCartItem.offices === ''
-                      }
-                      value=""
-                      className="h-8 w-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
-                      checked={checkedState[index]}
-                      onChange={() => handleOnCheck(index)}
-                    />
+                    <div className="m-1/10">
+                      <input
+                        id={`product-checkbox-${index}`}
+                        type="checkbox"
+                        disabled={
+                          shoppingCartItem.product.isDeleted ||
+                          shoppingCartItem.offices === ''
+                        }
+                        value=""
+                        className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                        checked={checkedState[index]}
+                        onChange={() => handleOnCheck(index)}
+                      />
+                    </div>
                   </div>
                 </li>
               );
