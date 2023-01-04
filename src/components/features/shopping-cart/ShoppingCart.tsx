@@ -200,7 +200,7 @@ export default function ShoppingCart() {
                         handleMinus={() => handleMinus(index)}
                       />
                     </div>
-                    <div className="flex w-[50%]">
+                    <div className="flex w-2/5">
                       {renderProductAvailableOrNot(shoppingCartItem)}
                     </div>
                     <input
