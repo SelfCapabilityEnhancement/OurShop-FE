@@ -399,7 +399,7 @@ function CreateProduct() {
                 message={isInvalidStoreExist ? failMsg : successMsg}
               />
               <Loading message="Processing..." visible={showLoading} />
-              <div className="flex flex-col m-8" style={{ minHeight: '650px' }}>
+              <div className="flex flex-col m-8 min-h-[650px]">
                 <p className="text-xl font-medium mb-3">
                   <span className="text-red-500 pr-1">*</span>
                   Please indicate the office and number of product you want to
@@ -425,7 +425,7 @@ function CreateProduct() {
                 ))}
               </div>
 
-              <footer className="flex float-left absolute">
+              <footer className="ml-8">
                 <button
                   onClick={(event) => handleCreateProduct(event)}
                   className=" create w-64 rounded-lg bg-violet-500 px-5 py-2.5 text-center text-lg font-medium text-white transition duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500"

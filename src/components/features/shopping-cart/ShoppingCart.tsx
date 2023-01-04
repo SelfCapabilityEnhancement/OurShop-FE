@@ -198,8 +198,8 @@ export default function ShoppingCart() {
                       : 'product my-3 h-20 border-gray-400'
                   }
                 >
-                  <div className="flex transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                    <div className="mx-5">
+                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 min-w-[1200px]">
+                    <div className="mx-5 w-1/10">
                       <img
                         alt="profile"
                         src={shoppingCartItem.product.images.split(',')[0]}
