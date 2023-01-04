@@ -29,7 +29,9 @@ export default function Header() {
   }, [localStorage.getItem('jwt')]);
 
   const handleClick = () => {
-    navigate('/home');
+    if (routerList !== null) {
+      navigate('/home');
+    }
   };
 
   const headerList = [
