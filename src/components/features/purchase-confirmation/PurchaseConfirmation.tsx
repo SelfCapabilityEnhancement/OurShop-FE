@@ -1,19 +1,28 @@
+import { Fragment, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Product,
   PurchaseConfirmationItem,
   User,
 } from '@/components/common/CustomTypes';
-import { useEffect, useState } from 'react';
 import { getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
+import { Listbox, Transition } from '@headlessui/react';
+import { classNames } from '@/utils';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
   const {
-    state: { products, count, shoppingCartIds, productIds, logisticMethods },
+    state: {
+      products,
+      count,
+      shoppingCartIds,
+      productIds,
+      logisticMethods,
+      selectedOffices,
+    },
   }: {
     state: {
       products: Array<Product>;
@@ -21,8 +30,13 @@ export default function PurchaseConfirmation() {
       shoppingCartIds: Array<number>;
       productIds: Array<number>;
       logisticMethods: Array<string>;
+      selectedOffices: Array<string>;
     };
   } = useLocation();
+
+  const offices = Array.from(selectedOffices);
+  const [selectedOffice, setSelectedOffice] =
+    useState<string>('Select an Office');
 
   const calCostOfToken = () => {
     let cost = 0;
@@ -104,6 +118,18 @@ export default function PurchaseConfirmation() {
     }
   };
 
+  const selectOffice = (event: string) => {
+    setSelectedOffice(event);
+  };
+
+  const dropDownItemClassName =
+    'text-2xl relative w-full cursor-default bg-[#F7F5F9] py-2 pl-3 pr-[1.5rem] text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm';
+
+  const dropDownClassName = classNames(
+    dropDownItemClassName,
+    selectedOffice === 'Select an Office' ? 'text-[#9DA3AE]' : ''
+  );
+
   return (
     <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
       <Banner
@@ -153,9 +179,78 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
+      <div className="flex mr-[10%] mb-[3%] flex-row-reverse">
+        <div>
+          <Listbox
+            value={offices}
+            onChange={(event) => selectOffice(event as any as string)}
+          >
+            <div className="relative mt-1 w-[250px]">
+              <Listbox.Button
+                className={dropDownClassName}
+                data-testid="drop-down"
+              >
+                <span className="text-xl block truncate">{selectedOffice}</span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
+                  <svg
+                    className="h-8 w-8"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path
+                      className="png"
+                      fill={'rgb(217 217 217)'}
+                      d="M18 15l-6-6l-6 6h12"
+                      transform="rotate(180 12 12)"
+                    />
+                  </svg>
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-[#F3F4F6] py-1 text-center ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {offices.map((office, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-3 pr-4 ${
+                          active ? 'text-amber-900' : 'text-gray-900'
+                        }`
+                      }
+                      value={office}
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
+                          >
+                            {office}
+                          </span>
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
+        </div>
+        <div className="text-right text-2xl mt-[1.5%] mr-[2%]">
+          Collect My Product at{' '}
+        </div>
+      </div>
 
-      <div className="mb-[10%] mr-[10%]">
-        <div className="text-right text-2xl mb-[2%]">
+      <div className="mr-[10%]">
+        <div className="text-right text-2xl mb-[3%]">
           Cost of Tokens:{' '}
           <span className="text-2xl text-red-600">{calCostOfToken()}</span>
         </div>

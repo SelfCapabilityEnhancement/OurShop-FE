@@ -64,25 +64,42 @@ export default function ShoppingCart() {
     setCheckedState(updatedCheckedState);
   };
 
-  const handleOnClickPayBtn = () => {
-    const selectedItems = shoppingCartItems.filter(
-      (_item, index) => checkedState[index]
-    );
-    const selectedProducts = selectedItems.map((e) => e.product);
-    const selectedShoppingCartIds = selectedItems.map((e) => e.shoppingCartId);
-    const selectedProductIds = selectedItems.map((e) => e.productId);
-    const count = selectedItems.map((e) => e.productNum);
-    const logisticMethods = selectedItems.map((e) => e.logisticMethod);
-    navigate('/purchase-confirmation', {
-      state: {
-        products: selectedProducts,
-        count,
-        shoppingCartIds: selectedShoppingCartIds,
-        productIds: selectedProductIds,
-        logisticMethods,
-      },
-    });
-  };
+    const handleOnClickPayBtn = () => {
+      const selectedItems = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+      );
+      const selectedProducts = selectedItems.map((e) => e.product);
+      const selectedOffices = selectedItems.map(
+        (e) => new Set(e.offices.split(','))
+      );
+      let collectOffices = selectedOffices[0];
+
+      if (selectedOffices.length > 1) {
+        for (let i = 0; i < selectedOffices.length; i++) {
+          const tempOffices = selectedOffices[i];
+          collectOffices = new Set(
+            [...collectOffices].filter((x) => tempOffices.has(x))
+          );
+        }
+      }
+
+      const selectedShoppingCartIds = selectedItems.map(
+        (e) => e.shoppingCartId
+      );
+      const selectedProductIds = selectedItems.map((e) => e.productId);
+      const count = selectedItems.map((e) => e.productNum);
+      const logisticMethods = selectedItems.map((e) => e.logisticMethod);
+      navigate('/purchase-confirmation', {
+        state: {
+          products: selectedProducts,
+          count,
+          shoppingCartIds: selectedShoppingCartIds,
+          productIds: selectedProductIds,
+          logisticMethods,
+          selectedOffices: collectOffices,
+        },
+      });
+    };
 
   function renderProductAvailableOrNot(shoppingCartItem: { offices: string }) {
     if (shoppingCartItem.offices === '') {
