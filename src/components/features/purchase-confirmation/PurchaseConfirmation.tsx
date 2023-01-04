@@ -174,34 +174,34 @@ export default function PurchaseConfirmation() {
 
 
   return (
-    <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
+    <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
       <Banner
         visible={showBanner}
         success={isVerifySuccess}
         message={verifyMessage}
       />
       <Loading visible={showLoading} message="Processing..." />
-      <h1 className="wallet-header mb-10 text-center text-3xl">
+      <h1 className="wallet-header text-center text-3xl mb-10">
         Purchase Confirmation
       </h1>
-      <ul className="mb-10 flex flex-1 flex-col">
+      <ul className="flex-1 flex flex-col mb-10">
         {products.map(({ name, priceToken, images }, index) => (
           <li
             key={`product-${index}`}
-            className="product my-7 h-10 border-gray-400"
+            className="product border-gray-400 my-7 h-10"
           >
             <div className="flex flex-1 flex-row items-center items-center p-4">
-              <div className="mr-4 items-center justify-center">
+              <div className="justify-center items-center mr-4">
                 <img
                   alt="product"
                   src={images.split(',')[0]}
-                  className="mx-auto h-20 w-24 rounded-lg object-cover"
+                  className="mx-auto object-cover rounded-lg h-20 w-24"
                 />
               </div>
               <div className="w-72">
-                <div className="text-2xl font-medium text-gray-600">{name}</div>
+                <div className="text-gray-600 text-2xl font-medium">{name}</div>
               </div>
-              <div className="mr-10 pl-1">
+              <div className="pl-1 mr-10">
                 <div className="flex items-center">
                   <span className="text-2xl font-normal">Number:</span>
                   <Counter
