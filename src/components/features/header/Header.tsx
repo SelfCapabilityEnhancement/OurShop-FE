@@ -104,7 +104,7 @@ export default function Header() {
               .map((item) => renderHeader(item))
           )}
         </div>
-        {!isLoginOrRegister() && <Profile></Profile>}
+        {!isLoginOrRegister() && routerList != null && <Profile></Profile>}
       </div>
     </div>
   );
