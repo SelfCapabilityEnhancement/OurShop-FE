@@ -14,7 +14,7 @@ import Loading from '@/components/common/loading/Loading';
 import { createProduct, getAllOffices, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
 import OfficeStoreItem from '@/components/features/create-product/OfficeStoreItem';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const successMsg = 'The product was created successfully!';
 const failMsg = 'All required field must be filled.';
@@ -55,6 +55,7 @@ function CreateProduct() {
   const [storesError, setStoresError] = useState<StoresError>({});
   const [isInvalidStoreExist, setIsInvalidStoreExist] = useState(false);
   const [showNotLoginBanner, setShowNotLoginBanner] = useState(false);
+  const [showNotAuthorizedBanner, setShowNotAuthorizedBanner] = useState(false);
 
   const routerList = localStorage.getItem('router');
   if (routerList === null) {
@@ -73,11 +74,19 @@ function CreateProduct() {
       />
     );
   } else if (!routerList.includes('create-product')) {
+    useEffect(() => {
+      setShowNotAuthorizedBanner(true);
+      setTimeout(() => {
+        setShowNotAuthorizedBanner(false);
+        navigate('/home');
+      }, 2000);
+    }, []);
     return (
-      <>
-        You are forbidden to access this page.Please click{' '}
-        <NavLink to="/home">here</NavLink> to home page.
-      </>
+      <Banner
+        visible={showNotAuthorizedBanner}
+        success={false}
+        message={'You are forbidden to access this page.'}
+      />
     );
   } else {
     useEffect(() => {
