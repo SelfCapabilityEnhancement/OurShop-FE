@@ -171,8 +171,11 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal">
-                  Token: {callCostOfOneProduct(index, priceToken)}
+                <div className="text-xl font-normal text-right mr-[10%]">
+                  Token:{' '}
+                  <span className="text-purple-500">
+                    {callCostOfOneProduct(index, priceToken)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -254,11 +257,11 @@ export default function PurchaseConfirmation() {
           Cost of Tokens:{' '}
           <span className="text-2xl text-red-600">{calCostOfToken()}</span>
         </div>
-        <div className="text-right text-2xl mb-[2%]">
+        <div className="text-right text-2xl mb-[3%]">
           My Tokens:{' '}
           <span className="text-2xl text-purple-500">{user?.token}</span>
         </div>
-        <div className="text-right text-2xl mb-[2%]">
+        <div className="text-right text-2xl mb-[3%]">
           My Number: <span>{user?.telephoneNum}</span>
         </div>
       </div>
@@ -266,14 +269,14 @@ export default function PurchaseConfirmation() {
         <button
           type="button"
           onClick={handleClickCancel}
-          className="cancel w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 "
+          className="mt-[6%] cancel w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 "
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={handleClickBuy}
-          className="buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          className="mt-[6%] buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
           disabled={!user?.id}
         >
           Buy

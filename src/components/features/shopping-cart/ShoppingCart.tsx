@@ -131,7 +131,7 @@ export default function ShoppingCart() {
       } else {
         return (
           <>
-            <span className="w-[100px]">Available at :</span>
+            <span className="w-[100px]">Available at:</span>
             <div className="mr-10">{shoppingCartItem.offices}</div>
           </>
         );
