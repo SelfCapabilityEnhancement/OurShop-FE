@@ -6,7 +6,7 @@ import { getDeletedProducts, getProducts } from '@/service';
 import EditProduct from '@/components/features/product-management/EditProduct';
 import DeleteProduct from '@/components/features/product-management/DeleteProduct';
 import Banner from '@/components/common/banner/Banner';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const tabs = [
   { id: 'available', name: 'Available Products' },
@@ -25,6 +25,7 @@ export default function ProductManagement() {
   const [chosen, setChosen] = useState(0);
   const [showDeleteProductBanner, setShowDeleteProductBanner] = useState(false);
   const [showNotLoginBanner, setShowNotLoginBanner] = useState(false);
+  const [showNotAuthorizedBanner, setShowNotAuthorizedBanner] = useState(false);
 
   const routerList = localStorage.getItem('router');
   if (routerList === null) {
@@ -43,11 +44,19 @@ export default function ProductManagement() {
       />
     );
   } else if (!routerList.includes('product-management')) {
+    useEffect(() => {
+      setShowNotAuthorizedBanner(true);
+      setTimeout(() => {
+        setShowNotAuthorizedBanner(false);
+        navigate('/home');
+      }, 2000);
+    }, []);
     return (
-      <>
-        You are forbidden to access this page.Please click{' '}
-        <NavLink to="/home">here</NavLink> to home page.
-      </>
+      <Banner
+        visible={showNotAuthorizedBanner}
+        success={false}
+        message={'You are forbidden to access this page.'}
+      />
     );
   } else {
     useEffect(() => {

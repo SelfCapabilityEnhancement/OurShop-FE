@@ -14,7 +14,7 @@ import cloneDeep from 'lodash.clonedeep';
 import HLine from '@/components/common/horizontal-line/HorizontalLine';
 import Banner from '@/components/common/banner/Banner';
 import { initCategoryOption, initGoodOption } from '@/constants';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const titles = [
   { id: 'salesOverview', name: 'Sales Overview' },
@@ -34,30 +34,34 @@ export default function OrderManagement() {
   const [adminOrdersItems, setAdminOrdersItems] = useState<OrdersItemAdmin[]>(
     []
   );
-  const [showNotLoginBanner, setShowNotLoginBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
 
   const routerList = localStorage.getItem('router');
   if (routerList === null) {
     useEffect(() => {
-      setShowNotLoginBanner(true);
+      setShowBanner(true);
       setTimeout(() => {
-        setShowNotLoginBanner(false);
+        setShowBanner(false);
         navigate('/login');
       }, 2000);
     }, []);
     return (
-      <Banner
-        visible={showNotLoginBanner}
-        success={false}
-        message={'Not Login'}
-      />
+      <Banner visible={showBanner} success={false} message={'Not Login'} />
     );
   } else if (!routerList.includes('order-management')) {
+    useEffect(() => {
+      setShowBanner(true);
+      setTimeout(() => {
+        setShowBanner(false);
+        navigate('/home');
+      }, 2000);
+    }, []);
     return (
-      <>
-        You are forbidden to access this page.Please click{' '}
-        <NavLink to="/home">here</NavLink> to home page.
-      </>
+      <Banner
+        visible={showBanner}
+        success={false}
+        message={'You are forbidden to access this page.'}
+      />
     );
   } else {
     useEffect(() => {

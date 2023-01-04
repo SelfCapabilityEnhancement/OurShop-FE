@@ -6,7 +6,7 @@ import RoleTable from '@/components/features/account-management/components/RoleT
 import { Account, Feature, Role } from '@/components/common/CustomTypes';
 import { getAccountList, getFeatureList, getRoleList } from '@/service';
 import AccountListTable from '@/components/features/account-management/components/AccountListTable/AccountListTable';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Banner from '@/components/common/banner/Banner';
 
 const tabs = [
@@ -35,11 +35,19 @@ export default function AccountManagement() {
       <Banner visible={showBanner} success={false} message={'Not Login'} />
     );
   } else if (!routerList.includes('account-management')) {
+    useEffect(() => {
+      setShowBanner(true);
+      setTimeout(() => {
+        setShowBanner(false);
+        navigate('/home');
+      }, 2000);
+    }, []);
     return (
-      <>
-        You are forbidden to access this page.Please click{' '}
-        <NavLink to="/home">here</NavLink> to home page.
-      </>
+      <Banner
+        visible={showBanner}
+        success={false}
+        message={'You are forbidden to access this page.'}
+      />
     );
   } else {
     // @ts-ignore

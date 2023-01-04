@@ -48,7 +48,9 @@ describe('When user not have access to access order-management', () => {
   afterEach(cleanup);
 
   it('should show tabs', () => {
-    expect(screen.getByText('here')).toBeInTheDocument();
+    expect(
+      screen.getByText('You are forbidden to access this page.')
+    ).toBeInTheDocument();
   });
 });
 
