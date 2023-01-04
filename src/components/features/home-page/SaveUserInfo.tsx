@@ -1,8 +1,8 @@
 import { UserOffice, UserInfo } from '@/components/common/CustomTypes';
 import { Listbox, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { initUserInfo } from '@/constants';
-import { saveUserInfo } from '@/service';
+import { getAllOffices, saveUserInfo } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 
 const successMsg = 'Your information is saved!';
@@ -19,14 +19,7 @@ const basicForm: {
   { id: 'userRealName', label: 'Name', type: 'string | undefined' },
   { id: 'telephoneNum', label: 'Phone', type: 'number | undefined' },
 ];
-const baseCites = [
-  { id: 1, name: 'Beijing' },
-  { id: 2, name: 'Chengdu' },
-  { id: 3, name: 'Shanghai' },
-  { id: 4, name: 'Shenzhen' },
-  { id: 5, name: 'Wuhan' },
-  { id: 6, name: "Xi'an" },
-];
+
 const initCity = [{ id: 1, name: '' }];
 
 export default function SaveUserInfo({
@@ -40,8 +33,28 @@ export default function SaveUserInfo({
   const [showBanner, setShowBanner] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [selectedCity, setSelectedCity] = useState(initCity[0]);
-  const [cities, setCities] = useState(baseCites);
+  const [cities, setCities] = useState<{ id: number; name: string }[]>([]);
   const [border, setBorder] = useState(false);
+  const [officeList, setOfficeList] = useState<{ id: number; name: string }[]>(
+    []
+  );
+  useEffect(() => {
+    (async () => {
+      const res = await getAllOffices();
+      setCities(
+        res?.map(({ id, office }) => ({
+          id,
+          name: office,
+        }))
+      );
+      setOfficeList(
+        res?.map(({ id, office }) => ({
+          id,
+          name: office,
+        }))
+      );
+    })();
+  }, []);
 
   const handleInputField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -65,7 +78,7 @@ export default function SaveUserInfo({
     const tmp = { ...userInfo };
     tmp.officeId = Number(getOfficeId(event.name));
     setUserInfo(tmp);
-    setCities(baseCites);
+    setCities(officeList);
     setBorder(false);
   };
 
@@ -208,7 +221,7 @@ export default function SaveUserInfo({
                           leaveTo="opacity-0"
                         >
                           <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-[#EEEEEE] py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {baseCites.map((city) => (
+                            {officeList?.map((city) => (
                               <Listbox.Option
                                 key={city.id}
                                 className={({ active }) =>
