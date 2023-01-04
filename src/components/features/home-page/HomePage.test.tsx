@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import HomePage from '@/components/features/home-page/HomePage';
-import { tempProducts, users } from '@/mocks/mockData';
+import { mockOffice, tempProducts, users } from '@/mocks/mockData';
 import * as service from '@/service';
 // import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
@@ -10,6 +10,7 @@ import SaveUserInfo from '@/components/features/home-page/SaveUserInfo';
 jest.mock('@/service', () => ({
   getProducts: jest.fn(),
   getCurrentUser: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -19,6 +20,7 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 describe('When user not login to access HomePage', () => {
   beforeEach(async () => {
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
     await act(async () => {
       render(<HomePage />, { wrapper: BrowserRouter });
     });
