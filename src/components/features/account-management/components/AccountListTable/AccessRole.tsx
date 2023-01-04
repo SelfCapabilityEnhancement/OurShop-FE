@@ -111,11 +111,14 @@ export default function AccessRole({
           <Dialog.Panel className="fixed top-[19%] w-[590px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle transition-all">
             <Dialog.Title as="h1" className="leading-6 grid grid-cols-3">
               <div></div>
-              <div className="text-[#A45FB7] flex text-[18px] content-center font-semibold my-[20%]">
-                Access Configuration
-              </div>
-              <div className="justify-self-end" data-testid="cancel-icon">
-                <CancelIcon handleClose={handleClose} />
+              <div className="flex col-start-1 col-end-4">
+                <div className="text-[#A45FB7] text-xl content-center font-semibold ml-[30%] mb-[5%]">
+                  Access Configuration
+                </div>
+                <div className="w-[28%]"></div>
+                <div className="justify-self-end" data-testid="cancel-icon">
+                  <CancelIcon handleClose={handleClose} />
+                </div>
               </div>
             </Dialog.Title>
             <div className="mt-2">
