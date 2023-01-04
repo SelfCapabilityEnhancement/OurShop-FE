@@ -101,18 +101,20 @@ export default function ShoppingCart() {
       });
     };
 
-  function renderProductAvailableOrNot(shoppingCartItem: { offices: string }) {
-    if (shoppingCartItem.offices === '') {
-      return <span className="w-[500px]">{notAvailableAtAnyOffice}</span>;
-    } else {
-      return (
-        <>
-          <span className="w-[100px]">Available at :</span>
-          <div className="mr-10">{shoppingCartItem.offices}</div>
-        </>
-      );
+    function renderProductAvailableOrNot(shoppingCartItem: {
+      offices: string;
+    }) {
+      if (shoppingCartItem.offices === '') {
+        return <span className="w-[500px]">{notAvailableAtAnyOffice}</span>;
+      } else {
+        return (
+          <>
+            <span className="w-[100px]">Available at:</span>
+            <div className="mr-10">{shoppingCartItem.offices}</div>
+          </>
+        );
+      }
     }
-  }
 
   return (
     <div

@@ -171,8 +171,11 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal">
-                  Token: {callCostOfOneProduct(index, priceToken)}
+                <div className="text-xl font-normal text-right mr-[10%]">
+                  Token:{' '}
+                  <span className="text-purple-500">
+                    {callCostOfOneProduct(index, priceToken)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -254,11 +257,11 @@ export default function PurchaseConfirmation() {
           Cost of Tokens:{' '}
           <span className="text-2xl text-red-600">{calCostOfToken()}</span>
         </div>
-        <div className="text-right text-2xl mb-[2%]">
+        <div className="text-right text-2xl mb-[3%]">
           My Tokens:{' '}
           <span className="text-2xl text-purple-500">{user?.token}</span>
         </div>
-        <div className="text-right text-2xl mb-[2%]">
+        <div className="text-right text-2xl mb-[3%]">
           My Number: <span>{user?.telephoneNum}</span>
         </div>
       </div>
