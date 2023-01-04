@@ -153,11 +153,19 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
-      <div className="my-10 ml-auto grid w-1/2 grid-cols-2 gap-y-4">
-        <div className="text-right text-2xl">My Tokens:</div>
-        <div className="ml-5 text-2xl text-purple-500">{user?.token}</div>
-        <div className="text-right text-2xl">Cost of Tokens:</div>
-        <div className="ml-5 text-2xl text-red-600">{calCostOfToken()}</div>
+
+      <div className="mb-[10%] mr-[10%]">
+        <div className="text-right text-2xl mb-[2%]">
+          Cost of Tokens:{' '}
+          <span className="text-2xl text-red-600">{calCostOfToken()}</span>
+        </div>
+        <div className="text-right text-2xl mb-[2%]">
+          My Tokens:{' '}
+          <span className="text-2xl text-purple-500">{user?.token}</span>
+        </div>
+        <div className="text-right text-2xl mb-[2%]">
+          My Number: <span>{user?.telephoneNum}</span>
+        </div>
       </div>
       <div className="mt-auto mb-5 flex justify-around">
         <button
