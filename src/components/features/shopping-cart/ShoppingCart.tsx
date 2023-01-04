@@ -142,8 +142,11 @@ export default function ShoppingCart() {
                       : 'product border-gray-400 my-3 h-20'
                   }
                 >
-                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
-                    <div className="mx-5">
+                  <div
+                    className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4"
+                    style={{ minWidth: '1200px' }}
+                  >
+                    <div className="mx-5 w-1/10">
                       <img
                         alt="profile"
                         src={shoppingCartItem.product.images.split(',')[0]}
@@ -152,11 +155,11 @@ export default function ShoppingCart() {
                     </div>
                     <label
                       htmlFor="product-checkbox-1"
-                      className="font-medium w-2/5 mx-5"
+                      className="font-medium w-1/5 mx-5"
                     >
                       {shoppingCartItem.product.name}
                     </label>
-                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
+                    <div className="font-medium flex w-1/5 items-center text-2xl mx-5">
                       <span className="mr-5">Number</span>
                       <Counter
                         count={shoppingCartItem.productNum}
@@ -164,21 +167,23 @@ export default function ShoppingCart() {
                         handleMinus={() => handleMinus(index)}
                       />
                     </div>
-                    <div className="flex w-[50%]">
+                    <div className="flex w-2/5">
                       {renderProductAvailableOrNot(shoppingCartItem)}
                     </div>
-                    <input
-                      id={`product-checkbox-${index}`}
-                      type="checkbox"
-                      disabled={
-                        shoppingCartItem.product.isDeleted ||
-                        shoppingCartItem.offices === ''
-                      }
-                      value=""
-                      className="w-8 h-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
-                      checked={checkedState[index]}
-                      onChange={() => handleOnCheck(index)}
-                    />
+                    <div className="m-1/10">
+                      <input
+                        id={`product-checkbox-${index}`}
+                        type="checkbox"
+                        disabled={
+                          shoppingCartItem.product.isDeleted ||
+                          shoppingCartItem.offices === ''
+                        }
+                        value=""
+                        className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                        checked={checkedState[index]}
+                        onChange={() => handleOnCheck(index)}
+                      />
+                    </div>
                   </div>
                 </li>
               );
