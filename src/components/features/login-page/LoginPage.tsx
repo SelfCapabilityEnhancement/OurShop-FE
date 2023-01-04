@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 
@@ -21,9 +21,15 @@ export default function LoginPage() {
   const [error, setError] =
     useState<Partial<typeof initialError>>(initialError);
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const routerList = localStorage.getItem('router');
 
   const successMsg = 'Login successfully';
 
+  useEffect(() => {
+    if (routerList !== null) {
+      navigate('/home');
+    }
+  });
   const handleLogin = async () => {
     let { usernameError, passwordError } = initialError;
     if (!username) {

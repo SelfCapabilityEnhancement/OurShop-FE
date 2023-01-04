@@ -6,6 +6,13 @@ import * as service from '@/service';
 import { AxiosResponse } from 'axios';
 import { act } from 'react-dom/test-utils';
 
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate,
+}));
+
 jest.mock('@/service', () => ({
   login: jest.fn(),
 }));
@@ -106,5 +113,27 @@ describe('display login page', () => {
     expect(
       await screen.findByText('Username & Password does not match!')
     ).toBeInTheDocument();
+  });
+});
+
+describe('display home page', () => {
+  beforeEach(async () => {
+    const list = [
+      'account-management',
+      'product-management',
+      'order-management',
+      'create-product',
+    ];
+    // @ts-ignore
+    localStorage.setItem('router', list);
+    await act(async () => {
+      render(<LoginPage />, { wrapper: BrowserRouter });
+    });
+  });
+
+  afterEach(cleanup);
+
+  it('should return to home page', function () {
+    expect(mockedNavigate).toHaveBeenCalledWith('/home');
   });
 });
