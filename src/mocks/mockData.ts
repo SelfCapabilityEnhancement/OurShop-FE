@@ -397,3 +397,12 @@ const account2 = {
 };
 
 export const accounts: Account[] = [account1, account2];
+
+export const mockOffice: { id: number; office: string }[] = [
+  { id: 1, office: 'Beijing' },
+  { id: 2, office: 'Chengdu' },
+  { id: 3, office: 'Shanghai' },
+  { id: 4, office: 'Shenzhen' },
+  { id: 5, office: 'Wuhan' },
+  { id: 6, office: "Xi'an" },
+];
