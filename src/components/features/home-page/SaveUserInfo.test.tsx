@@ -3,6 +3,8 @@ import SaveUserInfo from '@/components/features/home-page/SaveUserInfo';
 import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { AxiosResponse } from 'axios';
+import { BrowserRouter } from 'react-router-dom';
+import { mockOffice } from '@/mocks/mockData';
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -12,13 +14,17 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
   saveUserInfo: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 describe('Edit UserInfo when user first login', () => {
   const user = userEvent.setup();
 
   beforeEach(() => {
-    render(<SaveUserInfo isOpen={true} setIsOpen={jest.fn} />);
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
+    render(<SaveUserInfo isOpen={true} setIsOpen={jest.fn} />, {
+      wrapper: BrowserRouter,
+    });
   });
 
   it('should show text in Popup', () => {
