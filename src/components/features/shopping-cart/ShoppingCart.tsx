@@ -42,7 +42,7 @@ export default function ShoppingCart() {
   } else {
     useEffect(() => {
       setShowLoading(true);
-      getShoppingCarts().then((items) => {
+      getShoppingCarts(false).then((items) => {
         setShoppingCartItems(items);
         setShoppingCartLength(items.length);
         setShowLoading(false);

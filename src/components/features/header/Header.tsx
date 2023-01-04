@@ -21,7 +21,7 @@ export default function Header() {
       localStorage.clear();
     }
     if (localStorage.getItem('jwt') != null) {
-      getShoppingCarts().then((items) => {
+      getShoppingCarts(true).then((items) => {
         setShoppingCartItems(items);
         setShoppingCartLength(items.length);
       });

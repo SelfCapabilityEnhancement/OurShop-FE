@@ -100,10 +100,13 @@ export const addToCarts = async (productId: number, productNum: number) => {
   );
 };
 
-export const getShoppingCarts = async () => {
-  const { data } = await http.get(`/users/shopping-carts`, {
-    headers: { Authorization: localStorage.getItem('jwt') },
-  });
+export const getShoppingCarts = async (handleRedDot: boolean) => {
+  const { data } = await http.get(
+    `/users/shopping-carts?handle_red_dot=` + handleRedDot,
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
   return data;
 };
 
