@@ -38,9 +38,12 @@ export default function MyWallet() {
     };
 
     return (
-      <div>
+      <div
+        className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40
+          dark:bg-gray-800 p-4"
+      >
         {showPage && (
-          <div className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 dark:bg-gray-800 p-4">
+          <div>
             <h1 className="wallet-header text-center text-3xl mb-10">
               My Wallet
             </h1>
