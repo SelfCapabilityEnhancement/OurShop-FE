@@ -65,10 +65,9 @@ export default function PurchaseConfirmation() {
 
   useEffect(() => {
     getCurrentUser().then((user) => setUser(user));
-    (async () => {
-      const res = await getAllOffices();
-      setAllOffice(res.map(({ id, office }) => ({ id, office })));
-    })();
+    getAllOffices().then((data) => {
+      setAllOffice(data);
+    });
   }, []);
 
   useEffect(() => {
