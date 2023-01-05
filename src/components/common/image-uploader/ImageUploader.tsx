@@ -49,7 +49,7 @@ export default function ImageUploader({
             stroke="currentColor"
             className={classNames(
               'new-image h-20 w-24 bg-slate-100 rounded-md border-solid',
-              validation ? 'outline-none ring ring-rose-500' : ''
+              { 'outline-none ring ring-rose-500': validation }
             )}
           >
             <path

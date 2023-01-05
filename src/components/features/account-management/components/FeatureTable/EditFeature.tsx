@@ -2,7 +2,6 @@ import { Feature } from '@/components/common/CustomTypes';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
-import { clsx as classNames } from 'clsx';
 import { updateFeature } from '@/service';
 import { initFeature } from '@/constants';
 
@@ -151,9 +150,9 @@ export default function EditFeature({
                 />
                 <section className="col-span-8">Function Description</section>
                 <textarea
-                  className={classNames(
+                  className={
                     'col-span-2 h-28 shadow-sm resize-none bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300'
-                  )}
+                  }
                   value={feature.description}
                   onChange={(event) => handleInputField(event, 'description')}
                 />
