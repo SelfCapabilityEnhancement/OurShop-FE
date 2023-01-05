@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import * as utils from '@/utils';
 import * as service from '@/service';
 import { Product } from '@/components/common/CustomTypes';
+import { mockOffice } from '@/mocks/mockData';
 
 jest.mock('@/service', () => ({
   uploadFile: jest.fn(),
@@ -20,6 +21,7 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 describe('When user not login to access create-products', () => {
   beforeEach(async () => {
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
     await act(async () => {
       render(<CreateProduct />, { wrapper: BrowserRouter });
     });
@@ -35,6 +37,7 @@ describe('When user not login to access create-products', () => {
 describe('When user not have access to access create-products', () => {
   beforeEach(async () => {
     localStorage.setItem('router', 'testForCreate-Products');
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
     await act(async () => {
       render(<CreateProduct />, { wrapper: BrowserRouter });
     });
