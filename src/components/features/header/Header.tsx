@@ -3,7 +3,7 @@ import Profile from '../profile/Profile';
 import { useEffect, useState } from 'react';
 import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import { getShoppingCarts } from '@/service';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { useLocation } from 'react-router';
 import useGlobalState from '@/state';
 

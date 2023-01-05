@@ -1,4 +1,4 @@
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 
 export default function ImageUploader({
   images,

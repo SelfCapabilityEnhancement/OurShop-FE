@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { Listbox, Transition } from '@headlessui/react';
 
 type Props = {

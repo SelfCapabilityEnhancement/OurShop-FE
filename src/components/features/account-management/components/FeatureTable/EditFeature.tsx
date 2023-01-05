@@ -2,7 +2,7 @@ import { Feature } from '@/components/common/CustomTypes';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { updateFeature } from '@/service';
 import { initFeature } from '@/constants';
 

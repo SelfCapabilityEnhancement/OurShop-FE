@@ -5,7 +5,7 @@ import { OrdersItem, OrdersItemAdmin } from '@/components/common/CustomTypes';
 import OrderItemAdmin from '@/components/features/order-management/OrderItemAdmin';
 import OrderDetailWindow from '@/components/features/order-management/OrderDetailWindow';
 import { Tab } from '@headlessui/react';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { getAllOrdersItems, updateOrders } from '@/service';
 import ReactECharts from 'echarts-for-react';
 // @ts-ignore

@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import avatarUrl from 'images/avatar.png';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 
 export default function Profile() {
   const handleLogout = () => {
