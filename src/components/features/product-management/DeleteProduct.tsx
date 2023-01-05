@@ -83,7 +83,7 @@ export default function DeleteProduct({
                       type="button"
                       className="ml-6 mr-10 rounded-lg rounded-lg bg-gray-400 px-14 py-2.5 text-sm font-medium text-white hover:bg-gray-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 "
                     >
-                      cancel
+                      Cancel
                     </button>
                     <button
                       data-modal-toggle="popup-modal"
@@ -92,7 +92,7 @@ export default function DeleteProduct({
                       onClick={handleDeleteBtn}
                       data-testid="delete-btn"
                     >
-                      delete
+                      Delete
                     </button>
                   </div>
                 </Dialog.Panel>
