@@ -10,12 +10,14 @@ export default function OfficeBox(props: { getIsCheck: Function }) {
   );
 
   useEffect(() => {
-    (async () => {
-      const res = await getAllOffices();
+    getAllOffices().then((data) => {
       setOfficeList(
-        res.map(({ id, office }) => ({ id: id.toString(), name: office }))
+        data.map(({ id, office }) => ({
+          id: id.toString(),
+          name: office,
+        }))
       );
-    })();
+    });
   }, []);
 
   useEffect(() => props.getIsCheck(isCheck), [isCheck]);
