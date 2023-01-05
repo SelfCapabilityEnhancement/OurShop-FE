@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AccountManagement from '@/components/features/account-management/AccountManagement';
 import * as service from '@/service';
 import { Account, Feature, Role } from '@/components/common/CustomTypes';
+import { accounts, features, roles } from '@/mocks/mockData';
 
 jest.mock('@/service', () => ({
   getAccountList: jest.fn(),
@@ -16,31 +17,23 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
-describe('When user not login to access account-management', () => {
-  beforeEach(async () => {
+describe('When user has no access to account-management', () => {
+  it('When user not login to access account-management, should show tabs', async () => {
+    jest.spyOn(service, 'getAccountList').mockResolvedValue(accounts);
+    jest.spyOn(service, 'getRoleList').mockResolvedValue(roles);
+    jest.spyOn(service, 'getFeatureList').mockResolvedValue(features);
+
     await act(async () => {
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
     expect(screen.getByText('Not Login')).toBeInTheDocument();
   });
-});
 
-describe('When user not have access', () => {
-  beforeEach(async () => {
+  it('When user not have access, should show tabs', async () => {
     localStorage.setItem('router', 'test');
     await act(async () => {
       render(<AccountManagement />, { wrapper: BrowserRouter });
     });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
     expect(screen.getByText('here')).toBeInTheDocument();
   });
 });
