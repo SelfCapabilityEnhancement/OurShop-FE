@@ -107,7 +107,7 @@ export default function PurchaseConfirmation() {
 
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
-    setShowLoading(true);
+
     const result = validateOffice(selectedOffice);
 
     if (result) {
@@ -117,14 +117,7 @@ export default function PurchaseConfirmation() {
       setVerifySuccess(false);
       handleVerifyOffice();
     } else {
-      localStorage.setItem('verifyOffice', String(result));
-      const id = allOffice.filter((item) => {
-        if (item.office === selectedOffice) {
-          return item.id;
-        }
-        return 0;
-      });
-      setCollectOfficeId(id[0].id);
+      setShowLoading(true);
       try {
         await payByToken(cost, purchaseConfirmationItems, collectOfficeId);
         setShowLoading(false);
@@ -158,20 +151,23 @@ export default function PurchaseConfirmation() {
   const selectOffice = (event: string) => {
     setSelectedOffice(event);
     setVerifyOffice(false);
-    // localStorage.setItem('verifyOffice',String(false));
+    const id = allOffice.filter((item) => {
+      if (item.office === event) {
+        return item.id;
+      }
+      return 0;
+    });
+    setCollectOfficeId(id[0].id);
   };
 
   const dropDownItemClassName =
     'text-2xl relative w-full cursor-default bg-[#F7F5F9] py-2 pl-3 pr-[1.5rem] text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm';
 
-  let dropDownClassName = classNames(
+  const dropDownClassName = classNames(
     dropDownItemClassName,
-    selectedOffice === 'Select an Office' ? 'text-[#9DA3AE]' : ''
+    selectedOffice === 'Select an Office' ? 'text-[#606367]' : '',
+    verifyOffice ? ' outline-none ring-2 ring-rose-500' : ''
   );
-
-  if (verifyOffice) {
-    dropDownClassName += ' outline-none ring-2 ring-rose-500';
-  }
 
   return (
     <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
