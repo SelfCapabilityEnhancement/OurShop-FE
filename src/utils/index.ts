@@ -80,3 +80,11 @@ export const preventScrollBug = () => {
     HTMLDOM.setAttribute('style', '');
   }
 };
+
+export const validateOffice = (office: string) => {
+  let result = false;
+  if (office === 'Select an Office') {
+    result = true;
+  }
+  return result;
+};

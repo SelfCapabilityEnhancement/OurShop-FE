@@ -5,12 +5,12 @@ import {
   PurchaseConfirmationItem,
   User,
 } from '@/components/common/CustomTypes';
-import { getCurrentUser, payByToken } from '@/service';
+import { getAllOffices, getCurrentUser, payByToken } from '@/service';
 import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
 import { Listbox, Transition } from '@headlessui/react';
-import { classNames } from '@/utils';
+import { classNames, validateOffice } from '@/utils';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
@@ -51,14 +51,24 @@ export default function PurchaseConfirmation() {
   };
 
   const [showBanner, SetShowBanner] = useState(false);
+  const [verifyMessage, setVerifyMessage] = useState<string>();
   const [isVerifySuccess, setVerifySuccess] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
   const [cost, setCost] = useState(calCostOfToken());
   const [showLoading, setShowLoading] = useState(false);
+  const [verifyOffice, setVerifyOffice] = useState<boolean>(false);
+  const [allOffice, setAllOffice] = useState<{ id: number; office: string }[]>(
+    []
+  );
+  const [collectOfficeId, setCollectOfficeId] = useState<number>(0);
 
   useEffect(() => {
     getCurrentUser().then((user) => setUser(user));
+    (async () => {
+      const res = await getAllOffices();
+      setAllOffice(res.map(({ id, office }) => ({ id, office })));
+    })();
   }, []);
 
   useEffect(() => {
@@ -88,19 +98,46 @@ export default function PurchaseConfirmation() {
     }, 1500);
   };
 
+  const handleVerifyOffice = () => {
+    setTimeout(() => {
+      SetShowBanner(false);
+      setShowLoading(false);
+    }, 1500);
+  };
+
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
     setShowLoading(true);
-    try {
-      await payByToken(cost, purchaseConfirmationItems);
-      setShowLoading(false);
+    const result = validateOffice(selectedOffice);
+
+    if (result) {
+      setVerifyOffice(result);
       SetShowBanner(true);
-      setVerifySuccess(true);
-      handleVerify();
-    } catch (e) {
-      SetShowBanner(true);
+      setVerifyMessage('All required field must be filled!');
       setVerifySuccess(false);
-      handleVerify();
+      handleVerifyOffice();
+    } else {
+      localStorage.setItem('verifyOffice', String(result));
+      const id = allOffice.filter((item) => {
+        if (item.office === selectedOffice) {
+          return item.id;
+        }
+        return 0;
+      });
+      setCollectOfficeId(id[0].id);
+      try {
+        await payByToken(cost, purchaseConfirmationItems, collectOfficeId);
+        setShowLoading(false);
+        SetShowBanner(true);
+        setVerifyMessage('The purchase made successfully!');
+        setVerifySuccess(true);
+        handleVerify();
+      } catch (e) {
+        SetShowBanner(true);
+        setVerifyMessage('Sorry, you do not have enough token!');
+        setVerifySuccess(false);
+        handleVerify();
+      }
     }
   };
 
@@ -120,26 +157,28 @@ export default function PurchaseConfirmation() {
 
   const selectOffice = (event: string) => {
     setSelectedOffice(event);
+    setVerifyOffice(false);
+    // localStorage.setItem('verifyOffice',String(false));
   };
 
   const dropDownItemClassName =
     'text-2xl relative w-full cursor-default bg-[#F7F5F9] py-2 pl-3 pr-[1.5rem] text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm';
 
-  const dropDownClassName = classNames(
+  let dropDownClassName = classNames(
     dropDownItemClassName,
     selectedOffice === 'Select an Office' ? 'text-[#9DA3AE]' : ''
   );
+
+  if (verifyOffice) {
+    dropDownClassName += ' outline-none ring-2 ring-rose-500';
+  }
 
   return (
     <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
       <Banner
         visible={showBanner}
         success={isVerifySuccess}
-        message={
-          isVerifySuccess
-            ? 'The Purchase Made Successfully!'
-            : 'Validation failure!'
-        }
+        message={verifyMessage as string}
       />
       <Loading visible={showLoading} message="Processing..." />
       <h1 className="wallet-header text-center text-3xl mb-10">

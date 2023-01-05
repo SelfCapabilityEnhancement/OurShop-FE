@@ -170,13 +170,15 @@ export const updateProductNum = async (
 
 export const payByToken = async (
   cost: number,
-  purchaseConfirmationItems: PurchaseConfirmationItem[]
+  purchaseConfirmationItems: PurchaseConfirmationItem[],
+  collectOfficeId: number
 ) => {
   return await http.post(
     '/shopping-carts/pay-by-token',
     {
       token: cost,
       purchaseConfirmationItems,
+      collectOfficeId,
     },
     {
       headers: { Authorization: localStorage.getItem('jwt') },
