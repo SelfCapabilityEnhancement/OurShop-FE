@@ -45,7 +45,7 @@ const product2: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 3, officeName: 'Shanghai', stock: 40 },
+    { officeId: 1, officeName: 'Beijing', stock: 50 },
     { officeId: 4, officeName: 'Shenzhen', stock: 50 },
   ],
 };
@@ -64,7 +64,7 @@ const product3: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 5, officeName: 'Wuhan', stock: 40 },
+    { officeId: 1, officeName: 'Beijing', stock: 50 },
     { officeId: 6, officeName: "Xi'an", stock: 50 },
   ],
 };
