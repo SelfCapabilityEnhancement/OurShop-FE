@@ -172,6 +172,7 @@ export default function PurchaseConfirmation() {
     'outline-none ring-2 ring-rose-500': verifyOffice,
   });
 
+
   return (
     <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
       <Banner
