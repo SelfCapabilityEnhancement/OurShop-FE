@@ -124,11 +124,6 @@ export const getDeletedProducts = async (): Promise<Product[]> => {
   const { data } = await http.get('/products?deleted=' + true, {
     headers: { Authorization: localStorage.getItem('jwt') },
   });
-
-  data.sort((a: { id: number }, b: { id: number }) => {
-    return a.id > b.id ? -1 : 1;
-  });
-
   return data;
 };
 
