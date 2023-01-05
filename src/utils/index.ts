@@ -78,9 +78,5 @@ export const preventScrollBug = () => {
 };
 
 export const validateOffice = (office: string) => {
-  let result = false;
-  if (office === 'Select an Office') {
-    result = true;
-  }
-  return result;
+  return office === 'Select an Office';
 };
