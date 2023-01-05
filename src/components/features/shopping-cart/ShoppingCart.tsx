@@ -4,7 +4,6 @@ import Counter from '@/components/common/counter/Counter';
 import { getShoppingCarts, updateProductNum } from '@/service';
 import { ShoppingCartItem } from '@/components/common/CustomTypes';
 import Loading from '@/components/common/loading/Loading';
-import useGlobalState from '@/state';
 import Banner from '@/components/common/banner/Banner';
 
 const notAvailableAtAnyOffice = 'The products is not available at any office';
@@ -15,7 +14,6 @@ export default function ShoppingCart() {
   const [shoppingCartItems, setShoppingCartItems] = useState<
     ShoppingCartItem[]
   >([]);
-  const [, setShoppingCartLength] = useGlobalState('shoppingCartLength');
 
   const [checkedState, setCheckedState] = useState(
     new Array(shoppingCartItems.length).fill(false)
@@ -47,7 +45,6 @@ export default function ShoppingCart() {
       setShowLoading(true);
       getShoppingCarts().then((items) => {
         setShoppingCartItems(items);
-        setShoppingCartLength(items.length);
         setShowLoading(false);
       });
     }, []);
@@ -104,17 +101,15 @@ export default function ShoppingCart() {
         (_item, index) => updatedCheckedState[index]
       );
       const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices.split(','))
+        (e) => new Set(e.offices?.split(','))
       );
       let collectOffices = selectedOffices[0];
 
-      if (selectedOffices.length > 1) {
-        for (let i = 0; i < selectedOffices.length; i++) {
-          const tempOffices = selectedOffices[i];
-          collectOffices = new Set(
-            [...collectOffices].filter((x) => tempOffices.has(x))
-          );
-        }
+      for (let i = 1; i < selectedOffices.length; i++) {
+        const tempOffices = selectedOffices[i];
+        collectOffices = new Set(
+          [...collectOffices].filter((x) => tempOffices.has(x))
+        );
       }
       if (collectOffices.size === 0) {
         setNoneOffice(true);
