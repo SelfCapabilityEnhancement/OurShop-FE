@@ -22,6 +22,9 @@ export default function ShoppingCart() {
   );
   const [showLoading, setShowLoading] = useState(false);
   const [showNotLoginBanner, setShowNotLoginBanner] = useState(false);
+  // 用来控制有没有交集办公室，true就显示红色的提示,pay by token 不可点击，不亮
+  const [noneOffice, setNoneOffice] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const routerList = localStorage.getItem('router');
   if (routerList === null) {
@@ -48,6 +51,18 @@ export default function ShoppingCart() {
         setShowLoading(false);
       });
     }, []);
+
+    useEffect(() => {
+      if (checkedState.includes(true)) {
+        if (noneOffice) {
+          setButtonDisabled(true);
+        } else {
+          setButtonDisabled(false);
+        }
+      } else {
+        setButtonDisabled(true);
+      }
+    }, [noneOffice, checkedState]);
 
     const handlePlus = async (index: number) => {
       if (!shoppingCartItems[index].product.isDeleted) {
@@ -84,13 +99,10 @@ export default function ShoppingCart() {
       updatedCheckedState[position] = !updatedCheckedState[position];
 
       setCheckedState(updatedCheckedState);
-    };
 
-    const handleOnClickPayBtn = () => {
       const selectedItems = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
+        (_item, index) => updatedCheckedState[index]
       );
-      const selectedProducts = selectedItems.map((e) => e.product);
       const selectedOffices = selectedItems.map(
         (e) => new Set(e.offices.split(','))
       );
@@ -101,6 +113,32 @@ export default function ShoppingCart() {
           const tempOffices = selectedOffices[i];
           collectOffices = new Set(
             [...collectOffices].filter((x) => tempOffices.has(x))
+          );
+        }
+      }
+      if (collectOffices.size === 0) {
+        setNoneOffice(true);
+      } else {
+        setNoneOffice(false);
+      }
+    };
+
+    const handleOnClickPayBtn = () => {
+      const selectedItems = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+      );
+      const selectedProducts = selectedItems.map((e) => e.product);
+
+      const selectedOffices = selectedItems.map(
+        (e) => new Set(e.offices.split(','))
+      );
+      let selectOfficeList = selectedOffices[0];
+
+      if (selectedOffices.length > 1) {
+        for (let i = 0; i < selectedOffices.length; i++) {
+          const tempOffices = selectedOffices[i];
+          selectOfficeList = new Set(
+            [...selectOfficeList].filter((x) => tempOffices.has(x))
           );
         }
       }
@@ -118,7 +156,7 @@ export default function ShoppingCart() {
           shoppingCartIds: selectedShoppingCartIds,
           productIds: selectedProductIds,
           logisticMethods,
-          selectedOffices: collectOffices,
+          selectedOffices: selectOfficeList,
         },
       });
     };
@@ -204,7 +242,11 @@ export default function ShoppingCart() {
           <button
             type="button"
             onClick={handleOnClickPayBtn}
-            disabled={!checkedState.includes(true)}
+            disabled={
+              // !checkedState.includes(true)
+              buttonDisabled
+              //   true
+            }
             className="my-20 token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg
             bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
           >
@@ -212,7 +254,7 @@ export default function ShoppingCart() {
           </button>
           <button
             type="button"
-            disabled={!checkedState.includes(true)}
+            disabled={buttonDisabled}
             className="my-20 money w-2/5 p-2 h-14 ml-36 text-lg text-white font-semibold rounded-lg
             bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
           >

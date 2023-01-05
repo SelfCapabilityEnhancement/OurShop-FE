@@ -30,7 +30,7 @@ export default function PurchaseConfirmation() {
       shoppingCartIds: Array<number>;
       productIds: Array<number>;
       logisticMethods: Array<string>;
-      selectedOffices: Array<string>;
+      selectedOffices: Set<string>;
     };
   } = useLocation();
 
