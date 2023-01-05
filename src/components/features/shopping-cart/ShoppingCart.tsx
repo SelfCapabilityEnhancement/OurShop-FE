@@ -81,17 +81,15 @@ export default function ShoppingCart() {
         (_item, index) => updatedCheckedState[index]
       );
       const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices.split(','))
+        (e) => new Set(e.offices?.split(','))
       );
       let collectOffices = selectedOffices[0];
 
-      if (selectedOffices.length > 1) {
-        for (let i = 0; i < selectedOffices.length; i++) {
-          const tempOffices = selectedOffices[i];
-          collectOffices = new Set(
-            [...collectOffices].filter((x) => tempOffices.has(x))
-          );
-        }
+      for (let i = 1; i < selectedOffices.length; i++) {
+        const tempOffices = selectedOffices[i];
+        collectOffices = new Set(
+          [...collectOffices].filter((x) => tempOffices.has(x))
+        );
       }
       if (collectOffices.size === 0) {
         setNoneOffice(true);
