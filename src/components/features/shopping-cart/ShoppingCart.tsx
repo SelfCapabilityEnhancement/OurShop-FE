@@ -18,6 +18,8 @@ export default function ShoppingCart() {
     new Array(shoppingCartItems.length).fill(false)
   );
   const [showLoading, setShowLoading] = useState(false);
+  const [noneOffice, setNoneOffice] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
     setShowLoading(true);
@@ -27,19 +29,31 @@ export default function ShoppingCart() {
     });
   }, []);
 
-  const handlePlus = async (index: number) => {
-    if (!shoppingCartItems[index].product.isDeleted) {
-      const tmp = [...shoppingCartItems];
-      tmp[index].productNum += 1;
-      const numSavedFlag = await updateProductNum(
-        shoppingCartItems[index].productId,
-        tmp[index].productNum
-      );
-      if (numSavedFlag) {
-        setShoppingCartItems(tmp);
+    useEffect(() => {
+      if (checkedState.includes(true)) {
+        if (noneOffice) {
+          setButtonDisabled(true);
+        } else {
+          setButtonDisabled(false);
+        }
+      } else {
+        setButtonDisabled(true);
       }
-    }
-  };
+    }, [noneOffice, checkedState]);
+
+    const handlePlus = async (index: number) => {
+      if (!shoppingCartItems[index].product.isDeleted) {
+        const tmp = [...shoppingCartItems];
+        tmp[index].productNum += 1;
+        const numSavedFlag = await updateProductNum(
+          shoppingCartItems[index].productId,
+          tmp[index].productNum
+        );
+        if (numSavedFlag) {
+          setShoppingCartItems(tmp);
+        }
+      }
+    };
 
   const handleMinus = async (index: number) => {
     if (!shoppingCartItems[index].product.isDeleted) {
@@ -61,14 +75,11 @@ export default function ShoppingCart() {
     const updatedCheckedState = [...checkedState];
     updatedCheckedState[position] = !updatedCheckedState[position];
 
-    setCheckedState(updatedCheckedState);
-  };
+      setCheckedState(updatedCheckedState);
 
-    const handleOnClickPayBtn = () => {
       const selectedItems = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
+        (_item, index) => updatedCheckedState[index]
       );
-      const selectedProducts = selectedItems.map((e) => e.product);
       const selectedOffices = selectedItems.map(
         (e) => new Set(e.offices.split(','))
       );
@@ -79,6 +90,32 @@ export default function ShoppingCart() {
           const tempOffices = selectedOffices[i];
           collectOffices = new Set(
             [...collectOffices].filter((x) => tempOffices.has(x))
+          );
+        }
+      }
+      if (collectOffices.size === 0) {
+        setNoneOffice(true);
+      } else {
+        setNoneOffice(false);
+      }
+    };
+
+    const handleOnClickPayBtn = () => {
+      const selectedItems = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+      );
+      const selectedProducts = selectedItems.map((e) => e.product);
+
+      const selectedOffices = selectedItems.map(
+        (e) => new Set(e.offices.split(','))
+      );
+      let selectOfficeList = selectedOffices[0];
+
+      if (selectedOffices.length > 1) {
+        for (let i = 0; i < selectedOffices.length; i++) {
+          const tempOffices = selectedOffices[i];
+          selectOfficeList = new Set(
+            [...selectOfficeList].filter((x) => tempOffices.has(x))
           );
         }
       }
@@ -96,7 +133,7 @@ export default function ShoppingCart() {
           shoppingCartIds: selectedShoppingCartIds,
           productIds: selectedProductIds,
           logisticMethods,
-          selectedOffices: collectOffices,
+          selectedOffices: selectOfficeList,
         },
       });
     };
@@ -174,31 +211,32 @@ export default function ShoppingCart() {
                       onChange={() => handleOnCheck(index)}
                     />
                   </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <footer className="flex float-right w-1/2 justify-items-end self-end">
+          <button
+            type="button"
+            onClick={handleOnClickPayBtn}
+            disabled={
+              buttonDisabled
+            }
+            className="my-20 token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg
+            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
+          >
+            Pay by Token
+          </button>
+          <button
+            type="button"
+            disabled={buttonDisabled}
+            className="my-20 money w-2/5 p-2 h-14 ml-36 text-lg text-white font-semibold rounded-lg
+            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
+          >
+            Pay by Bank
+          </button>
+        </footer>
       </div>
-      <footer className="float-right flex w-1/2 justify-items-end self-end">
-        <button
-          type="button"
-          onClick={handleOnClickPayBtn}
-          disabled={!checkedState.includes(true)}
-          className="token my-20 h-14 w-2/5 rounded-lg bg-violet-500 p-2 text-lg font-semibold
-            text-white text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 disabled:opacity-50"
-        >
-          Pay by Token
-        </button>
-        <button
-          type="button"
-          disabled={!checkedState.includes(true)}
-          className="money my-20 ml-36 h-14 w-2/5 rounded-lg bg-violet-500 p-2 text-lg font-semibold
-            text-white text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 disabled:opacity-50"
-        >
-          Pay by Bank
-        </button>
-      </footer>
-    </div>
-  );
+    );
 }
