@@ -125,7 +125,7 @@ export default function ShoppingCart() {
 
     const handleOnClickPayBtn = () => {
       const selectedItems = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
+        (_item, index) => updatedCheckedState[index]
       );
       const selectedProducts = selectedItems.map((e) => e.product);
 
