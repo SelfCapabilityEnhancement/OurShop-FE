@@ -45,7 +45,7 @@ const product2: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 3, officeName: 'Shanghai', stock: 40 },
+    { officeId: 1, officeName: 'Beijing', stock: 50 },
     { officeId: 4, officeName: 'Shenzhen', stock: 50 },
   ],
 };
@@ -64,7 +64,7 @@ const product3: Product = {
   isDeleted: false,
   deletedTime: null,
   officeStockList: [
-    { officeId: 5, officeName: 'Wuhan', stock: 40 },
+    { officeId: 1, officeName: 'Beijing', stock: 50 },
     { officeId: 6, officeName: "Xi'an", stock: 50 },
   ],
 };
@@ -397,3 +397,12 @@ const account2 = {
 };
 
 export const accounts: Account[] = [account1, account2];
+
+export const mockOffices = [
+  { id: 1, office: 'Beijing' },
+  { id: 2, office: 'Chengdu' },
+  { id: 3, office: 'Shanghai' },
+  { id: 4, office: 'Shenzhen' },
+  { id: 5, office: 'Wuhan' },
+  { id: 6, office: "Xi'an" },
+];
