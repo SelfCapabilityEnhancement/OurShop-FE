@@ -15,7 +15,7 @@ jest.mock('lodash.clonedeep', () => ({
 }));
 
 jest.mock('@/service', () => ({
-  getAllOrdersItems: jest.fn(),
+  getAllOrdersItems: jest.fn().mockResolvedValue([]),
   updateOrders: jest.fn().mockResolvedValue([]),
 }));
 
