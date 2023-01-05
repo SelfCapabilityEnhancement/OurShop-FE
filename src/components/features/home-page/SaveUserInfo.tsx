@@ -38,22 +38,22 @@ export default function SaveUserInfo({
   const [officeList, setOfficeList] = useState<{ id: number; name: string }[]>(
     []
   );
+
   useEffect(() => {
-    (async () => {
-      const res = await getAllOffices();
+    getAllOffices().then((data) => {
       setCities(
-        res?.map(({ id, office }) => ({
+        data.map(({ id, office }) => ({
           id,
           name: office,
         }))
       );
       setOfficeList(
-        res?.map(({ id, office }) => ({
+        data.map(({ id, office }) => ({
           id,
           name: office,
         }))
       );
-    })();
+    });
   }, []);
 
   const handleInputField = (
