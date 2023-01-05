@@ -44,8 +44,8 @@ export default function LoginPage() {
 
     setError({});
     login(username, password)
-      .then((data) => {
-        if (data.data.title === 'username & password does not match') {
+      .then((res) => {
+        if (res.data.title === 'username & password does not match') {
           setLoginSuccess(false);
           setError({
             usernameError: 'Username & Password does not match!',
@@ -54,8 +54,8 @@ export default function LoginPage() {
         } else {
           setLoginSuccess(true);
           resetInput();
-          localStorage.setItem('jwt', 'Bearer ' + data.data.token);
-          localStorage.setItem('router', data.data.routerResponses);
+          localStorage.setItem('jwt', 'Bearer ' + res.data.token);
+          localStorage.setItem('router', res.data.routerResponses);
           setTimeout(() => {
             navigate('/home');
           }, 1500);

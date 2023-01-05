@@ -20,7 +20,7 @@ import { officeList } from '@/components/features/create-product/CreateProduct';
 import OfficeStoreSelect from '@/components/features/product-management/OfficeStoreSelect';
 
 const successMsg = 'The product was updated successfully!';
-const failMsg = 'All required field must be filled.';
+const failMsg = 'All required fields must be filled.';
 
 const basicForm: { id: keyof Product; label: string; type: string }[] = [
   { id: 'name', label: 'Product Name', type: 'string' },
