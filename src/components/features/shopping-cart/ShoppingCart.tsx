@@ -120,9 +120,8 @@ export default function ShoppingCart() {
       }
     };
 
-    const handleOnClickPayBtn = () => {
       const selectedItems = shoppingCartItems.filter(
-        (_item, index) => checkedState[index]
+        (_item, index) => updatedCheckedState[index]
       );
       const selectedProducts = selectedItems.map((e) => e.product);
 
@@ -136,6 +135,32 @@ export default function ShoppingCart() {
         selectOfficeList = new Set(
           [...selectOfficeList].filter((x) => tempOffices.has(x))
         );
+      }
+      if (collectOffices.size === 0) {
+        setNoneOffice(true);
+      } else {
+        setNoneOffice(false);
+      }
+    };
+
+    const handleOnClickPayBtn = () => {
+      const selectedItems = shoppingCartItems.filter(
+        (_item, index) => checkedState[index]
+      );
+      const selectedProducts = selectedItems.map((e) => e.product);
+
+      const selectedOffices = selectedItems.map(
+        (e) => new Set(e.offices.split(','))
+      );
+      let selectOfficeList = selectedOffices[0];
+
+      if (selectedOffices.length > 1) {
+        for (let i = 0; i < selectedOffices.length; i++) {
+          const tempOffices = selectedOffices[i];
+          selectOfficeList = new Set(
+            [...selectOfficeList].filter((x) => tempOffices.has(x))
+          );
+        }
       }
 
       const selectedShoppingCartIds = selectedItems.map(
@@ -232,7 +257,7 @@ export default function ShoppingCart() {
                           shoppingCartItem.offices === ''
                         }
                         value=""
-                        className="h-6 w-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                        className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                         checked={checkedState[index]}
                         onChange={() => handleOnCheck(index)}
                       />
