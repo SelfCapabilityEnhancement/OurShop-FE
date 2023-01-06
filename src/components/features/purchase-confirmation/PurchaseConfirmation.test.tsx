@@ -12,14 +12,17 @@ import {
   logisticMethods,
   productIds,
   shoppingCartIds,
+  mockOffices,
 } from '@/mocks/mockData';
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
+// import {validateOffice} from '@/utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
   payByToken: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -42,11 +45,13 @@ describe('purchase confirmation', () => {
       shoppingCartIds,
       productIds,
       logisticMethods,
+      selectedOffices: new Set(['Beijing']),
     },
   };
 
   jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);
   jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
+  jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffices);
 
   beforeEach(async () => {
     await act(async () => {
@@ -62,7 +67,7 @@ describe('purchase confirmation', () => {
     ).toBeInTheDocument();
     expect(await screen.findByText('My Tokens:')).toBeInTheDocument();
     expect(await screen.findByText('Cost of Tokens:')).toBeInTheDocument();
-    expect(container.querySelectorAll('button')).toHaveLength(2);
+    expect(container.querySelectorAll('button')).toHaveLength(3);
   });
 
   // it('should navigate to shopping cart when click cancel', async () => {
@@ -79,7 +84,7 @@ describe('purchase confirmation', () => {
   });
 
   it('should show banner when click buy by token btn and verify successfully', async () => {
-    const element = container.querySelector('button.buy');
+    const buyBtn = container.querySelector('button.buy');
     const mockResp = {
       config: {},
       data: {
@@ -95,11 +100,17 @@ describe('purchase confirmation', () => {
     const payByToken = jest
       .spyOn(service, 'payByToken')
       .mockResolvedValue(mockResp as AxiosResponse);
-    await user.click(element as Element);
+    const dropDown = screen.getByTestId('drop-down');
+    await user.click(dropDown as Element);
+    const office = screen.getByText('Beijing');
+    await user.click(office);
+    // validateOffice
+    await user.click(buyBtn as Element);
     // change expect
     // expect(
     //   await screen.findByText('The Purchase Made Successfully!')
     // ).toBeInTheDocument();
     expect(payByToken).toBeCalled();
+    //
   });
 });

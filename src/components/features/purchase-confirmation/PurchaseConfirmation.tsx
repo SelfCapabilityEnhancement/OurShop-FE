@@ -325,6 +325,7 @@ export default function PurchaseConfirmation() {
           Cancel
         </button>
         <button
+          data-testid="buyBtn"
           type="button"
           onClick={handleClickBuy}
           className="buy h-12 w-1/4 rounded-lg bg-violet-500 p-3 text-lg font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
