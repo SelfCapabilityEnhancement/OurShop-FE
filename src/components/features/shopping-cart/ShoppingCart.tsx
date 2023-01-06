@@ -186,11 +186,11 @@ export default function ShoppingCart() {
                     </div>
                     <label
                       htmlFor="product-checkbox-1"
-                      className="font-medium w-2/5 mx-5"
+                      className="mx-5 w-1/5 font-medium"
                     >
                       {shoppingCartItem.product.name}
                     </label>
-                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
+                    <div className="mx-5 flex w-1/5 items-center text-2xl font-medium">
                       <span className="mr-5">Number</span>
                       <Counter
                         count={shoppingCartItem.productNum}
