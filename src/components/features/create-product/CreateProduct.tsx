@@ -219,10 +219,10 @@ function CreateProduct() {
           key={item}
           onClick={() => handleCategory(item)}
           className={classNames(
-            'w-20 h-8 ml-2 mr-2 text-center text-sm font-normal py-1.5',
+            'ml-2 mr-2 h-8 w-20 py-1.5 text-center text-sm font-normal',
             categories.has(item) ? 'bg-purple-300' : 'bg-gray-200',
             validations.category
-              ? 'outline-none ring-inset ring ring-rose-500'
+              ? 'outline-none ring ring-inset ring-rose-500'
               : ''
           )}
         >
@@ -303,9 +303,9 @@ function CreateProduct() {
                 }}
                 className={({ selected }) =>
                   classNames(
-                    'w-52 rounded-lg text-xl font-semibold mt-4',
+                    'mt-4 w-52 rounded-lg text-xl font-semibold',
                     selected
-                      ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
+                      ? `${tab.id} border-b-2 border-white text-pink-500 underline underline-offset-8`
                       : 'text-gray-500'
                   )
                 }
@@ -322,20 +322,20 @@ function CreateProduct() {
                   success={false}
                   message={failMsg}
                 />
-                <form className="mb-6 grid grid-cols-2 gap-y-4 text-xl font-normal w-[500px]">
+                <form className="mb-6 grid w-[500px] grid-cols-2 gap-y-4 text-xl font-normal">
                   {basicForm.map(({ id, label, type }) => (
                     <div
                       key={id}
                       className="col-span-2 grid grid-cols-2 gap-y-4"
                     >
-                      <label htmlFor={id} className="mr-5 w-30">
-                        <span className="text-red-500 pr-1">*</span>
+                      <label htmlFor={id} className="w-30 mr-5">
+                        <span className="pr-1 text-red-500">*</span>
                         {label}
                       </label>
                       <input
                         type={type === 'string' ? 'text' : 'number'}
                         className={classNames(
-                          'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300',
+                          'rounded border border-gray-300 bg-gray-50 p-2 text-center text-base text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-purple-300',
                           validations[id]
                             ? 'outline-none ring ring-rose-500'
                             : ''
@@ -353,21 +353,21 @@ function CreateProduct() {
 
                   <div className="col-span-2">
                     <div>
-                      <span className="text-red-500 pr-1">*</span>
+                      <span className="pr-1 text-red-500">*</span>
                       Product Category
                     </div>
-                    <div className="grid grid-cols-3 mt-3 w-7/12">
+                    <div className="mt-3 grid w-7/12 grid-cols-3">
                       {categoryList.map((item) => renderCategory(item))}
                     </div>
                   </div>
 
-                  <label htmlFor="description" className="mr-5 col-span-2">
-                    <span className="text-red-500 pr-1">*</span>
+                  <label htmlFor="description" className="col-span-2 mr-5">
+                    <span className="pr-1 text-red-500">*</span>
                     Product Description
                   </label>
                   <textarea
                     className={classNames(
-                      'h-[200px] col-span-2 shadow-sm bg-gray-50 resize-none border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300',
+                      'col-span-2 h-[200px] resize-none rounded border border-gray-300 bg-gray-50 p-2 text-base text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-purple-300',
                       validations.description
                         ? 'outline-none ring ring-rose-500'
                         : ''
@@ -385,7 +385,7 @@ function CreateProduct() {
                   />
                   <button
                     onClick={(event) => handleNext(event)}
-                    className="next text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 transition ease-in font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                    className="next w-64 rounded-lg bg-violet-500 px-5 py-2.5 text-center text-lg font-medium text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500"
                   >
                     Next
                   </button>
@@ -399,15 +399,15 @@ function CreateProduct() {
                 message={isInvalidStoreExist ? failMsg : successMsg}
               />
               <Loading message="Processing..." visible={showLoading} />
-              <div className="flex flex-col m-8">
-                <p className="text-xl font-medium mb-3">
-                  <span className="text-red-500 pr-1">*</span>
+              <div className="m-8 flex flex-col">
+                <p className="mb-3 text-xl font-medium">
+                  <span className="pr-1 text-red-500">*</span>
                   Please indicate the office and number of product you want to
                   sell
                 </p>
                 {stores.map((item, index) => (
                   <>
-                    <p className="text-xl font-semibold my-3">{`Office ${
+                    <p className="my-3 text-xl font-semibold">{`Office ${
                       index + 1
                     }`}</p>
                     <OfficeStoreItem
@@ -428,7 +428,7 @@ function CreateProduct() {
               <footer className="ml-8">
                 <button
                   onClick={(event) => handleCreateProduct(event)}
-                  className=" create text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className=" create w-64 rounded-lg bg-violet-500 px-5 py-2.5 text-center text-lg font-medium text-white transition duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500"
                 >
                   Create New Product
                 </button>

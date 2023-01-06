@@ -56,7 +56,7 @@ export default function Header() {
       key={item.id}
       className={() =>
         classNames(
-          'p-2 mx-3 text-center border-b-2 border-white',
+          'mx-3 border-b-2 border-white p-2 text-center',
           isCurrentPage(`${item.id}`)
             ? 'text-pink-500 underline underline-offset-8'
             : ''
@@ -68,7 +68,7 @@ export default function Header() {
         <span
           data-testid="redDot"
           className={classNames(
-            'inline-block w-2 h-2 bg-red-600 rounded-full mb-2 ml-1',
+            'mb-2 ml-1 inline-block h-2 w-2 rounded-full bg-red-600',
             shoppingCartLength > 0 ? '' : 'hidden'
           )}
         ></span>
@@ -77,12 +77,12 @@ export default function Header() {
   );
 
   return (
-    <div className="flex justify-between items-center shadow-md h-[72px]">
-      <div className="flex items-center ml-8 min-w-[150px]">
+    <div className="flex h-[72px] items-center justify-between shadow-md">
+      <div className="ml-8 flex min-w-[150px] items-center">
         <img
           src="/logo.png"
           alt=""
-          className="logo cursor-pointer w-16 h-14"
+          className="logo h-14 w-16 cursor-pointer"
           onClick={handleClick}
         />
         <span className="cursor-pointer" onClick={handleClick}>
@@ -90,9 +90,9 @@ export default function Header() {
         </span>
       </div>
       <div className="flex items-center ">
-        <div className="nav-list flex justify-around flex-1">
+        <div className="nav-list flex flex-1 justify-around">
           {routerList === null ? (
-            <div className="font-semibold mr-80">Language : English</div>
+            <div className="mr-80 font-semibold">Language : English</div>
           ) : (
             headerList
               // @ts-ignore

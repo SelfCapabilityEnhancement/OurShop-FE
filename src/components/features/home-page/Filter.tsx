@@ -67,7 +67,7 @@ function Filter(props: { setProduct: Function }) {
           <OfficeBox getIsCheck={getIsCheck} />
           <button
             type="button"
-            className="apply mt-[6.5rem] ml-[32rem] w-[8rem] p-2 h-[2.5rem] text-lg text-white font-semibold rounded-xl bg-[#7F62C3] "
+            className="apply mt-[6.5rem] ml-[32rem] h-[2.5rem] w-[8rem] rounded-xl bg-[#7F62C3] p-2 text-lg font-semibold text-white "
             onClick={handleApply}
           >
             Apply

@@ -6,17 +6,17 @@ export default function SearchBar(props: { setProduct: Function }) {
       <Filter setProduct={props.setProduct} />
       <input
         data-testid="search-input"
-        className="bg-gray-50 mt-[4rem] pr-[8rem] h-[45px] w-[31.5rem]"
+        className="mt-[4rem] h-[45px] w-[31.5rem] bg-gray-50 pr-[8rem]"
         name="search"
         placeholder="  Search a product"
       />
       <button
         type="submit"
-        className="pl-[0.4rem] mt-[4rem] h-[45px] w-[3rem] text-sm font-medium text-white bg-[#AC64C2] rounded"
+        className="mt-[4rem] h-[45px] w-[3rem] rounded bg-[#AC64C2] pl-[0.4rem] text-sm font-medium text-white"
       >
         <svg
           aria-hidden="true"
-          className="pl-1 w-8 h-8"
+          className="h-8 w-8 pl-1"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

@@ -25,7 +25,7 @@ export default function Loading({
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex mt-20 items-center justify-center p-4 text-center">
+          <div className="mt-20 flex items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -39,7 +39,7 @@ export default function Loading({
               <Dialog.Panel className="transform overflow-hidden p-3 text-left align-middle transition-all">
                 <div role="status" className="flex items-center">
                   <svg
-                    className="inline mr-2 w-10 h-10 text-gray-200 animate-spin fill-blue-600"
+                    className="mr-2 inline h-10 w-10 animate-spin fill-blue-600 text-gray-200"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

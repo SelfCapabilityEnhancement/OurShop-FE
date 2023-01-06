@@ -48,7 +48,7 @@ export default function DetailPage() {
 
   const renderProductOfficeStock = (item: OfficeStock) => {
     return (
-      <div className="text-xl my-2 " key={item.officeId}>
+      <div className="my-2 text-xl " key={item.officeId}>
         <span className="">
           {item.officeName}: {item.stock}
         </span>
@@ -64,22 +64,22 @@ export default function DetailPage() {
         message={validation ? successMsg : failMsg}
       />
       <Loading visible={showLoading} message="Processing..."></Loading>
-      <div className="DetailPage flex col-span-2 justify-center gap-4">
+      <div className="DetailPage col-span-2 flex justify-center gap-4">
         <section className="mr-10">
           <Breadcrumb crumbNames={['Product Detail']} />
           <img
             src={product.images.split(',')[bigImgIndex]}
             alt={`big product picture ${bigImgIndex}`}
-            className="h-96 w-[420px] mb-5 rounded-xl border-2 drop-shadow-xl"
+            className="mb-5 h-96 w-[420px] rounded-xl border-2 drop-shadow-xl"
           />
-          <div className="flex small-pictures">
+          <div className="small-pictures flex">
             {product.images.split(',').map((imgSrc, index) => (
               <img
                 key={index}
                 src={imgSrc}
                 alt={`small product picture ${index}`}
                 className={classNames(
-                  'h-16 w-20 mr-3 rounded-xl border-2 drop-shadow-lg',
+                  'mr-3 h-16 w-20 rounded-xl border-2 drop-shadow-lg',
                   index === bigImgIndex ? 'border-purple-600' : ''
                 )}
                 onClick={() => {
@@ -90,30 +90,30 @@ export default function DetailPage() {
           </div>
         </section>
         <section className="w-[500px]">
-          <div className="self-center mb-4 font-medium text-2xl">
+          <div className="mb-4 self-center text-2xl font-medium">
             {product.name}
           </div>
-          <p className="price bg-slate-100 rounded-xl h-12 p-2 text-xl">
+          <p className="price h-12 rounded-xl bg-slate-100 p-2 text-xl">
             Price: ${product.priceMoney} or {product.priceToken} Token
           </p>
-          <div className="self-center my-4 font-medium text-2xl">
+          <div className="my-4 self-center text-2xl font-medium">
             Product Description
           </div>
-          <p className="description bg-slate-100 rounded-xl h-24 p-3 text-xl">
+          <p className="description h-24 rounded-xl bg-slate-100 p-3 text-xl">
             {product.description}
           </p>
           <div
             data-testid="counter"
-            className="PurchaseNumber flex bottom-12 my-4 items-center"
+            className="PurchaseNumber bottom-12 my-4 flex items-center"
           >
-            <span className="mr-36 font-medium text-2xl">No. of Purchase</span>
+            <span className="mr-36 text-2xl font-medium">No. of Purchase</span>
             <Counter
               count={count}
               handlePlus={handlePlus}
               handleMinus={handleMinus}
             />
           </div>
-          <div className="self-center my-4 font-medium text-2xl">
+          <div className="my-4 self-center text-2xl font-medium">
             Office & Inventory
           </div>
           <div className="mb-4 ml-2 grid grid-cols-3">
@@ -126,19 +126,19 @@ export default function DetailPage() {
             <button
               type="button"
               onClick={handleAddToCart}
-              className="add-in-cart p-2 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500
-              focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200
-              text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2
-              focus:ring-offset-2 rounded-lg w-56"
+              className="add-in-cart w-full w-56 rounded-lg bg-purple-600
+              p-2 text-center text-base font-semibold text-white shadow-md
+              transition duration-200 ease-in hover:bg-purple-700 focus:outline-none focus:ring-2
+              focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
             >
               Add in Shopping Cart
             </button>
             <button
               type="button"
-              className="purchase p-2 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500
-              focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200
-              text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2
-              focus:ring-offset-2 rounded-lg w-56"
+              className="purchase w-full w-56 rounded-lg bg-purple-600
+              p-2 text-center text-base font-semibold text-white shadow-md
+              transition duration-200 ease-in hover:bg-purple-700 focus:outline-none focus:ring-2
+              focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
             >
               Purchase
             </button>

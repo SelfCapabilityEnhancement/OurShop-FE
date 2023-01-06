@@ -2,10 +2,10 @@
 
 @layer compontents {
   .dropbtn {
-    @apply flex text-[#606368] cursor-pointer border-none bg-[#EEEEEE] text-xl pt-[0.5rem] h-[45px] w-[7rem] rounded !important;
+    @apply flex h-[45px] w-[7rem] cursor-pointer rounded border-none bg-[#EEEEEE] pt-[0.5rem] text-xl text-[#606368] !important;
   }
   .after-apply {
-    @apply flex text-white cursor-pointer border-none bg-[#AC64C2] text-xl pt-[0.5rem] h-[45px] w-[7rem] rounded !important;
+    @apply flex h-[45px] w-[7rem] cursor-pointer rounded border-none bg-[#AC64C2] pt-[0.5rem] text-xl text-white !important;
   }
   .arrow {
     @apply pb-[0.5rem];
@@ -16,7 +16,7 @@
   }
 
   .dropdown-content {
-    @apply absolute overflow-auto w-[41.5rem] h-[235px] bg-[#EEEEEE] rounded hidden z-[1];
+    @apply absolute z-[1] hidden h-[235px] w-[41.5rem] overflow-auto rounded bg-[#EEEEEE];
   }
 
   .show {

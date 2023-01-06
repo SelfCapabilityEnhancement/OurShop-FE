@@ -105,7 +105,7 @@ export default function PurchaseConfirmation() {
   };
 
   return (
-    <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
+    <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
       <Banner
         visible={showBanner}
         success={isVerifySuccess}
@@ -116,27 +116,27 @@ export default function PurchaseConfirmation() {
         }
       />
       <Loading visible={showLoading} message="Processing..." />
-      <h1 className="wallet-header text-center text-3xl mb-10">
+      <h1 className="wallet-header mb-10 text-center text-3xl">
         Purchase Confirmation
       </h1>
-      <ul className="flex-1 flex flex-col mb-10">
+      <ul className="mb-10 flex flex-1 flex-col">
         {products.map(({ name, priceToken, images }, index) => (
           <li
             key={`product-${index}`}
-            className="product border-gray-400 my-7 h-10"
+            className="product my-7 h-10 border-gray-400"
           >
             <div className="flex flex-1 flex-row items-center items-center p-4">
-              <div className="justify-center items-center mr-4">
+              <div className="mr-4 items-center justify-center">
                 <img
                   alt="product"
                   src={images.split(',')[0]}
-                  className="mx-auto object-cover rounded-lg h-20 w-24"
+                  className="mx-auto h-20 w-24 rounded-lg object-cover"
                 />
               </div>
               <div className="w-72">
-                <div className="text-gray-600 text-2xl font-medium">{name}</div>
+                <div className="text-2xl font-medium text-gray-600">{name}</div>
               </div>
-              <div className="pl-1 mr-10">
+              <div className="mr-10 pl-1">
                 <div className="flex items-center">
                   <span className="text-2xl font-normal">Number:</span>
                   <Counter
@@ -153,7 +153,7 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
-      <div className="grid w-1/2 ml-auto my-10 grid-cols-2 gap-y-4">
+      <div className="my-10 ml-auto grid w-1/2 grid-cols-2 gap-y-4">
         <div className="text-right text-2xl">My Tokens:</div>
         <div className="ml-5 text-2xl text-purple-500">{user?.token}</div>
         <div className="text-right text-2xl">Cost of Tokens:</div>
@@ -163,14 +163,14 @@ export default function PurchaseConfirmation() {
         <button
           type="button"
           onClick={handleClickCancel}
-          className="cancel w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 "
+          className="cancel h-12 w-1/4 rounded-lg bg-gray-400 p-3 text-lg font-semibold text-white hover:bg-gray-600 "
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={handleClickBuy}
-          className="buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          className="buy h-12 w-1/4 rounded-lg bg-violet-500 p-3 text-lg font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
           disabled={!user?.id}
         >
           Buy
