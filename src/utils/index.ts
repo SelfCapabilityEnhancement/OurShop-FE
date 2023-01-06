@@ -10,10 +10,6 @@ export const generateUniqueImageName = (name: string) => {
   return `${name.replace(/\.png/, '')}-${moment().unix()}.png`;
 };
 
-export function classNames(...classes: any): string {
-  return classes.filter(Boolean).join(' ');
-}
-
 export const validateForm = (obj: Product, exclude: string[] = []) => {
   const result: any = {};
   for (const [key, value] of Object.entries(obj)) {

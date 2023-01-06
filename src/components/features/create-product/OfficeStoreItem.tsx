@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { OfficeItem, StoreItem } from '@/components/common/CustomTypes';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { Listbox, Transition } from '@headlessui/react';
 
 type Props = {
@@ -41,13 +41,10 @@ export default function OfficeStoreItem({
     setStoreItem({ ...storeItem, inventory: Number(value) });
   };
 
-  let dropDownClassName = classNames(
-    dropDownItemClassName,
-    storeItem.officeName ? '' : 'text-slate-400'
-  );
-  if (error.office) {
-    dropDownClassName += ' outline-none ring-2 ring-rose-500';
-  }
+  const dropDownClassName = classNames(dropDownItemClassName, {
+    'text-slate-400': !storeItem.officeName,
+    'outline-none ring-2 ring-rose-500': error.office,
+  });
 
   let currentInputClassName = inputClassName;
   if (error.inventory) {

@@ -5,8 +5,8 @@ import {
   Product,
   StoresError,
 } from '@/components/common/CustomTypes';
+import { clsx as classNames } from 'clsx';
 import {
-  classNames,
   generateUniqueImageName,
   validateForm,
   validateOffices,

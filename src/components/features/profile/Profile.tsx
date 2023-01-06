@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import avatarUrl from 'images/avatar.png';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 
 export default function Profile() {
   const handleLogout = () => {
@@ -29,7 +29,7 @@ export default function Profile() {
                 <NavLink
                   to="my-wallet"
                   className={classNames(
-                    active ? 'bg-gray-100' : '',
+                    { 'bg-gray-100': active },
                     'wallet block px-4 py-2 text-center text-base'
                   )}
                 >
@@ -56,9 +56,7 @@ export default function Profile() {
           <div className="px-1 py-1">
             <Menu.Item>
               <span
-                className={classNames(
-                  'settings block px-4 py-2 text-center text-base'
-                )}
+                className={'settings block px-4 py-2 text-center text-base'}
               >
                 Settings
               </span>
@@ -70,7 +68,7 @@ export default function Profile() {
                 <NavLink
                   to="login"
                   className={classNames(
-                    active ? 'bg-gray-100' : '',
+                    { 'bg-gray-100': active },
                     'address block px-4 py-2 text-center text-base'
                   )}
                   onClick={handleLogout}

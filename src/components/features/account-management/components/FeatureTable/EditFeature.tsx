@@ -2,7 +2,6 @@ import { Feature } from '@/components/common/CustomTypes';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
-import { classNames } from '@/utils';
 import { updateFeature } from '@/service';
 import { initFeature } from '@/constants';
 
@@ -120,7 +119,7 @@ export default function EditFeature({
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="h-6 w-6"
+                  className="w-6 h-6"
                   onClick={() => handleClose()}
                 >
                   <path
@@ -151,9 +150,9 @@ export default function EditFeature({
                 />
                 <section className="col-span-8">Function Description</section>
                 <textarea
-                  className={classNames(
-                    'col-span-2 h-28 resize-none rounded border border-gray-300 bg-gray-50 p-2 text-base text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-purple-300'
-                  )}
+                  className={
+                    'col-span-2 h-28 shadow-sm resize-none bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300'
+                  }
                   value={feature.description}
                   onChange={(event) => handleInputField(event, 'description')}
                 />

@@ -2,7 +2,7 @@ import { Feature, Role } from '@/components/common/CustomTypes';
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { getFeatureList, updateRole } from '@/service';
 import { initRole } from '@/constants';
 import CancelIcon from '@/components/common/cancel-icon/Cancel-icon';

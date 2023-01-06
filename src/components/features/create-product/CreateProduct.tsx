@@ -8,12 +8,8 @@ import {
   StoresError,
 } from '@/components/common/CustomTypes';
 import Banner from '@/components/common/banner/Banner';
-import {
-  classNames,
-  generateUniqueImageName,
-  validateForm,
-  validateStores,
-} from '@/utils';
+import { clsx as classNames } from 'clsx';
+import { generateUniqueImageName, validateForm, validateStores } from '@/utils';
 import Loading from '@/components/common/loading/Loading';
 import { createProduct, getAllOffices, uploadFile } from '@/service';
 import { categoryList, initProduct, initValidateResult } from '@/constants';
