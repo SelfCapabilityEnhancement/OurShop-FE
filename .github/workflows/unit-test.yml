@@ -5,7 +5,7 @@ name: OurShop Unit test
 
 on:
   push:
-    branches: ['main', 'test']
+    branches: [ 'main', 'uat' ]
   pull_request:
   workflow_dispatch:
 

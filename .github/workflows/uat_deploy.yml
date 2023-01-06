@@ -1,10 +1,10 @@
-name: Build and deploy to Azure Web App
+name: Build and deploy uat to Azure Web App
 
 on:
   workflow_run:
     workflows: ['OurShop Unit test']
     types: [completed]
-    branches: ['test']
+    branches: [ 'uat' ]
 
 jobs:
   build-and-deploy:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: test
+          ref: uat
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -29,7 +29,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ourshop-qa'
+          app-name: 'ourshop-uat'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_QA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_OURSHOP_FE_UAT }}
           package: '.'
