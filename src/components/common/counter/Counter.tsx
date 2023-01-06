@@ -23,7 +23,7 @@ export default function Counter(props: {
         <path stroke="none" d="M0 0h24v24H0z" />
         <path d="M18 15l-6-6l-6 6h12" transform="rotate(270 12 12)" />
       </svg>
-      <span data-testid="num" className="text-3xl w-8 text-center">
+      <span data-testid="num" className="w-8 text-center text-3xl">
         {count}
       </span>
       <svg

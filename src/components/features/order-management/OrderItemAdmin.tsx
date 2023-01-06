@@ -21,27 +21,27 @@ export default function OrderItemAdmin(props: {
   }
 
   return (
-    <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 relative">
+    <div className="relative flex transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
       <div className="product-info flex flex-1 items-center">
         <img
           alt="profile"
           src={order.images.split(',')[0]}
-          className="w-20 h-16 mr-10 object-cover rounded-lg object-cover"
+          className="mr-10 h-16 w-20 rounded-lg object-cover object-cover"
           data-testid="product-picture"
         />
-        <span className="font-medium mx-5" data-testid="product-name">
+        <span className="mx-5 font-medium" data-testid="product-name">
           {order.productName}
         </span>
       </div>
       <div className="flex items-center">
         {props.nowStatus === 'Finished' && (
-          <div className="whitespace-nowrap w-[300px] ">
+          <div className="w-[300px] whitespace-nowrap ">
             <span data-testid="ordered-date-title">Order is Made on: </span>
             <span data-testid="ordered-date">{date}</span>
           </div>
         )}
         <div
-          className={`whitespace-nowrap mr-5 ${
+          className={`mr-5 whitespace-nowrap ${
             props.nowStatus === 'Pending' ? 'w-[400px]' : 'w-[100px]'
           } `}
         >
@@ -50,7 +50,7 @@ export default function OrderItemAdmin(props: {
         </div>
         {props.nowStatus !== 'All' && (
           <button
-            className="view-detail whitespace-nowrap ml-24 px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
+            className="view-detail ml-24 mb-2 whitespace-nowrap rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800"
             data-testid="view-detail"
             onClick={openDetailWindow}
           >

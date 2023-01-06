@@ -61,12 +61,12 @@ export default function MyOrder() {
     }
 
     return (
-      <div className="w-[1280px] mx-auto mt-5">
+      <div className="mx-auto mt-5 w-[1280px]">
         <ul className="flex flex-col">
           {ordersItems.map((item) => (
             <li
               key={item.productId}
-              className="order-item product border-gray-400 mb-5 h-20 "
+              className="order-item product mb-5 h-20 border-gray-400 "
             >
               <OrderItem
                 order={item}

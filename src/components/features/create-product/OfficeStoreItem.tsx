@@ -118,7 +118,7 @@ export default function OfficeStoreItem({
           </div>
         </Listbox>
       </div>
-      <span className="text-lg text-center mx-8 py-2">has</span>
+      <span className="mx-8 py-2 text-center text-lg">has</span>
       <input
         type="number"
         placeholder="Number of Product"
@@ -126,7 +126,7 @@ export default function OfficeStoreItem({
         className={currentInputClassName}
         onChange={changeInventory}
       />
-      <span className="text-lg text-center mx-8 py-2">Available</span>
+      <span className="mx-8 py-2 text-center text-lg">Available</span>
       {!isMaxCounts && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +134,7 @@ export default function OfficeStoreItem({
           viewBox="0 0 24 24"
           strokeWidth="1"
           stroke="white"
-          className="w-12 h-12"
+          className="h-12 w-12"
           data-testid="add-store-item"
           onClick={addStoreItem}
         >
@@ -152,7 +152,7 @@ export default function OfficeStoreItem({
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="white"
-          className="w-12 h-12 mx-2"
+          className="mx-2 h-12 w-12"
           data-testid="delete-store-item"
           onClick={() => deleteStoreItem(storeItem.id)}
         >

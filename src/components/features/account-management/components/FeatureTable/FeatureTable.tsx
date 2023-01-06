@@ -25,7 +25,7 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
   };
 
   return (
-    <div className="overflow-y-auto relative sm:rounded-lg mt-6">
+    <div className="relative mt-6 overflow-y-auto sm:rounded-lg">
       <div className="absolute w-full max-w-full p-3">
         {featureList.length > 0 && (
           <EditFeature
@@ -36,7 +36,7 @@ export default function FeatureTable(props: { featureList: Feature[] }) {
         )}
       </div>
       <table className="w-full text-center" id="AccountListTable">
-        <thead className="text-gray-800 bg-gray-100 text-lg">
+        <thead className="bg-gray-100 text-lg text-gray-800">
           <tr className="h-16">
             {featureListTabs.map((item) => (
               <th
