@@ -29,9 +29,9 @@ type Props = {
 const dropDownItemClassName =
   'relative w-full cursor-default bg-[#F3F4F6] py-2 pl-3 pr-[1.5rem] text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm';
 const inputClassName =
-  'w-[120px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[150px] h-10 py-2 bg-gray-100 text-l text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 const inputClassTitleName =
-  'w-[120px] h-10 py-2 bg-gray-100 text-[0.9rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
+  'w-[150px] h-10 py-2 bg-gray-100 text-[0.9rem] text-center focus:outline-none focus:ring-2 focus:ring-purple-400';
 
 export default function OfficeStoreSelect({
   index,
@@ -139,15 +139,15 @@ export default function OfficeStoreSelect({
         </Listbox>
       </div>
 
-      <span className="mx-[2%] py-2 text-center">has</span>
+      <span className="text-center mx-[1.5%] py-2">has</span>
       <input
         data-testid="product-number"
-        placeholder="Product Number"
+        placeholder="Number of Product"
         value={storeItem.stock === 0 ? '' : storeItem.stock}
         className={currentInputClassName}
         onChange={changeInventory}
       />
-      <span className="mx-[2%] py-2 text-center">Available</span>
+      <span className="text-center mx-[1.5%] py-2">Available</span>
       {!isMaxCounts && (
         <svg
           d="1671700379772"
@@ -155,8 +155,8 @@ export default function OfficeStoreSelect({
           viewBox="0 0 1024 1024"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
+          width="35"
+          height="35"
           data-testid="add-store-item"
           onClick={addStoreItem}
         >
@@ -173,8 +173,8 @@ export default function OfficeStoreSelect({
           viewBox="0 0 1024 1024"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
+          width="35"
+          height="35"
           data-testid="delete-store-item"
           onClick={() => deleteStoreItem(storeItem.officeId)}
         >
