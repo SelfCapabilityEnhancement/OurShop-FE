@@ -160,13 +160,13 @@ export default function PurchaseConfirmation() {
   const selectOffice = (event: string) => {
     setSelectedOffice(event);
     setVerifyOffice(false);
-    const id = allOffice.filter((item) => {
+    const filterOffice = allOffice.filter((item) => {
       if (item.office === event) {
         return item.id;
       }
       return 0;
     });
-    setCollectOfficeId(id[0].id);
+    setCollectOfficeId(filterOffice[0].id);
   };
 
   const dropDownItemClassName =
