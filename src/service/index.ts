@@ -14,10 +14,10 @@ import { uploadFileToBlob } from '@/azure-storage-blob';
 
 export const isDev = () => import.meta.env.DEV;
 const localBaseUrl = 'http://127.0.0.1:5173';
-const prodBaseUrl = 'https://ourshop-uat.azurewebsites.net';
+const prodBaseUrl = 'https://ourshop-uat-be-popular-roughy.azurewebsites.net';
 
 export const http = axios.create({
-  baseURL: `${isDev() ? localBaseUrl : prodBaseUrl}/api`,
+  baseURL: `${isDev() ? localBaseUrl : prodBaseUrl}/api/v1`,
   timeout: 10000,
 });
 
