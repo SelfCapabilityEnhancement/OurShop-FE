@@ -124,23 +124,18 @@ export default function PurchaseConfirmation() {
         setVerifyMessage('The purchase made successfully!');
         setVerifySuccess(true);
         handleVerify();
-      } catch (e) {
-        // @ts-ignore
+      } catch (e: any) {
+        SetShowBanner(true);
+        setVerifySuccess(false);
         if (e.response.data.title === 'token not enough') {
-          SetShowBanner(true);
           setVerifyMessage('Sorry, you do not have enough token!');
-          setVerifySuccess(false);
           handleVerify();
         } else {
           if (e.response.data.title === 'product is out of stock') {
-            SetShowBanner(true);
             setVerifyMessage(e.response.data.detail);
-            setVerifySuccess(false);
-            handleVerify();
+            handleVerifyOffice();
           } else {
-            SetShowBanner(true);
             setVerifyMessage('Sorry, Internet was broken!');
-            setVerifySuccess(false);
             handleVerify();
           }
         }
