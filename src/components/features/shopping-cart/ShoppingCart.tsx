@@ -173,12 +173,14 @@ export default function ShoppingCart() {
         data-testid="shopping-cart"
         className="w-5/6 min-w-[1080px] h-[calc(100vh-150px)] mx-auto mt-5 relative"
       >
-        {checkedState.includes(true) && noneOffice && (
-          <p className="text-[#C5352C]">
-            Please purchase individually, products are not available at same
-            offices !
-          </p>
-        )}
+        <section className="h-[1rem]">
+          {checkedState.includes(true) && noneOffice && (
+            <p className="text-[#C5352C]">
+              Please purchase individually, products are not available at same
+              offices !
+            </p>
+          )}
+        </section>
         <Loading visible={showLoading} message="Loading..." />
         <div className="flex flex-col">
           <ul className="flex flex-col min-h-[700px]">
