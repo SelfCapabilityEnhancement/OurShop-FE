@@ -10,7 +10,8 @@ import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
 import { Listbox, Transition } from '@headlessui/react';
-import { classNames, validateOffice } from '@/utils';
+import { validateOffice } from '@/utils';
+import { clsx as classNames } from 'clsx';
 
 export default function PurchaseConfirmation() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ export default function PurchaseConfirmation() {
   };
 
   const [showBanner, SetShowBanner] = useState(false);
-  const [verifyMessage, setVerifyMessage] = useState<string>();
+  const [verifyMessage, setVerifyMessage] = useState<string>('');
   const [isVerifySuccess, setVerifySuccess] = useState(false);
   const [user, setUser] = useState<User>();
   const [allCount, setAllCount] = useState(count);
@@ -132,10 +133,8 @@ export default function PurchaseConfirmation() {
           setVerifySuccess(false);
           handleVerify();
         } else {
-          // @ts-ignore
           if (e.response.data.title === 'product is out of stock') {
             SetShowBanner(true);
-            // @ts-ignore
             setVerifyMessage(e.response.data.detail);
             setVerifySuccess(false);
             handleVerify();
@@ -190,7 +189,7 @@ export default function PurchaseConfirmation() {
       <Banner
         visible={showBanner}
         success={isVerifySuccess}
-        message={verifyMessage as string}
+        message={verifyMessage}
       />
       <Loading visible={showLoading} message="Processing..." />
       <h1 className="wallet-header mb-10 text-center text-3xl">
