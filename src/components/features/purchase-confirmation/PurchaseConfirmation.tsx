@@ -10,7 +10,6 @@ import Loading from '@/components/common/loading/Loading';
 import Banner from '@/components/common/banner/Banner';
 import Counter from '@/components/common/counter/Counter';
 import { Listbox, Transition } from '@headlessui/react';
-import { validateOffice } from '@/utils';
 import { clsx as classNames } from 'clsx';
 
 export default function PurchaseConfirmation() {
@@ -108,7 +107,7 @@ export default function PurchaseConfirmation() {
   const handleClickBuy = async () => {
     getPurchaseConfirmationItems();
 
-    const result = validateOffice(selectedOffice);
+    const result = selectedOffice === 'Select an Office';
 
     if (result) {
       setVerifyOffice(result);
