@@ -139,7 +139,7 @@ export default function OfficeStoreSelect({
         </Listbox>
       </div>
 
-      <span className="mx-[2%] py-2 text-center">has</span>
+      <span className="text-center mx-[1.5%] py-2">has</span>
       <input
         data-testid="product-number"
         placeholder="Number of Product"
@@ -147,7 +147,7 @@ export default function OfficeStoreSelect({
         className={currentInputClassName}
         onChange={changeInventory}
       />
-      <span className="mx-[2%] py-2 text-center">Available</span>
+      <span className="text-center mx-[1.5%] py-2">Available</span>
       {!isMaxCounts && (
         <svg
           d="1671700379772"
