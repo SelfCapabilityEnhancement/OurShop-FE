@@ -48,7 +48,7 @@ export default function ImageUploader({
             strokeWidth="0.5"
             stroke="currentColor"
             className={classNames(
-              'new-image h-20 w-24 bg-slate-100 rounded-md border-solid',
+              'new-image h-20 w-24 rounded-md border-solid bg-slate-100',
               { 'outline-none ring ring-rose-500': validation }
             )}
           >

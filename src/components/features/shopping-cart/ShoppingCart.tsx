@@ -198,8 +198,8 @@ export default function ShoppingCart() {
                       : 'product my-3 h-20 border-gray-400'
                   }
                 >
-                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 min-w-[1400px]">
-                    <div className="mx-5 w-1/10">
+                  <div className="flex min-w-[1400px] transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+                    <div className="w-1/10 mx-5">
                       <img
                         alt="profile"
                         src={shoppingCartItem.product.images.split(',')[0]}
@@ -208,11 +208,11 @@ export default function ShoppingCart() {
                     </div>
                     <label
                       htmlFor="product-checkbox-1"
-                      className="font-medium w-2/5 mx-5"
+                      className="mx-5 w-1/5 font-medium"
                     >
                       {shoppingCartItem.product.name}
                     </label>
-                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
+                    <div className="mx-5 flex w-1/5 items-center text-2xl font-medium">
                       <span className="mr-5">Number</span>
                       <Counter
                         count={shoppingCartItem.productNum}
@@ -232,7 +232,7 @@ export default function ShoppingCart() {
                           shoppingCartItem.offices === ''
                         }
                         value=""
-                        className="w-6 h-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                        className="h-6 w-6 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                         checked={checkedState[index]}
                         onChange={() => handleOnCheck(index)}
                       />
