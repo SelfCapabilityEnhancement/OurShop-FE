@@ -174,7 +174,7 @@ export default function PurchaseConfirmation() {
 
   const dropDownClassName = classNames(dropDownItemClassName, {
     'text-[#606367]': selectedOffice === 'Select an Office',
-    ' outline-none ring-2 ring-rose-500': verifyOffice,
+    'outline-none ring-2 ring-rose-500': verifyOffice,
   });
 
   return (
