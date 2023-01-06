@@ -128,13 +128,11 @@ export default function ShoppingCart() {
       );
       let selectOfficeList = selectedOffices[0];
 
-      if (selectedOffices.length > 1) {
-        for (let i = 0; i < selectedOffices.length; i++) {
-          const tempOffices = selectedOffices[i];
-          selectOfficeList = new Set(
-            [...selectOfficeList].filter((x) => tempOffices.has(x))
-          );
-        }
+      for (let i = 1; i < selectedOffices.length; i++) {
+        const tempOffices = selectedOffices[i];
+        selectOfficeList = new Set(
+          [...selectOfficeList].filter((x) => tempOffices.has(x))
+        );
       }
 
       const selectedShoppingCartIds = selectedItems.map(
