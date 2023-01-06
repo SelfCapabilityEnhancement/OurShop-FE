@@ -10,7 +10,7 @@ import { classNames } from '@/utils';
 import useGlobalState from '@/state';
 
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';
-const failMsg = 'The product has been deleted!';
+const failMsg = 'The product is no longer available.';
 
 export default function DetailPage() {
   const {
