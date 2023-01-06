@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import FeatureTable from '@/components/features/account-management/components/FeatureTable/FeatureTable';
 import RoleTable from '@/components/features/account-management/components/RoleTable/RoleTable';
 import { Account, Feature, Role } from '@/components/common/CustomTypes';

@@ -6,7 +6,7 @@ import Loading from '@/components/common/loading/Loading';
 import { OfficeStock, Product } from '@/components/common/CustomTypes';
 import { useLocation } from 'react-router-dom';
 import { addToCarts } from '@/service';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import useGlobalState from '@/state';
 
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';

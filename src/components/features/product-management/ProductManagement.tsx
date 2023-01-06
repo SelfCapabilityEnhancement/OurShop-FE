@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react';
-import { classNames } from '@/utils';
+import { clsx as classNames } from 'clsx';
 import { useEffect, useState } from 'react';
 import { Product } from '@/components/common/CustomTypes';
 import { getDeletedProducts, getProducts } from '@/service';
