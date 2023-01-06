@@ -151,51 +151,56 @@ export default function ShoppingCart() {
       }
     }
 
-  return (
-    <div
-      data-testid="shopping-cart"
-      className="relative mx-auto mt-5 h-[calc(100vh-150px)] w-5/6 min-w-[1080px]"
-    >
-      <Loading visible={showLoading} message="Loading..." />
-      <div className="flex flex-col">
-        <ul className="flex min-h-[700px] flex-col">
-          {shoppingCartItems.map((shoppingCartItem, index) => {
-            return (
-              <li
-                key={`product-${index}`}
-                className={
-                  shoppingCartItem.product.isDeleted ||
-                  shoppingCartItem.offices === ''
-                    ? 'product my-3 h-20 border-gray-400 opacity-25'
-                    : 'product my-3 h-20 border-gray-400'
-                }
-              >
-                <div className="flex min-w-[1400px] transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                  <div className="w-1/10 mx-5">
-                    <img
-                      alt="profile"
-                      src={shoppingCartItem.product.images.split(',')[0]}
-                      className="mx-auto h-16 w-20 rounded-lg object-cover"
-                    />
-                  </div>
-                  <label
-                    htmlFor="product-checkbox-1"
-                    className="mx-5 w-1/5 font-medium"
-                  >
-                    {shoppingCartItem.product.name}
-                  </label>
-                  <div className="mx-5 flex w-1/5 items-center text-2xl font-medium">
-                    <span className="mr-5">Number</span>
-                    <Counter
-                      count={shoppingCartItem.productNum}
-                      handlePlus={() => handlePlus(index)}
-                      handleMinus={() => handleMinus(index)}
-                    />
-                  </div>
-                  <div className="flex w-2/5">
-                    {renderProductAvailableOrNot(shoppingCartItem)}
-                  </div>
-                  <div className="m-1/10">
+    return (
+      <div
+        data-testid="shopping-cart"
+        className="w-5/6 min-w-[1080px] h-[calc(100vh-150px)] mx-auto mt-5 relative"
+      >
+        {checkedState.includes(true) && noneOffice && (
+          <p className="text-[#C5352C]">
+            Please purchase individually, products are not available at same
+            offices !
+          </p>
+        )}
+        <Loading visible={showLoading} message="Loading..." />
+        <div className="flex flex-col">
+          <ul className="flex flex-col min-h-[700px]">
+            {shoppingCartItems.map((shoppingCartItem, index) => {
+              return (
+                <li
+                  key={`product-${index}`}
+                  className={
+                    shoppingCartItem.product.isDeleted ||
+                    shoppingCartItem.offices === ''
+                      ? 'product border-gray-400 my-3 h-20 opacity-25'
+                      : 'product border-gray-400 my-3 h-20'
+                  }
+                >
+                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
+                    <div className="mx-5">
+                      <img
+                        alt="profile"
+                        src={shoppingCartItem.product.images.split(',')[0]}
+                        className="w-20 h-16 mx-auto object-cover rounded-lg"
+                      />
+                    </div>
+                    <label
+                      htmlFor="product-checkbox-1"
+                      className="font-medium w-2/5 mx-5"
+                    >
+                      {shoppingCartItem.product.name}
+                    </label>
+                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
+                      <span className="mr-5">Number</span>
+                      <Counter
+                        count={shoppingCartItem.productNum}
+                        handlePlus={() => handlePlus(index)}
+                        handleMinus={() => handleMinus(index)}
+                      />
+                    </div>
+                    <div className="flex w-[50%]">
+                      {renderProductAvailableOrNot(shoppingCartItem)}
+                    </div>
                     <input
                       id={`product-checkbox-${index}`}
                       type="checkbox"
