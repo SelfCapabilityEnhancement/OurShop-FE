@@ -130,7 +130,7 @@ export default function ShoppingCart() {
       const selectedProducts = selectedItems.map((e) => e.product);
 
       const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices.split(','))
+        (e) => new Set(e.offices?.split(','))
       );
       let selectOfficeList = selectedOffices[0];
 
