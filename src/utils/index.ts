@@ -76,7 +76,3 @@ export const preventScrollBug = () => {
     HTMLDOM.setAttribute('style', '');
   }
 };
-
-export const validateOffice = (office: string) => {
-  return office === 'Select an Office';
-};
