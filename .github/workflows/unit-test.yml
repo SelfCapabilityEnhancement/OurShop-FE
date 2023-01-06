@@ -5,7 +5,7 @@ name: OurShop Unit test
 
 on:
   push:
-    branches: [ 'main', 'uat' ]
+    branches: ["main", "uat"]
   pull_request:
   workflow_dispatch:
 
@@ -18,5 +18,11 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '.nvmrc'
+          cache: 'yarn'
+  
       - name: Test
-        run: bash -c "yarn && yarn test"
+        run: yarn run test
