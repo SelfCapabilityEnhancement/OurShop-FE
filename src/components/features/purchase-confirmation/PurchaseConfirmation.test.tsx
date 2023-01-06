@@ -17,7 +17,6 @@ import {
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
-// import {validateOffice} from '@/utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
@@ -104,13 +103,7 @@ describe('purchase confirmation', () => {
     await user.click(dropDown as Element);
     const office = screen.getByText('Beijing');
     await user.click(office);
-    // validateOffice
     await user.click(buyBtn as Element);
-    // change expect
-    // expect(
-    //   await screen.findByText('The Purchase Made Successfully!')
-    // ).toBeInTheDocument();
     expect(payByToken).toBeCalled();
-    //
   });
 });
