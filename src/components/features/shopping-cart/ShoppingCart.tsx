@@ -103,7 +103,7 @@ export default function ShoppingCart() {
         (_item, index) => updatedCheckedState[index]
       );
       const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices?.split(','))
+        (e) => new Set(e.offices?.split(', '))
       );
       let collectOffices = selectedOffices[0];
 
