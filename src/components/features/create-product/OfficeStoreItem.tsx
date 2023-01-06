@@ -124,7 +124,7 @@ export default function OfficeStoreItem({
       <span className="text-lg text-center mx-8 py-2">has</span>
       <input
         type="number"
-        placeholder="Number of Products"
+        placeholder="Number of Product"
         value={storeItem.inventory === 0 ? '' : storeItem.inventory}
         className={currentInputClassName}
         onChange={changeInventory}
