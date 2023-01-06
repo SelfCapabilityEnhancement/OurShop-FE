@@ -198,7 +198,7 @@ export default function ShoppingCart() {
                       : 'product my-3 h-20 border-gray-400'
                   }
                 >
-                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 min-w-[1200px]">
+                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4 min-w-[1400px]">
                     <div className="mx-5 w-1/10">
                       <img
                         alt="profile"
