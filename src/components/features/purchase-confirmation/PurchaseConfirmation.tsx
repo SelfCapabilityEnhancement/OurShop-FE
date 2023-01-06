@@ -125,10 +125,27 @@ export default function PurchaseConfirmation() {
         setVerifySuccess(true);
         handleVerify();
       } catch (e) {
-        SetShowBanner(true);
-        setVerifyMessage('Sorry, you do not have enough token!');
-        setVerifySuccess(false);
-        handleVerify();
+        // @ts-ignore
+        if (e.response.data.title === 'token not enough') {
+          SetShowBanner(true);
+          setVerifyMessage('Sorry, you do not have enough token!');
+          setVerifySuccess(false);
+          handleVerify();
+        } else {
+          // @ts-ignore
+          if (e.response.data.title === 'product is out of stock') {
+            SetShowBanner(true);
+            // @ts-ignore
+            setVerifyMessage(e.response.data.detail);
+            setVerifySuccess(false);
+            handleVerify();
+          } else {
+            SetShowBanner(true);
+            setVerifyMessage('Sorry, Internet was broken!');
+            setVerifySuccess(false);
+            handleVerify();
+          }
+        }
       }
     }
   };
