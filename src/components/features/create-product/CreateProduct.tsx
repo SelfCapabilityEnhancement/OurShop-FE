@@ -399,7 +399,7 @@ function CreateProduct() {
                 message={isInvalidStoreExist ? failMsg : successMsg}
               />
               <Loading message="Processing..." visible={showLoading} />
-              <div className="flex flex-col m-8 min-h-[650px]">
+              <div className="flex flex-col m-8">
                 <p className="text-xl font-medium mb-3">
                   <span className="text-red-500 pr-1">*</span>
                   Please indicate the office and number of product you want to
