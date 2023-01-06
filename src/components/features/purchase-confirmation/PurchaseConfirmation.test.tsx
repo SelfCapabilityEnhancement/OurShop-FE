@@ -12,11 +12,12 @@ import {
   logisticMethods,
   productIds,
   shoppingCartIds,
-  mockOffices,
+  mockOffice,
 } from '@/mocks/mockData';
 import * as service from '@/service';
 import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
+// import {validateOffice} from '@/utils';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
@@ -50,7 +51,7 @@ describe('purchase confirmation', () => {
 
   jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[0]);
   jest.spyOn(ReactRouter, 'useLocation').mockReturnValue(mockLocation);
-  jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffices);
+  jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
 
   beforeEach(async () => {
     await act(async () => {
