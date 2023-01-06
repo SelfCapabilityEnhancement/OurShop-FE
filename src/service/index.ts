@@ -14,7 +14,7 @@ import { uploadFileToBlob } from '@/azure-storage-blob';
 
 export const isDev = () => import.meta.env.DEV;
 const localBaseUrl = 'http://127.0.0.1:5173';
-const prodBaseUrl = 'https://ourshop-tw.netlify.app';
+const prodBaseUrl = 'https://ourshop-uat.azurewebsites.net';
 
 export const http = axios.create({
   baseURL: `${isDev() ? localBaseUrl : prodBaseUrl}/api`,
