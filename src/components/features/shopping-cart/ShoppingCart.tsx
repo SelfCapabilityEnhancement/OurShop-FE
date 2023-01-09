@@ -98,29 +98,6 @@ export default function ShoppingCart() {
       }
     };
 
-      const selectedItems = shoppingCartItems.filter(
-        (_item, index) => updatedCheckedState[index]
-      );
-      const selectedProducts = selectedItems.map((e) => e.product);
-
-      const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices?.split(', '))
-      );
-      let selectOfficeList = selectedOffices[0];
-
-      for (let i = 1; i < selectedOffices.length; i++) {
-        const tempOffices = selectedOffices[i];
-        selectOfficeList = new Set(
-          [...selectOfficeList].filter((x) => tempOffices.has(x))
-        );
-      }
-      if (collectOffices.size === 0) {
-        setNoneOffice(true);
-      } else {
-        setNoneOffice(false);
-      }
-    };
-
     const handleOnClickPayBtn = () => {
       const selectedItems = shoppingCartItems.filter(
         (_item, index) => checkedState[index]
