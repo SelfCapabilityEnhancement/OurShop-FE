@@ -1,35 +1,35 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
-import { useEffect, useState } from 'react';
-import { ShoppingCartItem } from '@/components/common/CustomTypes';
+import { useEffect } from 'react';
 import { getShoppingCarts } from '@/service';
-import { clsx as classNames } from 'clsx';
 import { useLocation } from 'react-router';
 import useGlobalState from '@/state';
 
 export default function Header() {
   const navigate = useNavigate();
-  const [, setShoppingCartItems] = useState<ShoppingCartItem[]>([]);
 
   const [shoppingCartLength, setShoppingCartLength] =
     useGlobalState('shoppingCartLength');
 
   const location = useLocation();
 
+  const routerList = localStorage.getItem('router');
+
   useEffect(() => {
     if (isLoginOrRegister()) {
       localStorage.clear();
     }
     if (localStorage.getItem('jwt') != null) {
-      getShoppingCarts().then((items) => {
-        setShoppingCartItems(items);
+      getShoppingCarts(true).then((items) => {
         setShoppingCartLength(items.length);
       });
     }
   }, [localStorage.getItem('jwt')]);
 
   const handleClick = () => {
-    navigate('/home');
+    if (routerList !== null) {
+      navigate('/home');
+    }
   };
 
   const headerList = [
@@ -40,7 +40,6 @@ export default function Header() {
     { id: 'shopping-cart', name: 'Shopping Cart' },
     { id: 'my-order', name: 'My Order' },
   ];
-  const routerList = localStorage.getItem('router');
 
   const isCurrentPage = (param: string) => {
     return location.pathname === `/${param}`;
@@ -54,23 +53,21 @@ export default function Header() {
     <NavLink
       to={item.id}
       key={item.id}
-      className={() =>
-        classNames(
-          'mx-3 border-b-2 border-white p-2 text-center',
-          isCurrentPage(`${item.id}`)
-            ? 'text-pink-500 underline underline-offset-8'
-            : ''
-        )
+      className={
+        isCurrentPage(`${item.id}`)
+          ? 'mx-3 border-b-2 border-white p-2 text-center text-pink-500 underline underline-offset-8'
+          : 'mx-3 border-b-2 border-white p-2 text-center'
       }
     >
       {item.name}
       {item.name === 'Shopping Cart' && (
         <span
           data-testid="redDot"
-          className={classNames(
-            'mb-2 ml-1 inline-block h-2 w-2 rounded-full bg-red-600',
-            shoppingCartLength > 0 ? '' : 'hidden'
-          )}
+          className={
+            shoppingCartLength > 0
+              ? 'mb-2 ml-1 inline-block h-2 w-2 rounded-full bg-red-600'
+              : 'mb-2 ml-1 inline-block hidden h-2 w-2 rounded-full bg-red-600'
+          }
         ></span>
       )}
     </NavLink>

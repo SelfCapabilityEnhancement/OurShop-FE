@@ -100,10 +100,13 @@ export const addToCarts = async (productId: number, productNum: number) => {
   );
 };
 
-export const getShoppingCarts = async () => {
-  const { data } = await http.get(`/users/shopping-carts`, {
-    headers: { Authorization: localStorage.getItem('jwt') },
-  });
+export const getShoppingCarts = async (handleRedDot: boolean) => {
+  const { data } = await http.get(
+    `/users/shopping-carts?handle_red_dot=` + handleRedDot,
+    {
+      headers: { Authorization: localStorage.getItem('jwt') },
+    }
+  );
   return data;
 };
 
@@ -266,7 +269,7 @@ export const getFeatureList = async (): Promise<Feature[]> => {
 
 export const getRoleList = async (hasFunction: boolean): Promise<Role[]> => {
   return await http
-    .get('/roles?hasFunction=' + hasFunction, {
+    .get('/roles?has_function=' + hasFunction, {
       headers: { Authorization: localStorage.getItem('jwt') },
     })
     .then((response) => response.data);
