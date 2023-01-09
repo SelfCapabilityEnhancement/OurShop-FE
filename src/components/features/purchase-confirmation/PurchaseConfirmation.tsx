@@ -222,7 +222,7 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal text-right mr-[10%]">
+                <div className="mr-[10%] text-right text-xl font-normal">
                   Token:{' '}
                   <span className="text-purple-500">
                     {callCostOfOneProduct(index, priceToken)}
@@ -233,7 +233,7 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
-      <div className="flex mr-[10%] mb-[3%] flex-row-reverse">
+      <div className="mr-[10%] mb-[3%] flex flex-row-reverse">
         <div>
           <Listbox
             value={offices}
@@ -244,7 +244,7 @@ export default function PurchaseConfirmation() {
                 className={dropDownClassName}
                 data-testid="drop-down"
               >
-                <span className="text-xl block truncate">{selectedOffice}</span>
+                <span className="block truncate text-xl">{selectedOffice}</span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
                   <svg
                     className="h-8 w-8"
@@ -298,21 +298,21 @@ export default function PurchaseConfirmation() {
             </div>
           </Listbox>
         </div>
-        <div className="text-right text-2xl mt-[1.5%] mr-[2%]">
+        <div className="mt-[1.5%] mr-[2%] text-right text-2xl">
           Collect My Product at{' '}
         </div>
       </div>
 
       <div className="mr-[10%]">
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           Cost of Tokens:{' '}
           <span className="text-2xl text-red-600">{calCostOfToken()}</span>
         </div>
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           My Tokens:{' '}
           <span className="text-2xl text-purple-500">{user?.token}</span>
         </div>
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           My Number: <span>{user?.telephoneNum}</span>
         </div>
       </div>

@@ -164,7 +164,7 @@ export default function ShoppingCart() {
         </section>
         <Loading visible={showLoading} message="Loading..." />
         <div className="flex flex-col">
-          <ul className="flex flex-col min-h-[700px]">
+          <ul className="flex min-h-[700px] flex-col">
             {shoppingCartItems.map((shoppingCartItem, index) => {
               return (
                 <li
