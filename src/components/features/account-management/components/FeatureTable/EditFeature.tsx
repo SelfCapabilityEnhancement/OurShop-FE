@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Banner from '@/components/common/banner/Banner';
 import { updateFeature } from '@/service';
 import { initFeature } from '@/constants';
-import { classNames } from '@headlessui/react/dist/utils/class-names';
+import { clsx as classNames } from 'clsx';
 
 const inputClassName =
   'w-[550px] shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300';
