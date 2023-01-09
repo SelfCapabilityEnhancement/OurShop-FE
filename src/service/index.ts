@@ -269,7 +269,7 @@ export const getFeatureList = async (): Promise<Feature[]> => {
 
 export const getRoleList = async (hasFunction: boolean): Promise<Role[]> => {
   return await http
-    .get('/roles?hasFunction=' + hasFunction, {
+    .get('/roles?has_function=' + hasFunction, {
       headers: { Authorization: localStorage.getItem('jwt') },
     })
     .then((response) => response.data);
