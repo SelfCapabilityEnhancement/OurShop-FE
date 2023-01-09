@@ -46,7 +46,7 @@ export default function RegisterPage() {
       setError({});
       setButtonEnabled(false);
       register(username, password)
-        .then((data) => {
+        .then(() => {
           setRegisterSuccess(true);
           resetInput();
           setTimeout(() => {

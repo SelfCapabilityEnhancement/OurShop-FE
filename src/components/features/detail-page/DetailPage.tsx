@@ -10,7 +10,7 @@ import { clsx as classNames } from 'clsx';
 import useGlobalState from '@/state';
 
 const successMsg = 'The Product was Added into Shopping Cart Successfully!';
-const failMsg = 'Please Choose One Logistic Method!';
+const failMsg = 'The product is no longer available.';
 
 export default function DetailPage() {
   const {
@@ -34,16 +34,26 @@ export default function DetailPage() {
   };
 
   const handleAddToCart = async () => {
-    setValidation(true);
     setShowLoading(true);
-    await addToCarts(product.id, count);
-    setShoppingCartLength((prevState) => prevState + 1);
-    setShowLoading(false);
+    await addToCarts(product.id, count)
+      .then(() => {
+        setShoppingCartLength((prevState) => prevState + 1);
+        setValidation(true);
+        setShowLoading(false);
 
-    setShowBanner(true);
-    setTimeout(() => {
-      setShowBanner(false);
-    }, 1500);
+        setShowBanner(true);
+        setTimeout(() => {
+          setShowBanner(false);
+        }, 1500);
+      })
+      .catch(() => {
+        setValidation(false);
+        setShowLoading(false);
+        setShowBanner(true);
+        setTimeout(() => {
+          setShowBanner(false);
+        }, 1500);
+      });
   };
 
   const renderProductOfficeStock = (item: OfficeStock) => {
