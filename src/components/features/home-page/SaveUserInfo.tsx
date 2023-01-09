@@ -123,14 +123,14 @@ export default function SaveUserInfo({
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <div className="absolute inset-0 top-[-50px]">
-        <div className="mx-auto container flex items-center" id="nav">
-          <div className="w-full pt-2 p-4 mt-[7rem]">
-            <div className="mx-auto md:p-6 md:w-1/3">
-              <div className="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <p className="text-center text-3xl text-purple-400 font-normal">
+        <div className="container mx-auto flex items-center" id="nav">
+          <div className="mt-[7rem] w-full p-4 pt-2">
+            <div className="mx-auto md:w-1/3 md:p-6">
+              <div className="mb-4 rounded bg-[#EEEEEE] px-8 pt-6 pb-8 shadow-md">
+                <p className="text-center text-3xl font-normal text-purple-400">
                   Welcome
                 </p>
-                <p className="mt-6 h-14 text-center text-[16px] text-black-500">
+                <p className="text-black-500 mt-6 h-14 text-center text-[16px]">
                   Please fill the required information before purchases
                 </p>
                 <Banner
@@ -143,12 +143,12 @@ export default function SaveUserInfo({
                     <div key={id} className="mb-8">
                       <label
                         htmlFor={id}
-                        className="block text-gray-700 text-sm mb-2"
+                        className="mb-2 block text-sm text-gray-700"
                       >
                         {label}
                         <span className="text-red-500">&nbsp;*</span>
                       </label>
-                      <div className="mt-1 relative rounded-md shadow-sm">
+                      <div className="relative mt-1 rounded-md shadow-sm">
                         <input
                           data-testid={id}
                           id={id}
@@ -163,7 +163,7 @@ export default function SaveUserInfo({
                     </div>
                   ))}
                   <div className="mb-8">
-                    <label className="block text-gray-700 text-sm mb-2">
+                    <label className="mb-2 block text-sm text-gray-700">
                       Select at Office
                       <span className="text-red-500">&nbsp;*</span>
                     </label>
@@ -171,7 +171,7 @@ export default function SaveUserInfo({
                       value={selectedCity}
                       onChange={(event) => handleListBoxField(event)}
                     >
-                      <div className="relative mt-1 w-full h-full">
+                      <div className="relative mt-1 h-full w-full">
                         <Listbox.Button
                           data-testid="officeId"
                           className={
@@ -180,7 +180,7 @@ export default function SaveUserInfo({
                               : basicInputClassName + ' border-black'
                           }
                         >
-                          <span className="block truncate h-[22px]">
+                          <span className="block h-[22px] truncate">
                             {selectedCity.name}
                           </span>
                           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -239,7 +239,7 @@ export default function SaveUserInfo({
                   <div className="mb-4 ml-[55%]">
                     <button
                       data-testid="save-btn"
-                      className="transition duration-500 bg-violet-500 text-white bg-[#7F62C3] hover:bg-violet-700 focus:ring-violet-500 ease-in duration-200 font-medium rounded-2xl text-lg font-bold py-2 px-16 rounded "
+                      className="rounded-2xl rounded bg-violet-500 bg-[#7F62C3] py-2 px-16 text-lg font-medium font-bold text-white transition duration-500 duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500 "
                       onClick={(event) => handleSave(event)}
                       type="submit"
                     >

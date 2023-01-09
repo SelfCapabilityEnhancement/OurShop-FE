@@ -15,17 +15,17 @@ export default function OrderItem(props: {
   }
 
   return (
-    <div className="flex flex-row transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
-      <div className="flex-initial mx-5">
+    <div className="flex transform cursor-pointer select-none flex-row items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+      <div className="mx-5 flex-initial">
         <img
           alt="profile"
           src={order.images.split(',')[0]}
-          className="w-20 h-16 mx-auto object-cover rounded-lg object-cover"
+          className="mx-auto h-16 w-20 rounded-lg object-cover object-cover"
           data-testid="product-picture"
         />
       </div>
       <span
-        className="font-medium flex-initial w-2/5 mx-5"
+        className="mx-5 w-2/5 flex-initial font-medium"
         data-testid="product-name"
       >
         {order.productName}
@@ -39,7 +39,7 @@ export default function OrderItem(props: {
         <span data-testid="purchase-number">{order.purchaseNum}</span>
       </div>
       <button
-        className="my-order-view-detail whitespace-nowrap ml-24 px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
+        className="my-order-view-detail ml-24 mb-2 whitespace-nowrap rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800"
         data-testid="view-detail"
         onClick={myOrderDetailWindow}
       >

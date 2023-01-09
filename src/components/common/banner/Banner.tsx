@@ -27,7 +27,7 @@ export default function Banner({
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex mt-20 items-center justify-center p-4 text-center">
+          <div className="mt-20 flex items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -43,14 +43,14 @@ export default function Banner({
                   success ? 'bg-green-200' : 'bg-red-200'
                 } transform overflow-hidden rounded-md p-3 text-left align-middle shadow-xl transition-all`}
               >
-                <div className="flex flex-row items-center text-sm pr-5">
+                <div className="flex flex-row items-center pr-5 text-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className={`w-6 h-6 ${
+                    className={`h-6 w-6 ${
                       success ? 'text-green-600' : 'text-red-600'
                     } mr-2`}
                   >

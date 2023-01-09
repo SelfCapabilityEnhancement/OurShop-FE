@@ -51,7 +51,7 @@ export default function DeleteProduct({
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="ml-32 text-lg font-medium leading-6 text-gray-900 block"
+                    className="ml-32 block text-lg font-medium leading-6 text-gray-900"
                   >
                     <div data-testid="cancel-icon">
                       <span className="text-purple-400">Warning Message</span>
@@ -64,11 +64,11 @@ export default function DeleteProduct({
                   </div>
                   <div>
                     {product != null ? (
-                      <div className="flex mb-48">
+                      <div className="mb-48 flex">
                         <img
                           alt="profile"
                           src={product.images.split(',')[0]}
-                          className="w-20 h-16 ml-10 mr-5 object-cover rounded-lg"
+                          className="ml-10 mr-5 h-16 w-20 rounded-lg object-cover"
                         />
                         <div className="mt-4">{product.name}</div>
                       </div>
@@ -81,14 +81,14 @@ export default function DeleteProduct({
                       onClick={() => handleCancel()}
                       data-modal-toggle="popup-modal"
                       type="button"
-                      className="text-white rounded-lg bg-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm font-medium px-14 py-2.5 ml-6 mr-10 focus:z-10 "
+                      className="ml-6 mr-10 rounded-lg rounded-lg bg-gray-400 px-14 py-2.5 text-sm font-medium text-white hover:bg-gray-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 "
                     >
                       cancel
                     </button>
                     <button
                       data-modal-toggle="popup-modal"
                       type="button"
-                      className="text-white bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-14 py-2.5 text-center"
+                      className="inline-flex items-center rounded-lg bg-purple-600 px-14 py-2.5 text-center text-sm font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-purple-500 focus:ring-red-300 focus:ring-offset-purple-200 dark:focus:ring-red-800"
                       onClick={handleDeleteBtn}
                       data-testid="delete-btn"
                     >

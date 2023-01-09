@@ -6,12 +6,12 @@ export default function BuyerInfoTable(props: {
   const selectedOrdersItemAdmin = props.selectedOrdersItemAdmin;
   return (
     <div>
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table
-          className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          className="w-full text-left text-sm text-gray-500 dark:text-gray-400"
           id="BuyerInfoTable"
         >
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="py-3 px-6 text-center">
                 Product Name
@@ -44,7 +44,7 @@ export default function BuyerInfoTable(props: {
                   </td>
                   <td
                     scope="row"
-                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+                    className="whitespace-nowrap py-4 px-6 font-medium text-gray-900"
                   >
                     {order.username}
                   </td>

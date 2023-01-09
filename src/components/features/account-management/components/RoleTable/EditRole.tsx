@@ -37,7 +37,7 @@ export default function EditRole({
         key={feature}
         onClick={() => handleSelect(id)}
         className={classNames(
-          'w-[160px] h-[30px] text-white text-[15px] text-center text-l font-normal mt-[3%] rounded-lg mr-[3%]',
+          'text-l mt-[3%] mr-[3%] h-[30px] w-[160px] rounded-lg text-center text-[15px] font-normal text-white',
           featureIds.includes(id) ? 'bg-[#AE66C3]' : 'bg-gray-300'
         )}
       >
@@ -80,7 +80,7 @@ export default function EditRole({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="mx-[30%] relative z-10 justify-center"
+        className="relative z-10 mx-[30%] justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -106,10 +106,10 @@ export default function EditRole({
           <Dialog.Panel className="absolute top-[-285px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title
               as="h1"
-              className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
+              className="grid grid-cols-3 text-lg font-medium leading-6 text-gray-900"
             >
               <div></div>
-              <div className="text-[#A45FB7] text-xl content-center justify-self-center font-semibold mb-[20%]">
+              <div className="mb-[20%] content-center justify-self-center text-xl font-semibold text-[#A45FB7]">
                 Role Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -137,7 +137,7 @@ export default function EditRole({
                 <button
                   data-testid="saveBtn"
                   onClick={() => handleSubmit()}
-                  className="mt-[30%] mx-[50%] token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
+                  className="token mx-[50%] mt-[30%] h-14 w-2/5 rounded-lg bg-violet-500 p-2 text-lg font-semibold text-white text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 disabled:opacity-50"
                 >
                   Save
                 </button>

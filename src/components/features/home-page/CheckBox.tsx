@@ -17,7 +17,7 @@ export default function Checkbox(props: {
           // @ts-ignore
           onChange={handleClick}
           checked={isChecked}
-          className="align-text-bottom leading-loose text-xl mx-[0.5rem] h-[1.25rem] w-[1.25rem] bg-gray-100 accent-violet-600 focus:ring-violet-700"
+          className="mx-[0.5rem] h-[1.25rem] w-[1.25rem] bg-gray-100 align-text-bottom text-xl leading-loose accent-violet-600 focus:ring-violet-700"
         />
         {children}
       </label>

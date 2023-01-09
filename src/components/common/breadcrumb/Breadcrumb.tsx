@@ -7,7 +7,7 @@ export default function Breadcrumb(props: { crumbNames: string[] }) {
     <li key={name}>
       <div className="flex items-center">
         <svg
-          className="w-6 h-6 text-gray-400"
+          className="h-6 w-6 text-gray-400"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -24,15 +24,15 @@ export default function Breadcrumb(props: { crumbNames: string[] }) {
   );
 
   return (
-    <nav className="flex mb-10" aria-label="Breadcrumb">
+    <nav className="mb-10 flex" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-3">
-        <li className="inline-flex items-center to-home">
+        <li className="to-home inline-flex items-center">
           <NavLink
             to="/home"
             className="inline-flex items-center text-base font-medium text-gray-700 hover:text-gray-900"
           >
             <svg
-              className="w-4 h-4 mr-2"
+              className="mr-2 h-4 w-4"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

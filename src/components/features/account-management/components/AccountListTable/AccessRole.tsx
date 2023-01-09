@@ -84,7 +84,7 @@ export default function AccessRole({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="mx-[30%] relative z-10 justify-center"
+        className="relative z-10 mx-[30%] justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -109,10 +109,10 @@ export default function AccessRole({
           leaveTo="opacity-0 scale-95"
         >
           <Dialog.Panel className="fixed top-[19%] w-[590px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle transition-all">
-            <Dialog.Title as="h1" className="leading-6 grid grid-cols-3">
+            <Dialog.Title as="h1" className="grid grid-cols-3 leading-6">
               <div></div>
-              <div className="flex col-start-1 col-end-4">
-                <div className="text-[#A45FB7] text-xl content-center font-semibold ml-[30%] mb-[5%]">
+              <div className="col-start-1 col-end-4 flex">
+                <div className="ml-[30%] mb-[5%] content-center text-xl font-semibold text-[#A45FB7]">
                   Access Configuration
                 </div>
                 <div className="w-[28%]"></div>
@@ -128,19 +128,19 @@ export default function AccessRole({
                 message={message as string}
               />
               <div className="col-span-2">
-                <div className="text-xl text-gray-900 mb-8">
+                <div className="mb-8 text-xl text-gray-900">
                   Please select role for the user {account.username}
                 </div>
-                <div className="flex justify-start gap-6 mt-3">
+                <div className="mt-3 flex justify-start gap-6">
                   {allRoles.map((role) => renderRole(role, role.roleId))}
                 </div>
               </div>
 
-              <div className="flex justify-end mr-8">
+              <div className="mr-8 flex justify-end">
                 <button
                   data-testid="saveBtn"
                   onClick={() => handleSubmit()}
-                  className="text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-2xl text-2xl w-44 h-12 px-5 py-2 text-center"
+                  className="h-12 w-44 rounded-2xl bg-violet-500 px-5 py-2 text-center text-2xl font-medium text-white transition duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500"
                 >
                   Save
                 </button>

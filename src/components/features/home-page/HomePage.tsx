@@ -54,7 +54,7 @@ export default function HomePage() {
         <div
           key={product.id}
           onClick={() => handleClick(product)}
-          className="product w-full h-72 mb-5 flex flex-col bg-gray-100"
+          className="product mb-5 flex h-72 w-full flex-col bg-gray-100"
           id="home-product"
         >
           <img
@@ -91,7 +91,7 @@ export default function HomePage() {
               <SearchBar setProduct={setProducts} />
             </div>
             <SaveUserInfo isOpen={isOpen} setIsOpen={setIsOpen} />
-            <div className="grid grid-cols-5 gap-7 justify-between my-10 mx-10">
+            <div className="my-10 mx-10 grid grid-cols-5 justify-between gap-7">
               {renderProducts(products)}
             </div>
             <div className="mt-[3%] flex justify-center">

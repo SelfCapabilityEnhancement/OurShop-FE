@@ -85,7 +85,7 @@ export default function EditFeature({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="mx-[31%] relative z-10 justify-center"
+        className="relative z-10 mx-[31%] justify-center"
         onClose={() => {}}
       >
         <Transition.Child
@@ -110,7 +110,7 @@ export default function EditFeature({
         >
           <Dialog.Panel className="absolute top-[-285px] w-[600px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
             <Dialog.Title as="h1" className="flex">
-              <div className="ml-[25%] mr-[25%] mb-[5%] text-[#A45FB7] text-2xl content-center justify-self-center font-semibold">
+              <div className="ml-[25%] mr-[25%] mb-[5%] content-center justify-self-center text-2xl font-semibold text-[#A45FB7]">
                 Function Configuration
               </div>
               <div className="justify-self-end" data-testid="cancel-icon">
@@ -120,7 +120,7 @@ export default function EditFeature({
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                   onClick={() => handleClose()}
                 >
                   <path
@@ -139,7 +139,7 @@ export default function EditFeature({
               />
               <div className="mb-6 grid grid-cols-2 gap-y-3 text-xl font-normal">
                 <div className="col-span-8">
-                  <span className="text-red-500 pr-1">*</span>
+                  <span className="pr-1 text-red-500">*</span>
                   Please fill the code for <b>{feature.featureName}</b>
                 </div>
                 <input
@@ -152,7 +152,7 @@ export default function EditFeature({
                 <section className="col-span-8">Function Description</section>
                 <textarea
                   className={classNames(
-                    'col-span-2 h-28 shadow-sm resize-none bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300'
+                    'col-span-2 h-28 resize-none rounded border border-gray-300 bg-gray-50 p-2 text-base text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-purple-300'
                   )}
                   value={feature.description}
                   onChange={(event) => handleInputField(event, 'description')}
@@ -160,7 +160,7 @@ export default function EditFeature({
                 <button
                   data-testid="saveBtn"
                   onClick={() => handleSubmit()}
-                  className="mx-[5%] mt-[30%] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                  className="update col-start-2 mx-[5%] mt-[30%] w-64 rounded-lg bg-violet-500 px-5 py-2.5 text-center text-lg font-medium text-white transition duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500"
                 >
                   Save
                 </button>

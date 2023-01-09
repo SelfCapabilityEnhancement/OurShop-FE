@@ -81,13 +81,13 @@ export default function MyInformation() {
     }
 
     return (
-      <div className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40 p-4">
+      <div className="relative mx-auto mt-10 h-[720px] w-[600px] rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
         {pageVisible ? (
           <div>
-            <h1 className="address-header text-center text-3xl mb-10">
+            <h1 className="address-header mb-10 text-center text-3xl">
               My Information
             </h1>
-            <div className="flex items-center justify-between m-8">
+            <div className="m-8 flex items-center justify-between">
               <p className="text-2xl font-semibold">My Office</p>
               <Listbox value={selectedCity} onChange={setSelectedCity}>
                 <div className="relative mt-1 w-28">
@@ -100,7 +100,7 @@ export default function MyInformation() {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        className="h-6 w-6"
                       >
                         <path
                           strokeLinecap="round"
@@ -147,7 +147,7 @@ export default function MyInformation() {
                 </div>
               </Listbox>
             </div>
-            <div className="flex items-center justify-between m-8">
+            <div className="m-8 flex items-center justify-between">
               <p className="text-2xl font-semibold">My Shipping Address</p>
               <p
                 data-testid="edit-address"
@@ -158,7 +158,7 @@ export default function MyInformation() {
               </p>
             </div>
             <p className="m-8 text-2xl font-light">{saveShippingAddress}</p>
-            <div className="flex items-center justify-between m-8">
+            <div className="m-8 flex items-center justify-between">
               <p className="text-2xl font-semibold">My Phone</p>
               <p className="edit-btn text-2xl font-semibold text-indigo-400">
                 Edit
@@ -177,7 +177,7 @@ export default function MyInformation() {
                 <button
                   type="button"
                   onClick={handleClick}
-                  className="go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white transition ease-in duration-200 font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
+                  className="go-home absolute bottom-10 right-10 h-12 w-1/2 rounded-lg bg-violet-500 px-3 py-3 text-lg font-semibold text-white transition duration-200 ease-in hover:bg-violet-700 "
                 >
                   Save
                 </button>

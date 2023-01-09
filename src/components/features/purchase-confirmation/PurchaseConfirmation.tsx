@@ -186,34 +186,34 @@ export default function PurchaseConfirmation() {
   );
 
   return (
-    <div className="flex flex-col content-center shadow-lg min-w-[720px] rounded-2xl mx-auto mt-10 w-2/5 min-h-[720px] bg-zinc-300/40 p-4">
+    <div className="mx-auto mt-10 flex min-h-[720px] w-2/5 min-w-[720px] flex-col content-center rounded-2xl bg-zinc-300/40 p-4 shadow-lg">
       <Banner
         visible={showBanner}
         success={isVerifySuccess}
         message={verifyMessage as string}
       />
       <Loading visible={showLoading} message="Processing..." />
-      <h1 className="wallet-header text-center text-3xl mb-10">
+      <h1 className="wallet-header mb-10 text-center text-3xl">
         Purchase Confirmation
       </h1>
-      <ul className="flex-1 flex flex-col mb-10">
+      <ul className="mb-10 flex flex-1 flex-col">
         {products.map(({ name, priceToken, images }, index) => (
           <li
             key={`product-${index}`}
-            className="product border-gray-400 my-7 h-10"
+            className="product my-7 h-10 border-gray-400"
           >
             <div className="flex flex-1 flex-row items-center items-center p-4">
-              <div className="justify-center items-center mr-4">
+              <div className="mr-4 items-center justify-center">
                 <img
                   alt="product"
                   src={images.split(',')[0]}
-                  className="mx-auto object-cover rounded-lg h-20 w-24"
+                  className="mx-auto h-20 w-24 rounded-lg object-cover"
                 />
               </div>
               <div className="w-72">
-                <div className="text-gray-600 text-2xl font-medium">{name}</div>
+                <div className="text-2xl font-medium text-gray-600">{name}</div>
               </div>
-              <div className="pl-1 mr-10">
+              <div className="mr-10 pl-1">
                 <div className="flex items-center">
                   <span className="text-2xl font-normal">Number:</span>
                   <Counter
@@ -222,7 +222,7 @@ export default function PurchaseConfirmation() {
                     handleMinus={() => handleMinus(index)}
                   />
                 </div>
-                <div className="text-xl font-normal text-right mr-[10%]">
+                <div className="mr-[10%] text-right text-xl font-normal">
                   Token:{' '}
                   <span className="text-purple-500">
                     {callCostOfOneProduct(index, priceToken)}
@@ -233,7 +233,7 @@ export default function PurchaseConfirmation() {
           </li>
         ))}
       </ul>
-      <div className="flex mr-[10%] mb-[3%] flex-row-reverse">
+      <div className="mr-[10%] mb-[3%] flex flex-row-reverse">
         <div>
           <Listbox
             value={offices}
@@ -244,7 +244,7 @@ export default function PurchaseConfirmation() {
                 className={dropDownClassName}
                 data-testid="drop-down"
               >
-                <span className="text-xl block truncate">{selectedOffice}</span>
+                <span className="block truncate text-xl">{selectedOffice}</span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
                   <svg
                     className="h-8 w-8"
@@ -298,21 +298,21 @@ export default function PurchaseConfirmation() {
             </div>
           </Listbox>
         </div>
-        <div className="text-right text-2xl mt-[1.5%] mr-[2%]">
+        <div className="mt-[1.5%] mr-[2%] text-right text-2xl">
           Collect My Product at{' '}
         </div>
       </div>
 
       <div className="mr-[10%]">
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           Cost of Tokens:{' '}
           <span className="text-2xl text-red-600">{calCostOfToken()}</span>
         </div>
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           My Tokens:{' '}
           <span className="text-2xl text-purple-500">{user?.token}</span>
         </div>
-        <div className="text-right text-2xl mb-[3%]">
+        <div className="mb-[3%] text-right text-2xl">
           My Number: <span>{user?.telephoneNum}</span>
         </div>
       </div>
@@ -320,7 +320,7 @@ export default function PurchaseConfirmation() {
         <button
           type="button"
           onClick={handleClickCancel}
-          className="mt-[6%] cancel w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-gray-400 hover:bg-gray-600 "
+          className="cancel mt-[6%] h-12 w-1/4 rounded-lg bg-gray-400 p-3 text-lg font-semibold text-white hover:bg-gray-600 "
         >
           Cancel
         </button>
@@ -328,7 +328,7 @@ export default function PurchaseConfirmation() {
           data-testid="buyBtn"
           type="button"
           onClick={handleClickBuy}
-          className="mt-[6%] buy w-1/4 p-3 h-12 text-lg text-white font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 disabled:opacity-50"
+          className="buy mt-[6%] h-12 w-1/4 rounded-lg bg-violet-500 p-3 text-lg font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
           disabled={!user?.id}
         >
           Buy
