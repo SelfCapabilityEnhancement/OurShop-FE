@@ -1,20 +1,20 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Profile from '../profile/Profile';
-import { useEffect, useState } from 'react';
-import { ShoppingCartItem } from '@/components/common/CustomTypes';
-import { getShoppingCarts } from '@/service';
+import { useEffect } from 'react';
 import { classNames } from '@/utils';
 import { useLocation } from 'react-router';
 import useGlobalState from '@/state';
+import { getShoppingCarts } from '@/service';
 
 export default function Header() {
   const navigate = useNavigate();
-  const [, setShoppingCartItems] = useState<ShoppingCartItem[]>([]);
 
   const [shoppingCartLength, setShoppingCartLength] =
     useGlobalState('shoppingCartLength');
 
   const location = useLocation();
+
+  const routerList = localStorage.getItem('router');
 
   useEffect(() => {
     if (isLoginOrRegister()) {
@@ -22,7 +22,6 @@ export default function Header() {
     }
     if (localStorage.getItem('jwt') != null) {
       getShoppingCarts(true).then((items) => {
-        setShoppingCartItems(items);
         setShoppingCartLength(items.length);
       });
     }
@@ -42,7 +41,6 @@ export default function Header() {
     { id: 'shopping-cart', name: 'Shopping Cart' },
     { id: 'my-order', name: 'My Order' },
   ];
-  const routerList = localStorage.getItem('router');
 
   const isCurrentPage = (param: string) => {
     return location.pathname === `/${param}`;
