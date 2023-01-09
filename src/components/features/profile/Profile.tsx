@@ -9,7 +9,7 @@ export default function Profile() {
     localStorage.clear();
   };
   return (
-    <Menu as="div" className="relative flex justify-end mx-8">
+    <Menu as="div" className="relative mx-8 flex justify-end">
       <Menu.Button>
         <img className="avatar h-12 w-12 rounded-full" src={avatarUrl} alt="" />
       </Menu.Button>
@@ -22,7 +22,7 @@ export default function Profile() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-14 w-40 rounded-md bg-white py-1 shadow-lg divide-y divide-gray-200 ring-1 ring-black ring-opacity-5">
+        <Menu.Items className="absolute right-0 z-10 mt-14 w-40 divide-y divide-gray-200 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="px-1 py-1">
             <Menu.Item>
               {({ active }) => (

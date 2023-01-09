@@ -39,19 +39,19 @@ export default function MyWallet() {
 
     return (
       <div
-        className="relative shadow-lg rounded-2xl mx-auto mt-10 w-[600px] h-[720px] bg-zinc-300/40
-          dark:bg-gray-800 p-4"
+        className="relative mx-auto mt-10 h-[720px] w-[600px] rounded-2xl bg-zinc-300/40 p-4
+          shadow-lg dark:bg-gray-800"
       >
         {showPage && (
           <div>
-            <h1 className="wallet-header text-center text-3xl mb-10">
+            <h1 className="wallet-header mb-10 text-center text-3xl">
               My Wallet
             </h1>
-            <div className="flex items-center justify-between m-8">
+            <div className="m-8 flex items-center justify-between">
               <p className="text-2xl font-semibold">My Tokens</p>
               <p className="text-2xl font-semibold text-purple-500">{token}</p>
             </div>
-            <div className="flex items-center justify-between m-8">
+            <div className="m-8 flex items-center justify-between">
               <p className="text-2xl font-semibold">My Bank Account</p>
               <p className="text-2xl font-semibold text-indigo-400">Edit</p>
             </div>
@@ -61,7 +61,7 @@ export default function MyWallet() {
             <button
               type="button"
               onClick={handleClick}
-              className="go-home w-1/2 px-3 py-3 h-12 absolute bottom-10 right-10 text-lg text-white transition ease-in duration-200 font-semibold rounded-lg bg-violet-500 hover:bg-violet-700 "
+              className="go-home absolute bottom-10 right-10 h-12 w-1/2 rounded-lg bg-violet-500 px-3 py-3 text-lg font-semibold text-white transition duration-200 ease-in hover:bg-violet-700 "
             >
               Good to Go
             </button>

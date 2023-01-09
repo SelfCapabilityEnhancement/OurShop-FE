@@ -71,7 +71,7 @@ export default function OrderDetailWindow(props: {
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
+                  className="grid grid-cols-3 text-lg font-medium leading-6 text-gray-900"
                 >
                   <div></div>
                   <div className="justify-self-center font-semibold">
@@ -81,26 +81,26 @@ export default function OrderDetailWindow(props: {
                     <CancelIcon handleClose={closeDetailWindow} />
                   </div>
                 </Dialog.Title>
-                <div className="mt-2 flex mx-2">
+                <div className="mx-2 mt-2 flex">
                   <img
                     alt="profile"
                     src={selectedOrdersItemAdmin.images.split(',')[0]}
-                    className="my-2 mx-2 object-cover rounded-lg w-24 h-24"
+                    className="my-2 mx-2 h-24 w-24 rounded-lg object-cover"
                     data-testid="product-picture"
                   />
-                  <p className="text-base font-semibold mx-auto mt-3 text-black text-center">
+                  <p className="mx-auto mt-3 text-center text-base font-semibold text-black">
                     {selectedOrdersItemAdmin.productName}
                   </p>
                 </div>
                 <div>
-                  <p className="text-base mx-2 my-1">
+                  <p className="mx-2 my-1 text-base">
                     Order Number: {selectedOrdersItemAdmin.productNumAll}
                   </p>
                 </div>
                 <div className="mx-2">
-                  <p className="text-base my-1">Buyer Information: </p>
+                  <p className="my-1 text-base">Buyer Information: </p>
                   <div
-                    className="description bg-slate-100 rounded-xl h-[210px] overflow-auto"
+                    className="description h-[210px] overflow-auto rounded-xl bg-slate-100"
                     data-testid="buyer-info-list"
                   >
                     <BuyerInfoTable
@@ -116,7 +116,7 @@ export default function OrderDetailWindow(props: {
                   )}
                   <button
                     type="button"
-                    className="text-sm px-5 py-2.5 mb-2 mx-5 bg-blue-600 hover:bg-blue-800 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg"
+                    className="mx-5 mb-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800"
                     data-testid="export-excel"
                     onClick={toExcel}
                   >
@@ -129,7 +129,7 @@ export default function OrderDetailWindow(props: {
                   )}
                   {props.showOrderMadeButton ? (
                     <button
-                      className="order-made text-sm px-5 py-2.5 mb-2 mx-5 bg-violet-500 hover:bg-violet-700 text-white transition ease-in duration-200 font-semibold shadow-md rounded-lg disabled:opacity-50"
+                      className="order-made mx-5 mb-2 rounded-lg bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-violet-700 disabled:opacity-50"
                       data-testid="order-made"
                       disabled={!buttonEnabled}
                       onClick={handleOrderMade}

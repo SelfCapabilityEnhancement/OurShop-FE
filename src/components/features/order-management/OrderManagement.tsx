@@ -380,22 +380,22 @@ export default function OrderManagement() {
     };
 
     return (
-      <div className="mt-8 mx-10">
+      <div className="mx-10 mt-8">
         <Tab.Group
           manual
           selectedIndex={selectedTitle}
           onChange={setSelectedTitle}
         >
-          <Tab.List className="order-status-header w-11/12 mb-6 border-b-2 border-white">
+          <Tab.List className="order-status-header mb-6 w-11/12 border-b-2 border-white">
             {titles.map((title) => (
               <Tab
                 key={title.id}
                 onClick={() => showTitle(title.id)}
                 className={({ selected }) =>
                   classNames(
-                    `order-status-label ${title.id} w-52 rounded-lg text-xl text-left font-semibold outline-0`,
+                    `order-status-label ${title.id} w-52 rounded-lg text-left text-xl font-semibold outline-0`,
                     selected
-                      ? 'text-pink-500 underline underline-offset-8 border-b-2 border-white'
+                      ? 'border-b-2 border-white text-pink-500 underline underline-offset-8'
                       : 'text-gray-800'
                   )
                 }
@@ -411,12 +411,12 @@ export default function OrderManagement() {
             success={true}
             message={'Order is Made Successfully!'}
           />
-          <div className="start-end-date-picker flex mb-4">
-            <span className="ml-5 mr-2 py-2 whitespace-nowrap font-semibold">
+          <div className="start-end-date-picker mb-4 flex">
+            <span className="ml-5 mr-2 whitespace-nowrap py-2 font-semibold">
               Order Received From{' '}
             </span>
             <ReactDatePicker
-              className="start-date bg-slate-100 rounded-lg w-28 py-2 text-center"
+              className="start-date w-28 rounded-lg bg-slate-100 py-2 text-center"
               selected={startDate}
               maxDate={endDate}
               placeholderText="Time"
@@ -424,24 +424,24 @@ export default function OrderManagement() {
             />
             <span className="mx-2 py-2 font-semibold">To</span>
             <ReactDatePicker
-              className="end-date bg-slate-100 rounded-lg w-28 py-2 text-center"
+              className="end-date w-28 rounded-lg bg-slate-100 py-2 text-center"
               selected={endDate}
               placeholderText="Time"
               minDate={startDate}
               onChange={(date: Date) => setEndDate(date)}
             />
           </div>
-          <div className="apply-reset flex flex-1 ml-6 mb-4">
+          <div className="apply-reset ml-6 mb-4 flex flex-1">
             <button
               type="button"
-              className="apply bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[80px] h-10 mr-[20px]"
+              className="apply mr-[20px] h-10 w-[80px] rounded-lg bg-violet-500 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-violet-700 focus:ring-2 focus:ring-purple-500"
               onClick={dataRangeFilterHandler}
             >
               Apply
             </button>
             <button
               type="button"
-              className="reset add-in-cart-button py-1 px-4 flex bg-slate-100 hover:bg-slate-200 text-white transition ease-in duration-200 shadow-md focus:outline-none rounded-lg w-[50px] h-10"
+              className="reset add-in-cart-button flex h-10 w-[50px] rounded-lg bg-slate-100 py-1 px-4 text-white shadow-md transition duration-200 ease-in hover:bg-slate-200 focus:outline-none"
               onClick={resetHandler}
             >
               <svg
@@ -467,12 +467,12 @@ export default function OrderManagement() {
           </div>
           <HLine text="Orders" />
         </div>
-        <div className="order-list mt-3 w-11/12 mx-auto">
+        <div className="order-list mx-auto mt-3 w-11/12">
           <ul className="flex flex-col">
             {adminOrdersItems.map((item: OrdersItemAdmin, index) => (
               <li
                 key={index}
-                className="order-item-admin product border-gray-400 mb-5 h-20 "
+                className="order-item-admin product mb-5 h-20 border-gray-400 "
               >
                 <OrderItemAdmin
                   order={item}

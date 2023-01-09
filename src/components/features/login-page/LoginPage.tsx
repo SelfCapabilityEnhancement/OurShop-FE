@@ -86,28 +86,28 @@ export default function LoginPage() {
   return (
     <div className="login-page h-screen">
       <Banner visible={loginSuccess} success={true} message={successMsg} />
-      <div className="login-page-body flex col-span-2 justify-center gap-32">
+      <div className="login-page-body col-span-2 flex justify-center gap-32">
         <div className="login-page-left">
           <p className="mt-24 text-6xl font-semibold">Welcome</p>
-          <div className="flex col-span-2">
-            <div className="mt-12 w-8 h-28 border-l-8 border-fuchsia-600"></div>
-            <p className="mt-12 py-8 text-xl font-semibold w-[360px]">
+          <div className="col-span-2 flex">
+            <div className="mt-12 h-28 w-8 border-l-8 border-fuchsia-600"></div>
+            <p className="mt-12 w-[360px] py-8 text-xl font-semibold">
               Try this shopping platform for TWers
             </p>
           </div>
           <p className="mt-12 text-6xl text-fuchsia-600">Try it now.</p>
         </div>
 
-        <div className="login-page-right bg-gray-100 text-center mt-16 w-[480px] h-[520px] rounded-xl">
+        <div className="login-page-right mt-16 h-[520px] w-[480px] rounded-xl bg-gray-100 text-center">
           <p className="mt-6 text-3xl font-semibold">User Login</p>
-          <p className="mt-6 mx-[120px] h-14 text-m text-gray-500">
+          <p className="text-m mx-[120px] mt-6 h-14 text-gray-500">
             Hey TWer, enter your detail to get in to OurShop
           </p>
 
           <form className="mx-24 text-left">
             <>
               {usernameError && (
-                <p className="text-red-500 text-sm h-5">{usernameError}</p>
+                <p className="h-5 text-sm text-red-500">{usernameError}</p>
               )}
               <input
                 type="text"
@@ -121,7 +121,7 @@ export default function LoginPage() {
             </>
             <>
               {passwordError && (
-                <p className="text-red-500 text-sm h-5">{passwordError}</p>
+                <p className="h-5 text-sm text-red-500">{passwordError}</p>
               )}
               <input
                 type="password"
@@ -134,15 +134,15 @@ export default function LoginPage() {
               />
             </>
           </form>
-          <p className="text-center text-gray-500 mt-4 mb-36">
+          <p className="mt-4 mb-36 text-center text-gray-500">
             Do not have an account?
-            <NavLink to="/register" className="text-blue-500 ml-1">
+            <NavLink to="/register" className="ml-1 text-blue-500">
               Register with us
             </NavLink>
           </p>
           <button
-            className="text-white bg-violet-500 hover:bg-violet-700 focus:ring-purple-500
-          transition ease-in font-medium rounded-lg text-l w-56 h-10 py-2 "
+            className="text-l h-10 w-56 rounded-lg
+          bg-violet-500 py-2 font-medium text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 "
             data-testid="login-btn"
             onClick={handleLogin}
           >

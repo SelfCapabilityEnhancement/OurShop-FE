@@ -122,9 +122,9 @@ export default function ProductManagement() {
                 key={tab.id}
                 className={({ selected }) =>
                   classNames(
-                    'w-52 rounded-lg text-xl font-semibold outline-0 mt-4',
+                    'mt-4 w-52 rounded-lg text-xl font-semibold outline-0',
                     selected
-                      ? `${tab.id} text-pink-500 underline underline-offset-8 border-b-2 border-white`
+                      ? `${tab.id} border-b-2 border-white text-pink-500 underline underline-offset-8`
                       : 'text-gray-800'
                   )
                 }
@@ -136,24 +136,24 @@ export default function ProductManagement() {
           <Tab.Panels>
             <Tab.Panel>
               <div className="flex justify-around">
-                <ul className="flex flex-col w-11/12">
+                <ul className="flex w-11/12 flex-col">
                   {available.map((product, index) => (
                     <li
                       key={product.id}
-                      className="available border-gray-400 my-3 h-20"
+                      className="available my-3 h-20 border-gray-400"
                     >
-                      <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
+                      <div className="flex transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
                         <div className="mx-5">
                           <img
                             alt="profile"
                             src={product.images.split(',')[0]}
-                            className="w-20 h-16 mx-auto object-cover rounded-lg"
+                            className="mx-auto h-16 w-20 rounded-lg object-cover"
                           />
                         </div>
-                        <div className="font-medium w-2/5 mx-5">
+                        <div className="mx-5 w-2/5 font-medium">
                           {product.name}
                         </div>
-                        <div className="text-red-600 flex-1">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
+                        <div className="flex-1 text-red-600">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
                         <div className="grid grid-cols-2 gap-x-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +161,7 @@ export default function ProductManagement() {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-6 h-6"
+                            className="h-6 w-6"
                             onClick={() => handleEdit(index)}
                           >
                             <path
@@ -177,7 +177,7 @@ export default function ProductManagement() {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-6 h-6"
+                            className="h-6 w-6"
                             onClick={() => handleDelete(index)}
                           >
                             <path
@@ -195,24 +195,24 @@ export default function ProductManagement() {
             </Tab.Panel>
             <Tab.Panel>
               <div className="flex justify-around">
-                <ul className="flex flex-col w-11/12">
+                <ul className="flex w-11/12 flex-col">
                   {deleted.map((product) => (
                     <li
                       key={product.id}
-                      className="deleted border-gray-400 my-3 h-20"
+                      className="deleted my-3 h-20 border-gray-400"
                     >
-                      <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
+                      <div className="flex transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
                         <div className="mx-5">
                           <img
                             alt="profile"
                             src={product.images.split(',')[0]}
-                            className="w-20 h-16 mx-auto object-cover rounded-lg"
+                            className="mx-auto h-16 w-20 rounded-lg object-cover"
                           />
                         </div>
-                        <div className="font-medium w-2/5 mx-5">
+                        <div className="mx-5 w-2/5 font-medium">
                           {product.name}
                         </div>
-                        <div className="text-red-600 flex-1">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
+                        <div className="flex-1 text-red-600">{`$${product.priceMoney} or ${product.priceToken} Token`}</div>
                         <div className="font-medium">
                           Delete Time:
                           <span className="mx-1">

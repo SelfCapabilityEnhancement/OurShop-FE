@@ -41,48 +41,48 @@ export default function MyOrderDetailWindow({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-200 max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white">
+              <Dialog.Panel className="w-200 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 grid"
+                  className="grid text-lg font-medium leading-6 text-gray-900"
                 >
                   <div className="justify-self-center font-semibold">
                     Order Detail
                   </div>
                 </Dialog.Title>
-                <div className="mt-2 flex mx-2">
+                <div className="mx-2 mt-2 flex">
                   <img
                     alt="profile"
                     src={selectedOrdersItem.images.split(',')[0]}
-                    className="my-2 mx-2 object-cover rounded-lg w-20 h-20"
+                    className="my-2 mx-2 h-20 w-20 rounded-lg object-cover"
                     data-testid="product-picture"
                   />
-                  <p className="text-base font-semibold mx-4 mt-8 text-center">
+                  <p className="mx-4 mt-8 text-center text-base font-semibold">
                     {selectedOrdersItem.productName}
                   </p>
                 </div>
-                <p className="text-base m-4" data-testid="purchase-number">
+                <p className="m-4 text-base" data-testid="purchase-number">
                   <span className="text-base font-semibold">Number</span>:{' '}
                   {selectedOrdersItem.purchaseNum}
                 </p>
-                <p className="text-base m-4" data-testid="purchase-date">
+                <p className="m-4 text-base" data-testid="purchase-date">
                   <span className="text-base font-semibold">
                     Date of Purchase
                   </span>
                   : {selectedOrdersItem.purchaseDate}
                 </p>
-                <p className="text-base m-4" data-testid="address">
+                <p className="m-4 text-base" data-testid="address">
                   <span className="text-base font-semibold">Address</span>:{' '}
                   {selectedOrdersItem.address}
                 </p>
-                <p className="text-base m-4" data-testid="order-status">
+                <p className="m-4 text-base" data-testid="order-status">
                   <span className="text-base font-semibold">Order Status</span>:{' '}
                   {selectedOrdersItem.status}
                 </p>
                 <div className="mt-20 flex justify-end">
                   <button
                     type="button"
-                    className="bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in duration-200 font-semibold shadow-md focus:ring-2 rounded-lg w-[120px] h-8 mr-[20px]"
+                    className="mr-[20px] h-8 w-[120px] rounded-lg bg-violet-500 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-violet-700 focus:ring-2 focus:ring-purple-500"
                     onClick={closeMyOrderDetailWindow}
                   >
                     OK

@@ -131,10 +131,10 @@ export default function EditProduct({
         key={item}
         onClick={() => handleCategory(item)}
         className={classNames(
-          'w-16 h-6 ml-2 text-center text-sm font-normal py-0.5',
+          'ml-2 h-6 w-16 py-0.5 text-center text-sm font-normal',
           categories.has(item) ? 'bg-purple-300' : 'bg-gray-300',
           validations.category
-            ? 'outline-none ring-inset ring ring-rose-500'
+            ? 'outline-none ring ring-inset ring-rose-500'
             : ''
         )}
       >
@@ -266,7 +266,7 @@ export default function EditProduct({
               <Dialog.Panel className="w-[550px] transform overflow-hidden rounded-2xl bg-gray-200 p-6 align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 grid grid-cols-3"
+                  className="grid grid-cols-3 text-lg font-medium leading-6 text-gray-900"
                 >
                   <div></div>
                   <div className="justify-self-center font-semibold">
@@ -283,7 +283,7 @@ export default function EditProduct({
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="w-6 h-6"
+                      className="h-6 w-6"
                     >
                       <path
                         strokeLinecap="round"
@@ -310,15 +310,15 @@ export default function EditProduct({
                         key={id}
                         className="col-span-2 grid grid-cols-2 gap-y-4"
                       >
-                        <label htmlFor={id} className="mr-5 w-30">
-                          <span className="text-red-500 pr-1">*</span>
+                        <label htmlFor={id} className="w-30 mr-5">
+                          <span className="pr-1 text-red-500">*</span>
                           {label}
                         </label>
                         <input
                           type={type === 'string' ? 'text' : 'number'}
                           className={classNames(
-                            'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 ' +
-                              'text-base p-2 text-center rounded focus:outline-none focus:ring focus:ring-purple-300',
+                            'border border-gray-300 bg-gray-50 text-gray-900 shadow-sm ' +
+                              'rounded p-2 text-center text-base focus:outline-none focus:ring focus:ring-purple-300',
                             validations[id]
                               ? 'outline-none ring ring-rose-500'
                               : ''
@@ -332,21 +332,21 @@ export default function EditProduct({
 
                     <div className="col-span-2">
                       <div>
-                        <span className="text-red-500 pr-1">*</span>
+                        <span className="pr-1 text-red-500">*</span>
                         Product Category
                       </div>
-                      <div className="grid grid-cols-3 mt-3 w-1/2">
+                      <div className="mt-3 grid w-1/2 grid-cols-3">
                         {categoryList.map((item) => renderCategory(item))}
                       </div>
                     </div>
 
-                    <label htmlFor="description" className="mr-5 col-span-2">
-                      <span className="text-red-500 pr-1">*</span>
+                    <label htmlFor="description" className="col-span-2 mr-5">
+                      <span className="pr-1 text-red-500">*</span>
                       Product Description
                     </label>
                     <textarea
                       className={classNames(
-                        'col-span-2 h-28 shadow-sm resize-none bg-gray-50 border border-gray-300 text-gray-900 text-base p-2 rounded focus:outline-none focus:ring focus:ring-purple-300',
+                        'col-span-2 h-28 resize-none rounded border border-gray-300 bg-gray-50 p-2 text-base text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-purple-300',
                         validations.description
                           ? 'outline-none ring ring-rose-500'
                           : ''
@@ -369,18 +369,18 @@ export default function EditProduct({
                       validation={validations.images}
                     />
 
-                    <div className="col-span-2 flex flex-col mt-3">
+                    <div className="col-span-2 mt-3 flex flex-col">
                       <div>Office & Inventory</div>
                       <div>
                         <p className="mb-3 mt-3">
-                          <span className="text-red-500 pr-1">*</span>
+                          <span className="pr-1 text-red-500">*</span>
                           Please indicate the office and number of product you
                           want to sell.
                         </p>
                         <div>
                           {stores.map((item, index) => (
                             <div key={item.officeId}>
-                              <p className=" font-semibold my-3">{`Office ${
+                              <p className=" my-3 font-semibold">{`Office ${
                                 index + 1
                               }`}</p>
 
@@ -404,7 +404,7 @@ export default function EditProduct({
                     <button
                       data-testid="save-btn"
                       onClick={(event) => handleSubmit(event)}
-                      className="mt-[100px] update col-start-2 text-white bg-violet-500 hover:bg-violet-700 focus:ring-violet-500 transition ease-in duration-200 font-medium rounded-lg text-lg w-64 px-5 py-2.5 text-center"
+                      className="update col-start-2 mt-[100px] w-64 rounded-lg bg-violet-500 px-5 py-2.5 text-center text-lg font-medium text-white transition duration-200 ease-in hover:bg-violet-700 focus:ring-violet-500"
                     >
                       Save
                     </button>

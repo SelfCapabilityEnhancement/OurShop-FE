@@ -24,7 +24,7 @@ export default function RoleTable(props: { roleList: Role[] }) {
   };
 
   return (
-    <div className="overflow-x-auto relative sm:rounded-lg mt-6">
+    <div className="relative mt-6 overflow-x-auto sm:rounded-lg">
       <div className="absolute w-full max-w-full p-3">
         {roleList.length > 0 && (
           <EditRole
@@ -35,7 +35,7 @@ export default function RoleTable(props: { roleList: Role[] }) {
         )}
       </div>
       <table className="w-full text-center" id="AccountListTable">
-        <thead className="text-gray-800 bg-gray-100 text-lg">
+        <thead className="bg-gray-100 text-lg text-gray-800">
           <tr className="h-16">
             {roleListTabs.map((item) => (
               <th
@@ -53,7 +53,7 @@ export default function RoleTable(props: { roleList: Role[] }) {
           {roleList.map((role, index) => (
             <tr className="h-16 border-b border-gray-400" key={role.roleId}>
               <td className="px-2">{role.roleName}</td>
-              <td className="px-2 w-[400px]">
+              <td className="w-[400px] px-2">
                 {role.featureNameList.join(', ')}
               </td>
               <td className="px-2">{role.updateTime}</td>

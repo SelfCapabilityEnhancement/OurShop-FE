@@ -123,11 +123,11 @@ export default function ShoppingCart() {
     return (
       <div
         data-testid="shopping-cart"
-        className="w-5/6 min-w-[1080px] h-[calc(100vh-150px)] mx-auto mt-5 relative"
+        className="relative mx-auto mt-5 h-[calc(100vh-150px)] w-5/6 min-w-[1080px]"
       >
         <Loading visible={showLoading} message="Loading..." />
         <div className="flex flex-col">
-          <ul className="flex flex-col min-h-[700px]">
+          <ul className="flex min-h-[700px] flex-col">
             {shoppingCartItems.map((shoppingCartItem, index) => {
               return (
                 <li
@@ -135,25 +135,25 @@ export default function ShoppingCart() {
                   className={
                     shoppingCartItem.product.isDeleted ||
                     shoppingCartItem.offices === ''
-                      ? 'product border-gray-400 my-3 h-20 opacity-25'
-                      : 'product border-gray-400 my-3 h-20'
+                      ? 'product my-3 h-20 border-gray-400 opacity-25'
+                      : 'product my-3 h-20 border-gray-400'
                   }
                 >
-                  <div className="flex transition duration-500 shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white rounded-md items-center p-4">
+                  <div className="flex transform cursor-pointer select-none items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
                     <div className="mx-5">
                       <img
                         alt="profile"
                         src={shoppingCartItem.product.images.split(',')[0]}
-                        className="w-20 h-16 mx-auto object-cover rounded-lg"
+                        className="mx-auto h-16 w-20 rounded-lg object-cover"
                       />
                     </div>
                     <label
                       htmlFor="product-checkbox-1"
-                      className="font-medium w-2/5 mx-5"
+                      className="mx-5 w-2/5 font-medium"
                     >
                       {shoppingCartItem.product.name}
                     </label>
-                    <div className="font-medium flex w-2/5 items-center text-2xl mx-5">
+                    <div className="mx-5 flex w-2/5 items-center text-2xl font-medium">
                       <span className="mr-5">Number</span>
                       <Counter
                         count={shoppingCartItem.productNum}
@@ -172,7 +172,7 @@ export default function ShoppingCart() {
                         shoppingCartItem.offices === ''
                       }
                       value=""
-                      className="w-8 h-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
+                      className="h-8 w-8 bg-gray-100 accent-violet-600 focus:ring-violet-700"
                       checked={checkedState[index]}
                       onChange={() => handleOnCheck(index)}
                     />
@@ -182,21 +182,21 @@ export default function ShoppingCart() {
             })}
           </ul>
         </div>
-        <footer className="flex float-right w-1/2 justify-items-end self-end">
+        <footer className="float-right flex w-1/2 justify-items-end self-end">
           <button
             type="button"
             onClick={handleOnClickPayBtn}
             disabled={!checkedState.includes(true)}
-            className="my-20 token w-2/5 p-2 h-14 text-lg text-white font-semibold rounded-lg
-            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
+            className="token my-20 h-14 w-2/5 rounded-lg bg-violet-500 p-2 text-lg font-semibold
+            text-white text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 disabled:opacity-50"
           >
             Pay by Token
           </button>
           <button
             type="button"
             disabled={!checkedState.includes(true)}
-            className="my-20 money w-2/5 p-2 h-14 ml-36 text-lg text-white font-semibold rounded-lg
-            bg-violet-500 hover:bg-violet-700 focus:ring-purple-500 text-white transition ease-in disabled:opacity-50"
+            className="money my-20 ml-36 h-14 w-2/5 rounded-lg bg-violet-500 p-2 text-lg font-semibold
+            text-white text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 disabled:opacity-50"
           >
             Pay by Bank
           </button>

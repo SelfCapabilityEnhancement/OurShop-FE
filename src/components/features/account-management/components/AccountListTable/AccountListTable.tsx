@@ -25,7 +25,7 @@ export default function AccountListTable(props: { userList: Account[] }) {
   };
 
   return (
-    <div className="overflow-x-auto relative sm:rounded-lg mt-6">
+    <div className="relative mt-6 overflow-x-auto sm:rounded-lg">
       {userList.length > 0 && (
         <div className="flex justify-center">
           <AccessRole
@@ -36,7 +36,7 @@ export default function AccountListTable(props: { userList: Account[] }) {
         </div>
       )}
       <table className="w-full text-center" id="AccountListTable">
-        <thead className="text-gray-800 bg-gray-100 text-lg">
+        <thead className="bg-gray-100 text-lg text-gray-800">
           <tr className="h-16">
             {accountListTabs.map((item) => (
               <th
