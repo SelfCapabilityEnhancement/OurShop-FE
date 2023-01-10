@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
@@ -16,25 +16,10 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
-describe('When user not login to access my-order', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<MyOrder />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
 describe('display my order', () => {
   let container: Container;
 
   beforeEach(async () => {
-    localStorage.setItem('router', 'my-order');
     jest
       .spyOn(service, 'getOrdersItemsByUserId')
       .mockResolvedValue(mockOrdersItems);

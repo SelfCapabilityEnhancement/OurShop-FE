@@ -26,7 +26,7 @@ export const useLoginStore = create<ILoginState>()(
           console.log('setAccessiblePaths');
           console.log(val);
           set({
-            accessiblePaths: [...val, 'home'],
+            accessiblePaths: [...val],
           });
         },
         clear: () => set(defaultState()),

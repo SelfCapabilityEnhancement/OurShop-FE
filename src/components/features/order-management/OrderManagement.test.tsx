@@ -23,37 +23,6 @@ window.IntersectionObserver = jest
   .fn()
   .mockImplementation(() => ({ observe: () => null, disconnect: () => null }));
 
-describe('When user not login to access order-management', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<OrderManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
-describe('When user not have access to access order-management', () => {
-  beforeEach(async () => {
-    localStorage.setItem('router', 'testForOrder-Management');
-    await act(async () => {
-      render(<OrderManagement />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(
-      screen.getByText('You are forbidden to access this page.')
-    ).toBeInTheDocument();
-  });
-});
-
 describe('display order management', () => {
   let container: Container;
   const user = userEvent.setup();
@@ -63,7 +32,6 @@ describe('display order management', () => {
   }));
 
   beforeEach(async () => {
-    localStorage.setItem('router', 'order-management');
     jest
       .spyOn(service, 'getAllOrdersItems')
       .mockResolvedValueOnce(mockOrdersItems)

@@ -51,8 +51,6 @@ export default function LoginPage() {
         } else {
           setLoginSuccess(true);
           resetInput();
-          localStorage.setItem('jwt', 'Bearer ' + res.data.token); // todo: delete
-          localStorage.setItem('router', res.data.routerResponses); // todo: delete
           setJwt(res.data.token);
           setAccessiblePaths(res.data.routerResponses);
           setTimeout(() => {
