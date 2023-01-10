@@ -1,56 +1,47 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 import { useLoginStore } from '@/hooks/useLoginStore';
+import { useForm } from 'react-hook-form';
+import { clsx } from 'clsx';
 
 const basicClassName =
-  'form-control block px-4 py-2 mt-5 h-11 w-full text-base text-gray-900 font-normal border-2' +
-  ' border-solid border-gray-500 rounded focus:border-purple-400 focus:outline-none bg-gray-100';
-const getClassName = (error: string | undefined) =>
-  error ? basicClassName + ' border-red-500 mt-0' : basicClassName;
+  'form-control block px-4 py-2 h-11 w-full text-base text-gray-900 font-normal border-2' +
+  ' border-solid rounded focus:border-purple-400 focus:outline-none bg-gray-100 invalid:border-red-500';
 
-const initialError = {
-  usernameError: '',
-  passwordError: '',
+const errorMsg = 'Required field!';
+
+type Values = {
+  username: string;
+  password: string;
 };
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] =
-    useState<Partial<typeof initialError>>(initialError);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const setJwt = useLoginStore((state) => state.setJwt);
   const setAccessiblePaths = useLoginStore((state) => state.setAccessiblePaths);
 
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<Values>();
+
   const successMsg = 'Login successfully';
 
-  const handleLogin = async () => {
-    let { usernameError, passwordError } = initialError;
-    if (!username) {
-      usernameError = 'Required field!';
-    }
-    if (!password) {
-      passwordError = 'Required field!';
-    }
-    if (usernameError || passwordError) {
-      return setError({ usernameError, passwordError });
-    }
-
-    setError({});
+  const handleLogin = handleSubmit(({username, password}) => {
     login(username, password)
       .then((res) => {
         if (res.data.title === 'username & password does not match') {
           setLoginSuccess(false);
-          setError({
-            usernameError: 'Username & Password does not match!',
-            passwordError: ' ',
+          setError('username', {
+            message: 'Username & Password does not match!',
           });
         } else {
           setLoginSuccess(true);
-          resetInput();
           localStorage.setItem('jwt', 'Bearer ' + res.data.token); // todo: delete
           localStorage.setItem('router', res.data.routerResponses); // todo: delete
           setJwt(res.data.token);
@@ -63,28 +54,12 @@ export default function LoginPage() {
       .catch(() => {
         setLoginSuccess(false);
       });
-  };
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { id, value } = e.target;
-    if (id === 'username') {
-      setUsername(value);
-    }
-    if (id === 'password') {
-      setPassword(value);
-    }
-  }
-
-  function resetInput() {
-    setUsername('');
-    setPassword('');
-  }
-
-  const { usernameError, passwordError } = error;
+  });
 
   return (
     <div className="login-page h-screen">
       <Banner visible={loginSuccess} success={true} message={successMsg} />
+
       <div className="login-page-body col-span-2 flex justify-center gap-32">
         <div className="login-page-left">
           <p className="mt-24 text-6xl font-semibold">Welcome</p>
@@ -107,31 +82,41 @@ export default function LoginPage() {
           </p>
 
           <div className="w-full">
-            {usernameError && (
-              <p className="h-5 text-sm text-red-500">{usernameError}</p>
+            {errors.username && (
+              <span role="alert" className="h-5 text-sm text-red-500">
+                {errors.username.message}
+              </span>
             )}
             <input
               type="text"
-              className={getClassName(usernameError)}
+              className={clsx(
+                basicClassName,
+                errors.username ? 'mt-0 border-red-500' : 'mt-5 border-gray-500'
+              )}
               placeholder="Username"
               id="username"
               data-testid="username"
-              value={username}
-              onChange={(e) => handleInputChange(e)}
+              aria-invalid={!!errors.username}
+              {...register('username', { required: errorMsg })}
             />
           </div>
           <div className="w-full">
-            {passwordError && (
-              <p className="h-5 text-sm text-red-500">{passwordError}</p>
+            {errors.password && (
+              <span role="alert" className="h-5 text-sm text-red-500">
+                {errors.password.message}
+              </span>
             )}
             <input
               type="password"
-              className={getClassName(passwordError)}
+              className={clsx(
+                basicClassName,
+                errors.password ? 'mt-0 border-red-500' : 'mt-5 border-gray-500'
+              )}
               placeholder="Password"
               id="password"
               data-testid="password"
-              value={password}
-              onChange={(e) => handleInputChange(e)}
+              aria-invalid={!!errors.password}
+              {...register('password', { required: errorMsg })}
             />
           </div>
 
