@@ -170,7 +170,7 @@ export const getOrdersItemsByUserId = () =>
   http.get(`/users/orders`).then((response) => response.data);
 
 export const register = async (name: string, password: string) => {
-  return await http.post('/users/register', {
+  return await httpWithoutAuthorization.post('/users/register', {
     name,
     password,
   });
