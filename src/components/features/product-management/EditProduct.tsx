@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import {
   OfficeAndStock,
+  OfficeItem,
   Product,
   StoresError,
 } from '@/components/common/CustomTypes';
@@ -16,8 +17,16 @@ import { updateProduct, uploadFile } from '@/service';
 import { categoryList, imageUrlPrefix, initValidateResult } from '@/constants';
 import Banner from '@/components/common/banner/Banner';
 import Loading from '@/components/common/loading/Loading';
-import { officeList } from '@/components/features/create-product/CreateProduct';
 import OfficeStoreSelect from '@/components/features/product-management/OfficeStoreSelect';
+
+const officeList: OfficeItem[] = [
+  { id: 1, name: 'Beijing' },
+  { id: 2, name: 'Chengdu' },
+  { id: 3, name: 'Shanghai' },
+  { id: 4, name: 'Shenzhen' },
+  { id: 5, name: 'Wuhan' },
+  { id: 6, name: "Xi'an" },
+];
 
 const successMsg = 'The product was updated successfully!';
 const failMsg = 'All required fields must be filled.';
@@ -379,10 +388,10 @@ export default function EditProduct({
                         </p>
                         <div>
                           {stores.map((item, index) => (
-                            <div key={item.officeId}>
-                              <p className=" my-3 font-semibold">{`Office ${
-                                index + 1
-                              }`}</p>
+                            <div key={index}>
+                              <p className="my-3 font-semibold">
+                                {`Office ${index + 1}`}
+                              </p>
 
                               <OfficeStoreSelect
                                 index={index}
