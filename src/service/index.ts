@@ -11,6 +11,7 @@ import {
 } from '@/components/common/CustomTypes';
 import { imageUrlPrefix } from '@/constants';
 import { uploadFileToBlob } from '@/azure-storage-blob';
+import { useLoginStore } from '@/hooks/useLoginStore';
 
 export const isDev = () => import.meta.env.DEV;
 const localBaseUrl = 'http://127.0.0.1:5173';
@@ -25,12 +26,12 @@ const http = axios.create(defaultConfig);
 const httpWithoutAuthorization = axios.create(defaultConfig);
 
 http.interceptors.request.use((config) => {
-  const Authorization = localStorage.getItem('jwt'); // TODO
-  if (Authorization) {
+  const jwt = useLoginStore.getState().jwt;
+  if (jwt) {
     if (config.headers) {
-      config.headers.Authorization = Authorization;
+      config.headers.Authorization = jwt;
     } else {
-      config.headers = { Authorization };
+      config.headers = { Authorization: jwt };
     }
   }
   return config;
@@ -94,7 +95,9 @@ export const addToCarts = async (productId: number, productNum: number) => {
 };
 
 export const getShoppingCarts = async (handleRedDot: boolean) => {
-  const { data } = await http.get(`/users/shopping-carts?handle_red_dot=` + handleRedDot);
+  const { data } = await http.get(
+    `/users/shopping-carts?handle_red_dot=` + handleRedDot
+  );
   return data;
 };
 

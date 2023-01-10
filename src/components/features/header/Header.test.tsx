@@ -5,6 +5,7 @@ import Header from './Header';
 import { Container } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
+import { useLoginStore } from '@/hooks/useLoginStore';
 
 const mockedNavigate = jest.fn();
 
@@ -40,14 +41,13 @@ describe('Header test when user has authority', () => {
   let container: Container;
 
   beforeEach(async () => {
-    const list = [
+    const accessiblePaths = [
       'account-management',
       'product-management',
       'order-management',
       'create-product',
     ];
-    // @ts-ignore
-    localStorage.setItem('router', list);
+    useLoginStore.setState({ accessiblePaths });
     await act(async () => {
       container = render(<Header />, { wrapper: BrowserRouter }).container;
     });

@@ -44,7 +44,8 @@
     "react-router-dom": "^6.4.0",
     "rsuite": "^5.23.2",
     "sort-by": "^0.0.2",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "zustand": "^4.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.18.10",

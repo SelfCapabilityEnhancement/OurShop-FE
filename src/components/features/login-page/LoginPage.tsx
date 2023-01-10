@@ -2,6 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
+import { useLoginStore } from '@/hooks/useLoginStore';
+import { isEmpty } from 'lodash';
 
 const basicClassName =
   'form-control block px-4 py-2 mt-5 h-11 w-full text-base text-gray-900 font-normal border-2' +
@@ -21,12 +23,14 @@ export default function LoginPage() {
   const [error, setError] =
     useState<Partial<typeof initialError>>(initialError);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const routerList = localStorage.getItem('router');
+  const setJwt = useLoginStore((state) => state.setJwt);
+  const setAccessiblePaths = useLoginStore((state) => state.setAccessiblePaths);
+  const accessiblePaths = useLoginStore((state) => state.accessiblePaths);
 
   const successMsg = 'Login successfully';
 
   useEffect(() => {
-    if (routerList !== null) {
+    if (!isEmpty(accessiblePaths)) {
       navigate('/home');
     }
   });
@@ -54,8 +58,10 @@ export default function LoginPage() {
         } else {
           setLoginSuccess(true);
           resetInput();
-          localStorage.setItem('jwt', 'Bearer ' + res.data.token);
-          localStorage.setItem('router', res.data.routerResponses);
+          localStorage.setItem('jwt', 'Bearer ' + res.data.token); // todo: delete
+          localStorage.setItem('router', res.data.routerResponses); // todo: delete
+          setJwt(res.data.token);
+          setAccessiblePaths(res.data.routerResponses);
           setTimeout(() => {
             navigate('/home');
           }, 1500);

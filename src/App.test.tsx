@@ -3,6 +3,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { useLoginStore } from '@/hooks/useLoginStore';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn().mockResolvedValue([{ id: 2 }]),
@@ -11,7 +12,8 @@ jest.mock('@/service', () => ({
 
 describe('App test', () => {
   beforeEach(async () => {
-    localStorage.setItem('router', 'create-product');
+    localStorage.setItem('router', 'create-product'); // todo: delete
+    useLoginStore.setState({ accessiblePaths: ['create-product'] });
   });
 
   afterEach(cleanup);

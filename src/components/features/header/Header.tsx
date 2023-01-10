@@ -4,30 +4,32 @@ import { useEffect } from 'react';
 import { getShoppingCarts } from '@/service';
 import { useLocation } from 'react-router';
 import useGlobalState from '@/state';
+import { useLoginStore } from '@/hooks/useLoginStore';
+import { isEmpty } from 'lodash';
 
 export default function Header() {
   const navigate = useNavigate();
-
   const [shoppingCartLength, setShoppingCartLength] =
     useGlobalState('shoppingCartLength');
-
   const location = useLocation();
-
-  const routerList = localStorage.getItem('router');
+  const jwt = useLoginStore((state) => state.jwt);
+  const clear = useLoginStore((state) => state.clear);
+  const accessiblePaths = useLoginStore((state) => state.accessiblePaths);
 
   useEffect(() => {
     if (isLoginOrRegister()) {
-      localStorage.clear();
+      localStorage.clear(); // todo: delete
+      clear();
     }
-    if (localStorage.getItem('jwt') != null) {
+    if (jwt) {
       getShoppingCarts(true).then((items) => {
         setShoppingCartLength(items.length);
       });
     }
-  }, [localStorage.getItem('jwt')]);
+  }, [jwt]);
 
   const handleClick = () => {
-    if (routerList !== null) {
+    if (!isEmpty(accessiblePaths)) {
       navigate('/home');
     }
   };
@@ -88,18 +90,20 @@ export default function Header() {
       </div>
       <div className="flex items-center ">
         <div className="nav-list flex flex-1 justify-around">
-          {routerList === null ? (
+          {isEmpty(accessiblePaths) ? (
             <div className="mr-80 font-semibold">Language : English</div>
           ) : (
             headerList
               // @ts-ignore
-              .filter((list) => routerList.includes(list.id))
+              .filter((list) => accessiblePaths.includes(list.id))
               .concat({ id: 'shopping-cart', name: 'Shopping Cart' })
               .concat({ id: 'my-order', name: 'My Order' })
               .map((item) => renderHeader(item))
           )}
         </div>
-        {!isLoginOrRegister() && routerList != null && <Profile></Profile>}
+        {!isLoginOrRegister() && !isEmpty(accessiblePaths) && (
+          <Profile></Profile>
+        )}
       </div>
     </div>
   );
