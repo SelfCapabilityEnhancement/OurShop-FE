@@ -1,9 +1,8 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { login } from '@/service';
 import Banner from '@/components/common/banner/Banner';
 import { useLoginStore } from '@/hooks/useLoginStore';
-import { isEmpty } from 'lodash';
 
 const basicClassName =
   'form-control block px-4 py-2 mt-5 h-11 w-full text-base text-gray-900 font-normal border-2' +
@@ -25,15 +24,9 @@ export default function LoginPage() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const setJwt = useLoginStore((state) => state.setJwt);
   const setAccessiblePaths = useLoginStore((state) => state.setAccessiblePaths);
-  const accessiblePaths = useLoginStore((state) => state.accessiblePaths);
 
   const successMsg = 'Login successfully';
 
-  useEffect(() => {
-    if (!isEmpty(accessiblePaths)) {
-      navigate('/home');
-    }
-  });
   const handleLogin = async () => {
     let { usernameError, passwordError } = initialError;
     if (!username) {

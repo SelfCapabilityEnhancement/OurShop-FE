@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 import * as service from '@/service';
 import { AxiosResponse } from 'axios';
 import { act } from 'react-dom/test-utils';
-import { useLoginStore } from '@/hooks/useLoginStore';
 
 const mockedNavigate = jest.fn();
 
@@ -114,26 +113,5 @@ describe('display login page', () => {
     expect(
       await screen.findByText('Username & Password does not match!')
     ).toBeInTheDocument();
-  });
-});
-
-describe('display home page', () => {
-  beforeEach(async () => {
-    const accessiblePaths = [
-      'account-management',
-      'product-management',
-      'order-management',
-      'create-product',
-    ];
-    useLoginStore.setState({ accessiblePaths });
-    await act(async () => {
-      render(<LoginPage />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should return to home page', function () {
-    expect(mockedNavigate).toHaveBeenCalledWith('/home');
   });
 });

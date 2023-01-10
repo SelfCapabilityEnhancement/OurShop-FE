@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
@@ -6,7 +5,7 @@ export interface ILoginState {
   jwt: string;
   accessiblePaths: string[];
   setJwt: (token: string) => void;
-  setAccessiblePaths: (val: string) => void;
+  setAccessiblePaths: (val: string[]) => void;
   clear: () => void;
 }
 
@@ -23,16 +22,16 @@ export const useLoginStore = create<ILoginState>()(
       (set, get) => ({
         ...defaultState(),
         setJwt: (token) => set({ jwt: 'Bearer ' + token }),
-        setAccessiblePaths: (val: string) => {
-          if (_.isString(val)) {
-            set({
-              accessiblePaths: val.split(','),
-            });
-          }
+        setAccessiblePaths: (val) => {
+          console.log('setAccessiblePaths');
+          console.log(val);
+          set({
+            accessiblePaths: [...val, 'home'],
+          });
         },
         clear: () => set(defaultState()),
       }),
-      { name: 'useLoginStore' }
+      { name: 'useLoginStore', version: 1 }
     ),
     { name: 'useLoginStore' }
   )

@@ -18,25 +18,11 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
-describe('When user not login to access HomePage', () => {
-  beforeEach(async () => {
-    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
-    await act(async () => {
-      render(<HomePage />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
 describe('HomePage', () => {
   // const user = userEvent.setup();
   jest.spyOn(service, 'getProducts').mockResolvedValue(tempProducts);
   jest.spyOn(service, 'getCurrentUser').mockResolvedValue(users[1]);
+  jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
 
   beforeEach(async () => {
     localStorage.setItem('router', 'home');

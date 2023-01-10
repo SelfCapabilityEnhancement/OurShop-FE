@@ -13,14 +13,9 @@ export default function Header() {
     useGlobalState('shoppingCartLength');
   const location = useLocation();
   const jwt = useLoginStore((state) => state.jwt);
-  const clear = useLoginStore((state) => state.clear);
   const accessiblePaths = useLoginStore((state) => state.accessiblePaths);
 
   useEffect(() => {
-    if (isLoginOrRegister()) {
-      localStorage.clear(); // todo: delete
-      clear();
-    }
     if (jwt) {
       getShoppingCarts(true).then((items) => {
         setShoppingCartLength(items.length);
