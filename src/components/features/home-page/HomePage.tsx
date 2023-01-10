@@ -36,13 +36,11 @@ export default function HomePage() {
         key={product.id}
         onClick={() => handleClick(product)}
         className="product mb-5 flex h-72 w-full flex-col bg-gray-100"
-        id="home-product"
       >
         <img
           src={product.images.split(',')[0]}
           alt="product"
           className={`image${key} h-48 w-full object-cover`}
-          id="product-img"
         />
         <div className="bg-gray-100">
           <div className="text-xl font-normal">{product.name}</div>
