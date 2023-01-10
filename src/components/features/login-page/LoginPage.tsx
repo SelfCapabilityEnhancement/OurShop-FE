@@ -97,57 +97,59 @@ export default function LoginPage() {
           <p className="mt-12 text-6xl text-fuchsia-600">Try it now.</p>
         </div>
 
-        <div className="login-page-right mt-16 h-[520px] w-[480px] rounded-xl bg-gray-100 text-center">
-          <p className="mt-6 text-3xl font-semibold">User Login</p>
-          <p className="text-m mx-[120px] mt-6 h-14 text-gray-500">
+        <form
+          className="login-page-right mt-16 flex h-[520px] w-[480px] flex-col items-center rounded-xl bg-gray-100 px-24 py-6"
+          onSubmit={handleLogin}
+        >
+          <p className="text-3xl font-semibold">User Login</p>
+          <p className="text-m mt-6 h-14 w-9/12 text-center text-gray-500">
             Hey TWer, enter your detail to get in to OurShop
           </p>
 
-          <form className="mx-24 text-left">
-            <>
-              {usernameError && (
-                <p className="h-5 text-sm text-red-500">{usernameError}</p>
-              )}
-              <input
-                type="text"
-                className={getClassName(usernameError)}
-                placeholder="Username"
-                id="username"
-                data-testid="username"
-                value={username}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </>
-            <>
-              {passwordError && (
-                <p className="h-5 text-sm text-red-500">{passwordError}</p>
-              )}
-              <input
-                type="password"
-                className={getClassName(passwordError)}
-                placeholder="Password"
-                id="password"
-                data-testid="password"
-                value={password}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </>
-          </form>
-          <p className="mt-4 mb-36 text-center text-gray-500">
+          <div className="w-full">
+            {usernameError && (
+              <p className="h-5 text-sm text-red-500">{usernameError}</p>
+            )}
+            <input
+              type="text"
+              className={getClassName(usernameError)}
+              placeholder="Username"
+              id="username"
+              data-testid="username"
+              value={username}
+              onChange={(e) => handleInputChange(e)}
+            />
+          </div>
+          <div className="w-full">
+            {passwordError && (
+              <p className="h-5 text-sm text-red-500">{passwordError}</p>
+            )}
+            <input
+              type="password"
+              className={getClassName(passwordError)}
+              placeholder="Password"
+              id="password"
+              data-testid="password"
+              value={password}
+              onChange={(e) => handleInputChange(e)}
+            />
+          </div>
+
+          <p className="mt-4 text-center text-gray-500">
             Do not have an account?
             <NavLink to="/register" className="ml-1 text-blue-500">
               Register with us
             </NavLink>
           </p>
           <button
-            className="text-l h-10 w-56 rounded-lg
+            className="text-l mt-auto h-10 w-56 rounded-lg
           bg-violet-500 py-2 font-medium text-white transition ease-in hover:bg-violet-700 focus:ring-purple-500 "
             data-testid="login-btn"
-            onClick={handleLogin}
+            type="submit"
           >
             Sign In
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
