@@ -9,12 +9,10 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [, setUserRealName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getCurrentUser().then((user) => {
-      setUserRealName(user.realName);
       user.realName === '' ? setIsOpen(true) : setIsOpen(false);
     });
   }, [isOpen]);
