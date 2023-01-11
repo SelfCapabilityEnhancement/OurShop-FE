@@ -1,22 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { OrdersItem } from '@/components/common/CustomTypes';
 
 export default function MyOrderDetailWindow({
-  showWindow,
-  setShowWindow,
   selectedOrdersItem,
+  onClose,
 }: {
-  showWindow: boolean;
-  setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedOrdersItem: OrdersItem;
+  selectedOrdersItem?: OrdersItem;
+  onClose: () => void;
 }) {
-  function closeMyOrderDetailWindow() {
-    setShowWindow(false);
-  }
-
   return (
-    <Transition appear show={showWindow} as={Fragment}>
+    <Transition appear show={!!selectedOrdersItem} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => {}}>
         <Transition.Child
           as={Fragment}
@@ -41,7 +35,7 @@ export default function MyOrderDetailWindow({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-200 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-96 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="grid text-lg font-medium leading-6 text-gray-900"
@@ -53,37 +47,37 @@ export default function MyOrderDetailWindow({
                 <div className="mx-2 mt-2 flex">
                   <img
                     alt="profile"
-                    src={selectedOrdersItem.images.split(',')[0]}
+                    src={selectedOrdersItem?.images.split(',')[0]}
                     className="my-2 mx-2 h-20 w-20 rounded-lg object-cover"
                     data-testid="product-picture"
                   />
                   <p className="mx-4 mt-8 text-center text-base font-semibold">
-                    {selectedOrdersItem.productName}
+                    {selectedOrdersItem?.productName}
                   </p>
                 </div>
                 <p className="m-4 text-base" data-testid="purchase-number">
                   <span className="text-base font-semibold">Number</span>:{' '}
-                  {selectedOrdersItem.purchaseNum}
+                  {selectedOrdersItem?.purchaseNum}
                 </p>
                 <p className="m-4 text-base" data-testid="purchase-date">
                   <span className="text-base font-semibold">
                     Date of Purchase
                   </span>
-                  : {selectedOrdersItem.purchaseDate}
+                  : {selectedOrdersItem?.purchaseDate}
                 </p>
                 <p className="m-4 text-base" data-testid="address">
                   <span className="text-base font-semibold">Address</span>:{' '}
-                  {selectedOrdersItem.address}
+                  {selectedOrdersItem?.address}
                 </p>
                 <p className="m-4 text-base" data-testid="order-status">
                   <span className="text-base font-semibold">Order Status</span>:{' '}
-                  {selectedOrdersItem.status}
+                  {selectedOrdersItem?.status}
                 </p>
                 <div className="mt-20 flex justify-end">
                   <button
                     type="button"
                     className="mr-[20px] h-8 w-[120px] rounded-lg bg-violet-500 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-violet-700 focus:ring-2 focus:ring-purple-500"
-                    onClick={closeMyOrderDetailWindow}
+                    onClick={onClose}
                   >
                     OK
                   </button>

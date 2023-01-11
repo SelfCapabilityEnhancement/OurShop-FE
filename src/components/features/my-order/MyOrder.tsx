@@ -1,64 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import OrderItem from '@/components/features/my-order/OrderItem';
 import { OrdersItem } from '@/components/common/CustomTypes';
 import { getOrdersItemsByUserId } from '@/service';
 import MyOrderDetailWindow from '@/components/features/my-order/MyOrderDetailWindow';
+import { useQuery } from '@tanstack/react-query';
+import { useLoginStore } from '@/hooks/useLoginStore';
 
 export default function MyOrder() {
-  const [ordersItems, setOrdersItems] = useState<OrdersItem[]>([]);
-  const [showWindow, setShowWindow] = useState(false);
-  const [selectedOrdersItem, setSelectedOrdersItem] = useState<OrdersItem>({
-    productId: 0,
-    purchaseNum: 0,
-    orderId: 0,
-    status: '',
-    address: '',
-    vendorDate: '',
-    userId: 0,
-    purchaseDate: '',
-    productName: '',
-    description: '',
-    images: '',
-    username: '',
-    telephoneNum: '',
-    logisticMethod: '',
+  const [selectedOrdersItem, setSelectedOrdersItem] = useState<
+    OrdersItem | undefined
+  >();
+  const jwt = useLoginStore((state) => state.jwt);
+
+  const queryCurrentUserOrders = useQuery({
+    queryKey: ['orders', { userId: jwt }], // todo: replace jwt with userId
+    queryFn: getOrdersItemsByUserId,
   });
-
-  useEffect(() => {
-    getOrdersItemsByUserId().then((data) =>
-      setOrdersItems(orderByPurchaseDate(data))
-    );
-  }, []);
-
-  function orderByPurchaseDate(ordersItems: OrdersItem[]) {
-    return ordersItems.sort((objA, objB) => {
-      const date1 = new Date(objA.purchaseDate);
-      const date2 = new Date(objB.purchaseDate);
-      return date2.getTime() - date1.getTime();
-    });
-  }
 
   return (
     <div className="mx-auto mt-5 w-[1280px]">
       <ul className="flex flex-col">
-        {ordersItems.map((item) => (
+        {queryCurrentUserOrders.data?.map((item) => (
           <li
-            key={item.productId}
+            key={item.orderId}
             className="order-item product mb-5 h-20 border-gray-400 "
           >
             <OrderItem
               order={item}
-              setShowWindow={setShowWindow}
-              setSelectedOrdersItem={setSelectedOrdersItem}
+              onViewDetail={() => setSelectedOrdersItem(item)}
             />
           </li>
         ))}
       </ul>
 
       <MyOrderDetailWindow
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
         selectedOrdersItem={selectedOrdersItem}
+        onClose={() => setSelectedOrdersItem(undefined)}
       />
     </div>
   );

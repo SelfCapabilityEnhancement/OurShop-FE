@@ -1,19 +1,12 @@
 import { OrdersItem } from '@/components/common/CustomTypes';
-import React from 'react';
 
-export default function OrderItem(props: {
+export default function OrderItem({
+  order,
+  onViewDetail,
+}: {
   order: OrdersItem;
-  setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedOrdersItem: React.Dispatch<React.SetStateAction<OrdersItem>>;
+  onViewDetail: () => void;
 }) {
-  const order = props.order;
-  const date = order.purchaseDate;
-
-  function myOrderDetailWindow() {
-    props.setShowWindow(true);
-    props.setSelectedOrdersItem(order);
-  }
-
   return (
     <div className="flex transform cursor-pointer select-none flex-row items-center rounded-md bg-white p-4 shadow transition duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg">
       <div className="mx-5 flex-initial">
@@ -32,7 +25,7 @@ export default function OrderItem(props: {
       </span>
       <div className="purchase-date w-1/3">
         <span data-testid="purchase-date-title">Date of Purchase: </span>
-        <span data-testid="purchase-date">{date}</span>
+        <span data-testid="purchase-date">{order.purchaseDate}</span>
       </div>
       <div className="w-1/5">
         <span data-testid="number-title">Number: </span>
@@ -41,7 +34,7 @@ export default function OrderItem(props: {
       <button
         className="my-order-view-detail ml-24 mb-2 whitespace-nowrap rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-md transition duration-200 ease-in hover:bg-blue-800"
         data-testid="view-detail"
-        onClick={myOrderDetailWindow}
+        onClick={onViewDetail}
       >
         View Detail
       </button>

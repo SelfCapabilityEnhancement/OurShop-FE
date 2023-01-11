@@ -5,11 +5,7 @@ import { mockOrder, mockOrdersItems } from '@/mocks/mockData';
 describe('OrderItem', () => {
   beforeEach(() => {
     render(
-      <OrderItem
-        order={mockOrdersItems[0]}
-        setShowWindow={() => {}}
-        setSelectedOrdersItem={() => {}}
-      />
+      <OrderItem order={mockOrdersItems[0]} onViewDetail={() => undefined} />
     );
   });
 

@@ -167,7 +167,13 @@ export const updateOrders = (
 ) => http.patch('/orders', ordersProductIds).then((response) => response.data);
 
 export const getOrdersItemsByUserId = () =>
-  http.get(`/users/orders`).then((response) => response.data);
+  http.get<OrdersItem[]>(`/users/orders`).then((response) =>
+    response.data.sort((a, b) => {
+      return (
+        new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime()
+      );
+    })
+  );
 
 export const register = async (name: string, password: string) => {
   return await httpWithoutAuthorization.post('/users/register', {

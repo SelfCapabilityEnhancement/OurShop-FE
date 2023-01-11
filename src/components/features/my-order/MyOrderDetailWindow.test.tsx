@@ -6,9 +6,8 @@ describe('MyOrderDetailWindow', () => {
   beforeEach(() => {
     render(
       <MyOrderDetailWindow
-        showWindow={true}
-        setShowWindow={() => {}}
         selectedOrdersItem={mockOrdersItems[0]}
+        onClose={() => undefined}
       />
     );
   });

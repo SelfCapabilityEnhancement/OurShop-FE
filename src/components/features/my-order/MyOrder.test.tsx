@@ -1,10 +1,11 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import MyOrder from '@/components/features/my-order/MyOrder';
 import { Container } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { mockOrdersItems } from '@/mocks/mockData';
 import * as service from '@/service';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 jest.mock('@/service', () => ({
   getCurrentUser: jest.fn(),
@@ -16,6 +17,8 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
+const queryClient = new QueryClient();
+
 describe('display my order', () => {
   let container: Container;
 
@@ -25,14 +28,20 @@ describe('display my order', () => {
       .mockResolvedValue(mockOrdersItems);
 
     await act(async () => {
-      container = await render(<MyOrder />, { wrapper: BrowserRouter })
-        .container;
+      container = await render(
+        <QueryClientProvider client={queryClient}>
+          <MyOrder />
+        </QueryClientProvider>,
+        { wrapper: BrowserRouter }
+      ).container;
     });
   });
 
   afterEach(cleanup);
 
-  test('render all OrderItems', () => {
-    expect(container.querySelectorAll('.order-item').length).toBe(2);
+  test('render all OrderItems', async () => {
+    await waitFor(() => {
+      expect(container.querySelectorAll('.order-item').length).toBe(2);
+    });
   });
 });
