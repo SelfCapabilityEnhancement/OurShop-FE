@@ -32,7 +32,7 @@ export default function LoginPage() {
 
   const successMsg = 'Login successfully';
 
-  const handleLogin = handleSubmit(({username, password}) => {
+  const handleLogin = handleSubmit(({ username, password }) => {
     login(username, password)
       .then((res) => {
         if (res.data.title === 'username & password does not match') {
@@ -42,7 +42,6 @@ export default function LoginPage() {
           });
         } else {
           setLoginSuccess(true);
-          resetInput();
           setJwt(res.data.token);
           setAccessiblePaths(res.data.routerResponses);
           setTimeout(() => {
