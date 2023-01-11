@@ -2,7 +2,6 @@ import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import {
   OfficeAndStock,
-  OfficeItem,
   Product,
   StoresError,
 } from '@/components/common/CustomTypes';
@@ -13,20 +12,11 @@ import {
   validateOffices,
 } from '@/utils';
 import ImageUploader from '@/components/common/image-uploader/ImageUploader';
-import { updateProduct, uploadFile } from '@/service';
+import { getAllOffices, updateProduct, uploadFile } from '@/service';
 import { categoryList, imageUrlPrefix, initValidateResult } from '@/constants';
 import Banner from '@/components/common/banner/Banner';
 import Loading from '@/components/common/loading/Loading';
 import OfficeStoreSelect from '@/components/features/product-management/OfficeStoreSelect';
-
-const officeList: OfficeItem[] = [
-  { id: 1, name: 'Beijing' },
-  { id: 2, name: 'Chengdu' },
-  { id: 3, name: 'Shanghai' },
-  { id: 4, name: 'Shenzhen' },
-  { id: 5, name: 'Wuhan' },
-  { id: 6, name: "Xi'an" },
-];
 
 const successMsg = 'The product was updated successfully!';
 const failMsg = 'All required fields must be filled.';
@@ -55,7 +45,9 @@ export default function EditProduct({
   const [stores, setStores] = useState<OfficeAndStock[]>(
     oldProduct.officeStockList
   );
-
+  const [officeList, setOfficeList] = useState<{ id: number; name: string }[]>(
+    []
+  );
   const [storesError, setStoresError] = useState<StoresError>({});
 
   useEffect(() => {
@@ -64,6 +56,14 @@ export default function EditProduct({
     setProduct({ ...oldProduct, imageFiles });
     setCategories(new Set(oldProduct.category.split(';')));
     setStores(oldProduct.officeStockList);
+    getAllOffices().then((data) => {
+      setOfficeList(
+        data.map(({ id, office }) => ({
+          id,
+          name: office,
+        }))
+      );
+    });
   }, [oldProduct, isOpen]);
 
   const setStoreItem = (
