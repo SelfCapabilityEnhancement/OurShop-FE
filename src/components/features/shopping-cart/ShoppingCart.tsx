@@ -105,17 +105,15 @@ export default function ShoppingCart() {
     const selectedProducts = selectedItems.map((e) => e.product);
 
     const selectedOffices = selectedItems.map(
-      (e) => new Set(e.offices.split(', '))
+      (e) => new Set(e.offices?.split(', '))
     );
     let selectOfficeList = selectedOffices[0];
 
-    if (selectedOffices.length > 1) {
-      for (let i = 0; i < selectedOffices.length; i++) {
-        const tempOffices = selectedOffices[i];
-        selectOfficeList = new Set(
-          [...selectOfficeList].filter((x) => tempOffices.has(x))
-        );
-      }
+    for (let i = 1; i < selectedOffices.length; i++) {
+      const tempOffices = selectedOffices[i];
+      selectOfficeList = new Set(
+        [...selectOfficeList].filter((x) => tempOffices.has(x))
+      );
     }
 
     const selectedShoppingCartIds = selectedItems.map((e) => e.shoppingCartId);
