@@ -75,7 +75,7 @@ describe('display login page', () => {
     const loginBtn = screen.getByTestId('login-btn');
     await user.click(loginBtn);
 
-    expect(screen.getByText('Required field!')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
   });
 
   it('should show error tips when password is missing', async () => {
@@ -84,14 +84,14 @@ describe('display login page', () => {
     const loginBtn = screen.getByTestId('login-btn');
     await user.click(loginBtn);
 
-    expect(screen.getByText('Required field!')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
   });
 
   it('should show error tips when username and password are missing', async () => {
     const loginBtn = screen.getByTestId('login-btn');
     await user.click(loginBtn);
 
-    expect(screen.getAllByText('Required field!')).toHaveLength(2);
+    expect(await screen.findAllByRole('alert')).toHaveLength(2);
   });
 
   it('should show error tips when username exists or password wrong', async () => {
