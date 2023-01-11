@@ -16,6 +16,7 @@ jest.mock('@/service', () => ({
 }));
 
 describe('Edit Product', () => {
+  // const user = userEvent.setup();
   const handleClose = jest.fn();
 
   beforeEach(async () => {
