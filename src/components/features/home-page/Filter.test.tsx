@@ -19,7 +19,6 @@ describe('Filter', () => {
   const user = userEvent.setup();
   beforeEach(async () => {
     jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
-    // jest.spyOn(service, 'getProductsByOfficeIds');
     const setProductMock = jest.fn();
     await act(async () => {
       render(<Filter setProduct={setProductMock} />);
@@ -32,7 +31,6 @@ describe('Filter', () => {
       .mockResolvedValue([]);
     const applyBtn = screen.getByTestId('applyBtn');
     await user.click(applyBtn);
-    // getProductsByOfficeIds
     expect(getProductsByOfficeIdsMock).toBeCalled();
   });
 });
