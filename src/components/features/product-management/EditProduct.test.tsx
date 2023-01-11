@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import EditProduct from '@/components/features/product-management/EditProduct';
-import { tempProducts } from '@/mocks/mockData';
+import { mockOffice, tempProducts } from '@/mocks/mockData';
 import { Product } from '@/components/common/CustomTypes';
 import { act } from 'react-dom/test-utils';
+import * as service from '@/service';
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -11,12 +12,14 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 jest.mock('@/service', () => ({
   updateProduct: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 describe('Edit Product', () => {
   const handleClose = jest.fn();
 
   beforeEach(async () => {
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
     await act(async () => {
       render(
         <EditProduct
