@@ -5,6 +5,10 @@ import { useLoginStore } from '@/hooks/useLoginStore';
 import { isEmpty, last } from 'lodash';
 import { useEffect } from 'react';
 import Banner from '@/components/common/banner/Banner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
 
 function GoToLoginPageLater() {
   const navigate = useNavigate();
@@ -57,10 +61,13 @@ function App() {
   }
 
   return (
-    <div className="app flex flex-col">
-      <Header />
-      <Outlet />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="app flex flex-col">
+        <Header />
+        <Outlet />
+      </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

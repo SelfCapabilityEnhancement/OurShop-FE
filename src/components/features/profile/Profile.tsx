@@ -3,10 +3,11 @@ import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import avatarUrl from 'images/avatar.png';
 import { clsx as classNames } from 'clsx';
+import { useLoginStore } from '@/hooks/useLoginStore';
 
 export default function Profile() {
   const handleLogout = () => {
-    localStorage.clear();
+    useLoginStore.getState().clear();
   };
   return (
     <Menu as="div" className="relative mx-8 flex justify-end">

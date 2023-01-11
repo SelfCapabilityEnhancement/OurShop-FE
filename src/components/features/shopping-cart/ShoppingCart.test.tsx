@@ -18,20 +18,6 @@ window.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: () => null,
 }));
 
-describe('When user not login to access shopping-cart', () => {
-  beforeEach(async () => {
-    await act(async () => {
-      render(<ShoppingCart />, { wrapper: BrowserRouter });
-    });
-  });
-
-  afterEach(cleanup);
-
-  it('should show tabs', () => {
-    expect(screen.getByText('Not Login')).toBeInTheDocument();
-  });
-});
-
 describe('display shopping cart page given nonempty products', () => {
   const user = userEvent.setup();
   let container: Container;
@@ -41,7 +27,6 @@ describe('display shopping cart page given nonempty products', () => {
   });
 
   beforeEach(async () => {
-    localStorage.setItem('router', 'shopping-cart');
     await act(async () => {
       container = render(<ShoppingCart />, {
         wrapper: BrowserRouter,

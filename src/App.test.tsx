@@ -12,7 +12,6 @@ jest.mock('@/service', () => ({
 
 describe('App test', () => {
   beforeEach(async () => {
-    localStorage.setItem('router', 'create-product'); // todo: delete
     useLoginStore.setState({ accessiblePaths: ['create-product'], jwt: 'jwt' });
   });
 

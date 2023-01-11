@@ -22,13 +22,7 @@ export const useLoginStore = create<ILoginState>()(
       (set, get) => ({
         ...defaultState(),
         setJwt: (token) => set({ jwt: 'Bearer ' + token }),
-        setAccessiblePaths: (val) => {
-          console.log('setAccessiblePaths');
-          console.log(val);
-          set({
-            accessiblePaths: [...val, 'home'],
-          });
-        },
+        setAccessiblePaths: (accessiblePaths) => set({ accessiblePaths }),
         clear: () => set(defaultState()),
       }),
       { name: 'useLoginStore', version: 1 }

@@ -42,8 +42,7 @@ export default function LoginPage() {
           });
         } else {
           setLoginSuccess(true);
-          localStorage.setItem('jwt', 'Bearer ' + res.data.token); // todo: delete
-          localStorage.setItem('router', res.data.routerResponses); // todo: delete
+          resetInput();
           setJwt(res.data.token);
           setAccessiblePaths(res.data.routerResponses);
           setTimeout(() => {

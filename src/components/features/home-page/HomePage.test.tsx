@@ -25,7 +25,6 @@ describe('HomePage', () => {
   jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
 
   beforeEach(async () => {
-    localStorage.setItem('router', 'home');
     await act(async () => {
       render(<HomePage />, { wrapper: BrowserRouter });
       render(<SaveUserInfo isOpen={false} setIsOpen={jest.fn()} />, {
