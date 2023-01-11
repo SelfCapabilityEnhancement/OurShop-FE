@@ -7,18 +7,18 @@
     "start": "npx serve -s ./dist -l 8080",
     "dev": "vite",
     "dev:local": "vite --mode local-api",
-    "build": "tsc && vite build",
+    "build": "npx tsc && vite build",
     "preview": "npm run build && vite preview",
-    "lint": "eslint -c .eslintrc.json . --ext .tsx",
-    "lint-and-fix": "eslint -c .eslintrc.json . --ext .tsx --fix",
-    "prettier-format": "prettier --config .prettierrc  --write .",
-    "test": "jest",
+    "lint": "npx eslint -c .eslintrc.json . --ext .tsx",
+    "lint-and-fix": "npx eslint -c .eslintrc.json . --ext .tsx --fix",
+    "prettier-format": "npx prettier --config .prettierrc  --write .",
+    "test": "npx jest",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint -c .eslintrc.json . --ext .tsx --fix",
-      "prettier --config .prettierrc  --write ."
+      "npx eslint -c .eslintrc.json . --ext .tsx --fix",
+      "npx prettier --config .prettierrc --write ."
     ]
   },
   "dependencies": {

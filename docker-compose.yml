@@ -9,3 +9,9 @@ services:
       - type: bind
         source: .
         target: /app
+      - type: volume
+        source: ourshop_node_dep
+        target: /app/node_modules
+
+volumes:
+  ourshop_node_dep:
