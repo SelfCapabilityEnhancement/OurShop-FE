@@ -94,14 +94,14 @@ export default function PurchaseConfirmation() {
     setTimeout(() => {
       SetShowBanner(false);
       navigate('/shopping-cart');
-    }, 1500);
+    }, 2000);
   };
 
   const handleVerifyOffice = () => {
     setTimeout(() => {
       SetShowBanner(false);
       setShowLoading(false);
-    }, 1500);
+    }, 2000);
   };
 
   const handleClickBuy = async () => {
