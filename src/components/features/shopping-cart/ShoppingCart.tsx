@@ -29,31 +29,31 @@ export default function ShoppingCart() {
     });
   }, []);
 
-    useEffect(() => {
-      if (checkedState.includes(true)) {
-        if (noneOffice) {
-          setButtonDisabled(true);
-        } else {
-          setButtonDisabled(false);
-        }
-      } else {
+  useEffect(() => {
+    if (checkedState.includes(true)) {
+      if (noneOffice) {
         setButtonDisabled(true);
+      } else {
+        setButtonDisabled(false);
       }
-    }, [noneOffice, checkedState]);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [noneOffice, checkedState]);
 
-    const handlePlus = async (index: number) => {
-      if (!shoppingCartItems[index].product.isDeleted) {
-        const tmp = [...shoppingCartItems];
-        tmp[index].productNum += 1;
-        const numSavedFlag = await updateProductNum(
-          shoppingCartItems[index].productId,
-          tmp[index].productNum
-        );
-        if (numSavedFlag) {
-          setShoppingCartItems(tmp);
-        }
+  const handlePlus = async (index: number) => {
+    if (!shoppingCartItems[index].product.isDeleted) {
+      const tmp = [...shoppingCartItems];
+      tmp[index].productNum += 1;
+      const numSavedFlag = await updateProductNum(
+        shoppingCartItems[index].productId,
+        tmp[index].productNum
+      );
+      if (numSavedFlag) {
+        setShoppingCartItems(tmp);
       }
-    };
+    }
+  };
 
   const handleMinus = async (index: number) => {
     if (!shoppingCartItems[index].product.isDeleted) {
@@ -75,104 +75,77 @@ export default function ShoppingCart() {
     const updatedCheckedState = [...checkedState];
     updatedCheckedState[position] = !updatedCheckedState[position];
 
-      setCheckedState(updatedCheckedState);
+    setCheckedState(updatedCheckedState);
 
-      const selectedItems = shoppingCartItems.filter(
-        (_item, index) => updatedCheckedState[index]
-      );
-      const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices?.split(', '))
-      );
-      let collectOffices = selectedOffices[0];
+    const selectedItems = shoppingCartItems.filter(
+      (_item, index) => updatedCheckedState[index]
+    );
+    const selectedOffices = selectedItems.map(
+      (e) => new Set(e.offices?.split(', '))
+    );
+    let collectOffices = selectedOffices[0];
 
-      for (let i = 1; i < selectedOffices.length; i++) {
+    for (let i = 1; i < selectedOffices.length; i++) {
+      const tempOffices = selectedOffices[i];
+      collectOffices = new Set(
+        [...collectOffices].filter((x) => tempOffices.has(x))
+      );
+    }
+    if (collectOffices.size === 0) {
+      setNoneOffice(true);
+    } else {
+      setNoneOffice(false);
+    }
+  };
+
+  const handleOnClickPayBtn = () => {
+    const selectedItems = shoppingCartItems.filter(
+      (_item, index) => checkedState[index]
+    );
+    const selectedProducts = selectedItems.map((e) => e.product);
+
+    const selectedOffices = selectedItems.map(
+      (e) => new Set(e.offices.split(','))
+    );
+    let selectOfficeList = selectedOffices[0];
+
+    if (selectedOffices.length > 1) {
+      for (let i = 0; i < selectedOffices.length; i++) {
         const tempOffices = selectedOffices[i];
-        collectOffices = new Set(
-          [...collectOffices].filter((x) => tempOffices.has(x))
-        );
-      }
-      if (collectOffices.size === 0) {
-        setNoneOffice(true);
-      } else {
-        setNoneOffice(false);
-      }
-    };
-
-      const selectedItems = shoppingCartItems.filter(
-        (_item, index) => updatedCheckedState[index]
-      );
-      const selectedProducts = selectedItems.map((e) => e.product);
-
-      const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices.split(','))
-      );
-      let selectOfficeList = selectedOffices[0];
-
-      if (selectedOffices.length > 1) {
-        for (let i = 0; i < selectedOffices.length; i++) {
-          const tempOffices = selectedOffices[i];
-          selectOfficeList = new Set(
-            [...selectOfficeList].filter((x) => tempOffices.has(x))
-          );
-        }
-      }
-      if (collectOffices.size === 0) {
-        setNoneOffice(true);
-      } else {
-        setNoneOffice(false);
-      }
-    };
-
-    const handleOnClickPayBtn = () => {
-      const selectedItems = shoppingCartItems.filter(
-        (_item, index) => updatedCheckedState[index]
-      );
-      const selectedProducts = selectedItems.map((e) => e.product);
-
-      const selectedOffices = selectedItems.map(
-        (e) => new Set(e.offices?.split(','))
-      );
-      let selectOfficeList = selectedOffices[0];
-
-        for (let i = 1; i < selectedOffices.length; i++) {
-          const tempOffices = selectedOffices[i];
-          selectOfficeList = new Set(
-            [...selectOfficeList].filter((x) => tempOffices.has(x))
-          );
-        }
-
-      const selectedShoppingCartIds = selectedItems.map(
-        (e) => e.shoppingCartId
-      );
-      const selectedProductIds = selectedItems.map((e) => e.productId);
-      const count = selectedItems.map((e) => e.productNum);
-      const logisticMethods = selectedItems.map((e) => e.logisticMethod);
-      navigate('/purchase-confirmation', {
-        state: {
-          products: selectedProducts,
-          count,
-          shoppingCartIds: selectedShoppingCartIds,
-          productIds: selectedProductIds,
-          logisticMethods,
-          selectedOffices: selectOfficeList,
-        },
-      });
-    };
-
-    function renderProductAvailableOrNot(shoppingCartItem: {
-      offices: string;
-    }) {
-      if (shoppingCartItem.offices === '') {
-        return <span className="w-[500px]">{notAvailableAtAnyOffice}</span>;
-      } else {
-        return (
-          <>
-            <span className="w-[100px]">Available at:</span>
-            <div className="mr-10">{shoppingCartItem.offices}</div>
-          </>
+        selectOfficeList = new Set(
+          [...selectOfficeList].filter((x) => tempOffices.has(x))
         );
       }
     }
+
+    const selectedShoppingCartIds = selectedItems.map((e) => e.shoppingCartId);
+    const selectedProductIds = selectedItems.map((e) => e.productId);
+    const count = selectedItems.map((e) => e.productNum);
+    const logisticMethods = selectedItems.map((e) => e.logisticMethod);
+    navigate('/purchase-confirmation', {
+      state: {
+        products: selectedProducts,
+        count,
+        shoppingCartIds: selectedShoppingCartIds,
+        productIds: selectedProductIds,
+        logisticMethods,
+        selectedOffices: selectOfficeList,
+      },
+    });
+  };
+
+  function renderProductAvailableOrNot(shoppingCartItem: { offices: string }) {
+    if (shoppingCartItem.offices === '') {
+      return <span className="w-[500px]">{notAvailableAtAnyOffice}</span>;
+    } else {
+      return (
+        <>
+          <span className="w-[100px]">Available at:</span>
+          <div className="mr-10">{shoppingCartItem.offices}</div>
+        </>
+      );
+    }
+  }
 
     return (
       <div
