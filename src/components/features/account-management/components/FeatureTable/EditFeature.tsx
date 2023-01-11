@@ -61,7 +61,7 @@ export default function EditFeature({
         );
         setUpdateSuccess(true);
         setInputError(true);
-        setMessage('The Change was made Successfully!');
+        setMessage('The change was made successfully!');
         setShowBanner(true);
         setTimeout(() => {
           setShowBanner(false);

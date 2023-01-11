@@ -49,4 +49,15 @@ describe('Edit Function', () => {
 
     expect(updateMock).toBeCalled();
   });
+  test('should show successful message banner', async () => {
+    const codeElement = await screen.findByTestId('code');
+    const saveBtn = await screen.findByTestId('saveBtn');
+
+    await user.type(codeElement, '/product/product-management');
+    await user.click(saveBtn);
+
+    expect(
+      await screen.findByText('The change was made successfully!')
+    ).toBeInTheDocument();
+  });
 });
