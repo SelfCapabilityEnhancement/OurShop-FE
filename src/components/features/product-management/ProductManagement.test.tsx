@@ -4,12 +4,13 @@ import ProductManagement from '@/components/features/product-management/ProductM
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import * as service from '@/service';
-import { deletedProducts, tempProducts } from '@/mocks/mockData';
+import { deletedProducts, mockOffice, tempProducts } from '@/mocks/mockData';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('@/service', () => ({
   getProducts: jest.fn(),
   getDeletedProducts: jest.fn(),
+  getAllOffices: jest.fn(),
 }));
 
 window.IntersectionObserver = jest.fn().mockImplementation(() => ({
@@ -26,6 +27,7 @@ describe('Product Management', () => {
     jest
       .spyOn(service, 'getDeletedProducts')
       .mockResolvedValue(deletedProducts);
+    jest.spyOn(service, 'getAllOffices').mockResolvedValue(mockOffice);
     await act(async () => {
       container = render(<ProductManagement />, {
         wrapper: BrowserRouter,
