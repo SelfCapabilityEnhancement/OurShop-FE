@@ -46,9 +46,9 @@ function App() {
   const location = useLocation();
   const pathname = last(location.pathname.toLowerCase().split('/'));
   const shouldGoToLoginPage =
-    pathname && !['login', 'register'].includes(pathname) && isEmpty(jwt);
+    !!pathname && !['login', 'register'].includes(pathname) && isEmpty(jwt);
   const shouldGoToHomePage =
-    pathname &&
+    !!pathname &&
     [
       'product-management',
       'order-management',
