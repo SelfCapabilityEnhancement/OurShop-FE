@@ -49,7 +49,12 @@ function App() {
     pathname && !['login', 'register'].includes(pathname) && isEmpty(jwt);
   const shouldGoToHomePage =
     pathname &&
-    !['login', 'register', 'home'].includes(pathname) &&
+    [
+      'product-management',
+      'order-management',
+      'create-product',
+      'account-management',
+    ].includes(pathname) &&
     !accessiblePaths.includes(pathname);
 
   if (shouldGoToLoginPage) {
